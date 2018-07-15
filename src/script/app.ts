@@ -29,6 +29,11 @@ app.all('*', (req: Request, res: Response, next: NextFunction) => {
 });
 
 /**
+ * Image Upload
+ */
+app.post('/m/buffer', Handler.M.UploadBufferHandler);
+
+/**
  * 404
  */
 app.post('*', Handler.G.fourOFourHandler);

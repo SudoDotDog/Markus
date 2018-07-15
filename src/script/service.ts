@@ -6,14 +6,10 @@
 import * as Cluster from 'cluster';
 import * as Http from 'http';
 import { cpus } from 'os';
+import Config from '../config/config';
 import app from './app';
 
 const numCPUs: number = cpus().length;
-
-const Config = {
-    isDebug: true,
-    portNumber: 8080,
-};
 
 if (!Config.isDebug) {
     if (Cluster.isMaster) {
