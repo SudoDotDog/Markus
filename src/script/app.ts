@@ -7,9 +7,7 @@ import * as bodyParser from "body-parser";
 import * as express from "express";
 import { NextFunction, Request, Response } from "express";
 import * as mongoose from "mongoose";
-import { error, ERROR_CODE } from "./util/error";
 import * as Handler from './handlers/import';
-import { RESPONSE } from './util/interface';
 
 mongoose.connect('mongodb://localhost/markus-test');
 
