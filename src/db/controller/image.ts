@@ -21,6 +21,11 @@ export const createImage = async (options: IImageConfig): Promise<IImageModel> =
     return newImage;
 };
 
+export const deactiveImageById = async (id: ObjectID): Promise<any> => {
+    const result: any = await ImageModel.remove({ _id: id });
+    return result;
+};
+
 export const getImageById = async (id: ObjectID): Promise<IImageCallback> => {
     const image: IImageModel | null = await ImageModel.findOne({
         _id: id,

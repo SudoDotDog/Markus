@@ -54,7 +54,6 @@
         let formData = new FormData();
         let image = $("#file").prop("files")[0];
         formData.append("image", image);
-        formData.append('size', 123);
         $.ajax({
             type: "POST",
             url: "http://localhost:8080/m/buffer",
