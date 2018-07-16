@@ -53,7 +53,7 @@ export const getImageById = async (id: ObjectID): Promise<IImageCallback> => {
 export const getImageList = async (): Promise<IImageListResponse[]> => {
     const images: IImageModel[] | null = await ImageModel.find({});
     if (!images) {
-        throw error(ERROR_CODE.IMAGE_LIST_GET_FAILED);
+        throw error(ERROR_CODE.IMAGE_GET_LIST_FAILED);
     }
     return images.map((image: IImageModel) => {
         return {
@@ -64,4 +64,18 @@ export const getImageList = async (): Promise<IImageListResponse[]> => {
             size: image.size,
         };
     });
+};
+
+export const deactiveImage = async (id: ObjectID): Promise<void> => {
+    const image: IImageModel | null = await ImageModel.findOne({
+        _id: id,
+        active: true,
+    });
+    if (!image) {
+        throw error(ERROR_CODE.IMAGE_GET_FAILED);
+    }
+    
+    image.deactive();
+    await image.save();
+    return;
 };
