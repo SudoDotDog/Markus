@@ -3,6 +3,7 @@
  * @fileoverview Image Controller
  */
 
+import { NextFunction, Request, Response } from "express";
 import * as Fs from 'fs';
 import * as Multer from 'multer';
 import * as Path from 'path';
@@ -29,6 +30,16 @@ export const unique = (len?: number) => {
 
 export const mkPathDir = (path: string) => {
     Fs.mkdirSync(path);
+};
+
+export const checkUpload = async (req: Request, res: Response, next: NextFunction) => {
+    req.valid = false;
+    if(req.body.key === Config.key){
+        req.valid = true;
+    }else{
+        req.valid = false;
+    }
+    next();
 };
 
 export const Upload = (): Multer.Instance => {
