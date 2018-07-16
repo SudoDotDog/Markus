@@ -7,6 +7,7 @@ export enum ERROR_CODE {
     IMAGE_PATH_IS_NOT_ABSOLUTE = 100,
 
     IMAGE_GET_FAILED = 200,
+    IMAGE_SAVE_FAILED = 201,
 
     FOUR_O_FOUR_NOT_FOUND = 404,
 
@@ -18,6 +19,7 @@ export const errorList: {
 } = {
     100: 'Image path in config is not a absolute path',
     200: 'Image getting failed',
+    201: 'Image saving failed',
     404: 'Request URL not found',
     900: 'Unknown error code',
 };

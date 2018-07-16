@@ -11,6 +11,8 @@
 <body>
     <input type="file" id="file">
     <button id="btn">UPLOAD</button>
+    <textarea id="fileBase64" style="height: 100px; width: 100px"></textarea>
+    <button id="btnBase64">UPLOAD</button>
     <hr>
     <img src="" id="img" width="300px">
     <hr>
@@ -60,6 +62,20 @@
             processData: false,
             contentType: false,
             data: formData
+        }).then(function (msg) {
+            console.log(msg);
+        }).catch(function (msg) {
+            console.log(msg);
+        });
+    });
+
+    $("#btnBase64").on("click", function () {
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8080/m/base64",
+            data: {
+                image: $("#fileBase64").val()
+            }
         }).then(function (msg) {
             console.log(msg);
         }).catch(function (msg) {

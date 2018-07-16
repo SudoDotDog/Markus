@@ -44,6 +44,7 @@ app.get('/b/:id', Handler.G.imageGetBlankBlackHandler);
 
 // Handler(s) for Image Upload
 app.post('/m/buffer', uploadSingle, Handler.M.UploadBufferHandler);
+app.post('/m/base64', Handler.M.UploadBase64Handler);
 
 // Handler(s) for 404
 app.post('*', Handler.G.fourOFourHandler);
