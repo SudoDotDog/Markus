@@ -25,7 +25,7 @@ app.use(bodyParser.urlencoded({
 const uploadSingle = Upload().single('image');
 
 app.all('*', (req: Request, res: Response, next: NextFunction) => {
-    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Origin", Config.crossOrigin);
     res.header("X-Powered-By", 'Markus');
     res.header("X-Markus-Version", "1.0.0");
     next();
@@ -41,6 +41,7 @@ app.post('/m/buffer', uploadSingle, Handler.M.UploadBufferHandler);
 app.post('/m/base64', Handler.M.UploadBase64Handler);
 
 // Handler(s) for debug
+app.post('/list', Handler.M.OutputImageIdList);
 app.delete('/empty', Handler.Debug.emptyDatabaseHandler);
 
 // Handler(s) for 404

@@ -5,7 +5,9 @@
 
 import { Request, Response } from "express";
 import * as Path from 'path';
+import Config from "../../config/config";
 import * as Controller from '../../db/controller/import';
+import { IImageListResponse } from "../../db/interface/image";
 import { IImageModel } from "../../db/model/image";
 import { error, ERROR_CODE } from "../../util/error";
 import { UploadWithBase64 } from "../../util/image";
@@ -59,6 +61,26 @@ export const UploadBase64Handler = async (req: Request, res: Response): Promise<
                 id: image.id,
             },
         });
+    } catch (err) {
+        res.status(400).send({
+            status: RESPONSE.FAILED,
+            error: err,
+        });
+    }
+    return;
+};
+
+export const OutputImageIdList = async (req: Request, res: Response): Promise<void> => {
+    try {
+        if (Config.isDebug) {
+            const images: IImageListResponse[] = await Controller.Image.getImageList();
+            res.status(200).send({
+                status: RESPONSE.SUCCEED,
+                data: images,
+            });
+        } else {
+            throw error(ERROR_CODE.DEBUG_ONLY_FUNCTION_CALLED_IN_PRODUCTION);
+        }
     } catch (err) {
         res.status(400).send({
             status: RESPONSE.FAILED,

@@ -3,6 +3,8 @@
  * @fileoverview Image Interface
  */
 
+import { ObjectID } from "../../../node_modules/@types/bson";
+
 export interface IImageConfig {
     encoding: string;
     mime: string;
@@ -23,5 +25,13 @@ export interface IImageCallback {
     mime: string;
     original: string;
     path: string;
+    size: number;
+}
+
+export interface IImageListResponse {
+    active: boolean;
+    id: ObjectID;
+    createdAt: Date;
+    original: string;
     size: number;
 }

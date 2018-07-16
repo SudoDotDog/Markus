@@ -4,6 +4,7 @@
  */
 
 export interface IConfig {
+    crossOrigin: string;
     db: string;
     imagePath: string;
     imagePFolder: number;
@@ -14,6 +15,7 @@ export interface IConfig {
 }
 
 const Config: IConfig = {
+    crossOrigin: '*',
     db: 'mongodb://localhost/markus-test',
     imagePath: 'F:/path',
     imagePFolder: 12,

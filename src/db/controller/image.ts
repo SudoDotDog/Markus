@@ -3,9 +3,9 @@
  * @fileoverview Image Controller
  */
 
-import { ObjectID } from "../../../node_modules/@types/bson";
+import { ObjectID } from "bson";
 import { error, ERROR_CODE } from "../../util/error";
-import { IImageCallback, IImageConfig } from "../interface/image";
+import { IImageCallback, IImageConfig, IImageListResponse } from "../interface/image";
 import { IImageModel, ImageModel } from "../model/image";
 
 export const emptyDatabase = async (): Promise<void> => {
@@ -48,4 +48,20 @@ export const getImageById = async (id: ObjectID): Promise<IImageCallback> => {
         path: image.path,
         size: image.size,
     };
+};
+
+export const getImageList = async (): Promise<IImageListResponse[]> => {
+    const images: IImageModel[] | null = await ImageModel.find({});
+    if (!images) {
+        throw error(ERROR_CODE.IMAGE_GET_FAILED);
+    }
+    return images.map((image: IImageModel) => {
+        return {
+            active: image.active,
+            id: image.id,
+            createdAt: image.createdAt,
+            original: image.original,
+            size: image.size,
+        };
+    });
 };
