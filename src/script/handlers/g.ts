@@ -5,6 +5,7 @@
 
 import { ObjectId, ObjectID } from "bson";
 import { Request, Response } from "express";
+import * as Path from 'path';
 import * as Controller from '../../db/controller/import';
 import { IImageCallback } from "../../db/interface/image";
 import { error, ERROR_CODE } from "../../util/error";
@@ -20,6 +21,28 @@ export const imageGetHandler = async (req: Request, res: Response): Promise<void
             status: RESPONSE.FAILED,
             error: err,
         });
+    }
+    return;
+};
+
+export const imageGetBlankWhiteHandler = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const id: ObjectID = new ObjectId(req.params.id);
+        const image: IImageCallback = await Controller.Image.getImageById(id);
+        res.status(200).sendFile(image.path);
+    } catch (err) {
+        res.status(200).sendFile(Path.resolve('assets/404image_white.png'));
+    }
+    return;
+};
+
+export const imageGetBlankBlackHandler = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const id: ObjectID = new ObjectId(req.params.id);
+        const image: IImageCallback = await Controller.Image.getImageById(id);
+        res.status(200).sendFile(image.path);
+    } catch (err) {
+        res.status(200).sendFile(Path.resolve('assets/404image_black.png'));
     }
     return;
 };

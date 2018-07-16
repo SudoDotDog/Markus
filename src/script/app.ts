@@ -39,6 +39,8 @@ app.all('*', (req: Request, res: Response, next: NextFunction) => {
 
 // Handler(s) for Image Get
 app.get('/g/:id', Handler.G.imageGetHandler);
+app.get('/w/:id', Handler.G.imageGetBlankWhiteHandler);
+app.get('/b/:id', Handler.G.imageGetBlankBlackHandler);
 
 // Handler(s) for Image Upload
 app.post('/m/buffer', uploadSingle, Handler.M.UploadBufferHandler);
