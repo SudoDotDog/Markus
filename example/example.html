@@ -16,18 +16,13 @@
     <hr>
     <input id="get">
     <button id="getBtn">Get</button>
+    <hr>
+    <img src="" id="getImg" width="300px">
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
     $("#getBtn").on("click", function () {
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8080/g/" + $("#get").val(),
-        }).then(function (msg) {
-            console.log(msg);
-        }).catch(function (msg) {
-            console.log(msg);
-        });
+        $("#getImg").attr("src", "http://localhost:8080/g/" + $("#get").val());
     });
 
     $("#file").on("change", function (e) {
