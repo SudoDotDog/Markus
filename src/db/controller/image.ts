@@ -53,7 +53,7 @@ export const getImageById = async (id: ObjectID): Promise<IImageCallback> => {
 export const getImageList = async (): Promise<IImageListResponse[]> => {
     const images: IImageModel[] | null = await ImageModel.find({});
     if (!images) {
-        throw error(ERROR_CODE.IMAGE_GET_FAILED);
+        throw error(ERROR_CODE.IMAGE_LIST_GET_FAILED);
     }
     return images.map((image: IImageModel) => {
         return {
