@@ -8,6 +8,11 @@ import { error, ERROR_CODE } from "../../util/error";
 import { IImageCallback, IImageConfig } from "../interface/image";
 import { IImageModel, ImageModel } from "../model/image";
 
+export const emptyDatabase = async (): Promise<void> => {
+    await ImageModel.remove({});
+    return;
+};
+
 export const createImage = async (options: IImageConfig): Promise<IImageModel> => {
     const newImage: IImageModel = new ImageModel({
         encoding: options.encoding,
