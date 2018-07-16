@@ -1,6 +1,6 @@
 /**
  * @author WMXPY
- * @fileoverview G Handler
+ * @fileoverview Debug Handler
  */
 
 import { Request, Response } from "express";

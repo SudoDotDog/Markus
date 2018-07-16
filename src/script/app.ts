@@ -7,17 +7,11 @@ import * as bodyParser from "body-parser";
 import * as express from "express";
 import { NextFunction, Request, Response } from "express";
 import * as mongoose from "mongoose";
-import * as Path from 'path';
-import Config from '../config/config';
-import { error, ERROR_CODE } from "../util/error";
+import Config from "../config/config";
 import { Upload } from "../util/image";
 import * as Handler from './handlers/import';
 
-if (!Path.isAbsolute(Config.imagePath)) {
-    throw error(ERROR_CODE.IMAGE_PATH_IS_NOT_ABSOLUTE);
-}
-
-mongoose.connect('mongodb://localhost/markus-test');
+mongoose.connect(Config.db);
 
 const db: mongoose.Connection = mongoose.connection;
 db.on('error', console.log.bind(console, 'connection error:'));

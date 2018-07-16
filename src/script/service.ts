@@ -6,24 +6,40 @@
 import * as Cluster from 'cluster';
 import * as Http from 'http';
 import { cpus } from 'os';
+import * as Path from 'path';
 import Config from '../config/config';
+import { error, ERROR_CODE } from '../util/error';
 import app from './app';
+
+if (!Path.isAbsolute(Config.imagePath)) {
+    throw error(ERROR_CODE.IMAGE_PATH_IS_NOT_ABSOLUTE);
+}
+
+if (Config.isDebug) {
+    console.log('!!! YOU ARE RUNNING THIS APPLICATION IN DEBUG MODE !!!');
+    console.log('!!!   MAKE SURE TO CHANGE IT TO PRODUCTION MODE    !!!');
+}
 
 const numCPUs: number = cpus().length;
 
 if (!Config.isDebug) {
     if (Cluster.isMaster) {
-        for (let i = 0; i < numCPUs; i++) {
+        const thread: number = Math.min(Config.maxThread, numCPUs);
+        for (let i = 0; i < thread; i++) {
             const worker: Cluster.Worker = Cluster.fork();
             worker.send(worker.process.pid);
         }
 
         Cluster.on('listening', (worker: Cluster.Worker, address: Cluster.Address) => {
-            console.log('worker ' + worker.process.pid + ', listen: ' + address.address + ":" + address.port);
+            if (Config.verbose) {
+                console.log('worker ' + worker.process.pid + ', listen: ' + address.address + ":" + address.port);
+            }
         });
 
         Cluster.on('exit', (worker: Cluster.Worker, code: number, signal: string) => {
-            console.log('worker ' + worker.process.pid + ' died');
+            if (Config.verbose) {
+                console.log('worker ' + worker.process.pid + ' died');
+            }
             Cluster.fork();
         });
     } else {
