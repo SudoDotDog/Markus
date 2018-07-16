@@ -27,7 +27,7 @@ export const getImageById = async (id: ObjectID): Promise<IImageCallback> => {
         active: true,
     });
     if (!image) {
-        throw error(ERROR_CODE.IMAGE_GET_FILED);
+        throw error(ERROR_CODE.IMAGE_GET_FAILED);
     }
 
     return {

@@ -3,10 +3,10 @@
  * @fileoverview Image Controller
  */
 
+import * as Fs from 'fs';
 import * as Multer from 'multer';
 import * as Path from 'path';
 import Config from '../config/config';
-import * as Fs from 'fs';
 
 export const uniqueSmall = (): string => {
     return '_' + Math.random().toString(36).substring(2, 9);
