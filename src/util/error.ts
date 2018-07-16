@@ -9,6 +9,7 @@ export enum ERROR_CODE {
 
     IMAGE_GET_FAILED = 200,
     IMAGE_SAVE_FAILED = 201,
+    IMAGE_GET_LIST_FAILED = 202,
 
     FOUR_O_FOUR_NOT_FOUND = 404,
 
@@ -22,6 +23,7 @@ export const errorList: {
     101: 'Debug function should only call in debug environment',
     200: 'Image getting failed',
     201: 'Image saving failed',
+    202: 'Image list getting failed',
     404: 'Request URL not found',
     900: 'Unknown error code',
 };
