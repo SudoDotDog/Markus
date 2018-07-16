@@ -1,7 +1,7 @@
 {
   "name": "markus",
   "version": "1.0.0",
-  "description": ":rainbow: A image storage center",
+  "description": ":rainbow: My name is Markus; I am one of them; These are your images!",
   "private": true,
   "main": "dist/service.js",
   "scripts": {

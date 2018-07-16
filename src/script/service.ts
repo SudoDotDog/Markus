@@ -20,6 +20,10 @@ if (Config.isDebug) {
     console.log('!!!   MAKE SURE TO CHANGE IT TO PRODUCTION MODE    !!!');
 }
 
+if (Config.verbose) {
+    console.log("My name is Markus; I am one of them; These are your images!");
+}
+
 const numCPUs: number = cpus().length;
 
 if (!Config.isDebug) {
