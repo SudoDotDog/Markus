@@ -4,6 +4,7 @@
         "dbpath",
         "ifeq",
         "mimetype",
-        "mongod"
+        "mongod",
+        "originalname"
     ]
 }

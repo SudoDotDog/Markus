@@ -5,7 +5,7 @@
 
 const Config = {
     imagePath: 'F:/path',
-    imagePFolder: 3,
+    imagePFolder: 12,
     isDebug: true,
     portNumber: 8080,
 };

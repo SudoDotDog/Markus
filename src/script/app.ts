@@ -37,14 +37,13 @@ app.all('*', (req: Request, res: Response, next: NextFunction) => {
     next();
 });
 
-/**
- * Image Upload
- */
+// Handler(s) for Image Get
+app.get('/g/:id', Handler.G.imageGetHandler);
+
+// Handler(s) for Image Upload
 app.post('/m/buffer', uploadSingle, Handler.M.UploadBufferHandler);
 
-/**
- * 404
- */
+// Handler(s) for 404
 app.post('*', Handler.G.fourOFourHandler);
 
 export default app;
