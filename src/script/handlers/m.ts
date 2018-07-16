@@ -8,9 +8,11 @@ import { error, ERROR_CODE } from "../../util/error";
 import { RESPONSE } from '../../util/interface';
 
 export const UploadBufferHandler = (req: Request, res: Response): void => {
-    console.log(req.body);
+    console.log("body", req.body);
+    console.log("file", req.file, req.files);
+    console.log("query", req.query);
     res.status(200).send({
-        status: RESPONSE.FAILED,
+        status: RESPONSE.SUCCEED,
         action: [],
         error: error(ERROR_CODE.FOUR_O_FOUR_NOT_FOUND),
     });

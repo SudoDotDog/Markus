@@ -7,7 +7,15 @@ import * as bodyParser from "body-parser";
 import * as express from "express";
 import { NextFunction, Request, Response } from "express";
 import * as mongoose from "mongoose";
+import * as Path from 'path';
+import Config from '../config/config';
+import { error, ERROR_CODE } from "../util/error";
+import { Upload } from "../util/image";
 import * as Handler from './handlers/import';
+
+if (!Path.isAbsolute(Config.imagePath)) {
+    throw error(ERROR_CODE.IMAGE_PATH_IS_NOT_ABSOLUTE);
+}
 
 mongoose.connect('mongodb://localhost/markus-test');
 
@@ -20,6 +28,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true,
 }));
+const uploadSingle = Upload().single('image');
 
 app.all('*', (req: Request, res: Response, next: NextFunction) => {
     res.header("Access-Control-Allow-Origin", "*");
@@ -31,7 +40,7 @@ app.all('*', (req: Request, res: Response, next: NextFunction) => {
 /**
  * Image Upload
  */
-app.post('/m/buffer', Handler.M.UploadBufferHandler);
+app.post('/m/buffer', uploadSingle, Handler.M.UploadBufferHandler);
 
 /**
  * 404

@@ -9,7 +9,43 @@
 </head>
 
 <body>
-
+    <input type="file" id="file">
+    <button id="btn">UPLOAD</button>
+    <hr>
+    <img src="" id="img" width="300px">
 </body>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    $("#file").on("change", function (e) {
+        const file = e.target.files[0]; //获取图片资源
+        if (!file.type.match('image.*')) {
+            return false;
+        }
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+
+        reader.onload = function (arg) {
+            $("#img").attr("src", arg.target.result);
+        }
+    });
+
+    $("#btn").on("click", function () {
+        let formData = new FormData();
+        let image = $("#file").prop("files")[0];
+        formData.append("image", image);
+        formData.append('size', 123);
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8080/m/buffer",
+            processData: false,
+            contentType: false,
+            data: formData
+        }).then(function (msg) {
+            console.log(msg);
+        }).catch(function (msg) {
+            console.log(msg);
+        });
+    });
+</script>
 
 </html>

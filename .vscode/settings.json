@@ -3,6 +3,7 @@
         "Markus",
         "dbpath",
         "ifeq",
+        "mimetype",
         "mongod"
     ]
 }

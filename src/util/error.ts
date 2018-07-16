@@ -4,6 +4,8 @@
  */
 
 export enum ERROR_CODE {
+    IMAGE_PATH_IS_NOT_ABSOLUTE = 100,
+
     FOUR_O_FOUR_NOT_FOUND = 404,
 
     UNKNOWN_ERROR_CODE = 900,
@@ -12,7 +14,8 @@ export enum ERROR_CODE {
 export const errorList: {
     [key: number]: string;
 } = {
-    404: '404 Not found',
+    100: 'Image path in config is not a absolute path',
+    404: 'Request URL not found',
     900: 'Unknown error code',
 };
 
