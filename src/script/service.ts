@@ -29,7 +29,7 @@ const numCPUs: number = cpus().length;
 if (!Config.isDebug) {
     if (Cluster.isMaster) {
         const thread: number = Math.min(Config.maxThread, numCPUs);
-        for (let i = 0; i < thread; i++) {
+        for (let i: number = 0; i < thread; i++) {
             const worker: Cluster.Worker = Cluster.fork();
             worker.send(worker.process.pid);
         }

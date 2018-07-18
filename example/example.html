@@ -26,6 +26,7 @@
     </div>
     <hr>
     <button id="getList">Get list</button>
+    <div id="listResult"></div>
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
@@ -34,12 +35,12 @@
             type: "POST",
             url: "http://localhost:8080/list",
         }).then(function (msg) {
-            console.log(msg);
+            $('#listResult').html(msg);
         }).catch(function (msg) {
             console.log(msg);
         });
     });
-    
+
     $("#getBtn").on("click", function () {
         $("#getImg").attr("src", "http://localhost:8080/g/" + $("#get").val());
     });

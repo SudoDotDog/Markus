@@ -13,7 +13,7 @@ import { error, ERROR_CODE } from "../../util/error";
 import { UploadWithBase64 } from "../../util/image";
 import { RESPONSE } from '../../util/interface';
 
-const saveBase64ToFile = UploadWithBase64();
+const saveBase64ToFile: (base64: string) => Promise<string> = UploadWithBase64();
 
 export const UploadBufferHandler = async (req: Request, res: Response): Promise<void> => {
     try {
@@ -47,7 +47,7 @@ export const UploadBase64Handler = async (req: Request, res: Response): Promise<
             throw error(ERROR_CODE.IMAGE_SAVE_FAILED);
         }
         const filepath: string = await saveBase64ToFile(base64Image);
-        const ext = Path.extname(filepath);
+        const ext: string = Path.extname(filepath);
         // const image: IImageModel = await Controller.Image.createImage({
         //     encoding: 'base64',
         //     mime: ext.substring(1, ext.length),

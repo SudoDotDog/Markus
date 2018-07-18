@@ -3,6 +3,7 @@
  * @fileoverview Image Controller
  */
 
+import * as Crypto from 'crypto';
 import { NextFunction, Request, Response } from "express";
 import * as Fs from 'fs';
 import * as Multer from 'multer';
@@ -20,8 +21,8 @@ export const unique = (len?: number) => {
             return uniqueSmall();
         }
 
-        const left = Math.random().toString(36);
-        const right = Math.random().toString(36);
+        const left: string = Math.random().toString(36);
+        const right: string = Math.random().toString(36);
         return '_' + ((left + right).substring(2, 2 + len));
     } else {
         return uniqueSmall();
@@ -33,21 +34,41 @@ export const mkPathDir = (path: string) => {
 };
 
 export const checkUpload = async (req: Request, res: Response, next: NextFunction) => {
-    req.valid = false;
-    if(req.body.key === Config.key){
-        req.valid = true;
-    }else{
-        req.valid = false;
+    (req as any).valid = false;
+    if ((req as any).body.key === Config.key) {
+        (req as any).valid = true;
+    } else {
+        (req as any).valid = false;
     }
     next();
 };
 
+export const hashImage = (imagePath: string): Promise<string> => {
+    const stream: Fs.ReadStream = Fs.createReadStream(imagePath);
+    const fsHash: Crypto.Hash = Crypto.createHash('md5');
+
+    return new Promise<string>((resolve: (md5: string) => void, reject: (reason: Error) => void) => {
+        stream.on('data', (dataChunk: any) => {
+            fsHash.update(dataChunk);
+        });
+
+        stream.on('end', () => {
+            const md5: string = fsHash.digest('hex');
+            resolve(md5);
+        });
+
+        stream.on('close', (err: Error) => {
+            reject(err);
+        });
+    });
+};
+
 export const Upload = (): Multer.Instance => {
-    let count = 0;
-    let currentPath = Path.join(Config.imagePath, unique(7));
+    let count: number = 0;
+    let currentPath: string = Path.join(Config.imagePath, unique(7));
     mkPathDir(currentPath);
 
-    const storage = Multer.diskStorage({
+    const storage: Multer.StorageEngine = Multer.diskStorage({
         destination: (req: any, file: Express.Multer.File, callback: (error: Error | null, destination: string) => void) => {
             if (count++ >= Config.imagePFolder) {
                 count = 0;
@@ -68,8 +89,8 @@ export const Upload = (): Multer.Instance => {
 };
 
 export const UploadWithBase64 = (): ((base64: string) => Promise<string>) => {
-    let count = 0;
-    let currentPath = Path.join(Config.imagePath, unique(7));
+    let count: number = 0;
+    let currentPath: string = Path.join(Config.imagePath, unique(7));
     mkPathDir(currentPath);
 
     return (base64: string): Promise<string> => {
@@ -79,11 +100,11 @@ export const UploadWithBase64 = (): ((base64: string) => Promise<string>) => {
             mkPathDir(currentPath);
         }
         return new Promise<string>((resolve: (value: string) => void, reject: (error: Error) => void) => {
-            const splited = base64.split(';');
-            const type = splited[0].split('/')[1];
-            const filePath = Path.join(currentPath, unique(10) + '.' + type);
-            const data = splited[1].replace(/^base64,/, "");
-            Fs.writeFile(filePath, new Buffer(data, 'base64'), (err) => {
+            const splited: string[] = base64.split(';');
+            const type: string = splited[0].split('/')[1];
+            const filePath: string = Path.join(currentPath, unique(10) + '.' + type);
+            const data: string = splited[1].replace(/^base64,/, "");
+            Fs.writeFile(filePath, new Buffer(data, 'base64'), (err: Error) => {
                 if (err) {
                     reject(error(ERROR_CODE.IMAGE_SAVE_FAILED));
                 }

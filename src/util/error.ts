@@ -35,7 +35,7 @@ export const errorList: {
  * @returns {Error}
  */
 export const error = (code: number): Error => {
-    let newError: Error = new Error();
+    const newError: Error = new Error();
     if (errorList[code]) {
         newError.message = code + ': ' + errorList[code];
         newError.name = errorList[code];

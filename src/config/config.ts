@@ -11,6 +11,7 @@ export interface IConfig {
     isDebug: boolean;
     maxThread: number;
     portNumber: number;
+    key: string;
     verbose: boolean;
 }
 
@@ -22,6 +23,7 @@ const Config: IConfig = {
     isDebug: true,
     maxThread: 4,
     portNumber: 8080,
+    key: 'test',
     verbose: false,
 };
 
