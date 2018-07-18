@@ -19,7 +19,7 @@
     <div>
         <h1>UPLOAD BY BASE64</h1>
         <textarea id="fileBase64" style="height: 100px; width: 100px"></textarea>
-        <button id="btnBase64">UPLOAD BASE64</button>
+        <button id="btnBase64">UPLOAD BASE64 (IMAGE SIZE LIMITED!)</button>
     </div>
     <hr>
     <div>
@@ -35,7 +35,7 @@
     <div>
         <h1>GET IMAGE</h1>
         <input id="get">
-        <button id="getBtn">Get</button>
+        <button onclick="alert('DELETED, YOU SHOULD USE GET WHITE OR GET BLACK INSTEAD')">Get (DELETED, YOU SHOULD USE GET WHITE OR GET BLACK INSTEAD)</button>
         <button id="getBtnW">Get White</button>
         <button id="getBtnB">Get Black</button>
     </div>
@@ -200,7 +200,7 @@
             data: formData
         }).then(function (msg) {
             alert('SUCCEED');
-            $('#response').html(msg.data.id);
+            $('#response').html(msg.data.original + ': ' + msg.data.id);
         }).catch(function (msg) {
             alert('FAILED, see console');
             console.log(msg);
@@ -224,10 +224,10 @@
                 contentType: false,
                 data: formData
             }).then(function (msg) {
-                ids.push(msg.data.id)
+                ids.push(msg.data.original + ': ' + msg.data.id)
                 if (++count === images.length) {
                     alert('SUCCEED');
-                    $('#response').html(ids.join(','));
+                    $('#response').html(ids.join('<br>'));
                 }
             }).catch(function (msg) {
                 alert('FAILED, see console');

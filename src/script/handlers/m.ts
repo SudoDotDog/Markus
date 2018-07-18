@@ -49,6 +49,7 @@ export const UploadBufferHandler = async (req: Request, res: Response): Promise<
         res.status(200).send({
             status: RESPONSE.SUCCEED,
             data: {
+                original: image.original,
                 id: image.id,
             },
         });
@@ -104,6 +105,7 @@ export const UploadBase64Handler = async (req: Request, res: Response): Promise<
         res.status(200).send({
             status: RESPONSE.SUCCEED,
             data: {
+                original: image.original,
                 id: image.id,
             },
         });

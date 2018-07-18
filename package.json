@@ -1,6 +1,6 @@
 {
   "name": "markus",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": ":rainbow: My name is Markus; I am one of them; These are your images!",
   "private": true,
   "main": "dist/service.js",

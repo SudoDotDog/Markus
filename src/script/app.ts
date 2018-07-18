@@ -27,12 +27,12 @@ const uploadSingle = Upload().single('image');
 app.all('*', (req: Request, res: Response, next: NextFunction) => {
     res.header("Access-Control-Allow-Origin", Config.crossOrigin);
     res.header("X-Powered-By", 'Markus');
-    res.header("X-Markus-Version", "1.1.0");
+    res.header("X-Markus-Version", "1.1.1");
     next();
 });
 
 // Handler(s) for Image Get
-app.get('/g/:id', Handler.G.imageGetHandler);
+// app.get('/g/:id', Handler.G.imageGetHandler); // You should not use this method
 app.get('/w/:id', Handler.G.imageGetBlankWhiteHandler);
 app.get('/b/:id', Handler.G.imageGetBlankBlackHandler);
 
