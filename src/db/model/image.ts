@@ -17,6 +17,7 @@ export const ImageSchema: Schema = new Schema({
     },
     hash: {
         type: String,
+        index: true,
         required: true,
     },
     mime: {
@@ -38,6 +39,7 @@ export const ImageSchema: Schema = new Schema({
     tags: {
         type: [String],
         required: true,
+        index: true,
         default: [],
     },
 }, {

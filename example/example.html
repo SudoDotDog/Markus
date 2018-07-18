@@ -35,7 +35,8 @@
             type: "POST",
             url: "http://localhost:8080/list",
         }).then(function (msg) {
-            $('#listResult').html(msg);
+            console.log(msg);
+            $('#listResult').html(msg.data.join(''));
         }).catch(function (msg) {
             console.log(msg);
         });

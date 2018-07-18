@@ -13,6 +13,19 @@ export const emptyDatabase = async (): Promise<void> => {
     return;
 };
 
+export const createDeduplicateImage = async (Option: IImageConfig): Promise<IImageModel> => {
+    const SameHashImage: IImageModel | null = await ImageModel.findOne({
+        hash: Option.hash,
+    });
+
+    if (SameHashImage) {
+        return SameHashImage;
+    } else {
+        const newImage: IImageModel = await createImage(Option);
+        return newImage;
+    }
+};
+
 export const createImage = async (options: IImageConfig): Promise<IImageModel> => {
     const newImage: IImageModel = new ImageModel({
         encoding: options.encoding,

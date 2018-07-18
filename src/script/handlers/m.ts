@@ -10,7 +10,7 @@ import * as Controller from '../../db/controller/import';
 import { IImageListResponse } from "../../db/interface/image";
 import { IImageModel } from "../../db/model/image";
 import { error, ERROR_CODE } from "../../util/error";
-import { UploadWithBase64 } from "../../util/image";
+import { hashImage, UploadWithBase64 } from "../../util/image";
 import { RESPONSE } from '../../util/interface';
 
 const saveBase64ToFile: (base64: string) => Promise<string> = UploadWithBase64();
@@ -18,17 +18,20 @@ const saveBase64ToFile: (base64: string) => Promise<string> = UploadWithBase64()
 export const UploadBufferHandler = async (req: Request, res: Response): Promise<void> => {
     try {
         const file: Express.Multer.File = req.file;
-        // const image: IImageModel = await Controller.Image.createImage({
-        //     encoding: file.encoding,
-        //     mime: file.mimetype,
-        //     original: file.originalname,
-        //     path: file.path,
-        //     size: file.size,
-        // });
+        const hash: string = await hashImage(file.path);
+
+        const image: IImageModel = await Controller.Image.createDeduplicateImage({
+            encoding: file.encoding,
+            mime: file.mimetype,
+            original: file.originalname,
+            path: file.path,
+            size: file.size,
+            hash,
+        });
         res.status(200).send({
             status: RESPONSE.SUCCEED,
             data: {
-                id: 1,
+                id: image.id,
             },
         });
     } catch (err) {
@@ -48,17 +51,20 @@ export const UploadBase64Handler = async (req: Request, res: Response): Promise<
         }
         const filepath: string = await saveBase64ToFile(base64Image);
         const ext: string = Path.extname(filepath);
-        // const image: IImageModel = await Controller.Image.createImage({
-        //     encoding: 'base64',
-        //     mime: ext.substring(1, ext.length),
-        //     original: 'N/A',
-        //     path: filepath,
-        //     size: base64Image.length,
-        // });
+        const hash: string = await hashImage(filepath);
+
+        const image: IImageModel = await Controller.Image.createDeduplicateImage({
+            encoding: 'base64',
+            mime: ext.substring(1, ext.length),
+            original: 'N/A',
+            path: filepath,
+            size: base64Image.length,
+            hash,
+        });
         res.status(200).send({
             status: RESPONSE.SUCCEED,
             data: {
-                id: 1,
+                id: image.id,
             },
         });
     } catch (err) {
