@@ -3,7 +3,7 @@
  * @fileoverview Image Interface
  */
 
-import { ObjectID } from "../../../node_modules/@types/bson";
+import { ObjectID } from "bson";
 
 export interface IImageConfig {
     encoding: string;
