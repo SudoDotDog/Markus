@@ -35,8 +35,20 @@
             type: "POST",
             url: "http://localhost:8080/list",
         }).then(function (msg) {
-            console.log(msg);
-            $('#listResult').html(msg.data.join(''));
+            $('#listResult').html(msg.data.map((value) => {
+                let text = '';
+                for (let i in value) {
+                    if (i === 'tags') {
+                        text +=
+                            `${i}:&nbsp;<span style="color:red">[${value[i].join(',')}]</span>`
+                    } else {
+                        text +=
+                            `${i}:&nbsp;<span style="color:red">${value[i]}</span>,&nbsp;`
+                    }
+                }
+                text += '<br>';
+                return text;
+            }).join(''));
         }).catch(function (msg) {
             console.log(msg);
         });
@@ -71,6 +83,7 @@
         let formData = new FormData();
         let image = $("#file").prop("files")[0];
         formData.append("image", image);
+        formData.append("tags", ['test', 'buffer']);
         $.ajax({
             type: "POST",
             url: "http://localhost:8080/m/buffer",
@@ -89,7 +102,8 @@
             type: "POST",
             url: "http://localhost:8080/m/base64",
             data: {
-                image: $("#fileBase64").val()
+                image: $("#fileBase64").val(),
+                tags: ['test', 'base64'],
             }
         }).then(function (msg) {
             console.log(msg);

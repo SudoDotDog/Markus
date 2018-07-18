@@ -17,6 +17,13 @@ const saveBase64ToFile: (base64: string) => Promise<string> = UploadWithBase64()
 
 export const UploadBufferHandler = async (req: Request, res: Response): Promise<void> => {
     try {
+        const preTags: string[] | string = req.body.tags;
+        let tags: string[] = [];
+        if (typeof preTags === 'string') {
+            tags = preTags.split(',');
+        } else {
+            tags = preTags;
+        }
         const file: Express.Multer.File = req.file;
         const hash: string = await hashImage(file.path);
 
@@ -24,9 +31,10 @@ export const UploadBufferHandler = async (req: Request, res: Response): Promise<
             encoding: file.encoding,
             mime: file.mimetype,
             original: file.originalname,
+            hash,
             path: file.path,
             size: file.size,
-            hash,
+            tags,
         });
         res.status(200).send({
             status: RESPONSE.SUCCEED,
@@ -46,6 +54,15 @@ export const UploadBufferHandler = async (req: Request, res: Response): Promise<
 export const UploadBase64Handler = async (req: Request, res: Response): Promise<void> => {
     try {
         const base64Image: string = req.body.image;
+        const preTags: string[] | string = req.body.tags;
+        const originalName: string = req.body.original || 'N/A';
+        let tags: string[] = [];
+        if (typeof preTags === 'string') {
+            tags = preTags.split(',');
+        } else {
+            tags = preTags;
+        }
+
         if (!base64Image) {
             throw error(ERROR_CODE.IMAGE_SAVE_FAILED);
         }
@@ -56,10 +73,11 @@ export const UploadBase64Handler = async (req: Request, res: Response): Promise<
         const image: IImageModel = await Controller.Image.createDeduplicateImage({
             encoding: 'base64',
             mime: ext.substring(1, ext.length),
-            original: 'N/A',
+            original: originalName,
+            hash,
             path: filepath,
             size: base64Image.length,
-            hash,
+            tags,
         });
         res.status(200).send({
             status: RESPONSE.SUCCEED,
