@@ -36,6 +36,10 @@ app.get('/g/:id', Handler.G.imageGetHandler);
 app.get('/w/:id', Handler.G.imageGetBlankWhiteHandler);
 app.get('/b/:id', Handler.G.imageGetBlankBlackHandler);
 
+// Handler(s) for Image List Get
+app.post('/tag', Handler.G.imageGetListByTagHandler);
+app.post('/original', Handler.G.imageGetListByOriginalNameHandler);
+
 // Handler(s) for Image Upload
 app.post('/m/buffer', uploadSingle, Handler.M.UploadBufferHandler);
 app.post('/m/base64', Handler.M.UploadBase64Handler);

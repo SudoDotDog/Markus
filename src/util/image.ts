@@ -9,7 +9,32 @@ import * as Fs from 'fs';
 import * as Multer from 'multer';
 import * as Path from 'path';
 import Config from '../config/config';
+import { IImageCallback, IImageListResponse } from '../db/interface/image';
+import { IImageModel } from '../db/model/image';
 import { error, ERROR_CODE } from './error';
+
+export const imageModelToImageListResponse = (image: IImageModel): IImageListResponse => {
+    return {
+        active: image.active,
+        id: image.id,
+        createdAt: image.createdAt,
+        original: image.original,
+        size: image.size,
+        tags: image.tags,
+    };
+};
+
+export const imageModelToImageCallback = (image: IImageModel): IImageCallback => {
+    return {
+        createdAt: image.createdAt,
+        encoding: image.encoding,
+        mime: image.mime,
+        original: image.original,
+        path: image.path,
+        size: image.size,
+        tags: image.tags,
+    };
+};
 
 export const uniqueSmall = (): string => {
     return '_' + Math.random().toString(36).substring(2, 9);

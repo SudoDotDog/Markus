@@ -9,24 +9,36 @@
 </head>
 
 <body>
-    <input type="file" id="file">
-    <button id="btn">UPLOAD</button>
-    <textarea id="fileBase64" style="height: 100px; width: 100px"></textarea>
-    <button id="btnBase64">UPLOAD</button>
+    <div>
+        <h1>UPLOAD</h1>
+        <input type="file" id="file">
+        <button id="btn">UPLOAD BUFFER</button>
+        <textarea id="fileBase64" style="height: 100px; width: 100px"></textarea>
+        <button id="btnBase64">UPLOAD BASE64</button>
+    </div>
     <hr>
-    <img src="" id="img" width="300px">
+    <div>
+        <h1>PREVIEW</h1>
+        <img src="" id="img" width="300px">
+    </div>
     <hr>
-    <input id="get">
-    <button id="getBtn">Get</button>
-    <button id="getBtnW">Get White</button>
-    <button id="getBtnB">Get Black</button>
+    <div>
+        <h1>GET IMAGE</h1>
+        <input id="get">
+        <button id="getBtn">Get</button>
+        <button id="getBtnW">Get White</button>
+        <button id="getBtnB">Get Black</button>
+    </div>
     <hr>
     <div style="background-color: gray;">
         <img src="" id="getImg" width="300px">
     </div>
     <hr>
-    <button id="getList">Get list</button>
-    <div id="listResult"></div>
+    <div>
+        <h1>ADMIN</h1>
+        <button id="getList">Get list</button>
+        <div id="listResult"></div>
+    </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>

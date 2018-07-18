@@ -5,6 +5,7 @@
 
 import { ObjectID } from "bson";
 import { error, ERROR_CODE } from "../../util/error";
+import { imageModelToImageCallback, imageModelToImageListResponse } from "../../util/image";
 import { IImageCallback, IImageConfig, IImageListResponse } from "../interface/image";
 import { IImageModel, ImageModel } from "../model/image";
 
@@ -46,6 +47,34 @@ export const deactiveImageById = async (id: ObjectID): Promise<any> => {
     return result;
 };
 
+export const getImagesByTag = async (tag: string): Promise<IImageListResponse[]> => {
+    const images: IImageModel[] = await ImageModel.find({
+        tags: tag,
+        active: true,
+    });
+    if (images.length <= 0) {
+        throw error(ERROR_CODE.IMAGE_GET_FAILED);
+    }
+
+    return images.map((image: IImageModel): IImageListResponse => {
+        return imageModelToImageListResponse(image);
+    });
+};
+
+export const getImagesByOriginalName = async (originalName: string): Promise<IImageListResponse[]> => {
+    const images: IImageModel[] = await ImageModel.find({
+        original: originalName,
+        active: true,
+    });
+    if (images.length <= 0) {
+        throw error(ERROR_CODE.IMAGE_GET_FAILED);
+    }
+
+    return images.map((image: IImageModel): IImageListResponse => {
+        return imageModelToImageListResponse(image);
+    });
+};
+
 export const getImageById = async (id: ObjectID): Promise<IImageCallback> => {
     const image: IImageModel | null = await ImageModel.findOne({
         _id: id,
@@ -55,15 +84,7 @@ export const getImageById = async (id: ObjectID): Promise<IImageCallback> => {
         throw error(ERROR_CODE.IMAGE_GET_FAILED);
     }
 
-    return {
-        createdAt: image.createdAt,
-        encoding: image.encoding,
-        mime: image.mime,
-        original: image.original,
-        path: image.path,
-        size: image.size,
-        tags: image.tags,
-    };
+    return imageModelToImageCallback(image);
 };
 
 export const getImageList = async (): Promise<IImageListResponse[]> => {
@@ -72,14 +93,7 @@ export const getImageList = async (): Promise<IImageListResponse[]> => {
         throw error(ERROR_CODE.IMAGE_GET_LIST_FAILED);
     }
     return images.map((image: IImageModel) => {
-        return {
-            active: image.active,
-            id: image.id,
-            createdAt: image.createdAt,
-            original: image.original,
-            size: image.size,
-            tags: image.tags,
-        };
+        return imageModelToImageListResponse(image);
     });
 };
 
