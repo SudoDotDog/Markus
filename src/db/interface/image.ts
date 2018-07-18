@@ -40,3 +40,7 @@ export interface IImageListResponse {
     size: number;
     tags: string[];
 }
+
+export interface IImageListResponseAdmin extends IImageListResponse {
+    hash: string;
+}

@@ -5,9 +5,7 @@
 
 import { Request, Response } from "express";
 import * as Path from 'path';
-import Config from "../../config/config";
 import * as Controller from '../../db/controller/import';
-import { IImageListResponse } from "../../db/interface/image";
 import { IImageModel } from "../../db/model/image";
 import { error, ERROR_CODE } from "../../util/error";
 import { hashImage, UploadWithBase64 } from "../../util/image";
@@ -15,8 +13,20 @@ import { RESPONSE } from '../../util/interface';
 
 const saveBase64ToFile: (base64: string) => Promise<string> = UploadWithBase64();
 
+/**
+ * POST
+ * upload picture by buffer
+ *
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<void>}
+ */
 export const UploadBufferHandler = async (req: Request, res: Response): Promise<void> => {
     try {
+        if (!(req as any).valid) {
+            throw error(ERROR_CODE.PERMISSION_VALID_FAILED);
+        }
+
         const preTags: string[] | string = req.body.tags;
         let tags: string[] = [];
         if (typeof preTags === 'string') {
@@ -51,8 +61,20 @@ export const UploadBufferHandler = async (req: Request, res: Response): Promise<
     return;
 };
 
+/**
+ * POST
+ * upload image by base64 string
+ *
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<void>}
+ */
 export const UploadBase64Handler = async (req: Request, res: Response): Promise<void> => {
     try {
+        if (!(req as any).valid) {
+            throw error(ERROR_CODE.PERMISSION_VALID_FAILED);
+        }
+
         const base64Image: string = req.body.image;
         const preTags: string[] | string = req.body.tags;
         const originalName: string = req.body.original || 'N/A';
@@ -94,17 +116,16 @@ export const UploadBase64Handler = async (req: Request, res: Response): Promise<
     return;
 };
 
-export const OutputImageIdList = async (req: Request, res: Response): Promise<void> => {
+export const DeactiveImageHandler = async (req: Request, res: Response): Promise<void> => {
     try {
-        if (Config.isDebug) {
-            const images: IImageListResponse[] = await Controller.Image.getImageList();
-            res.status(200).send({
-                status: RESPONSE.SUCCEED,
-                data: images,
-            });
-        } else {
-            throw error(ERROR_CODE.DEBUG_ONLY_FUNCTION_CALLED_IN_PRODUCTION);
-        }
+        const imageId: string = req.body.id;
+        const image: any = await Controller.Image.deactiveImageById(imageId);
+        res.status(200).send({
+            status: RESPONSE.SUCCEED,
+            data: {
+                result: image,
+            },
+        });
     } catch (err) {
         res.status(400).send({
             status: RESPONSE.FAILED,

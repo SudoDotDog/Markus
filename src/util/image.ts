@@ -9,7 +9,7 @@ import * as Fs from 'fs';
 import * as Multer from 'multer';
 import * as Path from 'path';
 import Config from '../config/config';
-import { IImageCallback, IImageListResponse } from '../db/interface/image';
+import { IImageCallback, IImageListResponse, IImageListResponseAdmin } from '../db/interface/image';
 import { IImageModel } from '../db/model/image';
 import { error, ERROR_CODE } from './error';
 
@@ -18,6 +18,18 @@ export const imageModelToImageListResponse = (image: IImageModel): IImageListRes
         active: image.active,
         id: image.id,
         createdAt: image.createdAt,
+        original: image.original,
+        size: image.size,
+        tags: image.tags,
+    };
+};
+
+export const imageModelToImageListResponseAdmin = (image: IImageModel): IImageListResponseAdmin => {
+    return {
+        active: image.active,
+        id: image.id,
+        createdAt: image.createdAt,
+        hash: image.hash,
         original: image.original,
         size: image.size,
         tags: image.tags,
@@ -58,9 +70,10 @@ export const mkPathDir = (path: string) => {
     Fs.mkdirSync(path);
 };
 
-export const checkUpload = async (req: Request, res: Response, next: NextFunction) => {
-    (req as any).valid = false;
+export const checkUploadMiddleware = async (req: Request, res: Response, next: NextFunction) => {
     if ((req as any).body.key === Config.key) {
+        (req as any).valid = true;
+    } else if (!Config.key) {
         (req as any).valid = true;
     } else {
         (req as any).valid = false;

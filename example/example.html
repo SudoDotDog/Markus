@@ -10,9 +10,13 @@
 
 <body>
     <div>
-        <h1>UPLOAD</h1>
+        <h1>UPLOAD BY BUFFER</h1>
         <input type="file" id="file">
         <button id="btn">UPLOAD BUFFER</button>
+    </div>
+    <hr>
+    <div>
+        <h1>UPLOAD BY BASE64</h1>
         <textarea id="fileBase64" style="height: 100px; width: 100px"></textarea>
         <button id="btnBase64">UPLOAD BASE64</button>
     </div>
@@ -29,6 +33,14 @@
         <button id="getBtnW">Get White</button>
         <button id="getBtnB">Get Black</button>
     </div>
+    <hr>
+    <div>
+        <h1>IMAGE</h1>
+        <div style="background-color: gray;">
+            <img src="" id="getImg" width="300px">
+        </div>
+    </div>
+    <hr>
     <div>
         <h1>GET IMAGE LIST</h1>
         <input id="getL">
@@ -36,13 +48,16 @@
         <button id="getByOriginal">Get By Original Name</button>
     </div>
     <hr>
-    <div style="background-color: gray;">
-        <img src="" id="getImg" width="300px">
+    <div>
+        <h1>STATUS CHANGE</h1>
+        <input id="getC">
+        <button id="deactive">DEACTIVE IMAGE</button>
     </div>
     <hr>
     <div>
         <h1>ADMIN</h1>
         <button id="getList">Get list</button>
+        <button id="empty">EMPTY DB</button>
     </div>
     <div>
         <h1>RESULT</h1>
@@ -78,6 +93,7 @@
         }).then(function (msg) {
             $('#listResult').html(parseImageListToHTML(msg.data));
         }).catch(function (msg) {
+            alert('FAILED, see console');
             console.log(msg);
         });
     });
@@ -92,6 +108,7 @@
         }).then(function (msg) {
             $('#listResult').html(parseImageListToHTML(msg.data));
         }).catch(function (msg) {
+            alert('FAILED, see console');
             console.log(msg);
         });
     });
@@ -106,6 +123,34 @@
         }).then(function (msg) {
             $('#listResult').html(parseImageListToHTML(msg.data));
         }).catch(function (msg) {
+            alert('FAILED, see console');
+            console.log(msg);
+        });
+    });
+
+    $("#deactive").on("click", function () {
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8080/deactive",
+            data: {
+                id: $("#getC").val(),
+            },
+        }).then(function (msg) {
+            alert('SUCCEED');
+        }).catch(function (msg) {
+            alert('FAILED, see console');
+            console.log(msg);
+        });
+    });
+
+    $("#empty").on("click", function () {
+        $.ajax({
+            type: "DELETE",
+            url: "http://localhost:8080/empty",
+        }).then(function (msg) {
+            alert('SUCCEED');
+        }).catch(function (msg) {
+            alert('FAILED, see console');
             console.log(msg);
         });
     });
@@ -140,6 +185,7 @@
         let image = $("#file").prop("files")[0];
         formData.append("image", image);
         formData.append("tags", ['test', 'buffer']);
+        formData.append("key", 'test');
         $.ajax({
             type: "POST",
             url: "http://localhost:8080/m/buffer",
@@ -147,8 +193,9 @@
             contentType: false,
             data: formData
         }).then(function (msg) {
-            console.log(msg);
+            alert('SUCCEED');
         }).catch(function (msg) {
+            alert('FAILED, see console');
             console.log(msg);
         });
     });
@@ -160,10 +207,12 @@
             data: {
                 image: $("#fileBase64").val(),
                 tags: ['test', 'base64'],
+                key: 'test',
             }
         }).then(function (msg) {
-            console.log(msg);
+            alert('SUCCEED');
         }).catch(function (msg) {
+            alert('FAILED, see console');
             console.log(msg);
         });
     });

@@ -3,10 +3,10 @@
  * @fileoverview Image Controller
  */
 
-import { ObjectID } from "bson";
+import { ObjectID, ObjectId } from "bson";
 import { error, ERROR_CODE } from "../../util/error";
-import { imageModelToImageCallback, imageModelToImageListResponse } from "../../util/image";
-import { IImageCallback, IImageConfig, IImageListResponse } from "../interface/image";
+import { imageModelToImageCallback, imageModelToImageListResponse, imageModelToImageListResponseAdmin } from "../../util/image";
+import { IImageCallback, IImageConfig, IImageListResponse, IImageListResponseAdmin } from "../interface/image";
 import { IImageModel, ImageModel } from "../model/image";
 
 export const emptyDatabase = async (): Promise<void> => {
@@ -17,6 +17,7 @@ export const emptyDatabase = async (): Promise<void> => {
 export const createDeduplicateImage = async (Option: IImageConfig): Promise<IImageModel> => {
     const SameHashImage: IImageModel | null = await ImageModel.findOne({
         hash: Option.hash,
+        active: true,
     });
 
     if (SameHashImage) {
@@ -42,8 +43,25 @@ export const createImage = async (options: IImageConfig): Promise<IImageModel> =
     return newImage;
 };
 
-export const deactiveImageById = async (id: ObjectID): Promise<any> => {
-    const result: any = await ImageModel.remove({ _id: id });
+export const deactiveImageById = async (id: ObjectID | string): Promise<any> => {
+    let imageId: ObjectID;
+    if (typeof id === 'string') {
+        try {
+            imageId = new ObjectId(id);
+        } catch (err) {
+            throw error(ERROR_CODE.IMAGE_ID_NOT_VALID);
+        }
+    } else {
+        imageId = id;
+    }
+    const result: IImageModel | null = await ImageModel.findOne({ _id: imageId });
+
+    if (!result) {
+        throw error(ERROR_CODE.IMAGE_GET_FAILED);
+    }
+
+    result.deactive();
+    await result.save();
     return result;
 };
 
@@ -81,13 +99,13 @@ export const getImageById = async (id: ObjectID): Promise<IImageCallback> => {
     return imageModelToImageCallback(image);
 };
 
-export const getImageList = async (): Promise<IImageListResponse[]> => {
+export const getImageList = async (): Promise<IImageListResponseAdmin[]> => {
     const images: IImageModel[] | null = await ImageModel.find({});
     if (!images) {
         throw error(ERROR_CODE.IMAGE_GET_LIST_FAILED);
     }
     return images.map((image: IImageModel) => {
-        return imageModelToImageListResponse(image);
+        return imageModelToImageListResponseAdmin(image);
     });
 };
 

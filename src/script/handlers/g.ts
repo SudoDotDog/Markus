@@ -11,6 +11,14 @@ import { IImageCallback, IImageListResponse } from "../../db/interface/image";
 import { error, ERROR_CODE } from "../../util/error";
 import { RESPONSE } from '../../util/interface';
 
+/**
+ * GET
+ * get image by id
+ *
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<void>}
+ */
 export const imageGetHandler = async (req: Request, res: Response): Promise<void> => {
     try {
         const id: ObjectID = new ObjectId(req.params.id);
@@ -94,6 +102,14 @@ export const imageGetBlankWhiteHandler = async (req: Request, res: Response): Pr
     return;
 };
 
+/**
+ * GET
+ * get image by id, if none, return white null pic
+ *
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<void>}
+ */
 export const imageGetBlankBlackHandler = async (req: Request, res: Response): Promise<void> => {
     try {
         const id: ObjectID = new ObjectId(req.params.id);
@@ -105,6 +121,13 @@ export const imageGetBlankBlackHandler = async (req: Request, res: Response): Pr
     return;
 };
 
+/**
+ * ALL
+ * if 404, return 404 :D
+ *
+ * @param {Request} req
+ * @param {Response} res
+ */
 export const fourOFourHandler = (req: Request, res: Response): void => {
     res.status(404).send({
         status: RESPONSE.FAILED,

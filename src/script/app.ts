@@ -8,7 +8,7 @@ import * as express from "express";
 import { NextFunction, Request, Response } from "express";
 import * as mongoose from "mongoose";
 import Config from "../config/config";
-import { Upload } from "../util/image";
+import { checkUploadMiddleware, Upload } from "../util/image";
 import * as Handler from './handlers/import';
 
 mongoose.connect(Config.db);
@@ -40,12 +40,15 @@ app.get('/b/:id', Handler.G.imageGetBlankBlackHandler);
 app.post('/tag', Handler.G.imageGetListByTagHandler);
 app.post('/original', Handler.G.imageGetListByOriginalNameHandler);
 
+// Handler(s) for Image status change
+app.post('/deactive', Handler.M.DeactiveImageHandler);
+
 // Handler(s) for Image Upload
-app.post('/m/buffer', uploadSingle, Handler.M.UploadBufferHandler);
-app.post('/m/base64', Handler.M.UploadBase64Handler);
+app.post('/m/buffer', uploadSingle, checkUploadMiddleware, Handler.M.UploadBufferHandler);
+app.post('/m/base64', checkUploadMiddleware, Handler.M.UploadBase64Handler);
 
 // Handler(s) for debug
-app.post('/list', Handler.M.OutputImageIdList);
+app.post('/list', Handler.Debug.OutputImageIdList);
 app.delete('/empty', Handler.Debug.emptyDatabaseHandler);
 
 // Handler(s) for 404
