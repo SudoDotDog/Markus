@@ -11,14 +11,20 @@
 <body>
     <div>
         <h1>UPLOAD BY BUFFER</h1>
-        <input type="file" id="file">
+        <input type="file" id="file" multiple>
         <button id="btn">UPLOAD BUFFER</button>
+        <button id="btnMulti">UPLOAD BUFFER (MULTIPLE IMAGES)</button>
     </div>
     <hr>
     <div>
         <h1>UPLOAD BY BASE64</h1>
         <textarea id="fileBase64" style="height: 100px; width: 100px"></textarea>
         <button id="btnBase64">UPLOAD BASE64</button>
+    </div>
+    <hr>
+    <div>
+        <h1>IMAGE ID RESPONSE</h1>
+        <div id="response"></div>
     </div>
     <hr>
     <div>
@@ -168,7 +174,7 @@
     });
 
     $("#file").on("change", function (e) {
-        const file = e.target.files[0]; //获取图片资源
+        const file = e.target.files[0];
         if (!file.type.match('image.*')) {
             return false;
         }
@@ -194,10 +200,40 @@
             data: formData
         }).then(function (msg) {
             alert('SUCCEED');
+            $('#response').html(msg.data.id);
         }).catch(function (msg) {
             alert('FAILED, see console');
             console.log(msg);
         });
+    });
+
+    $("#btnMulti").on("click", function () {
+        let images = $("#file").prop("files");
+        let count = 0;
+        let ids = [];
+        for (let i of images) {
+            let formData = new FormData();
+            let image = i;
+            formData.append("image", image);
+            formData.append("tags", ['test', 'buffer']);
+            formData.append("key", 'test');
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:8080/m/buffer",
+                processData: false,
+                contentType: false,
+                data: formData
+            }).then(function (msg) {
+                ids.push(msg.data.id)
+                if (++count === images.length) {
+                    alert('SUCCEED');
+                    $('#response').html(ids.join(','));
+                }
+            }).catch(function (msg) {
+                alert('FAILED, see console');
+                console.log(msg);
+            });
+        }
     });
 
     $("#btnBase64").on("click", function () {
