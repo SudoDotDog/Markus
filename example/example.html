@@ -29,6 +29,12 @@
         <button id="getBtnW">Get White</button>
         <button id="getBtnB">Get Black</button>
     </div>
+    <div>
+        <h1>GET IMAGE LIST</h1>
+        <input id="getL">
+        <button id="getByTag">Get By Tag</button>
+        <button id="getByOriginal">Get By Original Name</button>
+    </div>
     <hr>
     <div style="background-color: gray;">
         <img src="" id="getImg" width="300px">
@@ -37,30 +43,68 @@
     <div>
         <h1>ADMIN</h1>
         <button id="getList">Get list</button>
+    </div>
+    <div>
+        <h1>RESULT</h1>
         <div id="listResult"></div>
     </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
+    const parseImageListToHTML = (tags) => {
+        return tags.map((value) => {
+            let text = '';
+            for (let i in value) {
+                if (i === 'tags') {
+                    text +=
+                        `${i}:&nbsp;<span style="color:red">[${value[i].join(',')}]</span>`
+                } else {
+                    text +=
+                        `${i}:&nbsp;<span style="color:red">${value[i]}</span>,&nbsp;`
+                }
+            }
+            text += '<br>';
+            return text;
+        }).join('')
+    };
+
+    $("#getByTag").on("click", function () {
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8080/tag",
+            data: {
+                tag: $("#getL").val(),
+            },
+        }).then(function (msg) {
+            $('#listResult').html(parseImageListToHTML(msg.data));
+        }).catch(function (msg) {
+            console.log(msg);
+        });
+    });
+
+    $("#getByOriginal").on("click", function () {
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8080/original",
+            data: {
+                tag: $("#getL").val(),
+            },
+        }).then(function (msg) {
+            $('#listResult').html(parseImageListToHTML(msg.data));
+        }).catch(function (msg) {
+            console.log(msg);
+        });
+    });
+
     $("#getList").on("click", function () {
         $.ajax({
             type: "POST",
             url: "http://localhost:8080/list",
+            data: {
+                tag: $("#getL").val(),
+            },
         }).then(function (msg) {
-            $('#listResult').html(msg.data.map((value) => {
-                let text = '';
-                for (let i in value) {
-                    if (i === 'tags') {
-                        text +=
-                            `${i}:&nbsp;<span style="color:red">[${value[i].join(',')}]</span>`
-                    } else {
-                        text +=
-                            `${i}:&nbsp;<span style="color:red">${value[i]}</span>,&nbsp;`
-                    }
-                }
-                text += '<br>';
-                return text;
-            }).join(''));
+            $('#listResult').html(parseImageListToHTML(msg.data));
         }).catch(function (msg) {
             console.log(msg);
         });

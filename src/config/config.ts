@@ -3,6 +3,8 @@
  * @fileoverview Config
  */
 
+import * as Path from 'path';
+
 export interface IConfig {
     crossOrigin: string;
     db: string;
@@ -13,6 +15,8 @@ export interface IConfig {
     portNumber: number;
     key: string;
     verbose: boolean;
+    white404ImagePath: string;
+    black404ImagePath: string;
 }
 
 const Config: IConfig = {
@@ -25,6 +29,8 @@ const Config: IConfig = {
     portNumber: 8080,
     key: 'test',
     verbose: false,
+    white404ImagePath: Path.resolve('assets/404image_white.png'),
+    black404ImagePath: Path.resolve('assets/404image_black.png'),
 };
 
 export default Config;

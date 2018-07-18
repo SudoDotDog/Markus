@@ -52,9 +52,6 @@ export const getImagesByTag = async (tag: string): Promise<IImageListResponse[]>
         tags: tag,
         active: true,
     });
-    if (images.length <= 0) {
-        throw error(ERROR_CODE.IMAGE_GET_FAILED);
-    }
 
     return images.map((image: IImageModel): IImageListResponse => {
         return imageModelToImageListResponse(image);
@@ -66,9 +63,6 @@ export const getImagesByOriginalName = async (originalName: string): Promise<IIm
         original: originalName,
         active: true,
     });
-    if (images.length <= 0) {
-        throw error(ERROR_CODE.IMAGE_GET_FAILED);
-    }
 
     return images.map((image: IImageModel): IImageListResponse => {
         return imageModelToImageListResponse(image);

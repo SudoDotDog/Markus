@@ -5,7 +5,7 @@
 
 import { ObjectId, ObjectID } from "bson";
 import { Request, Response } from "express";
-import * as Path from 'path';
+import Config from "../../config/config";
 import * as Controller from '../../db/controller/import';
 import { IImageCallback, IImageListResponse } from "../../db/interface/image";
 import { error, ERROR_CODE } from "../../util/error";
@@ -89,7 +89,7 @@ export const imageGetBlankWhiteHandler = async (req: Request, res: Response): Pr
         const image: IImageCallback = await Controller.Image.getImageById(id);
         res.status(200).sendFile(image.path);
     } catch (err) {
-        res.status(200).sendFile(Path.resolve('assets/404image_white.png'));
+        res.status(200).sendFile(Config.white404ImagePath);
     }
     return;
 };
@@ -100,7 +100,7 @@ export const imageGetBlankBlackHandler = async (req: Request, res: Response): Pr
         const image: IImageCallback = await Controller.Image.getImageById(id);
         res.status(200).sendFile(image.path);
     } catch (err) {
-        res.status(200).sendFile(Path.resolve('assets/404image_black.png'));
+        res.status(200).sendFile(Config.black404ImagePath);
     }
     return;
 };
