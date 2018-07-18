@@ -16,10 +16,12 @@ export const emptyDatabase = async (): Promise<void> => {
 export const createImage = async (options: IImageConfig): Promise<IImageModel> => {
     const newImage: IImageModel = new ImageModel({
         encoding: options.encoding,
+        hash: options.hash,
         mime: options.mime,
         original: options.original,
         path: options.path,
         size: options.size,
+        tags: options.tags || [],
     });
 
     await newImage.save();
@@ -47,6 +49,7 @@ export const getImageById = async (id: ObjectID): Promise<IImageCallback> => {
         original: image.original,
         path: image.path,
         size: image.size,
+        tags: image.tags,
     };
 };
 
@@ -62,6 +65,7 @@ export const getImageList = async (): Promise<IImageListResponse[]> => {
             createdAt: image.createdAt,
             original: image.original,
             size: image.size,
+            tags: image.tags,
         };
     });
 };
@@ -74,7 +78,7 @@ export const deactiveImage = async (id: ObjectID): Promise<void> => {
     if (!image) {
         throw error(ERROR_CODE.IMAGE_GET_FAILED);
     }
-    
+
     image.deactive();
     await image.save();
     return;

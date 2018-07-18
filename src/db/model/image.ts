@@ -15,6 +15,10 @@ export const ImageSchema: Schema = new Schema({
         type: String,
         required: true,
     },
+    hash: {
+        type: String,
+        required: true,
+    },
     mime: {
         type: String,
         required: true,
@@ -30,6 +34,11 @@ export const ImageSchema: Schema = new Schema({
     size: {
         type: Number,
         required: true,
+    },
+    tags: {
+        type: [String],
+        required: true,
+        default: [],
     },
 }, {
         timestamps: {

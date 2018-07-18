@@ -18,17 +18,17 @@ const saveBase64ToFile = UploadWithBase64();
 export const UploadBufferHandler = async (req: Request, res: Response): Promise<void> => {
     try {
         const file: Express.Multer.File = req.file;
-        const image: IImageModel = await Controller.Image.createImage({
-            encoding: file.encoding,
-            mime: file.mimetype,
-            original: file.originalname,
-            path: file.path,
-            size: file.size,
-        });
+        // const image: IImageModel = await Controller.Image.createImage({
+        //     encoding: file.encoding,
+        //     mime: file.mimetype,
+        //     original: file.originalname,
+        //     path: file.path,
+        //     size: file.size,
+        // });
         res.status(200).send({
             status: RESPONSE.SUCCEED,
             data: {
-                id: image.id,
+                id: 1,
             },
         });
     } catch (err) {
@@ -48,17 +48,17 @@ export const UploadBase64Handler = async (req: Request, res: Response): Promise<
         }
         const filepath: string = await saveBase64ToFile(base64Image);
         const ext = Path.extname(filepath);
-        const image: IImageModel = await Controller.Image.createImage({
-            encoding: 'base64',
-            mime: ext.substring(1, ext.length),
-            original: 'N/A',
-            path: filepath,
-            size: base64Image.length,
-        });
+        // const image: IImageModel = await Controller.Image.createImage({
+        //     encoding: 'base64',
+        //     mime: ext.substring(1, ext.length),
+        //     original: 'N/A',
+        //     path: filepath,
+        //     size: base64Image.length,
+        // });
         res.status(200).send({
             status: RESPONSE.SUCCEED,
             data: {
-                id: image.id,
+                id: 1,
             },
         });
     } catch (err) {
