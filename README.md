@@ -6,6 +6,8 @@
 
 :rainbow: My name is Markus; I am one of them; These are your images!
 
+> Host your Markus and read the following simple documents to get starting!
+
 ## Host!
 
 ```bash
@@ -17,13 +19,12 @@ node dist/script/service.js
 
 ## Document!
 
-Host your Markus and read the following simple documents to get starting!
+### APIS
 
-- APIS
-    - [Admin](https://github.com/sudo-dog/Markus/wiki/Markus---Admin-Testing-API)
-    - [Get Image](https://github.com/sudo-dog/Markus/wiki/Markus---Get-Image-API)
-    - [Modify](https://github.com/sudo-dog/Markus/wiki/Markus---Modify-Image-API)
-    - [Upload](https://github.com/sudo-dog/Markus/wiki/Markus---Upload-Image-API)
+-   [Admin](https://github.com/sudo-dog/Markus/wiki/Admin-Testing-API)
+-   [Get Image](https://github.com/sudo-dog/Markus/wiki/Get-Image-API)
+-   [Modify](https://github.com/sudo-dog/Markus/wiki/Modify-Image-API)
+-   [Upload](https://github.com/sudo-dog/Markus/wiki/Upload-Image-API)
 
 ## Development!
 

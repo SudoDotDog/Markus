@@ -1,6 +1,6 @@
 # Markus - Modify Image API
 
-## Deactive Image
+## Deactivate Image
 
 ### /deactive
 

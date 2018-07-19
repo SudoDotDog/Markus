@@ -6,7 +6,7 @@
 
 ### /list
 
-> List **ALL** image in database
+> List **ALL** image in the database
 
 -   Method: POST
 -   Path: [Domain]/list
@@ -37,7 +37,7 @@ $.ajax({
 
 ### /empty
 
-> Delete **ALL** image in database
+> Delete **ALL** image in the database
 
 -   Method: DELETE
 -   Path: [Domain]/empty
