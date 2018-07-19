@@ -8,7 +8,7 @@ import * as Path from 'path';
 import * as Controller from '../../db/controller/import';
 import { IImageModel } from "../../db/model/image";
 import { error, ERROR_CODE, handlerError } from "../../util/error";
-import { hashImage, UploadWithBase64 } from "../../util/image";
+import { hashImage, releaseStorage, UploadWithBase64 } from "../../util/image";
 import { RESPONSE } from '../../util/interface';
 
 const saveBase64ToFile: (base64: string) => Promise<string> = UploadWithBase64();
@@ -115,7 +115,10 @@ export const UploadBase64Handler = async (req: Request, res: Response): Promise<
 export const DeactiveImageHandler = async (req: Request, res: Response): Promise<void> => {
     try {
         const imageId: string = req.body.id;
-        const image: any = await Controller.Image.deactiveImageById(imageId);
+        const image: IImageModel = await Controller.Image.deactiveImageById(imageId);
+
+        await releaseStorage(image.path);
+
         res.status(200).send({
             status: RESPONSE.SUCCEED,
             data: {

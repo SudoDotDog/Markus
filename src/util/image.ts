@@ -13,6 +13,17 @@ import { IImageCallback, IImageListResponse, IImageListResponseAdmin } from '../
 import { IImageModel } from '../db/model/image';
 import { error, ERROR_CODE } from './error';
 
+export const releaseStorage = (path: string): Promise<void> => {
+    return new Promise<void>((resolve: () => void, reject: (err: Error) => void) => {
+        Fs.unlink(path, (err: Error | null): void => {
+            if (err) {
+                reject(error(ERROR_CODE.IMAGE_UNLINK_FAILED));
+            }
+            resolve();
+        });
+    });
+};
+
 export const imageModelToImageListResponse = (image: IImageModel): IImageListResponse => {
     return {
         active: image.active,

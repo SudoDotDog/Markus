@@ -14,6 +14,7 @@ export enum ERROR_CODE {
     IMAGE_SAVE_FAILED = 201,
     IMAGE_GET_LIST_FAILED = 202,
     IMAGE_ID_NOT_VALID = 203,
+    IMAGE_UNLINK_FAILED = 204,
 
     PERMISSION_VALID_FAILED = 300,
 
@@ -32,6 +33,7 @@ export const errorList: {
     201: 'Image saving failed',
     202: 'Image list getting failed',
     203: 'Given ID not a valid imageId',
+    204: 'Image unlink failed',
     300: 'Permission valid failed',
     404: 'Request URL not found',
     900: 'Unknown error code',

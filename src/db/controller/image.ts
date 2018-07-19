@@ -43,7 +43,7 @@ export const createImage = async (options: IImageConfig): Promise<IImageModel> =
     return newImage;
 };
 
-export const deactiveImageById = async (id: ObjectID | string): Promise<any> => {
+export const deactiveImageById = async (id: ObjectID | string): Promise<IImageModel> => {
     let imageId: ObjectID;
     if (typeof id === 'string') {
         try {
