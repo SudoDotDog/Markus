@@ -122,7 +122,7 @@ export const DeactiveImageHandler = async (req: Request, res: Response): Promise
         res.status(200).send({
             status: RESPONSE.SUCCEED,
             data: {
-                result: image,
+                id: image.id,
             },
         });
     } catch (err) {
