@@ -5,7 +5,7 @@
 
 import { ObjectID, ObjectId } from "bson";
 import { error, ERROR_CODE } from "../../util/error";
-import { imageModelToImageCallback, imageModelToImageListResponse, imageModelToImageListResponseAdmin } from "../../util/image";
+import { combineTagsArray, imageModelToImageCallback, imageModelToImageListResponse, imageModelToImageListResponseAdmin } from "../../util/image";
 import { IImageCallback, IImageConfig, IImageListResponse, IImageListResponseAdmin } from "../interface/image";
 import { IImageModel, ImageModel } from "../model/image";
 
@@ -21,6 +21,9 @@ export const createDeduplicateImage = async (Option: IImageConfig): Promise<IIma
     });
 
     if (SameHashImage) {
+        const newTags = combineTagsArray(SameHashImage.tags, Option.tags);
+        SameHashImage.tags = newTags;
+        await SameHashImage.save();
         return SameHashImage;
     } else {
         const newImage: IImageModel = await createImage(Option);
