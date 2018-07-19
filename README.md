@@ -6,6 +6,27 @@
 
 :rainbow: My name is Markus; I am one of them; These are your images!
 
+## Host!
+
+```bash
+git clone https://github.com/sudo-dog/Markus.git
+make install
+make build
+node dist/script/service.js
+```
+
+## Document!
+
+Host your Markus and read the following simple documents to get starting!
+
+- APIS
+    - [Admin](https://github.com/sudo-dog/Markus/wiki/Markus---Admin-Testing-API)
+    - [Get Image](https://github.com/sudo-dog/Markus/wiki/Markus---Get-Image-API)
+    - [Modify](https://github.com/sudo-dog/Markus/wiki/Markus---Modify-Image-API)
+    - [Upload](https://github.com/sudo-dog/Markus/wiki/Markus---Upload-Image-API)
+
+## Development!
+
 ### Install
 
 ```bash

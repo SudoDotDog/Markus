@@ -25,6 +25,27 @@
         -   name: String, [Error name]
         -   message: String, [Error message]
 
+```javascript
+// Use jquery
+let formData = new FormData();
+let image = $("#file").prop("files")[0];
+formData.append("image", image);
+formData.append("tags", ['tag']);
+formData.append("key", 'key');
+
+$.ajax({
+    type: "POST",
+    url: targetUrl + "/m/buffer",
+    processData: false,
+    contentType: false,
+    data: formData,
+}).then(function (msg) {
+    // Do something
+}).catch(function (msg) {
+    // Handle something
+});
+```
+
 ### /m/base64
 
 > Upload image with base64 encoded image
@@ -45,3 +66,20 @@
         -   code: Number: [Error code]
         -   name: String, [Error name]
         -   message: String, [Error message]
+
+```javascript
+// Use jquery
+$.ajax({
+    type: "POST",
+    url: targetUrl + "/m/base64",
+    data: {
+        image: 'base64....',
+        tags: ['tags'],
+        key: 'key',
+    },
+}).then(function (msg) {
+    // Do something
+}).catch(function (msg) {
+    // Handle something
+});
+```

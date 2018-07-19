@@ -1,11 +1,11 @@
 # Markus - Get Image API
 
-## Get image with imageId
+## Get an image with imageId
 
 ### /w/:imageId
 
-> Get image with ImageId, if image is not exist, return white background 404 picture  
-> Normally, you can use this API with in image src attribute.
+> Get an image with ImageId, if the image does not exist, return white background 404 picture  
+> Normally, you can use this API within image src attribute.
 
 -   Method: GET
 -   Path: [Domain]/w/[ImageID]
@@ -18,8 +18,8 @@
 
 ### /b/:imageId
 
-> Get image with ImageId, if image is not exist, return black background 404 picture  
-> Normally, you can use this API with in image src attribute.
+> Get an image with ImageId, if the image does not exist, return black background 404 picture  
+> Normally, you can use this API within image src attribute.
 
 -   Method: GET
 -   Path: [Domain]/b/[ImageID]
@@ -30,11 +30,11 @@
 <img src="https://yourdomain.com/b/1a2b3c4d5e6f7g8h9i0j"> 
 ```
 
-## Get image list with tag name
+## Get image list with a tag name
 
 ### /tag
 
-> Get image list with tag name
+> Get image list with a tag name
 
 -   Method: POST
 -   Path: [Domain]/tag

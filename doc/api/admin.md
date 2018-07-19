@@ -21,6 +21,20 @@
         -   name: String, [Error name]
         -   message: String, [Error message]
 
+```javascript
+// Use jquery
+$.ajax({
+    type: "POST",
+    url: targetUrl + "/list",
+    data: {},
+}).then(function (msg) {
+    // Do something
+}).catch(function (msg) {
+    // Handle something
+});
+```
+
+
 ### /empty
 
 > Delete **ALL** image in database
@@ -36,3 +50,15 @@
         -   code: Number: [Error code]
         -   name: String, [Error name]
         -   message: String, [Error message]
+
+```javascript
+// Use jquery
+$.ajax({
+    type: "DELETE",
+    url: targetUrl + "/empty",
+}).then(function (msg) {
+    // Do something
+}).catch(function (msg) {
+    // Handle something
+});
+```
