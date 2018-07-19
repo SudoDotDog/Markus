@@ -17,11 +17,14 @@ const db: mongoose.Connection = mongoose.connection;
 db.on('error', console.log.bind(console, 'connection error:'));
 
 const app: express.Express = express();
-
-app.use(bodyParser.json());
+app.use(bodyParser.json({
+    limit: '50mb',
+}));
 app.use(bodyParser.urlencoded({
     extended: true,
+    limit: '50mb',
 }));
+app.use(express.json({ limit: '50mb' }));
 const uploadSingle = Upload().single('image');
 
 app.all('*', (req: Request, res: Response, next: NextFunction) => {
