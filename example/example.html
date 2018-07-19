@@ -72,6 +72,7 @@
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
+    const targetUrl = 'http://localhost:8080';
     const parseImageListToHTML = (tags) => {
         return tags.map((value) => {
             let text = '';
@@ -92,7 +93,7 @@
     $("#getByTag").on("click", function () {
         $.ajax({
             type: "POST",
-            url: "http://localhost:8080/tag",
+            url: targetUrl + "/tag",
             data: {
                 tag: $("#getL").val(),
             },
@@ -107,7 +108,7 @@
     $("#getByOriginal").on("click", function () {
         $.ajax({
             type: "POST",
-            url: "http://localhost:8080/original",
+            url: targetUrl + "/original",
             data: {
                 tag: $("#getL").val(),
             },
@@ -122,7 +123,7 @@
     $("#getList").on("click", function () {
         $.ajax({
             type: "POST",
-            url: "http://localhost:8080/list",
+            url: targetUrl + "/list",
             data: {
                 tag: $("#getL").val(),
             },
@@ -137,7 +138,7 @@
     $("#deactive").on("click", function () {
         $.ajax({
             type: "POST",
-            url: "http://localhost:8080/deactive",
+            url: targetUrl + "/deactive",
             data: {
                 id: $("#getC").val(),
             },
@@ -152,7 +153,7 @@
     $("#empty").on("click", function () {
         $.ajax({
             type: "DELETE",
-            url: "http://localhost:8080/empty",
+            url: targetUrl + "/empty",
         }).then(function (msg) {
             alert('SUCCEED');
         }).catch(function (msg) {
@@ -162,15 +163,15 @@
     });
 
     $("#getBtn").on("click", function () {
-        $("#getImg").attr("src", "http://localhost:8080/g/" + $("#get").val());
+        $("#getImg").attr("src", targetUrl + "/g/" + $("#get").val());
     });
 
     $("#getBtnW").on("click", function () {
-        $("#getImg").attr("src", "http://localhost:8080/w/" + $("#get").val());
+        $("#getImg").attr("src", targetUrl + "/w/" + $("#get").val());
     });
 
     $("#getBtnB").on("click", function () {
-        $("#getImg").attr("src", "http://localhost:8080/b/" + $("#get").val());
+        $("#getImg").attr("src", targetUrl + "/b/" + $("#get").val());
     });
 
     $("#file").on("change", function (e) {
@@ -194,7 +195,7 @@
         formData.append("key", 'test');
         $.ajax({
             type: "POST",
-            url: "http://localhost:8080/m/buffer",
+            url: targetUrl + "/m/buffer",
             processData: false,
             contentType: false,
             data: formData
@@ -219,7 +220,7 @@
             formData.append("key", 'test');
             $.ajax({
                 type: "POST",
-                url: "http://localhost:8080/m/buffer",
+                url: targetUrl + "/m/buffer",
                 processData: false,
                 contentType: false,
                 data: formData
@@ -239,7 +240,7 @@
     $("#btnBase64").on("click", function () {
         $.ajax({
             type: "POST",
-            url: "http://localhost:8080/m/base64",
+            url: targetUrl + "/m/base64",
             data: {
                 image: $("#fileBase64").val(),
                 tags: ['test', 'base64'],

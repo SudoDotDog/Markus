@@ -7,7 +7,7 @@ import { Request, Response } from "express";
 import Config from "../../config/config";
 import * as Controller from '../../db/controller/import';
 import { IImageListResponse } from "../../db/interface/image";
-import { error, ERROR_CODE } from "../../util/error";
+import { error, ERROR_CODE, handlerError } from "../../util/error";
 import { RESPONSE } from '../../util/interface';
 
 /**
@@ -29,10 +29,7 @@ export const emptyDatabaseHandler = async (req: Request, res: Response): Promise
             throw error(ERROR_CODE.DEBUG_ONLY_FUNCTION_CALLED_IN_PRODUCTION);
         }
     } catch (err) {
-        res.status(400).send({
-            status: RESPONSE.FAILED,
-            error: err,
-        });
+        handlerError(res, err);
     }
     return;
 };
@@ -58,10 +55,7 @@ export const OutputImageIdList = async (req: Request, res: Response): Promise<vo
             throw error(ERROR_CODE.DEBUG_ONLY_FUNCTION_CALLED_IN_PRODUCTION);
         }
     } catch (err) {
-        res.status(400).send({
-            status: RESPONSE.FAILED,
-            error: err,
-        });
+        handlerError(res, err);
     }
     return;
 };

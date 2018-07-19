@@ -8,7 +8,7 @@ import { Request, Response } from "express";
 import Config from "../../config/config";
 import * as Controller from '../../db/controller/import';
 import { IImageCallback, IImageListResponse } from "../../db/interface/image";
-import { error, ERROR_CODE } from "../../util/error";
+import { error, ERROR_CODE, handlerError } from "../../util/error";
 import { RESPONSE } from '../../util/interface';
 
 /**
@@ -25,10 +25,7 @@ export const imageGetHandler = async (req: Request, res: Response): Promise<void
         const image: IImageCallback = await Controller.Image.getImageById(id);
         res.status(200).sendFile(image.path);
     } catch (err) {
-        res.status(400).send({
-            status: RESPONSE.FAILED,
-            error: err,
-        });
+        handlerError(res, err);
     }
     return;
 };
@@ -50,10 +47,7 @@ export const imageGetListByTagHandler = async (req: Request, res: Response): Pro
             data: images,
         });
     } catch (err) {
-        res.status(400).send({
-            status: RESPONSE.FAILED,
-            error: err,
-        });
+        handlerError(res, err);
     }
     return;
 };
@@ -75,10 +69,7 @@ export const imageGetListByOriginalNameHandler = async (req: Request, res: Respo
             data: images,
         });
     } catch (err) {
-        res.status(400).send({
-            status: RESPONSE.FAILED,
-            error: err,
-        });
+        handlerError(res, err);
     }
     return;
 };

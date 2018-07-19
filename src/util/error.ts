@@ -3,6 +3,9 @@
  * @fileoverview Error
  */
 
+import { Response } from "express";
+import { RESPONSE } from "./interface";
+
 export enum ERROR_CODE {
     IMAGE_PATH_IS_NOT_ABSOLUTE = 100,
     DEBUG_ONLY_FUNCTION_CALLED_IN_PRODUCTION = 101,
@@ -17,6 +20,7 @@ export enum ERROR_CODE {
     FOUR_O_FOUR_NOT_FOUND = 404,
 
     UNKNOWN_ERROR_CODE = 900,
+    INTERNAL_ERROR = 901,
 }
 
 export const errorList: {
@@ -31,6 +35,7 @@ export const errorList: {
     300: 'Permission valid failed',
     404: 'Request URL not found',
     900: 'Unknown error code',
+    901: 'Internal error, report it at github.com/sudo-dog/markus',
 };
 
 /**
@@ -51,4 +56,19 @@ export const error = (code: number): Error => {
     newError.name = errorList[900];
     (newError as any).code = 900;
     return newError;
+};
+
+
+export const handlerError = (res: Response, err: Error) => {
+    if (err.name) {
+        res.status(400).send({
+            status: RESPONSE.FAILED,
+            error: err,
+        });
+    } else {
+        res.status(500).send({
+            status: RESPONSE.FAILED,
+            error: error(ERROR_CODE.INTERNAL_ERROR),
+        });
+    }
 };

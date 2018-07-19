@@ -7,7 +7,7 @@ import { Request, Response } from "express";
 import * as Path from 'path';
 import * as Controller from '../../db/controller/import';
 import { IImageModel } from "../../db/model/image";
-import { error, ERROR_CODE } from "../../util/error";
+import { error, ERROR_CODE, handlerError } from "../../util/error";
 import { hashImage, UploadWithBase64 } from "../../util/image";
 import { RESPONSE } from '../../util/interface';
 
@@ -54,10 +54,7 @@ export const UploadBufferHandler = async (req: Request, res: Response): Promise<
             },
         });
     } catch (err) {
-        res.status(400).send({
-            status: RESPONSE.FAILED,
-            error: err,
-        });
+        handlerError(res, err);
     }
     return;
 };
@@ -110,10 +107,7 @@ export const UploadBase64Handler = async (req: Request, res: Response): Promise<
             },
         });
     } catch (err) {
-        res.status(400).send({
-            status: RESPONSE.FAILED,
-            error: err,
-        });
+        handlerError(res, err);
     }
     return;
 };
@@ -129,10 +123,7 @@ export const DeactiveImageHandler = async (req: Request, res: Response): Promise
             },
         });
     } catch (err) {
-        res.status(400).send({
-            status: RESPONSE.FAILED,
-            error: err,
-        });
+        handlerError(res, err);
     }
     return;
 };
