@@ -13,7 +13,7 @@
 -   Request: Object (formData)
     -   image: Binary, [Image]
     -   tags: string[], [Image tag list]
-    -   key: string, [Upload key]
+    -   key: string, If use default validator [Key]
 -   Succeed Response: Object (JSON)
     -   status: String, "SUCCEED"
     -   data: Object (JSON),
@@ -56,7 +56,7 @@ $.ajax({
 -   Request: Object (JSON)
     -   image: String, [Image base64 code, **start with base64**]
     -   tags: string[], [Image tag list]
-    -   key: string, [Upload key]
+    -   key: string, If use default validator [Key]
     -   original: string? Optional [Upload file original name]
         -   If original name not given, Markus will use "N/A" instead
 -   Succeed Response: Object (JSON)
@@ -80,6 +80,7 @@ $.ajax({
         image: 'base64....',
         tags: ['tags'],
         key: 'key',
+        original?: 'some.jpg',
     },
 }).then(function (msg) {
     // Do something

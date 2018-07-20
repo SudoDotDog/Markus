@@ -44,7 +44,8 @@ app.post('/tag', Handler.G.imageGetListByTagHandler);
 app.post('/original', Handler.G.imageGetListByOriginalNameHandler);
 
 // Handler(s) for Image status change
-app.post('/deactive', Handler.M.DeactiveImageHandler);
+app.post('/deactive/id', checkUploadMiddleware, Handler.M.DeactiveImageHandler);
+app.post('/deactive/tag', checkUploadMiddleware, Handler.M.DeactiveTagHandler);
 
 // Handler(s) for Image Upload
 app.post('/m/buffer', uploadSingle, checkUploadMiddleware, Handler.M.UploadBufferHandler);

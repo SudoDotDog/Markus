@@ -21,6 +21,9 @@ export const createDeduplicateImage = async (Option: IImageConfig): Promise<IIma
     });
 
     if (SameHashImage) {
+        if (!Option.tags) {
+            Option.tags = [];
+        }
         const newTags = combineTagsArray(SameHashImage.tags, Option.tags);
         SameHashImage.tags = newTags;
         await SameHashImage.save();
@@ -66,6 +69,23 @@ export const deactiveImageById = async (id: ObjectID | string): Promise<IImageMo
     result.deactive();
     await result.save();
     return result;
+};
+
+export const deactiveImageByTag = async (tag: string): Promise<IImageModel[]> => {
+    const results: IImageModel[] = await ImageModel.find({ tags: tag });
+
+    console.log(results);
+
+    if (results.length <= 0) {
+        throw error(ERROR_CODE.NO_IMAGE_UNDER_TARGET_TAG);
+    }
+
+    results.forEach(async (result: IImageModel) => {
+        result.deactive();
+        await result.save();
+    });
+
+    return results;
 };
 
 export const getImagesByTag = async (tag: string): Promise<IImageListResponse[]> => {

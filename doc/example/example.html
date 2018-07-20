@@ -58,6 +58,7 @@
         <h1>STATUS CHANGE</h1>
         <input id="getC">
         <button id="deactive">DEACTIVE IMAGE</button>
+        <button id="deactiveTag">DEACTIVE IMAGE By tag</button>
     </div>
     <hr>
     <div>
@@ -138,9 +139,26 @@
     $("#deactive").on("click", function () {
         $.ajax({
             type: "POST",
-            url: targetUrl + "/deactive",
+            url: targetUrl + "/deactive/id",
             data: {
+                key: 'test',
                 id: $("#getC").val(),
+            },
+        }).then(function (msg) {
+            alert('SUCCEED');
+        }).catch(function (msg) {
+            alert('FAILED, see console');
+            console.log(msg);
+        });
+    });
+
+    $("#deactiveTag").on("click", function () {
+        $.ajax({
+            type: "POST",
+            url: targetUrl + "/deactive/tag",
+            data: {
+                key: 'test',
+                tag: $("#getC").val(),
             },
         }).then(function (msg) {
             alert('SUCCEED');
