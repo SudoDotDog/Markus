@@ -9,38 +9,18 @@ import * as path from 'path';
 import { addHandlers, useMiddleware } from "./script/app";
 import { error, ERROR_CODE } from "./util/error";
 
-export interface IMarkus {
-    crossOrigin: string;
-    db: string;
-    imagePath: string;
-    imagePFolder: number;
-    isDebug: boolean;
-    maxThread: number;
-    portNumber: number;
-    key: string;
-    verbose: boolean;
-    white404ImagePath: string;
-    black404ImagePath: string;
-}
-
 export class Markus {
-    private _crossOrigin: string;
-    private _imageFolder: string;
-    private _imageFolderLimit: number;
-    private _isDebug: boolean;
-    private _verbose: boolean;
-    private _uploadLimit: number;
-    private _app: express.Express;
+    private _crossOrigin: string = '';
+    private _imageFolder: string = '';
+    private _imageFolderLimit: number = 128;
+    private _isDebug: boolean = false;
+    private _uploadLimit: number = 18;
+    private _app: express.Express = express();
+    private _version: string = "2.0.0";
     private _emptyImage: {
-        white: string;
-        black: string;
-    };
-
-    public constructor() {
-        this._uploadLimit = 18;
-        this._verbose = false;
-        this._imageFolderLimit = 128;
-    }
+        white?: string;
+        black?: string;
+    } = {};
 
     public folder(folderPath: string, limit: number): Markus {
         this._imageFolder = folderPath;
@@ -57,11 +37,6 @@ export class Markus {
         return this;
     }
 
-    public verbose(): Markus {
-        this._verbose = true;
-        return this;
-    }
-
     public debug(): Markus {
         this._isDebug = true;
         return this;
@@ -72,14 +47,13 @@ export class Markus {
         return this;
     }
 
-    public host(port: number): express.Express {
-        this._app = express();
+    public app(): express.Express {
         this._app.all('*', (req: express.Request, res: express.Response, next: express.NextFunction) => {
             if (this._crossOrigin) {
                 res.header("Access-Control-Allow-Origin", this._crossOrigin);
             }
             res.header("X-Powered-By", 'Markus');
-            res.header("X-Markus-Version", "1.2.0");
+            res.header("X-Markus-Version", this._version);
             (req as any).emptyImage = this._emptyImage;
             next();
         });
@@ -93,9 +67,6 @@ export class Markus {
         if (this._isDebug) {
             console.log('!!! YOU ARE RUNNING THIS APPLICATION IN DEBUG MODE !!!');
             console.log('!!!   MAKE SURE TO CHANGE IT TO PRODUCTION MODE    !!!');
-        }
-        if (this._verbose) {
-            console.log("My name is Markus; I am one of them; These are your images!");
         }
         return this._app;
     }
