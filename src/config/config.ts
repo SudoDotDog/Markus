@@ -5,21 +5,7 @@
 
 import * as Path from 'path';
 
-export interface IConfig {
-    crossOrigin: string;
-    db: string;
-    imagePath: string;
-    imagePFolder: number;
-    isDebug: boolean;
-    maxThread: number;
-    portNumber: number;
-    key: string;
-    verbose: boolean;
-    white404ImagePath: string;
-    black404ImagePath: string;
-}
-
-const Config: IConfig = {
+const Config = {
     crossOrigin: '*',
     db: 'mongodb://localhost/markus-test',
     imagePath: 'F:/path',
