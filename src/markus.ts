@@ -15,6 +15,7 @@ interface IConfig {
     imagePFolder: number;
     isDebug: boolean;
     maxThread: number;
+    uploadLimit: number;
     portNumber: number;
     verbose: boolean;
     white404ImagePath: string;
@@ -43,6 +44,7 @@ const Config: IConfig = {
     imagePFolder: 12,
     isDebug: true,
     maxThread: 4,
+    uploadLimit: 25,
     portNumber: 8080,
     verbose: false,
     white404ImagePath: Path.resolve('assets/404image_white.png'),

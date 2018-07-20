@@ -18,13 +18,13 @@ db.on('error', console.log.bind(console, 'connection error:'));
 
 const app: express.Express = express();
 app.use(bodyParser.json({
-    limit: '18mb',
+    limit: Config.uploadLimit + 'mb',
 }));
 app.use(bodyParser.urlencoded({
     extended: true,
-    limit: '18mb',
+    limit: Config.uploadLimit + 'mb',
 }));
-app.use(express.json({ limit: '50mb' }));
+
 const uploadSingle = Upload().single('image');
 
 app.all('*', (req: Request, res: Response, next: NextFunction) => {
@@ -39,7 +39,6 @@ const permissions = Config.middleware.permissions;
 const tailgates = Config.middleware.tailgates;
 
 // Handler(s) for Image Get
-// app.get('/g/:id', Handler.G.imageGetHandler); // You should not use this method
 app.get('/w/:id', ...prepares, Handler.G.imageGetBlankWhiteHandler, ...tailgates);
 app.get('/b/:id', ...prepares, Handler.G.imageGetBlankBlackHandler, ...tailgates);
 
