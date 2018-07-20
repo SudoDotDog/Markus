@@ -9,6 +9,7 @@ import { RESPONSE } from "./interface";
 export enum ERROR_CODE {
     IMAGE_PATH_IS_NOT_ABSOLUTE = 100,
     DEBUG_ONLY_FUNCTION_CALLED_IN_PRODUCTION = 101,
+    DATABASE_CONNECTION_FAILED = 102,
 
     IMAGE_GET_FAILED = 200,
     IMAGE_SAVE_FAILED = 201,
@@ -31,6 +32,7 @@ export const errorList: {
 } = {
     100: 'Image path in config is not a absolute path',
     101: 'Debug function should only call in debug environment',
+    102: 'Database connection failed',
     200: 'Image getting failed',
     201: 'Image saving failed',
     202: 'Image list getting failed',
