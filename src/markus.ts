@@ -20,12 +20,13 @@ interface IConfig {
     white404ImagePath: string;
     black404ImagePath: string;
     middleware: {
-        pre: middleware[];
-        tail: middleware[];
+        prepares: middleware[];
+        permissions: middleware[];
+        tailgates: middleware[];
     };
 }
 
-const validPermissionMiddleware = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+const validPermissionMiddleware: middleware = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     if ((req as any).body.key === 'test') {
         (req as any).valid = true;
     } else {
@@ -47,10 +48,10 @@ const Config: IConfig = {
     white404ImagePath: Path.resolve('assets/404image_white.png'),
     black404ImagePath: Path.resolve('assets/404image_black.png'),
     middleware: {
-        pre: [validPermissionMiddleware],
-        tail: [],
+        prepares: [],
+        permissions: [validPermissionMiddleware],
+        tailgates: [],
     },
 };
-
 
 export default Config;

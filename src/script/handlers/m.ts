@@ -23,7 +23,9 @@ const saveBase64ToFile: (base64: string) => Promise<string> = UploadWithBase64()
  */
 export const UploadBufferHandler = async (req: Request, res: Response): Promise<void> => {
     try {
+        const file: Express.Multer.File = req.file;
         if (!(req as any).valid) {
+            await releaseStorage(file.path);
             throw error(ERROR_CODE.PERMISSION_VALID_FAILED);
         }
 
@@ -34,7 +36,6 @@ export const UploadBufferHandler = async (req: Request, res: Response): Promise<
         } else {
             tags = preTags;
         }
-        const file: Express.Multer.File = req.file;
         const hash: string = await hashImage(file.path);
 
         const image: IImageModel = await Controller.Image.createDeduplicateImage({

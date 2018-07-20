@@ -8,7 +8,7 @@ import * as express from "express";
 import { NextFunction, Request, Response } from "express";
 import * as mongoose from "mongoose";
 import Config from "../markus";
-import { checkUploadMiddleware, Upload } from "../util/image";
+import { Upload } from "../util/image";
 import * as Handler from './handlers/import';
 
 mongoose.connect(Config.db);
@@ -30,32 +30,36 @@ const uploadSingle = Upload().single('image');
 app.all('*', (req: Request, res: Response, next: NextFunction) => {
     res.header("Access-Control-Allow-Origin", Config.crossOrigin);
     res.header("X-Powered-By", 'Markus');
-    res.header("X-Markus-Version", "1.2.0");
+    res.header("X-Markus-Version", "1.3.0");
     next();
 });
 
+const prepares = Config.middleware.prepares;
+const permissions = Config.middleware.permissions;
+const tailgates = Config.middleware.tailgates;
+
 // Handler(s) for Image Get
 // app.get('/g/:id', Handler.G.imageGetHandler); // You should not use this method
-app.get('/w/:id', Handler.G.imageGetBlankWhiteHandler);
-app.get('/b/:id', Handler.G.imageGetBlankBlackHandler);
+app.get('/w/:id', ...prepares, Handler.G.imageGetBlankWhiteHandler, ...tailgates);
+app.get('/b/:id', ...prepares, Handler.G.imageGetBlankBlackHandler, ...tailgates);
 
 // Handler(s) for Image List Get
-app.post('/tag', Handler.G.imageGetListByTagHandler);
-app.post('/original', Handler.G.imageGetListByOriginalNameHandler);
+app.post('/tag', ...prepares, Handler.G.imageGetListByTagHandler, ...tailgates);
+app.post('/original', ...prepares, Handler.G.imageGetListByOriginalNameHandler, ...tailgates);
 
 // Handler(s) for Image status change
-app.post('/deactive/id', checkUploadMiddleware, Handler.M.DeactiveImageHandler);
-app.post('/deactive/tag', checkUploadMiddleware, Handler.M.DeactiveTagHandler);
+app.post('/deactive/id', ...prepares, ...permissions, Handler.M.DeactiveImageHandler, ...tailgates);
+app.post('/deactive/tag', ...prepares, ...permissions, Handler.M.DeactiveTagHandler, ...tailgates);
 
 // Handler(s) for Image Upload
-app.post('/m/buffer', checkUploadMiddleware, uploadSingle, Handler.M.UploadBufferHandler);
-app.post('/m/base64', checkUploadMiddleware, Handler.M.UploadBase64Handler);
+app.post('/m/buffer', ...prepares, uploadSingle, ...permissions, Handler.M.UploadBufferHandler, ...tailgates);
+app.post('/m/base64', ...prepares, ...permissions, Handler.M.UploadBase64Handler, ...tailgates);
 
 // Handler(s) for debug
-app.post('/list', Handler.Debug.OutputImageIdList);
-app.delete('/empty', Handler.Debug.emptyDatabaseHandler);
+app.post('/list', ...prepares, Handler.Debug.OutputImageIdList, ...tailgates);
+app.delete('/empty', ...prepares, Handler.Debug.emptyDatabaseHandler, ...tailgates);
 
 // Handler(s) for 404
-app.all('*', Handler.G.fourOFourHandler);
+app.all('*', ...prepares, Handler.G.fourOFourHandler, ...tailgates);
 
 export default app;
