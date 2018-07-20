@@ -26,13 +26,13 @@
 -   Response: [Binary Image]
 
 ```html
-<!-- Example for /w/:imageId -->
+<!-- Example for /b/:imageId -->
 <img src="https://yourdomain.com/b/1a2b3c4d5e6f7g8h9i0j"> 
 ```
 
 ## Get image list with a tag name
 
-### /tag
+### POST /tag
 
 > Get image list with a tag name
 
@@ -57,6 +57,7 @@
         -   message: String, [Error message]
 
 ```javascript
+// Example for /tag
 // Use jquery
 $.ajax({
     type: "POST",
@@ -71,7 +72,7 @@ $.ajax({
 });
 ```
 
-### /original
+### POST /original
 
 > Get image list with tag name
 
@@ -96,6 +97,7 @@ $.ajax({
         -   message: String, [Error message]
 
 ```javascript
+// Example for /original
 // Use jquery
 $.ajax({
     type: "POST",

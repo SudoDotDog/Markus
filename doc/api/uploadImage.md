@@ -4,7 +4,7 @@
 
 > Duplicated image will be ignored and merge it tags, return existing image id
 
-### /m/buffer
+### POST /m/buffer
 
 > Upload image with image binary buffer
 
@@ -26,6 +26,7 @@
         -   message: String, [Error message]
 
 ```javascript
+// Example for /m/buffer
 // Use jquery
 let formData = new FormData();
 let image = $("#file").prop("files")[0];
@@ -46,7 +47,7 @@ $.ajax({
 });
 ```
 
-### /m/base64
+### POST /m/base64
 
 > Upload image with base64 encoded image
 
@@ -68,6 +69,7 @@ $.ajax({
         -   message: String, [Error message]
 
 ```javascript
+// Example for /m/base64
 // Use jquery
 $.ajax({
     type: "POST",

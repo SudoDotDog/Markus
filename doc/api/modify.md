@@ -2,7 +2,7 @@
 
 ## Deactivate Image
 
-### /deactive
+### POST /deactive
 
 > Upload image with image binary buffer
 
@@ -22,6 +22,7 @@
         -   message: String, [Error message]
 
 ```javascript
+// Example for /deactive
 // Use jquery
 $.ajax({
     type: "POST",

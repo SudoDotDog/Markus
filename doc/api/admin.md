@@ -4,7 +4,7 @@
 
 ## Admin
 
-### /list
+### POST /list
 
 > List **ALL** image in the database
 
@@ -22,6 +22,7 @@
         -   message: String, [Error message]
 
 ```javascript
+// Example for /list
 // Use jquery
 $.ajax({
     type: "POST",
@@ -35,7 +36,7 @@ $.ajax({
 ```
 
 
-### /empty
+### DELETE /empty
 
 > Delete **ALL** image in the database
 
@@ -52,6 +53,7 @@ $.ajax({
         -   message: String, [Error message]
 
 ```javascript
+// Example for /empty
 // Use jquery
 $.ajax({
     type: "DELETE",
