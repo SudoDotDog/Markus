@@ -7,7 +7,7 @@ import * as Cluster from 'cluster';
 import * as Http from 'http';
 import { cpus } from 'os';
 import * as Path from 'path';
-import Config from '../config/config';
+import Config from '../markus';
 import { error, ERROR_CODE } from '../util/error';
 import app from './app';
 

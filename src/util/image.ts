@@ -8,9 +8,9 @@ import { NextFunction, Request, Response } from "express";
 import * as Fs from 'fs';
 import * as Multer from 'multer';
 import * as Path from 'path';
-import Config from '../config/config';
 import { IImageCallback, IImageListResponse, IImageListResponseAdmin } from '../db/interface/image';
 import { IImageModel } from '../db/model/image';
+import Config from '../markus';
 import { error, ERROR_CODE } from './error';
 
 export const combineTagsArray = (original: string[], target: string[]): string[] => {
@@ -89,17 +89,6 @@ export const unique = (len?: number) => {
 
 export const mkPathDir = (path: string) => {
     Fs.mkdirSync(path);
-};
-
-export const checkUploadMiddleware = async (req: Request, res: Response, next: NextFunction) => {
-    if ((req as any).body.key === Config.key) {
-        (req as any).valid = true;
-    } else if (!Config.key) {
-        (req as any).valid = true;
-    } else {
-        (req as any).valid = false;
-    }
-    next();
 };
 
 export const hashImage = (imagePath: string): Promise<string> => {

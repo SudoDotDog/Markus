@@ -7,7 +7,7 @@ import * as bodyParser from "body-parser";
 import * as express from "express";
 import { NextFunction, Request, Response } from "express";
 import * as mongoose from "mongoose";
-import Config from "../config/config";
+import Config from "../markus";
 import { checkUploadMiddleware, Upload } from "../util/image";
 import * as Handler from './handlers/import';
 
@@ -48,7 +48,7 @@ app.post('/deactive/id', checkUploadMiddleware, Handler.M.DeactiveImageHandler);
 app.post('/deactive/tag', checkUploadMiddleware, Handler.M.DeactiveTagHandler);
 
 // Handler(s) for Image Upload
-app.post('/m/buffer', uploadSingle, checkUploadMiddleware, Handler.M.UploadBufferHandler);
+app.post('/m/buffer', checkUploadMiddleware, uploadSingle, Handler.M.UploadBufferHandler);
 app.post('/m/base64', checkUploadMiddleware, Handler.M.UploadBase64Handler);
 
 // Handler(s) for debug

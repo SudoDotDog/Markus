@@ -1,9 +1,7 @@
 build := tsc --p typescript/tsconfig.build.json
 dev := tsc --p typescript/tsconfig.dev.json
 
-sudo:
-	$(dev)
-	make run
+markus: service
 
 service:
 	$(dev)

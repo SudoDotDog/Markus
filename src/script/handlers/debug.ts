@@ -4,9 +4,9 @@
  */
 
 import { Request, Response } from "express";
-import Config from "../../config/config";
 import * as Controller from '../../db/controller/import';
 import { IImageListResponse } from "../../db/interface/image";
+import Config from "../../markus";
 import { error, ERROR_CODE, handlerError } from "../../util/error";
 import { RESPONSE } from '../../util/interface';
 
