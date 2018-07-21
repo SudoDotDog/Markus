@@ -9,6 +9,13 @@ import { combineTagsArray, imageModelToImageCallback, imageModelToImageListRespo
 import { IImageCallback, IImageConfig, IImageListResponse, IImageListResponseAdmin } from "../interface/image";
 import { IImageModel, ImageModel } from "../model/image";
 
+/**
+ * Create a new image, if duplicate return target id and unlink incoming path
+ * TODO!! Move release storage somewhere elese
+ *
+ * @param {IImageConfig} Option
+ * @returns {Promise<IImageModel>}
+ */
 export const createDeduplicateImage = async (Option: IImageConfig): Promise<IImageModel> => {
     const SameHashImage: IImageModel | null = await ImageModel.findOne({
         hash: Option.hash,
@@ -124,18 +131,4 @@ export const getImageList = async (): Promise<IImageListResponseAdmin[]> => {
     return images.map((image: IImageModel) => {
         return imageModelToImageListResponseAdmin(image);
     });
-};
-
-export const deactiveImage = async (id: ObjectID): Promise<void> => {
-    const image: IImageModel | null = await ImageModel.findOne({
-        _id: id,
-        active: true,
-    });
-    if (!image) {
-        throw error(ERROR_CODE.IMAGE_GET_FAILED);
-    }
-
-    image.deactive();
-    await image.save();
-    return;
 };

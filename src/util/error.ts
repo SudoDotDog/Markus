@@ -19,12 +19,15 @@ export enum ERROR_CODE {
     NO_IMAGE_UNDER_TARGET_TAG = 210,
     TAG_NOT_FOUND = 211,
 
+    IMAGE_NOT_FOUND = 220,
+
     PERMISSION_VALID_FAILED = 300,
 
     FOUR_O_FOUR_NOT_FOUND = 404,
 
     UNKNOWN_ERROR_CODE = 900,
     INTERNAL_ERROR = 901,
+    DEFAULT_TEST_ERROR = 902,
 }
 
 export const errorList: {
@@ -38,10 +41,12 @@ export const errorList: {
     203: 'Given ID not a valid imageId',
     204: 'Image unlink failed',
     210: 'No image under target tag name',
+    220: 'Image not found',
     300: 'Permission valid failed',
     404: 'Request URL not found',
     900: 'Unknown error code',
     901: 'Internal error, report it at github.com/sudo-dog/markus',
+    902: 'Default test error',
 };
 
 /**
@@ -64,6 +69,13 @@ export const error = (code: number): Error => {
     return newError;
 };
 
+export const compareError = (base: Error, target: Error): boolean => {
+    return (
+        base.name === target.name &&
+        base.message === target.message &&
+        (base as any).code === (target as any).code
+    );
+};
 
 export const handlerError = (res: Response, err: Error) => {
     if (err.name) {

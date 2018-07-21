@@ -4,7 +4,7 @@
  */
 
 import { expect } from 'chai';
-import { error, ERROR_CODE } from '../../src/util/error';
+import { compareError, error, ERROR_CODE } from '../../src/util/error';
 
 describe('test error util functions', (): void => {
 
@@ -19,6 +19,24 @@ describe('test error util functions', (): void => {
             throw result;
         };
         expect(throwThis).to.be.throw("901: Internal error, report it at github.com/sudo-dog/markus");
+    });
+
+    it('compare error should return TRUE if error is same', (): void => {
+        const result = compareError(
+            error(ERROR_CODE.IMAGE_GET_FAILED),
+            error(ERROR_CODE.IMAGE_GET_FAILED),
+        );
+        // tslint:disable-next-line
+        expect(result).to.be.true;
+    });
+
+    it('compare error should return FALSE if error is same', (): void => {
+        const result = compareError(
+            error(ERROR_CODE.IMAGE_GET_FAILED),
+            error(ERROR_CODE.INTERNAL_ERROR),
+        );
+        // tslint:disable-next-line
+        expect(result).to.be.false;
     });
 
     it('error a unknown error code should return 900 error', (): void => {
