@@ -23,7 +23,6 @@ interface IConfig {
     middleware: {
         prepares: middleware[];
         permissions: middleware[];
-        tailgates: middleware[];
     };
 }
 
@@ -52,7 +51,6 @@ const Config: IConfig = {
     middleware: {
         prepares: [],
         permissions: [validPermissionMiddleware],
-        tailgates: [],
     },
 };
 

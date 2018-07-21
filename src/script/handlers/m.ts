@@ -28,7 +28,6 @@ export const UploadBufferHandler = async (req: Request, res: Response): Promise<
             await releaseStorage(file.path);
             throw error(ERROR_CODE.PERMISSION_VALID_FAILED);
         }
-
         const preTags: string[] | string = req.body.tags;
         let tags: string[] = [];
         if (typeof preTags === 'string') {
@@ -37,7 +36,6 @@ export const UploadBufferHandler = async (req: Request, res: Response): Promise<
             tags = preTags;
         }
         const hash: string = await hashImage(file.path);
-
         const image: IImageModel = await Controller.Image.createDeduplicateImage({
             encoding: file.encoding,
             mime: file.mimetype,

@@ -36,29 +36,28 @@ app.all('*', (req: Request, res: Response, next: NextFunction) => {
 
 const prepares = Config.middleware.prepares;
 const permissions = Config.middleware.permissions;
-const tailgates = Config.middleware.tailgates;
 
 // Handler(s) for Image Get
-app.get('/w/:id', ...prepares, Handler.G.imageGetBlankWhiteHandler, ...tailgates);
-app.get('/b/:id', ...prepares, Handler.G.imageGetBlankBlackHandler, ...tailgates);
+app.get('/w/:id', ...prepares, Handler.G.imageGetBlankWhiteHandler);
+app.get('/b/:id', ...prepares, Handler.G.imageGetBlankBlackHandler);
 
 // Handler(s) for Image List Get
-app.post('/tag', ...prepares, Handler.G.imageGetListByTagHandler, ...tailgates);
-app.post('/original', ...prepares, Handler.G.imageGetListByOriginalNameHandler, ...tailgates);
+app.post('/tag', ...prepares, Handler.G.imageGetListByTagHandler);
+app.post('/original', ...prepares, Handler.G.imageGetListByOriginalNameHandler);
 
 // Handler(s) for Image status change
-app.post('/deactive/id', ...prepares, ...permissions, Handler.M.DeactiveImageHandler, ...tailgates);
-app.post('/deactive/tag', ...prepares, ...permissions, Handler.M.DeactiveTagHandler, ...tailgates);
+app.post('/deactive/id', ...prepares, ...permissions, Handler.M.DeactiveImageHandler);
+app.post('/deactive/tag', ...prepares, ...permissions, Handler.M.DeactiveTagHandler);
 
 // Handler(s) for Image Upload
-app.post('/m/buffer', ...prepares, uploadSingle, ...permissions, Handler.M.UploadBufferHandler, ...tailgates);
-app.post('/m/base64', ...prepares, ...permissions, Handler.M.UploadBase64Handler, ...tailgates);
+app.post('/m/buffer', ...prepares, uploadSingle, ...permissions, Handler.M.UploadBufferHandler);
+app.post('/m/base64', ...prepares, ...permissions, Handler.M.UploadBase64Handler);
 
 // Handler(s) for debug
-app.post('/list', ...prepares, Handler.Debug.OutputImageIdList, ...tailgates);
-app.delete('/empty', ...prepares, Handler.Debug.emptyDatabaseHandler, ...tailgates);
+app.post('/list', ...prepares, Handler.Debug.OutputImageIdList);
+app.delete('/empty', ...prepares, Handler.Debug.emptyDatabaseHandler);
 
 // Handler(s) for 404
-app.all('*', ...prepares, Handler.G.fourOFourHandler, ...tailgates);
+app.all('*', ...prepares, Handler.G.fourOFourHandler);
 
 export default app;
