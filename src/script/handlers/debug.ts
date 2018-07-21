@@ -21,7 +21,7 @@ import { RESPONSE } from '../../util/interface';
 export const emptyDatabaseHandler = async (req: Request, res: Response): Promise<void> => {
     try {
         if (Config.isDebug) {
-            await Controller.Image.emptyDatabase();
+            await Controller.Mix.emptyDatabase();
             res.status(200).send({
                 status: RESPONSE.SUCCEED,
             });

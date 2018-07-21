@@ -9,11 +9,6 @@ import { combineTagsArray, imageModelToImageCallback, imageModelToImageListRespo
 import { IImageCallback, IImageConfig, IImageListResponse, IImageListResponseAdmin } from "../interface/image";
 import { IImageModel, ImageModel } from "../model/image";
 
-export const emptyDatabase = async (): Promise<void> => {
-    await ImageModel.remove({});
-    return;
-};
-
 export const createDeduplicateImage = async (Option: IImageConfig): Promise<IImageModel> => {
     const SameHashImage: IImageModel | null = await ImageModel.findOne({
         hash: Option.hash,
