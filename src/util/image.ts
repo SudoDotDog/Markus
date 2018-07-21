@@ -8,8 +8,8 @@ import { NextFunction, Request, Response } from "express";
 import * as Fs from 'fs';
 import * as Multer from 'multer';
 import * as Path from 'path';
-import { IImageCallback, IImageListResponse, IImageListResponseAdmin } from '../db/interface/image';
-import { IImageModel } from '../db/model/image';
+import { IImageCallback, IImageListResponse, IImageListResponseAdmin } from '../database/interface/image';
+import { IImageModel } from '../database/model/image';
 import Config from '../markus';
 import { error, ERROR_CODE } from './error';
 

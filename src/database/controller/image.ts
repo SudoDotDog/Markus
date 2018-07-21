@@ -70,8 +70,6 @@ export const deactiveImageById = async (id: ObjectID | string): Promise<IImageMo
 export const deactiveImageByTag = async (tag: string): Promise<IImageModel[]> => {
     const results: IImageModel[] = await ImageModel.find({ tags: tag });
 
-    console.log(results);
-
     if (results.length <= 0) {
         throw error(ERROR_CODE.NO_IMAGE_UNDER_TARGET_TAG);
     }

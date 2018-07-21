@@ -5,8 +5,8 @@
 
 import { Request, Response } from "express";
 import * as Path from 'path';
-import * as Controller from '../../db/controller/import';
-import { IImageModel } from "../../db/model/image";
+import * as Controller from '../../database/controller/import';
+import { IImageModel } from "../../database/model/image";
 import { error, ERROR_CODE, handlerError } from "../../util/error";
 import { hashImage, releaseStorage, UploadWithBase64 } from "../../util/image";
 import { RESPONSE } from '../../util/interface';
