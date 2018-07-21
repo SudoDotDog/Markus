@@ -21,10 +21,13 @@ export const createTag = async (options: ITagConfig): Promise<ITagModel> => {
     return newTag;
 };
 
-export const increase = async (tagId: ObjectID) => {
+export const increase = async (tagId: ObjectID): Promise<ITagModel> => {
     const tag: ITagModel | null = await TagModel.findOne({ _id: tagId });
     if (!tag) {
         throw error(ERROR_CODE.TAG_NOT_FOUND);
     }
-    return;
+
+    tag.increase();
+    await tag.save();
+    return tag;
 };

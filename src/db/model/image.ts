@@ -50,7 +50,7 @@ export const ImageSchema: Schema = new Schema({
     });
 
 export interface IImageModel extends IImage, Document {
-    deactive: () => void;
+    deactive: () => IImageModel;
 }
 
 ImageSchema.methods.deactive = function (this: IImageModel): IImageModel {

@@ -38,6 +38,36 @@ export const TagSchema: Schema = new Schema({
 
 
 export interface ITagModel extends ITag, Document {
+    setPrefix: (prefix: string) => boolean;
+    increase: () => ITagModel;
+    reduce: () => ITagModel;
 }
+
+TagSchema.methods.setPrefix = function (this: ITagModel, prefixE: string): boolean {
+    if (prefixE.length < 1) {
+        return false;
+    }
+    const prefix: string = prefixE.toUpperCase();
+    if (prefix.indexOf('MARKUS~') !== -1) {
+        return false;
+    }
+
+    this.prefix = prefix;
+    return true;
+};
+
+TagSchema.methods.increase = function (this: ITagModel): ITagModel {
+    this.stepper++;
+    this.count++;
+    return this;
+};
+
+TagSchema.methods.reduce = function (this: ITagModel): ITagModel {
+    if (this.count > 0) {
+        this.count--;
+    }
+
+    return this;
+};
 
 export const TagModel: Model<ITagModel> = model<ITagModel>("Tag", TagSchema);
