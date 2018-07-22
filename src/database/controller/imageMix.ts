@@ -87,12 +87,11 @@ export const getImageUserFriendlyCallbackByTag = async (tagString: string, inclu
     if (!includeInactive) { query.active = true; }
 
     const images: IImageModel[] = await ImageModel.find(query);
+    const tagMap: Map<string, ITagModel> = new Map<string, ITagModel>();
 
-    const tagMap: Map<ObjectID, ITagModel> = new Map<ObjectID, ITagModel>();
-    const tagIdsArray: ObjectID[] = [];
-
+    let tagIdsArray: ObjectID[] = [];
     for (let current of images) {
-        mergeArray(tagIdsArray, current.tags);
+        tagIdsArray = mergeArray(tagIdsArray, current.tags);
     }
 
     const tags: ITagModel[] = await TagModel.find({
@@ -102,13 +101,14 @@ export const getImageUserFriendlyCallbackByTag = async (tagString: string, inclu
     });
 
     for (let current of tags) {
-        tagMap.set(current._id, current);
+        tagMap.set(current.id.toString(), current);
     }
 
     return images.map((image: IImageModel): IImageUserFriendlyCallback => {
         const current: ITagModel[] = [];
         for (let i of image.tags) {
-            const currentTag: ITagModel | undefined = tagMap.get(i);
+            const currentTag: ITagModel | undefined = tagMap.get(i.toString());
+
             if (currentTag) { current.push(currentTag); }
         }
         return buildImageUserFriendlyCallback(image, current);
@@ -124,13 +124,9 @@ export const getImagesCallbacksByTag = async (tagString: string, includeInactive
         tags: tag,
     };
     if (!includeInactive) { query.active = true; }
+    const images: IImageModel[] = await ImageModel.find(query);
 
-    const images: IImageModel[] = await ImageModel.find({
-        tags: tag,
-        active: true,
-    });
-
-    const fileMap: Map<ObjectID, IFileModel> = new Map<ObjectID, IFileModel>();
+    const fileMap: Map<string, IFileModel> = new Map<string, IFileModel>();
     const fileIdsArray: ObjectID[] = images.map((image) => image.file);
 
     const files: IFileModel[] = await FileModel.find({
@@ -140,11 +136,11 @@ export const getImagesCallbacksByTag = async (tagString: string, includeInactive
     });
 
     for (let file of files) {
-        fileMap.set(file._id, file);
+        fileMap.set(file._id.toString(), file);
     }
 
     return images.map((image: IImageModel): IImageCallback => {
-        const currentFile: IFileModel | undefined = fileMap.get(image._id);
+        const currentFile: IFileModel | undefined = fileMap.get(image.file.toString());
         if (!currentFile) { throw error(ERROR_CODE.FILE_NOT_FOUND); }
         return buildImageCallback(image, currentFile);
     });

@@ -4,7 +4,7 @@
  */
 import { expect } from 'chai';
 import { deactiveImageById, getImageById } from '../../../src/database/controller/image';
-import { createDuplicateImage, createImage, getImageCallbackById, getImageUserFriendlyCallbackByTag } from '../../../src/database/controller/imageMix';
+import { createDuplicateImage, createImage, getImageCallbackById, getImagesCallbacksByTag, getImageUserFriendlyCallbackByTag } from '../../../src/database/controller/imageMix';
 import { IImageCallback } from '../../../src/database/interface/image';
 import { IImageModel, ImageModel } from '../../../src/database/model/image';
 import { compareError, error, ERROR_CODE } from '../../../src/util/error';
@@ -102,10 +102,39 @@ export const testImageController = (): void => {
             const callbacks = await getImageUserFriendlyCallbackByTag('a');
 
             expect(callbacks).to.be.lengthOf(1);
+            expect(callbacks[0]).to.be.keys([
+                'createdAt',
+                'id',
+                'tags',
+            ]);
+            expect(callbacks[0].tags).to.be.lengthOf(1);
         }).timeout(3200);
 
         it('get image by tag include inactive should return all user friendly callback list', async (): Promise<void> => {
             const callbacks = await getImageUserFriendlyCallbackByTag('a', true);
+
+            expect(callbacks).to.be.lengthOf(2);
+        }).timeout(3200);
+
+        it('get image by tag should return callback list', async (): Promise<void> => {
+            const callbacks = await getImagesCallbacksByTag('a');
+
+            expect(callbacks).to.be.lengthOf(1);
+            expect(callbacks[0]).to.be.keys([
+                'createdAt',
+                'encoding',
+                'id',
+                'mime',
+                'original',
+                'path',
+                'size',
+                'tags',
+            ]);
+            expect(callbacks[0].tags).to.be.lengthOf(1);
+        }).timeout(3200);
+
+        it('get image by tag include inactive should return all user list', async (): Promise<void> => {
+            const callbacks = await getImagesCallbacksByTag('a', true);
 
             expect(callbacks).to.be.lengthOf(2);
         }).timeout(3200);

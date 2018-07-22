@@ -18,7 +18,7 @@ import { error, ERROR_CODE } from './error';
 export const mergeArray: <T>(original: T[], target: T[]) => T[] = <T>(original: T[], target: T[]) => {
     const tempArray: T[] = [...original];
     for (let i of target) {
-        if (original.indexOf(i) === -1) {
+        if (!original.map((element) => element.toString()).includes(i.toString())) {
             tempArray.push(i);
         }
     }

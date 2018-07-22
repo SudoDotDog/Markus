@@ -51,7 +51,6 @@
         <h1>GET IMAGE LIST</h1>
         <input id="getL">
         <button id="getByTag">Get By Tag</button>
-        <button id="getByOriginal">Get By Original Name</button>
     </div>
     <hr>
     <div>
@@ -95,21 +94,6 @@
         $.ajax({
             type: "POST",
             url: targetUrl + "/tag",
-            data: {
-                tag: $("#getL").val(),
-            },
-        }).then(function (msg) {
-            $('#listResult').html(parseImageListToHTML(msg.data));
-        }).catch(function (msg) {
-            alert('FAILED, see console');
-            console.log(msg);
-        });
-    });
-
-    $("#getByOriginal").on("click", function () {
-        $.ajax({
-            type: "POST",
-            url: targetUrl + "/original",
             data: {
                 tag: $("#getL").val(),
             },

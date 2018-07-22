@@ -81,7 +81,7 @@ export const compareError = (base: Error, target: Error): boolean => {
 };
 
 export const handlerError = (res: Response, err: Error) => {
-    if (err.name) {
+    if ((err as any).code) {
         res.status(400).send({
             status: RESPONSE.FAILED,
             error: err,
