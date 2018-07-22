@@ -4,7 +4,7 @@
  */
 import { expect } from 'chai';
 import { deactiveImageById, getImageById } from '../../../src/database/controller/image';
-import { createDuplicateImage, createImage, getImageCallbackById } from '../../../src/database/controller/imageMix';
+import { createDuplicateImage, createImage, getImageCallbackById, getImageUserFriendlyCallbackByTag } from '../../../src/database/controller/imageMix';
 import { IImageCallback } from '../../../src/database/interface/image';
 import { IImageModel, ImageModel } from '../../../src/database/model/image';
 import { compareError, error, ERROR_CODE } from '../../../src/util/error';
@@ -96,6 +96,18 @@ export const testImageController = (): void => {
                 expect(result).to.be.true;
             }
             return;
+        }).timeout(3200);
+
+        it('get image by tag should return user friendly callback list', async (): Promise<void> => {
+            const callbacks = await getImageUserFriendlyCallbackByTag('a');
+
+            expect(callbacks).to.be.lengthOf(1);
+        }).timeout(3200);
+
+        it('get image by tag include inactive should return all user friendly callback list', async (): Promise<void> => {
+            const callbacks = await getImageUserFriendlyCallbackByTag('a', true);
+
+            expect(callbacks).to.be.lengthOf(2);
         }).timeout(3200);
     });
 };

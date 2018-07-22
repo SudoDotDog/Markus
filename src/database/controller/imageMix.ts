@@ -77,11 +77,16 @@ export const getImageCallbackById = async (id: ObjectID): Promise<IImageCallback
     return buildImageCallback(image, file);
 };
 
-export const getImageUserFriendlyCallbackByTag = async (tag: string): Promise<IImageUserFriendlyCallback[]> => {
-    const images: IImageModel[] = await ImageModel.find({
+export const getImageUserFriendlyCallbackByTag = async (tagString: string, includeInactive?: boolean): Promise<IImageUserFriendlyCallback[]> => {
+    const tag: ITagModel | null = await TagModel.findOne({ name: tagString });
+    if (!tag) { throw error(ERROR_CODE.TAG_NOT_FOUND); }
+
+    let query: any = {
         tags: tag,
-        active: true,
-    });
+    };
+    if (!includeInactive) { query.active = true; }
+
+    const images: IImageModel[] = await ImageModel.find(query);
 
     const tagMap: Map<ObjectID, ITagModel> = new Map<ObjectID, ITagModel>();
     const tagIdsArray: ObjectID[] = [];
@@ -103,14 +108,23 @@ export const getImageUserFriendlyCallbackByTag = async (tag: string): Promise<II
     return images.map((image: IImageModel): IImageUserFriendlyCallback => {
         const current: ITagModel[] = [];
         for (let i of image.tags) {
-            current.push(tagMap.get(i));
+            const currentTag: ITagModel | undefined = tagMap.get(i);
+            if (currentTag) { current.push(currentTag); }
         }
         return buildImageUserFriendlyCallback(image, current);
     });
 };
 
 
-export const getImagesCallbacksByTag = async (tag: string): Promise<IImageCallback[]> => {
+export const getImagesCallbacksByTag = async (tagString: string, includeInactive?: boolean): Promise<IImageCallback[]> => {
+    const tag: ITagModel | null = await TagModel.findOne({ name: tagString });
+    if (!tag) { throw error(ERROR_CODE.TAG_NOT_FOUND); }
+
+    let query: any = {
+        tags: tag,
+    };
+    if (!includeInactive) { query.active = true; }
+
     const images: IImageModel[] = await ImageModel.find({
         tags: tag,
         active: true,
@@ -130,6 +144,8 @@ export const getImagesCallbacksByTag = async (tag: string): Promise<IImageCallba
     }
 
     return images.map((image: IImageModel): IImageCallback => {
-        return buildImageCallback(image, fileMap.get(image._id));
+        const currentFile: IFileModel | undefined = fileMap.get(image._id);
+        if (!currentFile) { throw error(ERROR_CODE.FILE_NOT_FOUND); }
+        return buildImageCallback(image, currentFile);
     });
 };
