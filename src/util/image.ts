@@ -4,11 +4,12 @@
  */
 
 import * as Crypto from 'crypto';
-import { NextFunction, Request, Response } from "express";
 import * as Fs from 'fs';
 import * as Multer from 'multer';
 import * as Path from 'path';
-import { IImageCallback, IImageListResponse, IImageListResponseAdmin } from '../database/interface/image';
+import { ObjectID } from '../../node_modules/@types/bson';
+import { IImageCallback } from '../database/interface/image';
+import { IFileModel } from '../database/model/file';
 import { IImageModel } from '../database/model/image';
 import Config from '../markus';
 import { error, ERROR_CODE } from './error';
@@ -34,38 +35,38 @@ export const releaseStorage = (path: string): Promise<void> => {
     });
 };
 
-export const imageModelToImageListResponse = (image: IImageModel): IImageListResponse => {
-    return {
-        active: image.active,
-        id: image.id,
-        createdAt: image.createdAt,
-        original: image.original,
-        size: image.size,
-        tags: image.tags,
-    };
-};
+// export const imageModelToImageListResponse = (image: IImageModel): IImageListResponse => {
+//     return {
+//         active: image.active,
+//         id: image.id,
+//         createdAt: image.createdAt,
+//         original: image.original,
+//         size: image.size,
+//         tags: image.tags,
+//     };
+// };
 
-export const imageModelToImageListResponseAdmin = (image: IImageModel): IImageListResponseAdmin => {
-    return {
-        active: image.active,
-        id: image.id,
-        createdAt: image.createdAt,
-        hash: image.hash,
-        original: image.original,
-        size: image.size,
-        tags: image.tags,
-    };
-};
+// export const imageModelToImageListResponseAdmin = (image: IImageModel): IImageListResponseAdmin => {
+//     return {
+//         active: image.active,
+//         id: image.id,
+//         createdAt: image.createdAt,
+//         hash: image.hash,
+//         original: image.original,
+//         size: image.size,
+//         tags: image.tags,
+//     };
+// };
 
-export const imageModelToImageCallback = (image: IImageModel): IImageCallback => {
+export const buildImageCallback = (image: IImageModel, file: IFileModel): IImageCallback => {
     return {
         createdAt: image.createdAt,
-        encoding: image.encoding,
-        mime: image.mime,
-        original: image.original,
-        path: image.path,
-        size: image.size,
-        tags: image.tags,
+        encoding: file.encoding,
+        mime: file.mime,
+        original: file.original,
+        path: file.path,
+        size: file.size,
+        tags: image.tags.map((id: ObjectID) => id.toString()),
     };
 };
 

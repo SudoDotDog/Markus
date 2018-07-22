@@ -21,6 +21,8 @@ export enum ERROR_CODE {
 
     IMAGE_NOT_FOUND = 220,
 
+    FILE_NOT_FOUND = 230,
+
     PERMISSION_VALID_FAILED = 300,
 
     FOUR_O_FOUR_NOT_FOUND = 404,
@@ -42,6 +44,7 @@ export const errorList: {
     204: 'Image unlink failed',
     210: 'No image under target tag name',
     220: 'Image not found',
+    230: 'File not found',
     300: 'Permission valid failed',
     404: 'Request URL not found',
     900: 'Unknown error code',
