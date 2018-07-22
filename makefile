@@ -1,20 +1,24 @@
-build := tsc --p typescript/tsconfig.build.json
-dev := tsc --p typescript/tsconfig.dev.json
+build := typescript/tsconfig.build.json
+dev := typescript/tsconfig.dev.json
 
-markus: service
+dbPath := F:/db/
+
+markus: dev service
 
 service:
-	$(dev)
 	node ./dist/script/service.js
 
 run:
-	node ./dist/index.js
+	node ./dist/script/service.js
+
+dev:
+	tsc --p $(dev)
 
 build: clean
-	$(build)
+	tsc --p $(build)
 
 host:
-	mongod --dbpath F:\db\
+	mongod --dbpath $(dbPath)
 
 clean:
 ifeq ($(OS), Windows_NT)
