@@ -40,7 +40,7 @@ const Config: IConfig = {
     crossOrigin: '*',
     db: 'mongodb://localhost/markus-test',
     imagePath: 'F:/path',
-    imagePFolder: 12,
+    imagePFolder: 48,
     isDebug: true,
     maxThread: 4,
     uploadLimit: 25,

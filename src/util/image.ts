@@ -113,21 +113,21 @@ export const hashImage = (imagePath: string): Promise<string> => {
 
 export const Upload = (): Multer.Instance => {
     let count: number = 0;
-    let currentPath: string = Path.join(Config.imagePath, unique(7));
+    let currentPath: string = Path.join(Config.imagePath, unique(9));
     mkPathDir(currentPath);
 
     const storage: Multer.StorageEngine = Multer.diskStorage({
         destination: (req: any, file: Express.Multer.File, callback: (error: Error | null, destination: string) => void) => {
             if (count++ >= Config.imagePFolder) {
                 count = 0;
-                currentPath = Path.join(Config.imagePath, unique(7));
+                currentPath = Path.join(Config.imagePath, unique(9));
                 mkPathDir(currentPath);
             }
             callback(null, currentPath);
         },
         filename: (req: any, file: Express.Multer.File, callback: (error: Error | null, destination: string) => void) => {
             const type = file.mimetype.split('/')[1];
-            callback(null, unique(10) + '.' + type);
+            callback(null, unique(11) + '.' + type);
         },
     });
 
@@ -138,19 +138,19 @@ export const Upload = (): Multer.Instance => {
 
 export const UploadWithBase64 = (): ((base64: string) => Promise<string>) => {
     let count: number = 0;
-    let currentPath: string = Path.join(Config.imagePath, unique(7));
+    let currentPath: string = Path.join(Config.imagePath, unique(9));
     mkPathDir(currentPath);
 
     return (base64: string): Promise<string> => {
         if (count++ >= Config.imagePFolder) {
             count = 0;
-            currentPath = Path.join(Config.imagePath, unique(7));
+            currentPath = Path.join(Config.imagePath, unique(9));
             mkPathDir(currentPath);
         }
         return new Promise<string>((resolve: (value: string) => void, reject: (error: Error) => void) => {
             const splited: string[] = base64.split(';');
             const type: string = splited[0].split('/')[1];
-            const filePath: string = Path.join(currentPath, unique(10) + '.' + type);
+            const filePath: string = Path.join(currentPath, unique(11) + '.' + type);
             const data: string = splited[1].replace(/^base64,/, "");
             Fs.writeFile(filePath, new Buffer(data, 'base64'), (err: Error) => {
                 if (err) {
