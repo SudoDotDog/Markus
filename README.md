@@ -8,13 +8,22 @@
 
 > Host your Markus and read the following simple documents to get starting!
 
-## Host
+## Install
 
 ```bash
 git clone https://github.com/sudo-dog/Markus.git
 make install
+```
+
+## Host
+
+```bash
+# Use your process daemon controller
 make build
 node dist/script/service.js
+
+# Run in terminal
+make service
 ```
 
 ## Documents
