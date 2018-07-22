@@ -38,6 +38,12 @@ export interface IImageCallback {
     tags: string[];
 }
 
+export interface IImageUserFriendlyCallback {
+    id: ObjectID;
+    createdAt: Date;
+    tags: string[];
+}
+
 export interface IImageListResponse {
     active: boolean;
     id: ObjectID;

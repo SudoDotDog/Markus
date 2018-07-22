@@ -5,10 +5,11 @@
 
 import { ObjectID } from "bson";
 import { error, ERROR_CODE } from "../../util/error";
-import { buildImageCallback, imageModelToImageListResponse, releaseStorage } from "../../util/image";
-import { IImageCallback, IImageCreationConfig, IImageListResponse } from "../interface/image";
+import { buildImageCallback, buildImageUserFriendlyCallback, mergeArray, releaseStorage } from "../../util/image";
+import { IImageCallback, IImageCreationConfig, IImageUserFriendlyCallback } from "../interface/image";
 import { FileModel, IFileModel } from "../model/file";
 import { IImageModel, ImageModel } from "../model/image";
+import { ITagModel, TagModel } from "../model/tag";
 import { getImageById } from "./image";
 import { getTagsIdArrayByNames } from './tag';
 
@@ -76,13 +77,59 @@ export const getImageCallbackById = async (id: ObjectID): Promise<IImageCallback
     return buildImageCallback(image, file);
 };
 
-export const getImagesByTag = async (tag: string): Promise<IImageListResponse[]> => {
+export const getImageUserFriendlyCallbackByTag = async (tag: string): Promise<IImageUserFriendlyCallback[]> => {
     const images: IImageModel[] = await ImageModel.find({
         tags: tag,
         active: true,
     });
 
-    return images.map((image: IImageModel): IImageListResponse => {
-        return imageModelToImageListResponse(image);
+    const tagMap: Map<ObjectID, ITagModel> = new Map<ObjectID, ITagModel>();
+    const tagIdsArray: ObjectID[] = [];
+
+    for (let current of images) {
+        mergeArray(tagIdsArray, current.tags);
+    }
+
+    const tags: ITagModel[] = await TagModel.find({
+        _id: {
+            $in: tagIdsArray,
+        },
+    });
+
+    for (let current of tags) {
+        tagMap.set(current._id, current);
+    }
+
+    return images.map((image: IImageModel): IImageUserFriendlyCallback => {
+        const current: ITagModel[] = [];
+        for (let i of image.tags) {
+            current.push(tagMap.get(i));
+        }
+        return buildImageUserFriendlyCallback(image, current);
+    });
+};
+
+
+export const getImagesCallbacksByTag = async (tag: string): Promise<IImageCallback[]> => {
+    const images: IImageModel[] = await ImageModel.find({
+        tags: tag,
+        active: true,
+    });
+
+    const fileMap: Map<ObjectID, IFileModel> = new Map<ObjectID, IFileModel>();
+    const fileIdsArray: ObjectID[] = images.map((image) => image.file);
+
+    const files: IFileModel[] = await FileModel.find({
+        _id: {
+            $in: fileIdsArray,
+        },
+    });
+
+    for (let file of files) {
+        fileMap.set(file._id, file);
+    }
+
+    return images.map((image: IImageModel): IImageCallback => {
+        return buildImageCallback(image, fileMap.get(image._id));
     });
 };

@@ -8,11 +8,22 @@ import * as Fs from 'fs';
 import * as Multer from 'multer';
 import * as Path from 'path';
 import { ObjectID } from '../../node_modules/@types/bson';
-import { IImageCallback, IImageListResponse } from '../database/interface/image';
+import { IImageCallback, IImageListResponse, IImageUserFriendlyCallback } from '../database/interface/image';
 import { IFileModel } from '../database/model/file';
 import { IImageModel } from '../database/model/image';
+import { ITagModel } from '../database/model/tag';
 import Config from '../markus';
 import { error, ERROR_CODE } from './error';
+
+export const mergeArray: <T>(original: T[], target: T[]) => T[] = <T>(original: T[], target: T[]) => {
+    const tempArray: T[] = [...original];
+    for (let i of target) {
+        if (original.indexOf(i) === -1) {
+            tempArray.push(i);
+        }
+    }
+    return tempArray;
+};
 
 export const combineTagsArray = (original: string[], target: string[]): string[] => {
     const tempArray: string[] = [...original];
@@ -54,6 +65,14 @@ export const buildImageCallback = (image: IImageModel, file: IFileModel): IImage
         path: file.path,
         size: file.size,
         tags: image.tags.map((id: ObjectID) => id.toString()),
+    };
+};
+
+export const buildImageUserFriendlyCallback = (image: IImageModel, tags: ITagModel[]): IImageUserFriendlyCallback => {
+    return {
+        id: image._id,
+        createdAt: image.createdAt,
+        tags: tags.map((tag) => tag.name),
     };
 };
 
