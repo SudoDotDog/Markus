@@ -8,9 +8,7 @@ export interface ITagConfig {
 }
 
 export interface ITag extends ITagConfig {
-    count: number;
+    active: boolean;
     createdAt: Date;
-    prefix: string;
-    stepper: number;
     updatedAt: Date;
 }

@@ -11,33 +11,12 @@ export const ImageSchema: Schema = new Schema({
         type: Boolean,
         default: true,
     },
-    encoding: {
-        type: String,
-        required: true,
-    },
-    hash: {
-        type: String,
-        index: true,
-        required: true,
-    },
-    mime: {
-        type: String,
-        required: true,
-    },
-    original: {
-        type: String,
-        required: true,
-    },
-    path: {
-        type: String,
-        required: true,
-    },
-    size: {
-        type: Number,
+    file: {
+        type: Schema.Types.ObjectId,
         required: true,
     },
     tags: {
-        type: [String],
+        type: [Schema.Types.ObjectId],
         required: true,
         index: true,
         default: [],

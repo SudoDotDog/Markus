@@ -37,21 +37,6 @@ export const createDeduplicateImage = async (Option: IImageConfig): Promise<IIma
     }
 };
 
-export const createImage = async (options: IImageConfig): Promise<IImageModel> => {
-    const newImage: IImageModel = new ImageModel({
-        encoding: options.encoding,
-        hash: options.hash,
-        mime: options.mime,
-        original: options.original,
-        path: options.path,
-        size: options.size,
-        tags: options.tags || [],
-    });
-
-    await newImage.save();
-    return newImage;
-};
-
 export const deactiveImageById = async (id: ObjectID | string): Promise<IImageModel> => {
     let imageId: ObjectID;
     if (typeof id === 'string') {

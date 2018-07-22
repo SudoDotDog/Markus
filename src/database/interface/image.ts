@@ -5,20 +5,25 @@
 
 import { ObjectID } from "bson";
 
-export interface IImageConfig {
+export interface IImageCreationConfig {
     encoding: string;
     hash: string;
     mime: string;
     original: string;
     path: string;
     size: number;
-    tags?: string[];
+    tags: string[];
+}
+
+export interface IImageConfig {
+    tags?: ObjectID[];
+    file: ObjectID;
 }
 
 export interface IImage extends IImageConfig {
     active: boolean;
     createdAt: Date;
-    tags: string[];
+    tags: ObjectID[];
     updatedAt: Date;
 }
 
