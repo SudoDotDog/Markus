@@ -5,37 +5,9 @@
 
 import { ObjectID, ObjectId } from "bson";
 import { error, ERROR_CODE } from "../../util/error";
-import { combineTagsArray, imageModelToImageCallback, imageModelToImageListResponse, imageModelToImageListResponseAdmin, releaseStorage } from "../../util/image";
-import { IImageCallback, IImageConfig, IImageListResponse, IImageListResponseAdmin } from "../interface/image";
+import { imageModelToImageCallback, imageModelToImageListResponse, imageModelToImageListResponseAdmin } from "../../util/image";
+import { IImageCallback, IImageListResponse, IImageListResponseAdmin } from "../interface/image";
 import { IImageModel, ImageModel } from "../model/image";
-
-/**
- * Create a new image, if duplicate return target id and unlink incoming path
- * TODO!! Move release storage somewhere elese
- *
- * @param {IImageConfig} Option
- * @returns {Promise<IImageModel>}
- */
-export const createDeduplicateImage = async (Option: IImageConfig): Promise<IImageModel> => {
-    const SameHashImage: IImageModel | null = await ImageModel.findOne({
-        hash: Option.hash,
-        active: true,
-    });
-
-    if (SameHashImage) {
-        if (!Option.tags) {
-            Option.tags = [];
-        }
-        const newTags = combineTagsArray(SameHashImage.tags, Option.tags);
-        SameHashImage.tags = newTags;
-        await SameHashImage.save();
-        await releaseStorage(Option.path);
-        return SameHashImage;
-    } else {
-        const newImage: IImageModel = await createImage(Option);
-        return newImage;
-    }
-};
 
 export const deactiveImageById = async (id: ObjectID | string): Promise<IImageModel> => {
     let imageId: ObjectID;

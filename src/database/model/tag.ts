@@ -7,6 +7,10 @@ import { Document, model, Model, Schema } from "mongoose";
 import { ITag } from "../interface/tag";
 
 export const TagSchema: Schema = new Schema({
+    active: {
+        type: Boolean,
+        default: true,
+    },
     name: {
         type: String,
         required: true,
@@ -19,7 +23,6 @@ export const TagSchema: Schema = new Schema({
             updatedAt: true,
         },
     });
-
 
 export interface ITagModel extends ITag, Document {
 }
