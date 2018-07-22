@@ -4,14 +4,26 @@
  */
 
 import * as Crypto from 'crypto';
-import { NextFunction, Request, Response } from "express";
 import * as Fs from 'fs';
 import * as Multer from 'multer';
 import * as Path from 'path';
-import { IImageCallback, IImageListResponse, IImageListResponseAdmin } from '../database/interface/image';
+import { ObjectID } from '../../node_modules/@types/bson';
+import { IImageCallback, IImageListResponse, IImageUserFriendlyCallback } from '../database/interface/image';
+import { IFileModel } from '../database/model/file';
 import { IImageModel } from '../database/model/image';
+import { ITagModel } from '../database/model/tag';
 import Config from '../markus';
 import { error, ERROR_CODE } from './error';
+
+export const mergeArray: <T>(original: T[], target: T[]) => T[] = <T>(original: T[], target: T[]) => {
+    const tempArray: T[] = [...original];
+    for (let i of target) {
+        if (!original.map((element) => element.toString()).includes(i.toString())) {
+            tempArray.push(i);
+        }
+    }
+    return tempArray;
+};
 
 export const combineTagsArray = (original: string[], target: string[]): string[] => {
     const tempArray: string[] = [...original];
@@ -39,33 +51,28 @@ export const imageModelToImageListResponse = (image: IImageModel): IImageListRes
         active: image.active,
         id: image.id,
         createdAt: image.createdAt,
-        original: image.original,
-        size: image.size,
-        tags: image.tags,
+        tags: image.tags.map((id: ObjectID) => id.toString()),
     };
 };
 
-export const imageModelToImageListResponseAdmin = (image: IImageModel): IImageListResponseAdmin => {
+export const buildImageCallback = (image: IImageModel, file: IFileModel): IImageCallback => {
     return {
-        active: image.active,
         id: image.id,
         createdAt: image.createdAt,
-        hash: image.hash,
-        original: image.original,
-        size: image.size,
-        tags: image.tags,
+        encoding: file.encoding,
+        mime: file.mime,
+        original: file.original,
+        path: file.path,
+        size: file.size,
+        tags: image.tags.map((id: ObjectID) => id.toString()),
     };
 };
 
-export const imageModelToImageCallback = (image: IImageModel): IImageCallback => {
+export const buildImageUserFriendlyCallback = (image: IImageModel, tags: ITagModel[]): IImageUserFriendlyCallback => {
     return {
+        id: image._id,
         createdAt: image.createdAt,
-        encoding: image.encoding,
-        mime: image.mime,
-        original: image.original,
-        path: image.path,
-        size: image.size,
-        tags: image.tags,
+        tags: tags.map((tag) => tag.name),
     };
 };
 

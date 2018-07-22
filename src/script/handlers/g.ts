@@ -6,7 +6,7 @@
 import { ObjectId, ObjectID } from "bson";
 import { Request, Response } from "express";
 import * as Controller from '../../database/controller/import';
-import { IImageCallback, IImageListResponse } from "../../database/interface/image";
+import { IImageCallback, IImageListResponse, IImageUserFriendlyCallback } from "../../database/interface/image";
 import Config from "../../markus";
 import { error, ERROR_CODE, handlerError } from "../../util/error";
 import { RESPONSE } from '../../util/interface';
@@ -22,7 +22,7 @@ import { RESPONSE } from '../../util/interface';
 export const imageGetHandler = async (req: Request, res: Response): Promise<void> => {
     try {
         const id: ObjectID = new ObjectId(req.params.id);
-        const image: IImageCallback = await Controller.Image.getImageById(id);
+        const image: IImageCallback = await Controller.ImageMix.getImageCallbackById(id);
         res.status(200).sendFile(image.path);
     } catch (err) {
         handlerError(res, err);
@@ -41,32 +41,10 @@ export const imageGetHandler = async (req: Request, res: Response): Promise<void
 export const imageGetListByTagHandler = async (req: Request, res: Response): Promise<void> => {
     try {
         const tag: string = req.body.tag;
-        const images: IImageListResponse[] = await Controller.Image.getImagesByTag(tag);
+        const callbacks: IImageUserFriendlyCallback[] = await Controller.ImageMix.getImageUserFriendlyCallbackByTag(tag);
         res.status(200).send({
             status: RESPONSE.SUCCEED,
-            data: images,
-        });
-    } catch (err) {
-        handlerError(res, err);
-    }
-    return;
-};
-
-/**
- * POST
- * get list by original name
- *
- * @param {Request} req
- * @param {Response} res
- * @returns {Promise<void>}
- */
-export const imageGetListByOriginalNameHandler = async (req: Request, res: Response): Promise<void> => {
-    try {
-        const originalName: string = req.body.original;
-        const images: IImageListResponse[] = await Controller.Image.getImagesByOriginalName(originalName);
-        res.status(200).send({
-            status: RESPONSE.SUCCEED,
-            data: images,
+            data: callbacks,
         });
     } catch (err) {
         handlerError(res, err);
@@ -85,8 +63,8 @@ export const imageGetListByOriginalNameHandler = async (req: Request, res: Respo
 export const imageGetBlankWhiteHandler = async (req: Request, res: Response): Promise<void> => {
     try {
         const id: ObjectID = new ObjectId(req.params.id);
-        const image: IImageCallback = await Controller.Image.getImageById(id);
-        res.status(200).sendFile(image.path);
+        const callback: IImageCallback = await Controller.ImageMix.getImageCallbackById(id);
+        res.status(200).sendFile(callback.path);
     } catch (err) {
         res.status(200).sendFile(Config.white404ImagePath);
     }
@@ -104,8 +82,8 @@ export const imageGetBlankWhiteHandler = async (req: Request, res: Response): Pr
 export const imageGetBlankBlackHandler = async (req: Request, res: Response): Promise<void> => {
     try {
         const id: ObjectID = new ObjectId(req.params.id);
-        const image: IImageCallback = await Controller.Image.getImageById(id);
-        res.status(200).sendFile(image.path);
+        const callback: IImageCallback = await Controller.ImageMix.getImageCallbackById(id);
+        res.status(200).sendFile(callback.path);
     } catch (err) {
         res.status(200).sendFile(Config.black404ImagePath);
     }

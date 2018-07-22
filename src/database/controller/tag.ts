@@ -9,25 +9,44 @@ import { ITagConfig } from "../interface/tag";
 import { ITagModel, TagModel } from "../model/tag";
 
 export const createTag = async (options: ITagConfig): Promise<ITagModel> => {
-    const prefix = 'MARKUS~' + options.name.toUpperCase();
     const newTag: ITagModel = new TagModel({
-        count: 0,
         name: options.name,
-        prefix,
-        stepper: 0,
     });
 
     await newTag.save();
     return newTag;
 };
 
-export const increase = async (tagId: ObjectID): Promise<ITagModel> => {
-    const tag: ITagModel | null = await TagModel.findOne({ _id: tagId });
-    if (!tag) {
-        throw error(ERROR_CODE.TAG_NOT_FOUND);
-    }
+export const getTagsIdArrayByNames = async (names: string[]): Promise<ObjectID[]> => {
+    const tagsArray: ITagModel[] = await getTagsArrayByNames(names);
+    const tags: ObjectID[] = tagsArray.map((tag: ITagModel) => tag._id);
+    return tags;
+};
 
-    tag.increase();
-    await tag.save();
-    return tag;
+export const getTagsArrayByNames = async (names: string[]): Promise<ITagModel[]> => {
+    const tagArray: ITagModel[] = [];
+    for (let name of names) {
+        const current: ITagModel = await getTagByName(name);
+        tagArray.push(current);
+    }
+    return tagArray;
+};
+
+export const getTagsMapByNames = async (names: string[]): Promise<Map<string, ITagModel>> => {
+    const map: Map<string, ITagModel> = new Map<string, ITagModel>();
+    for (let name of names) {
+        const current: ITagModel = await getTagByName(name);
+        map.set(name, current);
+    }
+    return map;
+};
+
+export const getTagByName = async (name: string): Promise<ITagModel> => {
+    const tag: ITagModel | null = await TagModel.findOne({ name });
+    if (tag) {
+        return tag;
+    } else {
+        const newTag = await createTag({ name });
+        return newTag;
+    }
 };

@@ -6,6 +6,7 @@
 import { Request, Response } from "express";
 import * as Path from 'path';
 import * as Controller from '../../database/controller/import';
+import { IImageCallback } from "../../database/interface/image";
 import { IImageModel } from "../../database/model/image";
 import { error, ERROR_CODE, handlerError } from "../../util/error";
 import { hashImage, releaseStorage, UploadWithBase64 } from "../../util/image";
@@ -36,7 +37,7 @@ export const UploadBufferHandler = async (req: Request, res: Response): Promise<
             tags = preTags;
         }
         const hash: string = await hashImage(file.path);
-        const image: IImageModel = await Controller.Image.createDeduplicateImage({
+        const image: IImageCallback = await Controller.ImageMix.createDuplicateImage({
             encoding: file.encoding,
             mime: file.mimetype,
             original: file.originalname,
@@ -89,7 +90,7 @@ export const UploadBase64Handler = async (req: Request, res: Response): Promise<
         const ext: string = Path.extname(filepath);
         const hash: string = await hashImage(filepath);
 
-        const image: IImageModel = await Controller.Image.createDeduplicateImage({
+        const image: IImageCallback = await Controller.ImageMix.createDuplicateImage({
             encoding: 'base64',
             mime: ext.substring(1, ext.length),
             original: originalName,
@@ -120,7 +121,7 @@ export const DeactiveImageHandler = async (req: Request, res: Response): Promise
         const imageId: string = req.body.id;
         const image: IImageModel = await Controller.Image.deactiveImageById(imageId);
 
-        await releaseStorage(image.path);
+        // await releaseStorage(image.path);
 
         res.status(200).send({
             status: RESPONSE.SUCCEED,
@@ -143,9 +144,9 @@ export const DeactiveTagHandler = async (req: Request, res: Response): Promise<v
         const tag: string = req.body.tag;
         const images: IImageModel[] = await Controller.Image.deactiveImageByTag(tag);
 
-        images.forEach(async (image) => {
-            await releaseStorage(image.path);
-        });
+        // images.forEach(async (image) => {
+        //     await releaseStorage(image.path);
+        // });
 
         res.status(200).send({
             status: RESPONSE.SUCCEED,

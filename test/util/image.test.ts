@@ -4,12 +4,24 @@
  */
 
 import { expect } from 'chai';
-import { combineTagsArray, unique } from '../../src/util/image';
+import { combineTagsArray, mergeArray, unique } from '../../src/util/image';
 
 describe('test formula image util functions', (): void => {
+    it('merge array function shall return deduplicate array', (): void => {
+        const original: string[] = ['hello', 'world'];
+        const target: string[] = ['apple', 'world'];
+
+        const result = mergeArray(original, target);
+        expect(result).to.be.deep.equal([
+            'hello',
+            'world',
+            'apple',
+        ]);
+    });
+
     it('combine tag function shall return deduplicate array', (): void => {
-        const original = ['hello', 'world'];
-        const target = ['apple', 'world'];
+        const original: string[] = ['hello', 'world'];
+        const target: string[] = ['apple', 'world'];
 
         const result = combineTagsArray(original, target);
         expect(result).to.be.deep.equal([
