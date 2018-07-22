@@ -5,10 +5,11 @@
 
 import { ObjectID } from "bson";
 import { error, ERROR_CODE } from "../../util/error";
-import { buildImageCallback, imageModelToImageListResponse, releaseStorage } from "../../util/image";
-import { IImageCallback, IImageCreationConfig, IImageListResponse } from "../interface/image";
+import { buildImageCallback, buildImageUserFriendlyCallback, mergeArray, releaseStorage } from "../../util/image";
+import { IImageCallback, IImageCreationConfig, IImageUserFriendlyCallback } from "../interface/image";
 import { FileModel, IFileModel } from "../model/file";
 import { IImageModel, ImageModel } from "../model/image";
+import { ITagModel, TagModel } from "../model/tag";
 import { getImageById } from "./image";
 import { getTagsIdArrayByNames } from './tag';
 
@@ -76,13 +77,75 @@ export const getImageCallbackById = async (id: ObjectID): Promise<IImageCallback
     return buildImageCallback(image, file);
 };
 
-export const getImagesByTag = async (tag: string): Promise<IImageListResponse[]> => {
+export const getImageUserFriendlyCallbackByTag = async (tagString: string, includeInactive?: boolean): Promise<IImageUserFriendlyCallback[]> => {
+    const tag: ITagModel | null = await TagModel.findOne({ name: tagString });
+    if (!tag) { throw error(ERROR_CODE.TAG_NOT_FOUND); }
+
+    let query: any = {
+        tags: tag,
+    };
+    if (!includeInactive) { query.active = true; }
+
+    const images: IImageModel[] = await ImageModel.find(query);
+
+    const tagMap: Map<ObjectID, ITagModel> = new Map<ObjectID, ITagModel>();
+    const tagIdsArray: ObjectID[] = [];
+
+    for (let current of images) {
+        mergeArray(tagIdsArray, current.tags);
+    }
+
+    const tags: ITagModel[] = await TagModel.find({
+        _id: {
+            $in: tagIdsArray,
+        },
+    });
+
+    for (let current of tags) {
+        tagMap.set(current._id, current);
+    }
+
+    return images.map((image: IImageModel): IImageUserFriendlyCallback => {
+        const current: ITagModel[] = [];
+        for (let i of image.tags) {
+            const currentTag: ITagModel | undefined = tagMap.get(i);
+            if (currentTag) { current.push(currentTag); }
+        }
+        return buildImageUserFriendlyCallback(image, current);
+    });
+};
+
+
+export const getImagesCallbacksByTag = async (tagString: string, includeInactive?: boolean): Promise<IImageCallback[]> => {
+    const tag: ITagModel | null = await TagModel.findOne({ name: tagString });
+    if (!tag) { throw error(ERROR_CODE.TAG_NOT_FOUND); }
+
+    let query: any = {
+        tags: tag,
+    };
+    if (!includeInactive) { query.active = true; }
+
     const images: IImageModel[] = await ImageModel.find({
         tags: tag,
         active: true,
     });
 
-    return images.map((image: IImageModel): IImageListResponse => {
-        return imageModelToImageListResponse(image);
+    const fileMap: Map<ObjectID, IFileModel> = new Map<ObjectID, IFileModel>();
+    const fileIdsArray: ObjectID[] = images.map((image) => image.file);
+
+    const files: IFileModel[] = await FileModel.find({
+        _id: {
+            $in: fileIdsArray,
+        },
+    });
+
+    for (let file of files) {
+        fileMap.set(file._id, file);
+    }
+
+    return images.map((image: IImageModel): IImageCallback => {
+        const currentFile: IFileModel | undefined = fileMap.get(image._id);
+        if (!currentFile) { throw error(ERROR_CODE.FILE_NOT_FOUND); }
+        return buildImageCallback(image, currentFile);
     });
 };
