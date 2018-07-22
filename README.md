@@ -29,5 +29,6 @@ node dist/script/service.js
 ### Markus SDKs
 
 -   [Markus-SDK-Node](https://github.com/sudo-dog/Markus-SDK-Node)
+-   [Markus-SDK-Fetch](https://github.com/sudo-dog/Markus-SDK-Fetch)
 
 > Created by [Ghoti-CLI](https://github.com/WMXPY/Ghoti-CLI/) 4.1.2
