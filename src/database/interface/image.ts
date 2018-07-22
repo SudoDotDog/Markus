@@ -28,6 +28,7 @@ export interface IImage extends IImageConfig {
 }
 
 export interface IImageCallback {
+    id: ObjectID;
     createdAt: Date;
     encoding: string;
     mime: string;
@@ -41,11 +42,5 @@ export interface IImageListResponse {
     active: boolean;
     id: ObjectID;
     createdAt: Date;
-    original: string;
-    size: number;
     tags: string[];
-}
-
-export interface IImageListResponseAdmin extends IImageListResponse {
-    hash: string;
 }

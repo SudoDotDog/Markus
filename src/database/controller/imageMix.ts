@@ -5,8 +5,8 @@
 
 import { ObjectID } from "bson";
 import { error, ERROR_CODE } from "../../util/error";
-import { buildImageCallback, releaseStorage } from "../../util/image";
-import { IImageCallback, IImageCreationConfig } from "../interface/image";
+import { buildImageCallback, imageModelToImageListResponse, releaseStorage } from "../../util/image";
+import { IImageCallback, IImageCreationConfig, IImageListResponse } from "../interface/image";
 import { FileModel, IFileModel } from "../model/file";
 import { IImageModel, ImageModel } from "../model/image";
 import { getImageById } from "./image";
@@ -24,7 +24,7 @@ export const getFileById = async (id: ObjectID): Promise<IFileModel> => {
     return file;
 };
 
-export const createImage = async (option: IImageCreationConfig): Promise<IImageModel> => {
+export const createImage = async (option: IImageCreationConfig): Promise<IImageCallback> => {
     const newFile: IFileModel = new FileModel({
         encoding: option.encoding,
         hash: option.hash,
@@ -43,10 +43,10 @@ export const createImage = async (option: IImageCreationConfig): Promise<IImageM
 
     await newFile.save();
     await newImage.save();
-    return newImage;
+    return buildImageCallback(newImage, newFile);
 };
 
-export const createDuplicateImage = async (option: IImageCreationConfig): Promise<IImageModel> => {
+export const createDuplicateImage = async (option: IImageCreationConfig): Promise<IImageCallback> => {
     const sameHashFile: IFileModel | null = await FileModel.findOne({
         active: true,
         hash: option.hash,
@@ -62,7 +62,7 @@ export const createDuplicateImage = async (option: IImageCreationConfig): Promis
 
         await newImage.save();
         await releaseStorage(option.path);
-        return newImage;
+        return buildImageCallback(newImage, sameHashFile);
     } else {
         const newImage = await createImage(option);
         return newImage;
@@ -74,4 +74,15 @@ export const getImageCallbackById = async (id: ObjectID): Promise<IImageCallback
     const file: IFileModel = await getFileById(image.file);
 
     return buildImageCallback(image, file);
+};
+
+export const getImagesByTag = async (tag: string): Promise<IImageListResponse[]> => {
+    const images: IImageModel[] = await ImageModel.find({
+        tags: tag,
+        active: true,
+    });
+
+    return images.map((image: IImageModel): IImageListResponse => {
+        return imageModelToImageListResponse(image);
+    });
 };

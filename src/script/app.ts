@@ -43,7 +43,6 @@ app.get('/b/:id', ...prepares, Handler.G.imageGetBlankBlackHandler);
 
 // Handler(s) for Image List Get
 app.post('/tag', ...prepares, Handler.G.imageGetListByTagHandler);
-app.post('/original', ...prepares, Handler.G.imageGetListByOriginalNameHandler);
 
 // Handler(s) for Image status change
 app.post('/deactive/id', ...prepares, ...permissions, Handler.M.DeactiveImageHandler);

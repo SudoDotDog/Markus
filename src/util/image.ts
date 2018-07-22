@@ -8,7 +8,7 @@ import * as Fs from 'fs';
 import * as Multer from 'multer';
 import * as Path from 'path';
 import { ObjectID } from '../../node_modules/@types/bson';
-import { IImageCallback } from '../database/interface/image';
+import { IImageCallback, IImageListResponse } from '../database/interface/image';
 import { IFileModel } from '../database/model/file';
 import { IImageModel } from '../database/model/image';
 import Config from '../markus';
@@ -35,31 +35,18 @@ export const releaseStorage = (path: string): Promise<void> => {
     });
 };
 
-// export const imageModelToImageListResponse = (image: IImageModel): IImageListResponse => {
-//     return {
-//         active: image.active,
-//         id: image.id,
-//         createdAt: image.createdAt,
-//         original: image.original,
-//         size: image.size,
-//         tags: image.tags,
-//     };
-// };
-
-// export const imageModelToImageListResponseAdmin = (image: IImageModel): IImageListResponseAdmin => {
-//     return {
-//         active: image.active,
-//         id: image.id,
-//         createdAt: image.createdAt,
-//         hash: image.hash,
-//         original: image.original,
-//         size: image.size,
-//         tags: image.tags,
-//     };
-// };
+export const imageModelToImageListResponse = (image: IImageModel): IImageListResponse => {
+    return {
+        active: image.active,
+        id: image.id,
+        createdAt: image.createdAt,
+        tags: image.tags.map((id: ObjectID) => id.toString()),
+    };
+};
 
 export const buildImageCallback = (image: IImageModel, file: IFileModel): IImageCallback => {
     return {
+        id: image.id,
         createdAt: image.createdAt,
         encoding: file.encoding,
         mime: file.mime,

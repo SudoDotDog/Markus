@@ -12,11 +12,11 @@ import { mockUnlinkSet } from '../../mock/mock';
 
 export const testImageController = (): void => {
     describe('image controller test', (): void => {
-        let image: IImageModel;
-        let duplicatedImage: IImageModel;
+        let image: IImageCallback;
+        let duplicatedImage: IImageCallback;
 
         const refreshImage = async (): Promise<void> => {
-            const temp: IImageModel | null = await ImageModel.findOne({ _id: image._id });
+            const temp: IImageCallback | null = await getImageCallbackById(image.id);
             if (temp) {
                 image = temp;
             } else {
@@ -36,8 +36,7 @@ export const testImageController = (): void => {
                 tags: ['a'],
             });
 
-            // tslint:disable-next-line
-            expect(image.active).to.be.true;
+            expect(image.size).to.be.equal(15);
             return;
         }).timeout(3200);
 
@@ -54,46 +53,49 @@ export const testImageController = (): void => {
             });
 
             const result: string[] = restoreUnlink();
-            expect(image.file.toString()).to.be.equal(duplicatedImage.file.toString());
+            expect(image.path).to.be.equal(duplicatedImage.path);
             expect(result).to.be.lengthOf(1); // TODO
             return;
         }).timeout(3200);
 
         it('get image by id should return image callback', async (): Promise<void> => {
-            const tempImage: IImageCallback = await getImageCallbackById(image._id);
+            const tempImage: IImageCallback = await getImageCallbackById(image.id);
 
             expect(tempImage.createdAt.toString()).to.be.equal(image.createdAt.toString());
             return;
         }).timeout(3200);
 
-        // it('deactive image should deactive image and return image id', async (): Promise<void> => {
-        //     const restoreUnlink: () => string[] = mockUnlinkSet();
-        //     await deactiveImageById(image._id);
-        //     await refreshImage();
+        it('deactive image should deactive image and return image id', async (): Promise<void> => {
+            const restoreUnlink: () => string[] = mockUnlinkSet();
+            await deactiveImageById(image.id);
+            const imageModel: IImageModel | null = await ImageModel.findOne({ _id: image.id });
 
-        //     const result: string[] = restoreUnlink();
-        //     // tslint:disable-next-line
-        //     expect(image.active).to.be.false;
-        //     expect(result).to.be.lengthOf(0);
-        //     return;
-        // }).timeout(3200);
+            const result: string[] = restoreUnlink();
 
-        // it('get image by id should return throw error when image is deactive', async (): Promise<void> => {
-        //     let testError: Error = error(ERROR_CODE.DEFAULT_TEST_ERROR);
+            // tslint:disable-next-line
+            expect(imageModel).to.be.not.null;
+            // tslint:disable-next-line
+            expect((imageModel as IImageModel).active).to.be.false;
+            expect(result).to.be.lengthOf(0);
+            return;
+        }).timeout(3200);
 
-        //     try {
-        //         await getImageById(image._id);
-        //     } catch (err) {
-        //         testError = err;
-        //     } finally {
-        //         const result = compareError(
-        //             testError,
-        //             error(ERROR_CODE.IMAGE_GET_FAILED),
-        //         );
-        //         // tslint:disable-next-line
-        //         expect(result).to.be.true;
-        //     }
-        //     return;
-        // }).timeout(3200);
+        it('get image by id should return throw error when image is deactive', async (): Promise<void> => {
+            let testError: Error = error(ERROR_CODE.DEFAULT_TEST_ERROR);
+
+            try {
+                await getImageById(image.id);
+            } catch (err) {
+                testError = err;
+            } finally {
+                const result = compareError(
+                    testError,
+                    error(ERROR_CODE.IMAGE_GET_FAILED),
+                );
+                // tslint:disable-next-line
+                expect(result).to.be.true;
+            }
+            return;
+        }).timeout(3200);
     });
 };
