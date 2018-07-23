@@ -3,6 +3,8 @@
         "Gitter",
         "Markus",
         "SDKs",
+        "Sparidae",
+        "chaetodon",
         "dbpath",
         "filepath",
         "ifeq",
@@ -10,6 +12,9 @@
         "mongod",
         "originalname",
         "splited",
-        "tshook"
+        "tshook",
+        "ubuild",
+        "xlink",
+        "xmlns"
     ]
 }
