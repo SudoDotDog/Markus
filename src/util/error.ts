@@ -27,6 +27,9 @@ export enum ERROR_CODE {
 
     FOUR_O_FOUR_NOT_FOUND = 404,
 
+    COLOR_INTERNAL_ERROR = 600,
+    POINT_INTERNAL_ERROR = 601,
+
     UNKNOWN_ERROR_CODE = 900,
     INTERNAL_ERROR = 901,
     DEFAULT_TEST_ERROR = 902,
@@ -47,6 +50,8 @@ export const errorList: {
     230: 'File not found',
     300: 'Permission valid failed',
     404: 'Request URL not found',
+    600: 'Color internal error',
+    601: 'Point internal error',
     900: 'Unknown error code',
     901: 'Internal error, report it at github.com/sudo-dog/markus',
     902: 'Default test error',

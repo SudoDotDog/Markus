@@ -1,9 +1,2 @@
-import Sparidae from 'sparidae';
+import { } from './icon/icon';
 
-const a = Sparidae(
-    "PCXPY", {
-        long: true,
-    },
-);
-
-console.log(a);
