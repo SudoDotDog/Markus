@@ -39,7 +39,7 @@
   },
   "homepage": "https://github.com/sudo-dog/Markus#readme",
   "dependencies": {
-    "bkc": "^3.1.1",
+    "bkc": "^3.1.2",
     "body-parser": "^1.18.3",
     "chaetodon": "^1.0.1",
     "express": "^4.16.3",
