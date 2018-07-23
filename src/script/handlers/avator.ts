@@ -18,7 +18,7 @@ export const avatorGetHandler = async (req: Request, res: Response): Promise<voi
         if (callback) {
             res.status(200).sendFile(callback.path);
         } else {
-
+            res.status(200).send();
         }
     } catch (err) {
         handlerError(res, err);
