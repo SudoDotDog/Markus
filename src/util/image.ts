@@ -15,6 +15,16 @@ import { ITagModel } from '../database/model/tag';
 import Config from '../markus';
 import { error, ERROR_CODE } from './error';
 
+export const createTempFile = (content: string, type: string): string => {
+    const tempPath: string = Path.join(Config.imagePath, 'temp');
+    mkPathDir(tempPath);
+
+    const filePath = Path.join(tempPath, unique(11) + '.' + type);
+    Fs.writeFileSync(filePath, content);
+
+    return filePath;
+};
+
 export const mergeArray: <T>(original: T[], target: T[]) => T[] = <T>(original: T[], target: T[]) => {
     const tempArray: T[] = [...original];
     for (let i of target) {
@@ -95,7 +105,10 @@ export const unique = (len?: number) => {
 };
 
 export const mkPathDir = (path: string) => {
-    Fs.mkdirSync(path);
+    const exist: boolean = Fs.existsSync(path);
+    if (!exist) {
+        Fs.mkdirSync(path);
+    }
 };
 
 export const hashImage = (imagePath: string): Promise<string> => {

@@ -9,17 +9,18 @@ import { IAvatorCallback } from '../../database/interface/avator';
 import { IFileModel } from "../../database/model/file";
 import { Icon } from "../../icon/icon";
 import { error, ERROR_CODE, handlerError } from "../../util/error";
-import { hashImage, releaseStorage } from "../../util/image";
+import { createTempFile, hashImage, releaseStorage } from "../../util/image";
 import { RESPONSE } from "../../util/interface";
 
 export const avatorGetHandler = async (req: Request, res: Response): Promise<void> => {
     try {
-        const avator = req.query.avator;
+        const avator = req.params.avator;
         const callback: IFileModel | null = await Controller.AvatorMix.getFileByAvator(avator);
         if (callback) {
             res.status(200).sendFile(callback.path);
         } else {
-            res.status(200).send(Icon(avator));
+            const tempFilePath: string = createTempFile(Icon(avator), 'svg');
+            res.status(200).sendFile(tempFilePath);
         }
     } catch (err) {
         handlerError(res, err);

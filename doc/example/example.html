@@ -37,6 +37,7 @@
         <input id="get">
         <button id="getBtnW">Get White</button>
         <button id="getBtnB">Get Black</button>
+        <button id="getBtnA">Get Avator</button>
         <button onclick="alert('DELETED, YOU SHOULD USE GET WHITE OR GET BLACK INSTEAD')">Get (DELETED, YOU SHOULD USE GET WHITE OR GET BLACK INSTEAD)</button>
     </div>
     <hr>
@@ -166,6 +167,10 @@
 
     $("#getBtn").on("click", function () {
         $("#getImg").attr("src", targetUrl + "/g/" + $("#get").val());
+    });
+
+    $("#getBtnA").on("click", function () {
+        $("#getImg").attr("src", targetUrl + "/a/" + $("#get").val());
     });
 
     $("#getBtnW").on("click", function () {

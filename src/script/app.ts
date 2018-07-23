@@ -41,9 +41,8 @@ const permissions = Config.middleware.permissions;
 app.get('/w/:id', ...prepares, Handler.G.imageGetBlankWhiteHandler);
 app.get('/b/:id', ...prepares, Handler.G.imageGetBlankBlackHandler);
 
-// Handler(s) for Image Get
-app.get('/a/:avator', ...prepares, Handler.G.imageGetBlankWhiteHandler);
-app.get('/b/:id', ...prepares, Handler.G.imageGetBlankBlackHandler);
+// Handler(s) for Avator Get
+app.get('/a/:avator', ...prepares, Handler.Avator.avatorGetHandler);
 
 // Handler(s) for Image List Get
 app.post('/tag', ...prepares, Handler.G.imageGetListByTagHandler);

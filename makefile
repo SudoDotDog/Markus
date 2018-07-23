@@ -5,7 +5,7 @@ dbPath := F:/db/
 
 markus: dev service
 
-service:
+service: 
 	node ./dist/script/service.js
 
 run:
@@ -14,7 +14,9 @@ run:
 dev:
 	tsc --p $(dev)
 
-build: clean
+build: clean ubuild
+
+ubuild:
 	tsc --p $(build)
 
 host:
