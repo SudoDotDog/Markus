@@ -8,7 +8,6 @@ import * as express from "express";
 import { NextFunction, Request, Response } from "express";
 import * as mongoose from "mongoose";
 import Config from "../markus";
-import { Upload } from "../util/image";
 import * as Handler from './handlers/import';
 
 mongoose.connect(Config.db);
