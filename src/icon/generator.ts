@@ -1,5 +1,6 @@
 /**
  * @author WMXPY
+ * @description Sparidae
  * @fileoverview Generator Icon Class
  */
 

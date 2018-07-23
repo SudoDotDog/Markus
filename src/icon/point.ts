@@ -1,5 +1,6 @@
 /**
  * @author WMXPY
+ * @description Sparidae
  * @fileoverview Point Icon Class
  */
 
@@ -86,6 +87,17 @@ export default class Point {
     public getRandom(limit: number): number {
         let ran: number = Math.floor(Math.random() * 1000);
         return Math.floor((ran % limit) - limit / 2);
+    }
+
+    public getEndPoint(): IPoint {
+        return {
+            x: EDGE.LENGTH - 30,
+            y: EDGE.LENGTH - 30,
+        };
+    }
+
+    public getFontSize(): number {
+        return Math.floor(EDGE.LENGTH / 2.15);
     }
 
     public checkQueue(edge: number): boolean {
