@@ -6,7 +6,7 @@
 import { ObjectId, ObjectID } from "bson";
 import { Request, Response } from "express";
 import * as Controller from '../../database/controller/import';
-import { IImageCallback, IImageListResponse, IImageUserFriendlyCallback } from "../../database/interface/image";
+import { IImageCallback, IImageUserFriendlyCallback } from "../../database/interface/image";
 import Config from "../../markus";
 import { error, ERROR_CODE, handlerError } from "../../util/error";
 import { RESPONSE } from '../../util/interface';
