@@ -8,6 +8,7 @@ import { createDuplicateImage, createImage, getImageCallbackById, getImagesCallb
 import { IImageCallback } from '../../../src/database/interface/image';
 import { IImageModel, ImageModel } from '../../../src/database/model/image';
 import { compareError, error, ERROR_CODE } from '../../../src/util/error';
+import MockManager from '../../mock/manager';
 import { mockUnlinkSet } from '../../mock/mock';
 
 export const testImageController = (): void => {
@@ -26,35 +27,43 @@ export const testImageController = (): void => {
         };
 
         it('create image should give correct image', async (): Promise<void> => {
+            const mock = new MockManager('path', 'hash', 'mime');
+
             image = await createImage({
                 encoding: 'test',
                 hash: 'test',
                 mime: 'test',
                 original: 'test',
-                path: 'test',
+                manager: mock,
                 size: 15,
                 tags: ['a'],
             });
 
             expect(image.size).to.be.equal(15);
+            expect(mock.getReleaseCount()).to.be.equal(0);
+            expect(mock.getSaveCount()).to.be.equal(1);
             return;
         }).timeout(3200);
 
         it('create duplicated image with same hash should return same id and unlink same image', async (): Promise<void> => {
+            const mock = new MockManager('path', 'hash', 'mime');
+
             const restoreUnlink: () => string[] = mockUnlinkSet();
             duplicatedImage = await createDuplicateImage({
                 encoding: 'test',
                 hash: 'test',
                 mime: 'test',
                 original: 'test',
-                path: 'test',
+                manager: mock,
                 size: 15,
                 tags: ['a'],
             });
 
             const result: string[] = restoreUnlink();
             expect(image.path).to.be.equal(duplicatedImage.path);
-            expect(result).to.be.lengthOf(1); // TODO
+            expect(result).to.be.lengthOf(0);
+            expect(mock.getReleaseCount()).to.be.equal(1);
+            expect(mock.getSaveCount()).to.be.equal(0);
             return;
         }).timeout(3200);
 
