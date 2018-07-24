@@ -4,6 +4,7 @@
  */
 
 import { ObjectID } from "bson";
+import { IFileManager } from "../../util/manager/file/import";
 
 export interface IAvatorConfig {
     avator: string;
@@ -22,7 +23,7 @@ export interface IAvatorCreationConfig {
     hash: string;
     mime: string;
     original: string;
-    path: string;
+    manager: IFileManager;
     size: number;
 }
 

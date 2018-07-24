@@ -65,6 +65,8 @@ export const createDuplicateImage = async (option: IImageCreationConfig): Promis
             file: sameHashFile._id,
         });
 
+        sameHashFile.refIncrement();
+        await sameHashFile.save();
         await newImage.save();
         option.manager.release();
         return buildImageCallback(newImage, sameHashFile);

@@ -7,6 +7,7 @@ import { Request, Response } from "express";
 import * as Controller from '../../database/controller/import';
 import { IImageCallback } from "../../database/interface/image";
 import { IImageModel } from "../../database/model/image";
+import { } from "../../declare/global";
 import { error, ERROR_CODE, handlerError } from "../../util/error";
 import { RESPONSE } from '../../util/interface';
 import { IFileManager } from "../../util/manager/file/import";

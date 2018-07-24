@@ -11,15 +11,6 @@ import { error, ERROR_CODE, handlerError } from '../error';
 import { mkPathDir, unique } from "../image";
 import { Base64FileManager, BufferFileManager, IFileManager } from './file/import';
 
-declare global {
-    namespace Express {
-        // tslint:disable-next-line
-        interface Request {
-            manager: IFileManager;
-        }
-    }
-}
-
 export default class UploadManager {
     private _currentFolder: string;
     private _count: number;

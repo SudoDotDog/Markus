@@ -7,15 +7,6 @@ import { NextFunction, Request, Response } from 'express';
 import * as Path from 'path';
 import { error, ERROR_CODE, handlerError } from './util/error';
 
-declare global {
-    namespace Express {
-        // tslint:disable-next-line
-        interface Request {
-            valid?: boolean;
-        }
-    }
-}
-
 export type middleware = (req: Request, res: Response, next: NextFunction) => Promise<void>;
 
 interface IConfig {
