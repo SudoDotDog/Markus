@@ -22,6 +22,9 @@ ubuild:
 host:
 	mongod --dbpath $(dbPath)
 
+help:
+	echo "make: run application"
+
 clean:
 ifeq ($(OS), Windows_NT)
 	cmd //C del dist
