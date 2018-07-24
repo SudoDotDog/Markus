@@ -4,12 +4,10 @@
  */
 
 import { Request, Response } from "express";
-import * as Path from 'path';
 import * as Controller from '../../database/controller/import';
 import { IImageCallback } from "../../database/interface/image";
 import { IImageModel } from "../../database/model/image";
 import { error, ERROR_CODE, handlerError } from "../../util/error";
-import { hashImage, releaseStorage } from "../../util/image";
 import { RESPONSE } from '../../util/interface';
 import { IFileManager } from "../../util/manager/file/import";
 

@@ -13,6 +13,7 @@ import { IImageModel } from '../database/model/image';
 import { ITagModel } from '../database/model/tag';
 import Config from '../markus';
 import { error, ERROR_CODE } from './error';
+import * as Stream from 'stream';
 
 export const createTempFile = (content: string, type: string): string => {
     const tempPath: string = Path.join(Config.imagePath, 'temp');
@@ -110,24 +111,9 @@ export const mkPathDir = (path: string) => {
     }
 };
 
-export const hashBuffer = (buffer: Buffer): Promise<string> => {
-    const stream: Fs.ReadStream = Fs.createReadStream(buffer);
+export const hashBuffer = (buffer: Buffer): string => {
     const fsHash: Crypto.Hash = Crypto.createHash('md5');
-
-    return new Promise<string>((resolve: (md5: string) => void, reject: (reason: Error) => void) => {
-        stream.on('data', (dataChunk: any) => {
-            fsHash.update(dataChunk);
-        });
-
-        stream.on('end', () => {
-            const md5: string = fsHash.digest('hex');
-            resolve(md5);
-        });
-
-        stream.on('close', (err: Error) => {
-            reject(err);
-        });
-    });
+    return fsHash.update(buffer).digest('hex');
 };
 
 export const hashImage = (imagePath: string): Promise<string> => {

@@ -5,6 +5,7 @@
 
 import { NextFunction, Request, Response } from 'express';
 import * as Path from 'path';
+import { error, ERROR_CODE, handlerError } from './util/error';
 
 declare global {
     namespace Express {
@@ -36,13 +37,17 @@ interface IConfig {
 }
 
 const validPermissionMiddleware: middleware = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    if (req.body.key === 'test') {
-        req.valid = true;
+    if (req.body.key) {
+        if (req.body.key === 'test') {
+            req.valid = true;
+        } else {
+            req.valid = false;
+        }
+        next();
+        return;
     } else {
-        req.valid = false;
+        handlerError(res, error(ERROR_CODE.PERMISSION_VALID_FAILED));
     }
-    next();
-    return;
 };
 
 const Config: IConfig = {
