@@ -33,7 +33,7 @@ export const createOrUpdateAvator = async (option: IAvatorCreationConfig): Promi
         original: option.original,
         path: option.path,
         size: option.size,
-    });
+    }).refIncrement();
     await newFile.save();
     // TODO unlink old file
 

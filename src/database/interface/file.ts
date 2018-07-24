@@ -15,5 +15,6 @@ export interface IFileConfig {
 export interface IFile extends IFileConfig {
     active: boolean;
     createdAt: Date;
+    reference: number;
     updatedAt: Date;
 }

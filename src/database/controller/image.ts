@@ -7,7 +7,9 @@ import { ObjectID, ObjectId } from "bson";
 import { error, ERROR_CODE } from "../../util/error";
 import { imageModelToImageListResponse } from "../../util/image";
 import { IImageListResponse } from "../interface/image";
+import { IFileModel } from "../model/file";
 import { IImageModel, ImageModel } from "../model/image";
+import { getFileById } from "./imageMix";
 
 export const deactiveImageById = async (id: ObjectID | string): Promise<IImageModel> => {
     let imageId: ObjectID;
@@ -20,13 +22,17 @@ export const deactiveImageById = async (id: ObjectID | string): Promise<IImageMo
     } else {
         imageId = id;
     }
+
     const result: IImageModel | null = await ImageModel.findOne({ _id: imageId });
 
     if (!result) {
         throw error(ERROR_CODE.IMAGE_GET_FAILED);
     }
 
+    const file: IFileModel = await getFileById(result.file);
+    file.refDecrement();
     result.deactive();
+    await file.save();
     await result.save();
     return result;
 };
@@ -39,7 +45,10 @@ export const deactiveImageByTag = async (tag: string): Promise<IImageModel[]> =>
     }
 
     results.forEach(async (result: IImageModel) => {
+        const file: IFileModel = await getFileById(result.file);
+        file.refDecrement();
         result.deactive();
+        await file.save();
         await result.save();
     });
 

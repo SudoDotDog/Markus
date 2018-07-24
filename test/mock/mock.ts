@@ -40,6 +40,35 @@ export const mockUnlinkSet = (): () => string[] => {
     };
 };
 
+export const mockWriteFile = (): () => Array<{
+    content: string;
+    path: string;
+}> => {
+    type WriteCB = (err: Error | null) => void;
+
+    const tempWrite: (path: string, cb: WriteCB) => void = fs.unlink;
+    const writeSet: Array<{
+        content: string;
+        path: string;
+    }> = [];
+
+    (fs as any).writeFile = (path: string, content: string, cb: WriteCB) => {
+        writeSet.push({
+            path,
+            content,
+        });
+        cb(null);
+    };
+
+    return (): Array<{
+        content: string;
+        path: string;
+    }> => {
+        (fs as any).writeFile = tempWrite;
+        return writeSet;
+    };
+};
+
 export const monkFsSyncs = (func: () => any) => {
     const tempUnlinkSync: any = fs.unlinkSync;
     const tempReadFileSync: any = fs.readFileSync;

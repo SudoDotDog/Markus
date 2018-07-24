@@ -37,7 +37,7 @@ export const createImage = async (option: IImageCreationConfig): Promise<IImageC
         original: option.original,
         path,
         size: option.size,
-    });
+    }).refIncrement();
 
     const tags: ObjectID[] = await getTagsIdArrayByNames(option.tags);
 

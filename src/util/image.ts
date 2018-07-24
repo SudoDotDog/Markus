@@ -13,7 +13,6 @@ import { IImageModel } from '../database/model/image';
 import { ITagModel } from '../database/model/tag';
 import Config from '../markus';
 import { error, ERROR_CODE } from './error';
-import * as Stream from 'stream';
 
 export const createTempFile = (content: string, type: string): string => {
     const tempPath: string = Path.join(Config.imagePath, 'temp');

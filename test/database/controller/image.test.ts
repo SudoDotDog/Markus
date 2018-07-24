@@ -77,6 +77,7 @@ export const testImageController = (): void => {
         it('deactive image should deactive image and return image id', async (): Promise<void> => {
             const restoreUnlink: () => string[] = mockUnlinkSet();
             await deactiveImageById(image.id);
+
             const imageModel: IImageModel | null = await ImageModel.findOne({ _id: image.id });
 
             const result: string[] = restoreUnlink();
