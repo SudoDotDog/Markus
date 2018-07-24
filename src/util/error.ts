@@ -65,7 +65,7 @@ export const errorList: {
  * @param {number} code
  * @returns {Error}
  */
-export const error = (code: number): Error => {
+export const error = (code: ERROR_CODE): Error => {
     const newError: Error = new Error();
     if (errorList[code]) {
         newError.message = code + ': ' + errorList[code];
