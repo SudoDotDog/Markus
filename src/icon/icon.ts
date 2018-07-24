@@ -3,8 +3,8 @@
  * @fileoverview Default Icon generator
  */
 
-import chaetodon, { WEATHERS } from 'chaetodon';
 import Buffer from './buffer';
+import { chaetodon } from './chaetodon/chaetodon';
 import Color from './color';
 import Generator from './generator';
 import Parser from './parser';
@@ -15,9 +15,7 @@ export const Icon = (str: string, display?: string) => {
     const point: Point = new Point();
     const parser: Parser = new Parser(str);
     const buffer: Buffer = new Buffer(display || parser.getTwoDigitResult());
-    const color: Color = new Color(
-        chaetodon(WEATHERS.NUM(generator.splice(27, 30))),
-    );
+    const color: Color = new Color(chaetodon(generator.splice(27, 30)));
 
     const points: IPoint[] = [
         point.getPoint(generator.splice(0, 6)),

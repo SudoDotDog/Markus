@@ -91,13 +91,13 @@ export default class Point {
 
     public getEndPoint(): IPoint {
         return {
-            x: EDGE.LENGTH - 30,
-            y: EDGE.LENGTH - 30,
+            x: EDGE.LENGTH - 25,
+            y: EDGE.LENGTH - 55,
         };
     }
 
     public getFontSize(): number {
-        return Math.floor(EDGE.LENGTH / 2.15);
+        return Math.floor(EDGE.LENGTH / 2.4);
     }
 
     public checkQueue(edge: number): boolean {
