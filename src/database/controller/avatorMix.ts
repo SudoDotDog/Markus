@@ -3,6 +3,7 @@
  * @fileoverview Avator Mix Controller
  */
 
+import { touchDecrementAndSaveFile } from "../../util/data/file";
 import { error, ERROR_CODE } from "../../util/error";
 import { IFileManager } from "../../util/manager/file/import";
 import { IAvatorCallback, IAvatorCreationConfig } from "../interface/avator";
@@ -58,8 +59,7 @@ export const createOrUpdateAvator = async (option: IAvatorCreationConfig): Promi
 
     if (avator) {
         const originalFile: IFileModel = await getFileById(avator.file);
-        originalFile.refDecrement();
-        await originalFile.save();
+        await touchDecrementAndSaveFile(originalFile);
 
         avator.updateFile(file._id);
         await avator.save();

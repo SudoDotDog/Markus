@@ -50,6 +50,7 @@ export interface IFileModel extends IFile, Document {
     deactive: () => IFileModel;
     refIncrement: () => IFileModel;
     refDecrement: () => IFileModel;
+    touchRemove: () => boolean;
 }
 
 FileSchema.methods.deactive = function (this: IFileModel): IFileModel {
@@ -65,6 +66,14 @@ FileSchema.methods.refIncrement = function (this: IFileModel): IFileModel {
 FileSchema.methods.refDecrement = function (this: IFileModel): IFileModel {
     this.reference--;
     return this;
+};
+
+FileSchema.methods.touchRemove = function (this: IFileModel): boolean {
+    if (this.reference <= 0) {
+        this.deactive();
+        return true;
+    }
+    return false;
 };
 
 export const FileModel: Model<IFileModel> = model<IFileModel>("File", FileSchema);
