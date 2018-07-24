@@ -2,7 +2,7 @@
     "compileOnSave": false,
     "compilerOptions": {
         "outDir": "../dist",
-        "sourceMap": true,
+        "inlineSourceMap": true,
         "strict": true,
         "noImplicitReturns": true,
         "noImplicitAny": true,

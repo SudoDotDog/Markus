@@ -4,13 +4,14 @@
  */
 
 import { ObjectID } from "bson";
+import { IFileManager } from "../../util/manager/file/import";
 
 export interface IImageCreationConfig {
     encoding: string;
     hash: string;
     mime: string;
     original: string;
-    path: string;
+    manager: IFileManager;
     size: number;
     tags: string[];
 }

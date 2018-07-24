@@ -8,7 +8,7 @@ import * as express from "express";
 import { NextFunction, Request, Response } from "express";
 import * as mongoose from "mongoose";
 import Config from "../markus";
-import { Upload } from "../util/image";
+import UploadManager from '../util/manager/upload';
 import * as Handler from './handlers/import';
 
 mongoose.connect(Config.db);
@@ -25,8 +25,6 @@ app.use(bodyParser.urlencoded({
     limit: Config.uploadLimit + 'mb',
 }));
 
-const uploadSingle = Upload().single('image');
-
 app.all('*', (req: Request, res: Response, next: NextFunction) => {
     res.header("Access-Control-Allow-Origin", Config.crossOrigin);
     res.header("X-Powered-By", 'Markus');
@@ -36,6 +34,8 @@ app.all('*', (req: Request, res: Response, next: NextFunction) => {
 
 const prepares = Config.middleware.prepares;
 const permissions = Config.middleware.permissions;
+
+const uploadManager = new UploadManager();
 
 // Handler(s) for Image Get
 app.get('/w/:id', ...prepares, Handler.G.imageGetBlankWhiteHandler);
@@ -52,8 +52,8 @@ app.post('/deactive/id', ...prepares, ...permissions, Handler.M.DeactiveImageHan
 app.post('/deactive/tag', ...prepares, ...permissions, Handler.M.DeactiveTagHandler);
 
 // Handler(s) for Image Upload
-app.post('/m/buffer', ...prepares, uploadSingle, ...permissions, Handler.M.UploadBufferHandler);
-app.post('/m/base64', ...prepares, ...permissions, Handler.M.UploadBase64Handler);
+app.post('/m/buffer', ...prepares, uploadManager.generateMulterEngine('image'), uploadManager.generateBufferEngine(), ...permissions, Handler.M.UploadBufferHandler);
+app.post('/m/base64', ...prepares, uploadManager.generateBase64Engine(), ...permissions, Handler.M.UploadBase64Handler);
 
 // Handler(s) for debug
 app.post('/list', ...prepares, Handler.Debug.OutputImageIdList);

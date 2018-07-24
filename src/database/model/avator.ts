@@ -3,9 +3,9 @@
  * @fileoverview Avator Model
  */
 
+import { ObjectID } from "bson";
 import { Document, model, Model, Schema } from "mongoose";
 import { IAvator } from "../interface/avator";
-import { ObjectID } from "../../../node_modules/@types/bson";
 
 export const AvatorSchema: Schema = new Schema({
     active: {

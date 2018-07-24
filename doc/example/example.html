@@ -255,6 +255,7 @@
             }
         }).then(function (msg) {
             alert('SUCCEED');
+            $('#response').html(msg.data.original + ': ' + msg.data.id);
         }).catch(function (msg) {
             alert('FAILED, see console');
             console.log(msg);

@@ -5,7 +5,8 @@
 
 import { ObjectID } from "bson";
 import { error, ERROR_CODE } from "../../util/error";
-import { buildImageCallback, buildImageUserFriendlyCallback, mergeArray, releaseStorage } from "../../util/image";
+import { buildImageCallback, buildImageUserFriendlyCallback, mergeArray } from "../../util/image";
+import { IFileManager } from "../../util/manager/file/import";
 import { IImageCallback, IImageCreationConfig, IImageUserFriendlyCallback } from "../interface/image";
 import { FileModel, IFileModel } from "../model/file";
 import { IImageModel, ImageModel } from "../model/image";
@@ -26,12 +27,15 @@ export const getFileById = async (id: ObjectID): Promise<IFileModel> => {
 };
 
 export const createImage = async (option: IImageCreationConfig): Promise<IImageCallback> => {
+    const manager: IFileManager = option.manager;
+    const path: string = await manager.save();
+
     const newFile: IFileModel = new FileModel({
         encoding: option.encoding,
         hash: option.hash,
         mime: option.mime,
         original: option.original,
-        path: option.path,
+        path,
         size: option.size,
     });
 
@@ -62,7 +66,7 @@ export const createDuplicateImage = async (option: IImageCreationConfig): Promis
         });
 
         await newImage.save();
-        await releaseStorage(option.path);
+        option.manager.release();
         return buildImageCallback(newImage, sameHashFile);
     } else {
         const newImage = await createImage(option);
