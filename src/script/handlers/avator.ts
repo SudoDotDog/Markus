@@ -9,8 +9,9 @@ import { IAvatorCallback } from '../../database/interface/avator';
 import { IFileModel } from "../../database/model/file";
 import { Icon } from "../../icon/icon";
 import { error, ERROR_CODE, handlerError } from "../../util/error";
-import { createTempFile, hashImage, releaseStorage } from "../../util/image";
+import { createTempFile } from "../../util/image";
 import { RESPONSE } from "../../util/interface";
+import { IFileManager } from "../../util/manager/file/import";
 
 export const avatorGetHandler = async (req: Request, res: Response): Promise<void> => {
     try {
@@ -28,29 +29,69 @@ export const avatorGetHandler = async (req: Request, res: Response): Promise<voi
     return;
 };
 
-export const avatorSetHandler = async (req: Request, res: Response): Promise<void> => {
+export const avatorBufferHandler = async (req: Request, res: Response): Promise<void> => {
     try {
-        const avator = req.query.avator;
+        const avator = req.body.avator;
         const file: Express.Multer.File = req.file;
-        if (!(req as any).valid) {
-            await releaseStorage(file.path);
+        const manager: IFileManager = req.manager;
+
+        if (!req.valid) {
+            manager.release();
             throw error(ERROR_CODE.PERMISSION_VALID_FAILED);
         }
-        const hash: string = await hashImage(file.path);
+
+        const hash: string = await manager.hash();
         const callback: IAvatorCallback = await Controller.AvatorMix.createOrUpdateAvator({
             avator,
             encoding: file.encoding,
             mime: file.mimetype,
             original: file.originalname,
             hash,
-            path: file.path,
+            manager,
             size: file.size,
         });
 
         res.status(200).send({
             status: RESPONSE.SUCCEED,
             data: {
-                id: callback.id,
+                avator: callback.avator,
+            },
+        });
+    } catch (err) {
+        handlerError(res, err);
+    }
+    return;
+};
+
+export const avatorBase64Handler = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const avator = req.body.avator;
+        const manager: IFileManager = req.manager;
+
+        if (!req.valid) {
+            manager.release();
+            throw error(ERROR_CODE.PERMISSION_VALID_FAILED);
+        }
+
+        const base64Image: string = req.body.image;
+        const mime: string = manager.mime();
+        const hash: string = await manager.hash();
+        const originalName: string = req.body.original || 'N/A';
+
+        const callback: IAvatorCallback = await Controller.AvatorMix.createOrUpdateAvator({
+            avator,
+            encoding: 'base64',
+            mime,
+            original: originalName,
+            hash,
+            manager,
+            size: base64Image.length,
+        });
+
+        res.status(200).send({
+            status: RESPONSE.SUCCEED,
+            data: {
+                avator: callback.avator,
             },
         });
     } catch (err) {

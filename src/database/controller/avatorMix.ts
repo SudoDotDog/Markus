@@ -8,6 +8,7 @@ import { IFileManager } from "../../util/manager/file/import";
 import { IAvatorCallback, IAvatorCreationConfig } from "../interface/avator";
 import { AvatorModel, IAvatorModel } from "../model/avator";
 import { FileModel, IFileModel } from "../model/file";
+import { getFileById } from "./imageMix";
 
 export const getFileByAvator = async (avatorName: string): Promise<IFileModel | null> => {
     const avator: IAvatorModel | null = await AvatorModel.findOne({ avator: avatorName });
@@ -56,10 +57,14 @@ export const createOrUpdateAvator = async (option: IAvatorCreationConfig): Promi
     const file: IFileModel = await createOrUpdateFile();
 
     if (avator) {
+        const originalFile: IFileModel = await getFileById(avator.file);
+        originalFile.refDecrement();
+        await originalFile.save();
+
         avator.updateFile(file._id);
         await avator.save();
         return {
-            id: avator._id,
+            avator: avator.avator,
             path: file.path,
         };
     } else {
@@ -69,7 +74,7 @@ export const createOrUpdateAvator = async (option: IAvatorCreationConfig): Promi
         });
         await newAvator.save();
         return {
-            id: newAvator._id,
+            avator: newAvator.avator,
             path: file.path,
         };
     }

@@ -74,6 +74,7 @@ export const UploadBase64Handler = async (req: Request, res: Response): Promise<
         const manager: IFileManager = req.manager;
 
         if (!req.valid) {
+            manager.release();
             throw error(ERROR_CODE.PERMISSION_VALID_FAILED);
         }
 
@@ -91,12 +92,12 @@ export const UploadBase64Handler = async (req: Request, res: Response): Promise<
             throw error(ERROR_CODE.IMAGE_SAVE_FAILED);
         }
 
-        const ext: string = manager.mime();
+        const mime: string = manager.mime();
         const hash: string = await manager.hash();
 
         const image: IImageCallback = await Controller.ImageMix.createDuplicateImage({
             encoding: 'base64',
-            mime: ext,
+            mime,
             original: originalName,
             hash,
             manager,

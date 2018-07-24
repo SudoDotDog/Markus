@@ -41,8 +41,16 @@ const uploadManager = new UploadManager();
 app.get('/w/:id', ...prepares, Handler.G.imageGetBlankWhiteHandler);
 app.get('/b/:id', ...prepares, Handler.G.imageGetBlankBlackHandler);
 
+// Handler(s) for Image Upload
+app.post('/m/buffer', ...prepares, uploadManager.generateMulterEngine('image'), uploadManager.generateBufferEngine(), ...permissions, Handler.M.UploadBufferHandler);
+app.post('/m/base64', ...prepares, uploadManager.generateBase64Engine(), ...permissions, Handler.M.UploadBase64Handler);
+
 // Handler(s) for Avator Get
 app.get('/a/:avator', ...prepares, Handler.Avator.avatorGetHandler);
+
+// Handler(s) for Avator Set
+app.post('/v/buffer', ...prepares, uploadManager.generateMulterEngine('image'), uploadManager.generateBufferEngine(), ...permissions, Handler.Avator.avatorBufferHandler);
+app.post('/v/base64', ...prepares, uploadManager.generateBase64Engine(), ...permissions, Handler.Avator.avatorBase64Handler);
 
 // Handler(s) for Image List Get
 app.post('/tag', ...prepares, Handler.G.imageGetListByTagHandler);
@@ -50,10 +58,6 @@ app.post('/tag', ...prepares, Handler.G.imageGetListByTagHandler);
 // Handler(s) for Image status change
 app.post('/deactive/id', ...prepares, ...permissions, Handler.M.DeactiveImageHandler);
 app.post('/deactive/tag', ...prepares, ...permissions, Handler.M.DeactiveTagHandler);
-
-// Handler(s) for Image Upload
-app.post('/m/buffer', ...prepares, uploadManager.generateMulterEngine('image'), uploadManager.generateBufferEngine(), ...permissions, Handler.M.UploadBufferHandler);
-app.post('/m/base64', ...prepares, uploadManager.generateBase64Engine(), ...permissions, Handler.M.UploadBase64Handler);
 
 // Handler(s) for debug
 app.post('/list', ...prepares, Handler.Debug.OutputImageIdList);

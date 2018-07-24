@@ -28,6 +28,6 @@ export interface IAvatorCreationConfig {
 }
 
 export interface IAvatorCallback {
-    id: ObjectID;
+    avator: string;
     path: string;
 }
