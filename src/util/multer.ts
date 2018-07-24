@@ -25,7 +25,7 @@ export const Upload = (): Multer.Instance => {
             callback(null, currentPath);
         },
         filename: (req: any, file: Express.Multer.File, callback: (error: Error | null, destination: string) => void) => {
-            const type = file.mimetype.split('/')[1];
+            const type: string = file.mimetype.split('/')[1];
             callback(null, unique(11) + '.' + type);
         },
     });

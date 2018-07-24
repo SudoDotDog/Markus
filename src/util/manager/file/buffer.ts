@@ -23,7 +23,7 @@ export default class BufferFileManager implements IFileManager {
 
     public save(): Promise<string> {
         return new Promise<string>((resolve: (path: string) => void, reject: (err: Error) => void) => {
-            const writeStream = Fs.createWriteStream(this._path);
+            const writeStream: Fs.WriteStream = Fs.createWriteStream(this._path);
             writeStream.on('error', (err: Error) => {
                 reject(error(ERROR_CODE.IMAGE_SAVE_FAILED));
             });

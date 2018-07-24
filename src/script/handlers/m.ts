@@ -119,14 +119,11 @@ export const UploadBase64Handler = async (req: Request, res: Response): Promise<
 
 export const DeactiveImageHandler = async (req: Request, res: Response): Promise<void> => {
     try {
-        if (!(req as any).valid) {
+        if (!req.valid) {
             throw error(ERROR_CODE.PERMISSION_VALID_FAILED);
         }
-
         const imageId: string = req.body.id;
         const image: IImageModel = await Controller.Image.deactiveImageById(imageId);
-
-        // await releaseStorage(image.path);
 
         res.status(200).send({
             status: RESPONSE.SUCCEED,
@@ -142,20 +139,18 @@ export const DeactiveImageHandler = async (req: Request, res: Response): Promise
 
 export const DeactiveTagHandler = async (req: Request, res: Response): Promise<void> => {
     try {
-        if (!(req as any).valid) {
+        if (!req.valid) {
             throw error(ERROR_CODE.PERMISSION_VALID_FAILED);
         }
 
         const tag: string = req.body.tag;
         const images: IImageModel[] = await Controller.Image.deactiveImageByTag(tag);
 
-        // images.forEach(async (image) => {
-        //     await releaseStorage(image.path);
-        // });
-
         res.status(200).send({
             status: RESPONSE.SUCCEED,
-            data: {},
+            data: {
+                deactivated: images.length,
+            },
         });
     } catch (err) {
         handlerError(res, err);

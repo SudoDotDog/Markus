@@ -38,7 +38,7 @@ export const avatorGetHandler = async (req: Request, res: Response): Promise<voi
 
 export const avatorBufferHandler = async (req: Request, res: Response): Promise<void> => {
     try {
-        const avator = req.body.avator;
+        const avator: string = req.body.avator;
         const file: Express.Multer.File = req.file;
         const manager: IFileManager = req.manager;
 
@@ -72,7 +72,7 @@ export const avatorBufferHandler = async (req: Request, res: Response): Promise<
 
 export const avatorBase64Handler = async (req: Request, res: Response): Promise<void> => {
     try {
-        const avator = req.body.avator;
+        const avator: string = req.body.avator;
         const manager: IFileManager = req.manager;
 
         if (!req.valid) {

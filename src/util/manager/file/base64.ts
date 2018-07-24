@@ -37,7 +37,7 @@ export default class Base64FileManager implements IFileManager {
     }
 
     public async hash(): Promise<string> {
-        const hash = stringToMD5(this._base64);
+        const hash: string = stringToMD5(this._base64);
         return hash;
     }
 

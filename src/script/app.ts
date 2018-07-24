@@ -7,7 +7,7 @@ import * as bodyParser from "body-parser";
 import * as express from "express";
 import { NextFunction, Request, Response } from "express";
 import * as mongoose from "mongoose";
-import Config from "../markus";
+import Config, { middleware } from "../markus";
 import UploadManager from '../util/manager/upload';
 import * as Handler from './handlers/import';
 
@@ -32,10 +32,10 @@ app.all('*', (req: Request, res: Response, next: NextFunction) => {
     next();
 });
 
-const prepares = Config.middleware.prepares;
-const permissions = Config.middleware.permissions;
+const prepares: middleware[] = Config.middleware.prepares;
+const permissions: middleware[] = Config.middleware.permissions;
 
-const uploadManager = new UploadManager();
+const uploadManager: UploadManager = new UploadManager();
 
 // Handler(s) for Image Get
 app.get('/w/:id', ...prepares, Handler.G.imageGetBlankWhiteHandler);

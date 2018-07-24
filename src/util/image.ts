@@ -18,7 +18,7 @@ export const createTempFile = (content: string, type: string): string => {
     const tempPath: string = Path.join(Config.imagePath, 'temp');
     mkPathDir(tempPath);
 
-    const filePath = Path.join(tempPath, unique(11) + '.' + type);
+    const filePath: string = Path.join(tempPath, unique(11) + '.' + type);
     Fs.writeFileSync(filePath, content);
 
     return filePath;

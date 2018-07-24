@@ -8,6 +8,7 @@ import { stringToMD5 } from "../util/crypto";
 
 export default class Generator {
     private _medium: string;
+
     public constructor(str: string) {
         this._medium = stringToMD5(str);
     }

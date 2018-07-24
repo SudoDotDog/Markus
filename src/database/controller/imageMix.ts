@@ -71,7 +71,7 @@ export const createDuplicateImage = async (option: IImageCreationConfig): Promis
         option.manager.release();
         return buildImageCallback(newImage, sameHashFile);
     } else {
-        const newImage = await createImage(option);
+        const newImage: IImageCallback = await createImage(option);
         return newImage;
     }
 };

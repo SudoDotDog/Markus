@@ -46,7 +46,7 @@ export default class Buffer {
     }
 
     public flush(): string {
-        let result;
+        let result: string;
         result = this.resultBuffer;
         result += "</svg>";
         this.reset();
