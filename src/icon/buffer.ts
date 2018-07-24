@@ -28,14 +28,14 @@ export default class Buffer {
         return this;
     }
 
-    public text(point: IPoint, text: string, fontSize: number): Buffer {
+    public text(point: IPoint, fontSize: number): Buffer {
         this.resultBuffer += "<text x=\"";
         this.resultBuffer += point.x + "\" ";
         this.resultBuffer += "y=\"";
         this.resultBuffer += point.y + "\" ";
         this.resultBuffer += "style=\"font-weight:bold;font-size:";
         this.resultBuffer += fontSize + ";text-anchor:end\">";
-        this.resultBuffer += text;
+        this.resultBuffer += this._text;
         this.resultBuffer += "</text>";
         return this;
     }

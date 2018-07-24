@@ -15,12 +15,18 @@ import { IFileManager } from "../../util/manager/file/import";
 
 export const avatorGetHandler = async (req: Request, res: Response): Promise<void> => {
     try {
-        const avator = req.params.avator;
+        const avator: string = req.params.avator;
+        const text: string | undefined = req.query.text;
         const callback: IFileModel | null = await Controller.AvatorMix.getFileByAvator(avator);
         if (callback) {
             res.status(200).sendFile(callback.path);
         } else {
-            const tempFilePath: string = createTempFile(Icon(avator), 'svg');
+            let tempFilePath: string;
+            if (text) {
+                tempFilePath = createTempFile(Icon(avator, text), 'svg');
+            } else {
+                tempFilePath = createTempFile(Icon(avator), 'svg');
+            }
             res.status(200).sendFile(tempFilePath);
         }
     } catch (err) {

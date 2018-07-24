@@ -46,6 +46,7 @@
         <input id="get">
         <button id="getBtnW">Get White</button>
         <button id="getBtnB">Get Black</button>
+        <input id="avatorD">
         <button id="getBtnA">Get Avator</button>
         <button onclick="alert('DELETED, YOU SHOULD USE GET WHITE OR GET BLACK INSTEAD')">Get (DELETED, YOU SHOULD USE GET WHITE OR GET BLACK INSTEAD)</button>
     </div>
@@ -180,7 +181,12 @@
     });
 
     $("#getBtnA").on("click", function () {
-        $("#getImg").attr("src", targetUrl + "/a/" + $("#get").val());
+        const avatorText = $('#avatorD').val();
+        if (avatorText) {
+            $("#getImg").attr("src", targetUrl + "/a/" + $("#get").val() + '/?text=' + avatorText);
+        } else {
+            $("#getImg").attr("src", targetUrl + "/a/" + $("#get").val());
+        }
     });
 
     $("#getBtnW").on("click", function () {

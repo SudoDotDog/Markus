@@ -10,11 +10,11 @@ import Generator from './generator';
 import Parser from './parser';
 import Point, { IPoint } from './point';
 
-export const Icon = (str: string) => {
+export const Icon = (str: string, display?: string) => {
     const generator: Generator = new Generator(str);
-    const buffer: Buffer = new Buffer(str);
     const point: Point = new Point();
     const parser: Parser = new Parser(str);
+    const buffer: Buffer = new Buffer(display || parser.getTwoDigitResult());
     const color: Color = new Color(
         chaetodon(WEATHERS.NUM(generator.splice(27, 30))),
     );
@@ -52,7 +52,7 @@ export const Icon = (str: string) => {
         .rect(points[9], points[10], points[11], loop())
         .rect(points[12], points[13], points[14], loop())
         .rect(points[15], points[16], points[17], loop())
-        .text(point.getEndPoint(), parser.getTwoDigitResult(), point.getFontSize());
+        .text(point.getEndPoint(), point.getFontSize());
 
     return buffer.flush();
 };
