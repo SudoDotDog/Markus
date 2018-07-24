@@ -5,6 +5,7 @@
 
 import { NextFunction, Request, Response } from 'express';
 import * as Path from 'path';
+import { } from './declare/global';
 import { error, ERROR_CODE, handlerError } from './util/error';
 
 export type middleware = (req: Request, res: Response, next: NextFunction) => Promise<void>;
