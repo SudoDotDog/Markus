@@ -23,6 +23,15 @@
     </div>
     <hr>
     <div>
+        <h1>AVATOR SET</h1>
+        <input id="avatorInput">
+        <input type="file" id="avatorFile">
+        <button id="avatorUpload">UPLOAD AVATOR</button>
+        <textarea id="avatorBase64" style="height: 100px; width: 100px"></textarea>
+        <button id="avator64Upload">UPLOAD AVATOR BASE64</button>
+    </div>
+    <hr>
+    <div>
         <h1>IMAGE ID RESPONSE</h1>
         <div id="response"></div>
     </div>
@@ -71,6 +80,7 @@
         <div id="listResult"></div>
     </div>
 </body>
+
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
     const targetUrl = 'http://localhost:8080';
@@ -192,6 +202,59 @@
         reader.onload = function (arg) {
             $("#img").attr("src", arg.target.result);
         }
+    });
+
+    $("#avatorFile").on("change", function (e) {
+        const file = e.target.files[0];
+        if (!file.type.match('image.*')) {
+            return false;
+        }
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+
+        reader.onload = function (arg) {
+            $("#img").attr("src", arg.target.result);
+        }
+    });
+
+    $("#avator64Upload").on("click", function () {
+        $.ajax({
+            type: "POST",
+            url: targetUrl + "/v/base64",
+            data: {
+                image: $("#avatorBase64").val(),
+                avator: $("#avatorInput").val(),
+                key: 'test',
+            }
+        }).then(function (msg) {
+            alert('SUCCEED');
+            $('#response').html(msg.data);
+        }).catch(function (msg) {
+            alert('FAILED, see console');
+            console.log(msg);
+        });
+    });
+
+    $("#avatorUpload").on("click", function () {
+        let formData = new FormData();
+        let image = $("#avatorFile").prop("files")[0];
+        formData.append("image", image);
+        formData.append("avator", $("#avatorInput").val());
+        formData.append("key", 'test');
+        $.ajax({
+            type: "POST",
+            url: targetUrl + "/v/buffer",
+            processData: false,
+            contentType: false,
+            data: formData
+        }).then(function (msg) {
+            alert('SUCCEED');
+            console.log(msg);
+            $('#response').html(msg.data);
+        }).catch(function (msg) {
+            alert('FAILED, see console');
+            console.log(msg);
+        });
     });
 
     $("#btn").on("click", function () {

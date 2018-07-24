@@ -14,7 +14,7 @@ export const getFileByAvator = async (avatorName: string): Promise<IFileModel | 
     const avator: IAvatorModel | null = await AvatorModel.findOne({ avator: avatorName });
 
     if (avator) {
-        const file: IFileModel | null = await FileModel.findOne({ _id: avator.id });
+        const file: IFileModel | null = await FileModel.findOne({ _id: avator.file });
         if (file) {
             return file;
         } else {
