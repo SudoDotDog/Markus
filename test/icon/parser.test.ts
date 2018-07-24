@@ -1,7 +1,7 @@
 /**
  * @author WMXPY
  * @description Sparidae
- * @fileoverview Util Error Test
+ * @fileoverview Sparidae Parser Test
  */
 
 import { expect } from 'chai';
