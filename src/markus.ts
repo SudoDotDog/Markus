@@ -6,7 +6,16 @@
 import { NextFunction, Request, Response } from 'express';
 import * as Path from 'path';
 
-type middleware = (req: Request, res: Response, next: NextFunction) => Promise<void>;
+declare global {
+    namespace Express {
+        // tslint:disable-next-line
+        interface Request {
+            valid?: boolean;
+        }
+    }
+}
+
+export type middleware = (req: Request, res: Response, next: NextFunction) => Promise<void>;
 
 interface IConfig {
     crossOrigin: string;
@@ -27,10 +36,10 @@ interface IConfig {
 }
 
 const validPermissionMiddleware: middleware = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    if ((req as any).body.key === 'test') {
-        (req as any).valid = true;
+    if (req.body.key === 'test') {
+        req.valid = true;
     } else {
-        (req as any).valid = false;
+        req.valid = false;
     }
     next();
     return;

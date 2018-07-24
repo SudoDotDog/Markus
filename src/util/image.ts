@@ -110,6 +110,26 @@ export const mkPathDir = (path: string) => {
     }
 };
 
+export const hashBuffer = (buffer: Buffer): Promise<string> => {
+    const stream: Fs.ReadStream = Fs.createReadStream(buffer);
+    const fsHash: Crypto.Hash = Crypto.createHash('md5');
+
+    return new Promise<string>((resolve: (md5: string) => void, reject: (reason: Error) => void) => {
+        stream.on('data', (dataChunk: any) => {
+            fsHash.update(dataChunk);
+        });
+
+        stream.on('end', () => {
+            const md5: string = fsHash.digest('hex');
+            resolve(md5);
+        });
+
+        stream.on('close', (err: Error) => {
+            reject(err);
+        });
+    });
+};
+
 export const hashImage = (imagePath: string): Promise<string> => {
     const stream: Fs.ReadStream = Fs.createReadStream(imagePath);
     const fsHash: Crypto.Hash = Crypto.createHash('md5');

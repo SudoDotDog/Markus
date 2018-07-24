@@ -4,6 +4,8 @@
  */
 
 export interface IFileManager {
-    save: () => Promise<void>;
+    save: () => Promise<string>;
+    hash: () => Promise<string>;
+    mime: () => string;
     release: () => void;
 }

@@ -4,32 +4,42 @@
  */
 
 import * as Fs from 'fs';
+import { stringToMD5 } from '../../crypto';
 import { error, ERROR_CODE } from '../../error';
 import { IFileManager } from "./interface";
 
 export default class Base64FileManager implements IFileManager {
     private _path: string;
     private _base64: string;
+    private _mime: string;
     private _release: () => void;
 
-    public constructor(path: string, release: () => void, base64: string) {
+    public constructor(path: string, release: () => void, base64: string, mime: string) {
         this._path = path;
         this._release = release;
+        this._mime = mime;
         this._base64 = base64;
     }
 
-    public save(): Promise<void> {
-        return new Promise<void>((resolve: () => void, reject: (error: Error) => void) => {
-            const splited: string[] = this._base64.split(';');
-            // const type: string = splited[0].split('/')[1];
-            const data: string = splited[1].replace(/^base64,/, "");
-            Fs.writeFile(this._path, new Buffer(data, 'base64'), (err: Error) => {
+    public save(): Promise<string> {
+        return new Promise<string>((resolve: (path: string) => void, reject: (error: Error) => void) => {
+
+            Fs.writeFile(this._path, new Buffer(this._base64, 'base64'), (err: Error) => {
                 if (err) {
                     reject(error(ERROR_CODE.IMAGE_SAVE_FAILED));
                 }
-                resolve();
+                resolve(this._path);
             });
         });
+    }
+
+    public mime(): string {
+        return this._mime;
+    }
+
+    public async hash(): Promise<string> {
+        const hash = stringToMD5(this._base64);
+        return hash;
     }
 
     public release(): void {

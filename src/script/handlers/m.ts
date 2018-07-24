@@ -11,8 +11,7 @@ import { IImageModel } from "../../database/model/image";
 import { error, ERROR_CODE, handlerError } from "../../util/error";
 import { hashImage, releaseStorage } from "../../util/image";
 import { RESPONSE } from '../../util/interface';
-
-const saveBase64ToFile: (base64: string) => Promise<string> = UploadWithBase64();
+import { IFileManager } from "../../util/manager/file/import";
 
 /**
  * POST
@@ -25,10 +24,12 @@ const saveBase64ToFile: (base64: string) => Promise<string> = UploadWithBase64()
 export const UploadBufferHandler = async (req: Request, res: Response): Promise<void> => {
     try {
         const file: Express.Multer.File = req.file;
-        if (!(req as any).valid) {
-            await releaseStorage(file.path);
+        const manager: IFileManager = req.manager;
+        if (!req.valid) {
+            manager.release();
             throw error(ERROR_CODE.PERMISSION_VALID_FAILED);
         }
+
         const preTags: string[] | string = req.body.tags;
         let tags: string[] = [];
         if (typeof preTags === 'string') {
@@ -36,13 +37,15 @@ export const UploadBufferHandler = async (req: Request, res: Response): Promise<
         } else {
             tags = preTags;
         }
-        const hash: string = await hashImage(file.path);
+
+        const hash: string = await manager.hash();
+
         const image: IImageCallback = await Controller.ImageMix.createDuplicateImage({
             encoding: file.encoding,
             mime: file.mimetype,
-            original: file.originalname,
             hash,
-            path: file.path,
+            original: file.originalname,
+            manager,
             size: file.size,
             tags,
         });
@@ -69,7 +72,9 @@ export const UploadBufferHandler = async (req: Request, res: Response): Promise<
  */
 export const UploadBase64Handler = async (req: Request, res: Response): Promise<void> => {
     try {
-        if (!(req as any).valid) {
+        const manager: IFileManager = req.manager;
+
+        if (!req.valid) {
             throw error(ERROR_CODE.PERMISSION_VALID_FAILED);
         }
 
@@ -86,16 +91,16 @@ export const UploadBase64Handler = async (req: Request, res: Response): Promise<
         if (!base64Image) {
             throw error(ERROR_CODE.IMAGE_SAVE_FAILED);
         }
-        const filepath: string = await saveBase64ToFile(base64Image);
-        const ext: string = Path.extname(filepath);
-        const hash: string = await hashImage(filepath);
+
+        const ext: string = manager.mime();
+        const hash: string = await manager.hash();
 
         const image: IImageCallback = await Controller.ImageMix.createDuplicateImage({
             encoding: 'base64',
-            mime: ext.substring(1, ext.length),
+            mime: ext,
             original: originalName,
             hash,
-            path: filepath,
+            manager,
             size: base64Image.length,
             tags,
         });
