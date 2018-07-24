@@ -69,6 +69,46 @@ export const mockWriteFile = (): () => Array<{
     };
 };
 
+export const mockWriteStream = (): () => {
+    eventList: string[];
+    contentList: any[];
+} => {
+    type eventCB = (...any: any[]) => void;
+    const tempWriteStream: (path: string) => void = fs.createWriteStream;
+
+    const eventList: string[] = [];
+    const contentList: any[] = [];
+
+    (fs as any).createWriteStream = (path: string) => {
+        let finishFunc: eventCB;
+        return {
+            on: (event: string, cb: eventCB) => {
+                if (event === 'finish') {
+                    finishFunc = cb;
+                }
+                eventList.push(event);
+            },
+            write: (content: any) => {
+                contentList.push(content);
+            },
+            end: () => {
+                finishFunc();
+            },
+        };
+    };
+
+    return (): {
+        eventList: string[];
+        contentList: any[];
+    } => {
+        (fs as any).createWriteStream = tempWriteStream;
+        return {
+            eventList,
+            contentList,
+        };
+    };
+};
+
 export const monkFsSyncs = (func: () => any) => {
     const tempUnlinkSync: any = fs.unlinkSync;
     const tempReadFileSync: any = fs.readFileSync;
