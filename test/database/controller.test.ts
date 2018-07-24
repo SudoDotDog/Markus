@@ -7,10 +7,10 @@ import { expect } from 'chai';
 import * as mongoose from 'mongoose';
 import { testImageController } from './controller/image.test';
 
-describe('test controllers', (): void => {
+describe('test controllers', function (this: Mocha.Suite): void {
     let db: mongoose.Connection;
 
-    before(function (this: any, next: () => void): void {
+    before(function (this: Mocha.Context, next: () => void): void {
         this.timeout(3000);
         mongoose.connect(
             'mongodb://localhost/unit-test-1',
