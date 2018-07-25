@@ -3,7 +3,9 @@
  * @fileoverview Mocks
  */
 
+import * as ChildProcess from 'child_process';
 import * as fs from 'fs';
+import { error, ERROR_CODE } from '../../src/util/error';
 
 export class MockExpress {
     private result: any[] = [];
@@ -37,6 +39,27 @@ export const mockUnlinkSet = (): () => string[] => {
     return (): string[] => {
         (fs as any).unlink = tempUnlink;
         return unlinkSet;
+    };
+};
+
+export const mockChildProcessExec = (err?: boolean, stderr?: boolean): () => string[] => {
+    const tempExec: typeof ChildProcess.exec = ChildProcess.exec;
+    const commandSet: string[] = [];
+
+    (ChildProcess as any).exec = (command: string, cb: (err: Error | null, stdout: string, stderr: string) => void) => {
+        commandSet.push(command);
+        if (err) {
+            cb(error(ERROR_CODE.DEFAULT_TEST_ERROR), 'failed', '');
+        } else if (stderr) {
+            cb(null, 'failed', error(ERROR_CODE.DEFAULT_TEST_ERROR).message);
+        } else {
+            cb(null, 'succeed', '');
+        }
+    };
+
+    return (): string[] => {
+        (ChildProcess as any).exec = tempExec;
+        return commandSet;
     };
 };
 

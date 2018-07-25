@@ -10,26 +10,30 @@ export type ExecCommandElement =
     {
         name: string;
         value: string;
+        equal?: boolean;
     };
 
 export const commandBuilder = (elements: ExecCommandElement[]) => {
-    let command: string = '';
+    const commands: string[] = [];
     for (let i of elements) {
         if (typeof i === 'string') {
-            command += i;
+            commands.push(i);
         } else {
-            command += i.name + '=' + i.value;
+            if (i.equal) {
+                commands.push(i.name + '=' + i.value);
+            } else {
+                commands.push(i.name, i.value);
+            }
         }
-        command += ' ';
     }
-    return command;
+    return commands.join(' ');
 };
 
 export const execute = (command: string): Promise<string> => {
 
     return new Promise<string>((resolve: (result: string) => void, reject: (reason?: any) => void) => {
 
-        ChildProcess.exec(command, (err: Error, stdout: string, stderr: string) => {
+        (ChildProcess as any).exec(command, (err: Error, stdout: string, stderr: string) => {
             if (err) {
                 reject(err);
                 return;
