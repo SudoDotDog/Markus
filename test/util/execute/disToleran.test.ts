@@ -4,57 +4,37 @@
  */
 
 import { expect } from 'chai';
-import { compareError, error, ERROR_CODE } from '../../../src/util/error';
-import { commandBuilder, execute } from '../../../src/util/execute/disToleran';
+import { databaseBackup, databaseRestore } from '../../../src/util/execute/disToleran';
 import { mockChildProcessExec } from '../../mock/mock';
 
-describe('test command utils', (): void => {
+describe('test Disaster Tolerance Class', (): void => {
 
-    it('execute should get expected stdout', async (): Promise<void> => {
+    it('test databaseBackup', async (): Promise<void> => {
         const restoreExec = mockChildProcessExec();
 
-        const result = await execute('test');
+        const result = await databaseBackup('host', 'name', 'output');
         const commandSet = restoreExec();
+
         expect(commandSet).to.be.lengthOf(1);
+        expect(commandSet).to.be.deep.equal([
+            'mongodump -h host -d name -o output',
+        ]);
+
         expect(result).to.be.equal('succeed');
         return;
     });
 
-    it('execute with err should be reject with error', async (): Promise<void> => {
-        const restoreExec = mockChildProcessExec(true);
-        let resultError: Error | null = null;
-        let result: string = '';
-        try {
-            result = await execute('test');
-        } catch (err) {
-            resultError = err;
-        }
+    it('test databaseRestore', async (): Promise<void> => {
+        const restoreExec = mockChildProcessExec();
 
+        const result = await databaseRestore('host', 'name');
         const commandSet = restoreExec();
+
         expect(commandSet).to.be.lengthOf(1);
-        expect(result).to.be.equal('');
-
-        const compareResult = compareError(error(ERROR_CODE.DEFAULT_TEST_ERROR), (resultError as Error));
-        // tslint:disable-next-line
-        expect(compareResult).to.be.true;
-        return;
-    });
-
-    it('execute with std error should reject with std error', async (): Promise<void> => {
-        const restoreExec = mockChildProcessExec(false, true);
-        let resultError: Error | null = null;
-        let result: string = '';
-        try {
-            result = await execute('test');
-        } catch (err) {
-            resultError = err;
-        }
-
-        const commandSet = restoreExec();
-        expect(commandSet).to.be.lengthOf(1);
-        expect(result).to.be.equal('');
-
-        expect(resultError).to.be.equal('902: Default test error');
+        expect(commandSet).to.be.deep.equal([
+            'mongorestore -h host -d name',
+        ]);
+        expect(result).to.be.equal('succeed');
         return;
     });
 });
