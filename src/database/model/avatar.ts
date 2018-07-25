@@ -1,18 +1,18 @@
 /**
  * @author WMXPY
- * @fileoverview Avator Model
+ * @fileoverview Avatar Model
  */
 
 import { ObjectID } from "bson";
 import { Document, model, Model, Schema } from "mongoose";
-import { IAvator } from "../interface/avator";
+import { IAvatar } from "../interface/avatar";
 
-export const AvatorSchema: Schema = new Schema({
+export const AvatarSchema: Schema = new Schema({
     active: {
         type: Boolean,
         default: true,
     },
-    avator: {
+    avatar: {
         type: String,
         required: true,
         index: true,
@@ -29,19 +29,19 @@ export const AvatorSchema: Schema = new Schema({
         },
     });
 
-export interface IAvatorModel extends IAvator, Document {
-    deactive: () => IAvatorModel;
-    updateFile: (file: ObjectID) => IAvatorModel;
+export interface IAvatarModel extends IAvatar, Document {
+    deactivate: () => IAvatarModel;
+    updateFile: (file: ObjectID) => IAvatarModel;
 }
 
-AvatorSchema.methods.deactive = function (this: IAvatorModel): IAvatorModel {
+AvatarSchema.methods.deactivate = function (this: IAvatarModel): IAvatarModel {
     this.active = false;
     return this;
 };
 
-AvatorSchema.methods.updateFile = function (this: IAvatorModel, file: ObjectID): IAvatorModel {
+AvatarSchema.methods.updateFile = function (this: IAvatarModel, file: ObjectID): IAvatarModel {
     this.file = file;
     return this;
 };
 
-export const AvatorModel: Model<IAvatorModel> = model<IAvatorModel>("Avator", AvatorSchema);
+export const AvatarModel: Model<IAvatarModel> = model<IAvatarModel>("Avatar", AvatarSchema);

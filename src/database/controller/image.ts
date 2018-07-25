@@ -4,7 +4,7 @@
  */
 
 import { ObjectID, ObjectId } from "bson";
-import { touchDecrementAndSaveFile } from "../../util/data/file";
+import { touchDecrementAndRelease } from "../../util/data/file";
 import { error, ERROR_CODE } from "../../util/error";
 import { imageModelToImageListResponse } from "../../util/image";
 import { IImageListResponse } from "../interface/image";
@@ -12,7 +12,7 @@ import { IFileModel } from "../model/file";
 import { IImageModel, ImageModel } from "../model/image";
 import { getFileById } from "./imageMix";
 
-export const deactiveImageById = async (id: ObjectID | string): Promise<IImageModel> => {
+export const deactivateImageById = async (id: ObjectID | string): Promise<IImageModel> => {
     let imageId: ObjectID;
     if (typeof id === 'string') {
         try {
@@ -31,13 +31,14 @@ export const deactiveImageById = async (id: ObjectID | string): Promise<IImageMo
     }
 
     const file: IFileModel = await getFileById(result.file);
-    await touchDecrementAndSaveFile(file);
-    result.deactive();
+    await touchDecrementAndRelease(file);
+    result.deactivate();
+    await file.save();
     await result.save();
     return result;
 };
 
-export const deactiveImageByTag = async (tag: string): Promise<IImageModel[]> => {
+export const deactivateImageByTag = async (tag: string): Promise<IImageModel[]> => {
     const results: IImageModel[] = await ImageModel.find({ tags: tag });
 
     if (results.length <= 0) {
@@ -46,8 +47,9 @@ export const deactiveImageByTag = async (tag: string): Promise<IImageModel[]> =>
 
     results.forEach(async (result: IImageModel) => {
         const file: IFileModel = await getFileById(result.file);
-        await touchDecrementAndSaveFile(file);
-        result.deactive();
+        await touchDecrementAndRelease(file);
+        result.deactivate();
+        await file.save();
         await result.save();
     });
 

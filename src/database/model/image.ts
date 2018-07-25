@@ -29,10 +29,10 @@ export const ImageSchema: Schema = new Schema({
     });
 
 export interface IImageModel extends IImage, Document {
-    deactive: () => IImageModel;
+    deactivate: () => IImageModel;
 }
 
-ImageSchema.methods.deactive = function (this: IImageModel): IImageModel {
+ImageSchema.methods.deactivate = function (this: IImageModel): IImageModel {
     this.active = false;
     return this;
 };

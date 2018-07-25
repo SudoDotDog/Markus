@@ -2,12 +2,12 @@
 
 ## Deactivate Image
 
-### POST /deactive/id
+### POST /deactivate/id
 
-> Deactive target image by imageId and release storage
+> Deactivate target image by imageId and release storage
 
 -   Method: POST
--   Path: [Domain]/deactive/id
+-   Path: [Domain]/deactivate/id
 -   Request: Object (formData)
     -   id: String, [Target imageId]
 -   Succeed Response: Object (JSON)
@@ -23,11 +23,11 @@
         -   message: String, [Error message]
 
 ```javascript
-// Example for /deactive/id
+// Example for /deactivate/id
 // Use jquery
 $.ajax({
     type: "POST",
-    url: targetUrl + "/deactive/id",
+    url: targetUrl + "/deactivate/id",
     data: {
         key: 'test',
         id: 'id'
@@ -39,12 +39,12 @@ $.ajax({
 });
 ```
 
-### POST /deactive/tag
+### POST /deactivate/tag
 
-> Deactive target image by tag and release storage
+> Deactivate target image by tag and release storage
 
 -   Method: POST
--   Path: [Domain]/deactive/tag
+-   Path: [Domain]/deactivate/tag
 -   Request: Object (formData)
     -   id: String, [Target imageId]
 -   Succeed Response: Object (JSON)
@@ -60,11 +60,11 @@ $.ajax({
         -   message: String, [Error message]
 
 ```javascript
-// Example for /deactive/tag
+// Example for /deactivate/tag
 // Use jquery
 $.ajax({
     type: "POST",
-    url: targetUrl + "/deactive/tag",
+    url: targetUrl + "/deactivate/tag",
     data: {
         key: 'test',
         tag: 'tag'

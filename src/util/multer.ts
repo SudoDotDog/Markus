@@ -51,7 +51,8 @@ export const UploadWithBase64 = (): ((base64: string) => Promise<string>) => {
             const type: string = splited[0].split('/')[1];
             const filePath: string = Path.join(currentPath, unique(11) + '.' + type);
             const data: string = splited[1].replace(/^base64,/, "");
-            Fs.writeFile(filePath, new Buffer(data, 'base64'), (err: Error) => {
+            const buffer: Buffer = Buffer.from(data, 'base64');
+            Fs.writeFile(filePath, buffer, (err: Error) => {
                 if (err) {
                     reject(error(ERROR_CODE.IMAGE_SAVE_FAILED));
                 }

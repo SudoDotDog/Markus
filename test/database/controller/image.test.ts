@@ -3,7 +3,7 @@
  * @fileoverview Image Controller tests
  */
 import { expect } from 'chai';
-import { deactiveImageById, getImageById } from '../../../src/database/controller/image';
+import { deactivateImageById, getImageById } from '../../../src/database/controller/image';
 import { createDuplicateImage, createImage, getImageCallbackById, getImagesCallbacksByTag, getImageUserFriendlyCallbackByTag } from '../../../src/database/controller/imageMix';
 import { IImageCallback } from '../../../src/database/interface/image';
 import { IImageModel, ImageModel } from '../../../src/database/model/image';
@@ -74,9 +74,9 @@ export const testImageController = (): void => {
             return;
         }).timeout(3200);
 
-        it('deactive image should deactive image and return image id', async (): Promise<void> => {
+        it('deactivate image should deactivate image and return image id', async (): Promise<void> => {
             const restoreUnlink: () => string[] = mockUnlinkSet();
-            await deactiveImageById(image.id);
+            await deactivateImageById(image.id);
 
             const imageModel: IImageModel | null = await ImageModel.findOne({ _id: image.id });
 
@@ -90,7 +90,7 @@ export const testImageController = (): void => {
             return;
         }).timeout(3200);
 
-        it('get image by id should return throw error when image is deactive', async (): Promise<void> => {
+        it('get image by id should return throw error when image is deactivate', async (): Promise<void> => {
             let testError: Error = error(ERROR_CODE.DEFAULT_TEST_ERROR);
 
             try {

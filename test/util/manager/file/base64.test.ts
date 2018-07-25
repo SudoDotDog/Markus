@@ -14,7 +14,6 @@ describe('test base64 file manager', (): void => {
 
     before((): void => {
         releaseCounter = 0;
-
     });
 
     it('constructor can init new manager', (): void => {
@@ -57,7 +56,7 @@ describe('test base64 file manager', (): void => {
             path: string;
         }> = restoreWriteFile();
 
-        const buffer: Buffer = new Buffer('testBase64', 'base64');
+        const buffer: Buffer  = Buffer.from('testBase64', 'base64');
         expect(result).to.be.deep.equal([{
             path: 'testPath',
             content: buffer,

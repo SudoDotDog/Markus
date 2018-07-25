@@ -3,11 +3,12 @@
  * @fileoverview M Handler
  */
 
+/// <reference path="../../declare/global.ts" />
+
 import { Request, Response } from "express";
 import * as Controller from '../../database/controller/import';
 import { IImageCallback } from "../../database/interface/image";
 import { IImageModel } from "../../database/model/image";
-import { } from "../../declare/global";
 import { error, ERROR_CODE, handlerError } from "../../util/error";
 import { RESPONSE } from '../../util/interface';
 import { IFileManager } from "../../util/manager/file/import";
@@ -117,13 +118,13 @@ export const UploadBase64Handler = async (req: Request, res: Response): Promise<
     return;
 };
 
-export const DeactiveImageHandler = async (req: Request, res: Response): Promise<void> => {
+export const DeactivateImageHandler = async (req: Request, res: Response): Promise<void> => {
     try {
         if (!req.valid) {
             throw error(ERROR_CODE.PERMISSION_VALID_FAILED);
         }
         const imageId: string = req.body.id;
-        const image: IImageModel = await Controller.Image.deactiveImageById(imageId);
+        const image: IImageModel = await Controller.Image.deactivateImageById(imageId);
 
         res.status(200).send({
             status: RESPONSE.SUCCEED,
@@ -137,14 +138,14 @@ export const DeactiveImageHandler = async (req: Request, res: Response): Promise
     return;
 };
 
-export const DeactiveTagHandler = async (req: Request, res: Response): Promise<void> => {
+export const DeactivateTagHandler = async (req: Request, res: Response): Promise<void> => {
     try {
         if (!req.valid) {
             throw error(ERROR_CODE.PERMISSION_VALID_FAILED);
         }
 
         const tag: string = req.body.tag;
-        const images: IImageModel[] = await Controller.Image.deactiveImageByTag(tag);
+        const images: IImageModel[] = await Controller.Image.deactivateImageByTag(tag);
 
         res.status(200).send({
             status: RESPONSE.SUCCEED,

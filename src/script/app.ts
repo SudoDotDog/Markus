@@ -45,19 +45,19 @@ app.get('/b/:id', ...prepares, Handler.G.imageGetBlankBlackHandler);
 app.post('/m/buffer', ...prepares, uploadManager.generateMulterEngine('image'), uploadManager.generateBufferEngine(), ...permissions, Handler.M.UploadBufferHandler);
 app.post('/m/base64', ...prepares, uploadManager.generateBase64Engine(), ...permissions, Handler.M.UploadBase64Handler);
 
-// Handler(s) for Avator Get
-app.get('/a/:avator', ...prepares, Handler.Avator.avatorGetHandler);
+// Handler(s) for Avatar Get
+app.get('/a/:avatar', ...prepares, Handler.Avatar.avatarGetHandler);
 
-// Handler(s) for Avator Set
-app.post('/v/buffer', ...prepares, uploadManager.generateMulterEngine('image'), uploadManager.generateBufferEngine(), ...permissions, Handler.Avator.avatorBufferHandler);
-app.post('/v/base64', ...prepares, uploadManager.generateBase64Engine(), ...permissions, Handler.Avator.avatorBase64Handler);
+// Handler(s) for Avatar Set
+app.post('/v/buffer', ...prepares, uploadManager.generateMulterEngine('image'), uploadManager.generateBufferEngine(), ...permissions, Handler.Avatar.avatarBufferHandler);
+app.post('/v/base64', ...prepares, uploadManager.generateBase64Engine(), ...permissions, Handler.Avatar.avatarBase64Handler);
 
 // Handler(s) for Image List Get
 app.post('/tag', ...prepares, Handler.G.imageGetListByTagHandler);
 
 // Handler(s) for Image status change
-app.post('/deactive/id', ...prepares, ...permissions, Handler.M.DeactiveImageHandler);
-app.post('/deactive/tag', ...prepares, ...permissions, Handler.M.DeactiveTagHandler);
+app.post('/deactivate/id', ...prepares, ...permissions, Handler.M.DeactivateImageHandler);
+app.post('/deactivate/tag', ...prepares, ...permissions, Handler.M.DeactivateTagHandler);
 
 // Handler(s) for debug
 app.post('/list', ...prepares, Handler.Debug.OutputImageIdList);

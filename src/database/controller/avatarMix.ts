@@ -1,21 +1,21 @@
 /**
  * @author WMXPY
- * @fileoverview Avator Mix Controller
+ * @fileoverview Avatar Mix Controller
  */
 
-import { touchDecrementAndSaveFile } from "../../util/data/file";
+import { touchDecrementAndRelease } from "../../util/data/file";
 import { error, ERROR_CODE } from "../../util/error";
 import { IFileManager } from "../../util/manager/file/import";
-import { IAvatorCallback, IAvatorCreationConfig } from "../interface/avator";
-import { AvatorModel, IAvatorModel } from "../model/avator";
+import { IAvatarCallback, IAvatarCreationConfig } from "../interface/avatar";
+import { AvatarModel, IAvatarModel } from "../model/avatar";
 import { FileModel, IFileModel } from "../model/file";
 import { getFileById } from "./imageMix";
 
-export const getFileByAvator = async (avatorName: string): Promise<IFileModel | null> => {
-    const avator: IAvatorModel | null = await AvatorModel.findOne({ avator: avatorName });
+export const getFileByAvatar = async (avatarName: string): Promise<IFileModel | null> => {
+    const avatar: IAvatarModel | null = await AvatarModel.findOne({ avatar: avatarName });
 
-    if (avator) {
-        const file: IFileModel | null = await FileModel.findOne({ _id: avator.file });
+    if (avatar) {
+        const file: IFileModel | null = await FileModel.findOne({ _id: avatar.file });
         if (file) {
             return file;
         } else {
@@ -26,12 +26,12 @@ export const getFileByAvator = async (avatorName: string): Promise<IFileModel | 
     }
 };
 
-export const createOrUpdateAvator = async (option: IAvatorCreationConfig): Promise<IAvatorCallback> => {
+export const createOrUpdateAvatar = async (option: IAvatarCreationConfig): Promise<IAvatarCallback> => {
     const sameHashFile: IFileModel | null = await FileModel.findOne({
         active: true,
         hash: option.hash,
     });
-    const avator: IAvatorModel | null = await AvatorModel.findOne({ avator: option.avator });
+    const avatar: IAvatarModel | null = await AvatarModel.findOne({ avatar: option.avatar });
     const manager: IFileManager = option.manager;
 
     const createOrUpdateFile = async (): Promise<IFileModel> => {
@@ -57,24 +57,25 @@ export const createOrUpdateAvator = async (option: IAvatorCreationConfig): Promi
 
     const file: IFileModel = await createOrUpdateFile();
 
-    if (avator) {
-        const originalFile: IFileModel = await getFileById(avator.file);
-        await touchDecrementAndSaveFile(originalFile);
+    if (avatar) {
+        const originalFile: IFileModel = await getFileById(avatar.file);
+        await touchDecrementAndRelease(originalFile);
 
-        avator.updateFile(file._id);
-        await avator.save();
+        avatar.updateFile(file._id);
+        await originalFile.save();
+        await avatar.save();
         return {
-            avator: avator.avator,
+            avatar: avatar.avatar,
             path: file.path,
         };
     } else {
-        const newAvator: IAvatorModel = new AvatorModel({
-            avator: option.avator,
+        const newAvatar: IAvatarModel = new AvatarModel({
+            avatar: option.avatar,
             file: file._id,
         });
-        await newAvator.save();
+        await newAvatar.save();
         return {
-            avator: newAvator.avator,
+            avatar: newAvatar.avatar,
             path: file.path,
         };
     }

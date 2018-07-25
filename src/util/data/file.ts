@@ -4,14 +4,26 @@
  */
 
 import { IFileModel } from "../../database/model/file";
-import { releaseStorage } from "../image";
+import { error, ERROR_CODE } from "../error";
+import * as Fs from 'fs';
 
-export const touchDecrementAndSaveFile = async (file: IFileModel): Promise<void> => {
+export const releaseStorage = (path: string): Promise<void> => {
+    return new Promise<void>((resolve: () => void, reject: (err: Error) => void) => {
+        Fs.unlink(path, (err: Error | null): void => {
+            if (err) {
+                reject(error(ERROR_CODE.IMAGE_UNLINK_FAILED));
+            }
+            resolve();
+        });
+    });
+};
+
+export const touchDecrementAndRelease = async (file: IFileModel): Promise<void> => {
     file.refDecrement();
     if (file.touchRemove()) {
         await removeFile(file);
     }
-    await file.save();
+
     return;
 };
 

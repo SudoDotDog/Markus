@@ -23,7 +23,8 @@ export default class Base64FileManager implements IFileManager {
 
     public save(): Promise<string> {
         return new Promise<string>((resolve: (path: string) => void, reject: (error: Error) => void) => {
-            Fs.writeFile(this._path, new Buffer(this._base64, 'base64'), (err: Error) => {
+            const buffer: Buffer = Buffer.from(this._base64, 'base64');
+            Fs.writeFile(this._path, buffer, (err: Error) => {
                 if (err) {
                     reject(error(ERROR_CODE.IMAGE_SAVE_FAILED));
                 }

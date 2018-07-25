@@ -1,11 +1,11 @@
 /**
  * @author WMXPY
- * @fileoverview Avator Handler
+ * @fileoverview Avatar Handler
  */
 
 import { Request, Response } from "express";
 import * as Controller from '../../database/controller/import';
-import { IAvatorCallback } from '../../database/interface/avator';
+import { IAvatarCallback } from '../../database/interface/avatar';
 import { IFileModel } from "../../database/model/file";
 import { Icon } from "../../icon/icon";
 import { error, ERROR_CODE, handlerError } from "../../util/error";
@@ -13,19 +13,19 @@ import { createTempFile } from "../../util/image";
 import { RESPONSE } from "../../util/interface";
 import { IFileManager } from "../../util/manager/file/import";
 
-export const avatorGetHandler = async (req: Request, res: Response): Promise<void> => {
+export const avatarGetHandler = async (req: Request, res: Response): Promise<void> => {
     try {
-        const avator: string = req.params.avator;
+        const avatar: string = req.params.avatar;
         const text: string | undefined = req.query.text;
-        const callback: IFileModel | null = await Controller.AvatorMix.getFileByAvator(avator);
+        const callback: IFileModel | null = await Controller.AvatarMix.getFileByAvatar(avatar);
         if (callback) {
             res.status(200).sendFile(callback.path);
         } else {
             let tempFilePath: string;
             if (text) {
-                tempFilePath = createTempFile(Icon(avator, text), 'svg');
+                tempFilePath = createTempFile(Icon(avatar, text), 'svg');
             } else {
-                tempFilePath = createTempFile(Icon(avator), 'svg');
+                tempFilePath = createTempFile(Icon(avatar), 'svg');
             }
             res.status(200).sendFile(tempFilePath);
         }
@@ -36,9 +36,9 @@ export const avatorGetHandler = async (req: Request, res: Response): Promise<voi
     return;
 };
 
-export const avatorBufferHandler = async (req: Request, res: Response): Promise<void> => {
+export const avatarBufferHandler = async (req: Request, res: Response): Promise<void> => {
     try {
-        const avator: string = req.body.avator;
+        const avatar: string = req.body.avatar;
         const file: Express.Multer.File = req.file;
         const manager: IFileManager = req.manager;
 
@@ -48,8 +48,8 @@ export const avatorBufferHandler = async (req: Request, res: Response): Promise<
         }
 
         const hash: string = await manager.hash();
-        const callback: IAvatorCallback = await Controller.AvatorMix.createOrUpdateAvator({
-            avator,
+        const callback: IAvatarCallback = await Controller.AvatarMix.createOrUpdateAvatar({
+            avatar,
             encoding: file.encoding,
             mime: file.mimetype,
             original: file.originalname,
@@ -61,7 +61,7 @@ export const avatorBufferHandler = async (req: Request, res: Response): Promise<
         res.status(200).send({
             status: RESPONSE.SUCCEED,
             data: {
-                avator: callback.avator,
+                avatar: callback.avatar,
             },
         });
     } catch (err) {
@@ -70,9 +70,9 @@ export const avatorBufferHandler = async (req: Request, res: Response): Promise<
     return;
 };
 
-export const avatorBase64Handler = async (req: Request, res: Response): Promise<void> => {
+export const avatarBase64Handler = async (req: Request, res: Response): Promise<void> => {
     try {
-        const avator: string = req.body.avator;
+        const avatar: string = req.body.avatar;
         const manager: IFileManager = req.manager;
 
         if (!req.valid) {
@@ -85,8 +85,8 @@ export const avatorBase64Handler = async (req: Request, res: Response): Promise<
         const hash: string = await manager.hash();
         const originalName: string = req.body.original || 'N/A';
 
-        const callback: IAvatorCallback = await Controller.AvatorMix.createOrUpdateAvator({
-            avator,
+        const callback: IAvatarCallback = await Controller.AvatarMix.createOrUpdateAvatar({
+            avatar,
             encoding: 'base64',
             mime,
             original: originalName,
@@ -98,7 +98,7 @@ export const avatorBase64Handler = async (req: Request, res: Response): Promise<
         res.status(200).send({
             status: RESPONSE.SUCCEED,
             data: {
-                avator: callback.avator,
+                avatar: callback.avatar,
             },
         });
     } catch (err) {

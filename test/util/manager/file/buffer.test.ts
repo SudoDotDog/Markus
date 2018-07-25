@@ -5,7 +5,7 @@
 
 import { expect } from 'chai';
 import { BufferFileManager, IFileManager } from '../../../../src/util/manager/file/import';
-import { mockWriteFile, mockWriteStream } from '../../../mock/mock';
+import { mockWriteStream } from '../../../mock/mock';
 
 describe('test base64 file manager', (): void => {
 
@@ -17,7 +17,7 @@ describe('test base64 file manager', (): void => {
     });
 
     it('constructor can init new manager', (): void => {
-        const testBuffer = new Buffer('test');
+        const testBuffer = Buffer.from('test');
         const execute: () => void = () => {
             manager = new BufferFileManager(
                 'testPath',
@@ -57,7 +57,7 @@ describe('test base64 file manager', (): void => {
             contentList: any[];
         } = restoreWriteStream();
 
-        const buffer: Buffer = new Buffer('test');
+        const buffer: Buffer = Buffer.from('test');
         expect(result).to.be.deep.equal({
             eventList: [
                 'error',

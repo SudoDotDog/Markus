@@ -1,24 +1,24 @@
 /**
  * @author WMXPY
- * @fileoverview Avator Interface
+ * @fileoverview Avatar Interface
  */
 
 import { ObjectID } from "bson";
 import { IFileManager } from "../../util/manager/file/import";
 
-export interface IAvatorConfig {
-    avator: string;
+export interface IAvatarConfig {
+    avatar: string;
     file: ObjectID;
 }
 
-export interface IAvator extends IAvatorConfig {
+export interface IAvatar extends IAvatarConfig {
     active: boolean;
     createdAt: Date;
     updatedAt: Date;
 }
 
-export interface IAvatorCreationConfig {
-    avator: string;
+export interface IAvatarCreationConfig {
+    avatar: string;
     encoding: string;
     hash: string;
     mime: string;
@@ -27,7 +27,7 @@ export interface IAvatorCreationConfig {
     size: number;
 }
 
-export interface IAvatorCallback {
-    avator: string;
+export interface IAvatarCallback {
+    avatar: string;
     path: string;
 }

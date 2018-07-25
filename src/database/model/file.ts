@@ -47,13 +47,13 @@ export const FileSchema: Schema = new Schema({
     });
 
 export interface IFileModel extends IFile, Document {
-    deactive: () => IFileModel;
+    deactivate: () => IFileModel;
     refIncrement: () => IFileModel;
     refDecrement: () => IFileModel;
     touchRemove: () => boolean;
 }
 
-FileSchema.methods.deactive = function (this: IFileModel): IFileModel {
+FileSchema.methods.deactivate = function (this: IFileModel): IFileModel {
     this.active = false;
     return this;
 };
@@ -70,7 +70,7 @@ FileSchema.methods.refDecrement = function (this: IFileModel): IFileModel {
 
 FileSchema.methods.touchRemove = function (this: IFileModel): boolean {
     if (this.reference <= 0) {
-        this.deactive();
+        this.deactivate();
         return true;
     }
     return false;
