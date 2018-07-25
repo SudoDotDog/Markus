@@ -3,9 +3,9 @@
  * @fileoverview Data File Utils
  */
 
+import * as Fs from 'fs';
 import { IFileModel } from "../../database/model/file";
 import { error, ERROR_CODE } from "../error";
-import * as Fs from 'fs';
 
 export const releaseStorage = (path: string): Promise<void> => {
     return new Promise<void>((resolve: () => void, reject: (err: Error) => void) => {

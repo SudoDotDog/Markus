@@ -81,6 +81,7 @@ export default class UploadManager {
         const type: string = splited.length >= 2 ? splited[1] : 'jpeg';
         if (this._count++ >= Config.uploadLimit) {
             this._currentFolder = Path.join(Config.imagePath, unique(9));
+            mkPathDir(this._currentFolder);
             this._count = 0;
         }
         return Path.join(this._currentFolder, unique(11) + '.' + type);

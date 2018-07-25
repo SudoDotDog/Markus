@@ -109,16 +109,27 @@ export const mockWriteStream = (): () => {
     };
 };
 
-export const monkFsSyncs = (func: () => any) => {
-    const tempUnlinkSync: any = fs.unlinkSync;
-    const tempReadFileSync: any = fs.readFileSync;
-    const tempWriteFileSync: any = fs.writeFileSync;
-    const tempMakeDirSync: any = fs.mkdirSync;
+export interface IMockFsSyncsCB {
+    unlink: string[];
+    read: string[];
+    write: string[];
+    mkdir: string[];
+    exist: string[];
+}
+
+export const monkFsSyncs = (): () => IMockFsSyncsCB => {
+    const tempUnlinkSync: typeof fs.unlinkSync = fs.unlinkSync;
+    const tempReadFileSync: typeof fs.readFileSync = fs.readFileSync;
+    const tempWriteFileSync: typeof fs.writeFileSync = fs.writeFileSync;
+    const tempMakeDirSync: typeof fs.mkdirSync = fs.mkdirSync;
+    const tempExistSync: typeof fs.existsSync = fs.existsSync;
 
     const unlinkSet: string[] = [];
     const readSet: string[] = [];
     const writeSet: string[] = [];
     const mkdirSet: string[] = [];
+    const existSet: string[] = [];
+
     (fs as any).unlinkSync = (filePath: string) => {
         unlinkSet.push(filePath);
     };
@@ -135,17 +146,23 @@ export const monkFsSyncs = (func: () => any) => {
         mkdirSet.push(dirPath);
     };
 
-    func();
+    (fs as any).existsSync = (dirPath: string) => {
+        existSet.push(dirPath);
+    };
 
-    (fs as any).unlinkSync = tempUnlinkSync;
-    (fs as any).readFileSync = tempReadFileSync;
-    (fs as any).writeFileSync = tempWriteFileSync;
-    (fs as any).mkdirSync = tempMakeDirSync;
+    return (): IMockFsSyncsCB => {
+        (fs as any).unlinkSync = tempUnlinkSync;
+        (fs as any).readFileSync = tempReadFileSync;
+        (fs as any).writeFileSync = tempWriteFileSync;
+        (fs as any).mkdirSync = tempMakeDirSync;
+        (fs as any).existsSync = tempExistSync;
 
-    return {
-        unlink: unlinkSet,
-        read: readSet,
-        write: writeSet,
-        mkdir: mkdirSet,
+        return {
+            unlink: unlinkSet,
+            read: readSet,
+            write: writeSet,
+            mkdir: mkdirSet,
+            exist: existSet,
+        };
     };
 };
