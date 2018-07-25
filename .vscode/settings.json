@@ -10,6 +10,8 @@
         "ifeq",
         "mimetype",
         "mongod",
+        "mongodump",
+        "mongorestore",
         "originalname",
         "splited",
         "tshook",
