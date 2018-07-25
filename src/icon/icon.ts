@@ -3,12 +3,12 @@
  * @fileoverview Default Icon generator
  */
 
-import Buffer from './buffer';
 import { chaetodon } from './chaetodon/chaetodon';
-import Color from './color';
-import Generator from './generator';
-import Parser from './parser';
-import Point, { IPoint } from './point';
+import Buffer from './sparidae/buffer';
+import Color from './sparidae/color';
+import Generator from './sparidae/generator';
+import Parser from './sparidae/parser';
+import Point, { IPoint } from './sparidae/point';
 
 export const Icon = (str: string, display?: string) => {
     const generator: Generator = new Generator(str);

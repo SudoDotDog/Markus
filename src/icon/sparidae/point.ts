@@ -4,7 +4,7 @@
  * @fileoverview Point Icon Class
  */
 
-import { error, ERROR_CODE } from "../util/error";
+import { error, ERROR_CODE } from "../../util/error";
 
 export interface IPoint {
     x: number;
@@ -64,7 +64,7 @@ export default class Point {
                 resultPoint = { x: 0, y: EDGE.LENGTH - lengthLeft };
                 break;
             default:
-                throw new Error("Edge out of bound");
+                throw error(ERROR_CODE.EDGE_OUT_OF_BOUND);
         }
         this.pushQueue(whichEdge).touchQueue();
         this._outer.push(resultPoint);

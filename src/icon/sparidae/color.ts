@@ -4,7 +4,7 @@
  * @fileoverview Color Icon Class
  */
 
-import { error, ERROR_CODE } from '../util/error';
+import { error, ERROR_CODE } from '../../util/error';
 
 export default class Color {
     private _list: string[];

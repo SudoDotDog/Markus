@@ -5,7 +5,7 @@
  */
 
 import { expect } from 'chai';
-import Parser from '../../src/icon/parser';
+import Parser from '../../../src/icon/sparidae/parser';
 
 describe('test icon parser', () => {
     let testContent: Parser;

@@ -5,8 +5,7 @@
  */
 
 import { expect } from 'chai';
-import Point from '../../src/icon/point';
-import { compareError, error, ERROR_CODE } from '../../src/util/error';
+import Point from '../../../src/icon/sparidae/point';
 
 describe('test icon point', () => {
     let testContent: Point;
