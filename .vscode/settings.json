@@ -15,6 +15,7 @@
         "mongorestore",
         "originalname",
         "splited",
+        "submodule",
         "tshook",
         "ubuild",
         "xlink",

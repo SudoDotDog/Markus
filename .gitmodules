@@ -1,0 +1,3 @@
+[submodule "Jericho"]
+	path = Jericho
+	url = https://github.com/sudo-dog/Jericho
