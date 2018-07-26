@@ -4,8 +4,13 @@
  */
 
 export interface IFileManager {
-    save: () => Promise<string>;
+    save: () => Promise<IFileLink>;
     hash: () => Promise<string>;
     mime: () => string;
     release: () => void;
+}
+
+export interface IFileLink {
+    folder: string;
+    filename: string;
 }

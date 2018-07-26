@@ -6,6 +6,7 @@
 import * as Fs from 'fs';
 import { IFileModel } from "../../database/model/file";
 import { error, ERROR_CODE } from "../error";
+import { fileBuilder } from './path';
 
 export const releaseStorage = (path: string): Promise<void> => {
     return new Promise<void>((resolve: () => void, reject: (err: Error) => void) => {
@@ -28,7 +29,7 @@ export const touchDecrementAndRelease = async (file: IFileModel): Promise<void> 
 };
 
 export const removeFile = async (file: IFileModel): Promise<void> => {
-    await releaseStorage(file.path);
+    await releaseStorage(fileBuilder(file.folder, file.filename));
     return;
 };
 

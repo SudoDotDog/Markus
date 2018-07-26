@@ -106,6 +106,7 @@ export const UploadBase64Handler = async (req: Request, res: Response): Promise<
             size: base64Image.length,
             tags,
         });
+
         res.status(200).send({
             status: RESPONSE.SUCCEED,
             data: {
