@@ -12,7 +12,7 @@ import { IFileModel } from '../database/model/file';
 import { IImageModel } from '../database/model/image';
 import { ITagModel } from '../database/model/tag';
 import Config from '../markus';
-import { error, ERROR_CODE } from './error';
+import { mkPathDir } from './data/file';
 
 export const createTempFile = (content: string, type: string): string => {
     const tempPath: string = Path.join(Config.imagePath, 'temp');
@@ -90,36 +90,4 @@ export const unique = (len?: number) => {
     } else {
         return uniqueSmall();
     }
-};
-
-export const mkPathDir = (path: string) => {
-    const exist: boolean = Fs.existsSync(path);
-    if (!exist) {
-        Fs.mkdirSync(path);
-    }
-};
-
-export const hashBuffer = (buffer: Buffer): string => {
-    const fsHash: Crypto.Hash = Crypto.createHash('md5');
-    return fsHash.update(buffer).digest('hex');
-};
-
-export const hashImage = (imagePath: string): Promise<string> => {
-    const stream: Fs.ReadStream = Fs.createReadStream(imagePath);
-    const fsHash: Crypto.Hash = Crypto.createHash('md5');
-
-    return new Promise<string>((resolve: (md5: string) => void, reject: (reason: Error) => void) => {
-        stream.on('data', (dataChunk: any) => {
-            fsHash.update(dataChunk);
-        });
-
-        stream.on('end', () => {
-            const md5: string = fsHash.digest('hex');
-            resolve(md5);
-        });
-
-        stream.on('close', (err: Error) => {
-            reject(err);
-        });
-    });
 };

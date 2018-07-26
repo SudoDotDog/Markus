@@ -4,7 +4,7 @@
  * @fileoverview Generator Icon Class
  */
 
-import { stringToMD5 } from "../../util/crypto";
+import { stringToMD5 } from "../../util/data/crypto";
 
 export default class Generator {
     private _medium: string;

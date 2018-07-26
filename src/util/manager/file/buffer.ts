@@ -4,8 +4,8 @@
  */
 
 import * as Fs from 'fs';
+import { hashBuffer } from '../../data/crypto';
 import { error, ERROR_CODE } from '../../error';
-import { hashBuffer } from '../../image';
 import { IFileManager } from "./interface";
 
 export default class BufferFileManager implements IFileManager {

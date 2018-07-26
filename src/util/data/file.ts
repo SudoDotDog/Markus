@@ -31,3 +31,10 @@ export const removeFile = async (file: IFileModel): Promise<void> => {
     await releaseStorage(file.path);
     return;
 };
+
+export const mkPathDir = (path: string) => {
+    const exist: boolean = Fs.existsSync(path);
+    if (!exist) {
+        Fs.mkdirSync(path);
+    }
+};

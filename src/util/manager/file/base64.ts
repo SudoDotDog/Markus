@@ -4,7 +4,7 @@
  */
 
 import * as Fs from 'fs';
-import { stringToMD5 } from '../../crypto';
+import { stringToMD5 } from '../../data/crypto';
 import { error, ERROR_CODE } from '../../error';
 import { IFileManager } from "./interface";
 

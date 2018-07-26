@@ -1,5 +1,6 @@
 /**
  * @author WMXPY
+ * @description Deprecated
  * @fileoverview Deprecated Multer Utils
  */
 
@@ -7,8 +8,9 @@ import * as Fs from 'fs';
 import * as Multer from 'multer';
 import * as Path from 'path';
 import Config from '../markus';
+import { mkPathDir } from './data/file';
 import { error, ERROR_CODE } from './error';
-import { mkPathDir, unique } from './image';
+import { unique } from './image';
 
 export const Upload = (): Multer.Instance => {
     let count: number = 0;
