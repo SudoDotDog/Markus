@@ -8,6 +8,7 @@ import * as Controller from '../../database/controller/import';
 import { IAvatarCallback } from '../../database/interface/avatar';
 import { IFileModel } from "../../database/model/file";
 import { Icon } from "../../icon/icon";
+import { fileBuilder } from "../../util/data/path";
 import { error, ERROR_CODE, handlerError } from "../../util/error";
 import { createTempFile } from "../../util/image";
 import { RESPONSE } from "../../util/interface";
@@ -19,7 +20,8 @@ export const avatarGetHandler = async (req: Request, res: Response): Promise<voi
         const text: string | undefined = req.query.text;
         const callback: IFileModel | null = await Controller.AvatarMix.getFileByAvatar(avatar);
         if (callback) {
-            res.status(200).sendFile(callback.path);
+            const filepath: string = fileBuilder(callback.folder, callback.filename);
+            res.status(200).sendFile(filepath);
         } else {
             let tempFilePath: string;
             if (text) {

@@ -4,21 +4,19 @@
  */
 
 import { ObjectID } from 'bson';
-import * as Crypto from 'crypto';
 import * as Fs from 'fs';
-import * as Path from 'path';
 import { IImageCallback, IImageListResponse, IImageUserFriendlyCallback } from '../database/interface/image';
 import { IFileModel } from '../database/model/file';
 import { IImageModel } from '../database/model/image';
 import { ITagModel } from '../database/model/tag';
-import Config from '../markus';
+import { fileBuilder, pathBuilder } from '../util/data/path';
 import { mkPathDir } from './data/file';
 
 export const createTempFile = (content: string, type: string): string => {
-    const tempPath: string = Path.join(Config.imagePath, 'temp');
+    const tempPath: string = pathBuilder('temp');
     mkPathDir(tempPath);
 
-    const filePath: string = Path.join(tempPath, unique(11) + '.' + type);
+    const filePath: string = fileBuilder('temp', unique(11) + '.' + type);
     Fs.writeFileSync(filePath, content);
 
     return filePath;
@@ -60,7 +58,7 @@ export const buildImageCallback = (image: IImageModel, file: IFileModel): IImage
         encoding: file.encoding,
         mime: file.mime,
         original: file.original,
-        path: file.path,
+        path: fileBuilder(file.folder, file.filename),
         size: file.size,
         tags: image.tags.map((id: ObjectID) => id.toString()),
     };

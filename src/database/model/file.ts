@@ -27,7 +27,11 @@ export const FileSchema: Schema = new Schema({
         type: String,
         required: true,
     },
-    path: {
+    folder: {
+        type: String,
+        required: true,
+    },
+    filename: {
         type: String,
         required: true,
     },

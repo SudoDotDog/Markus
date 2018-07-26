@@ -8,6 +8,7 @@ import * as Multer from 'multer';
 import * as Path from 'path';
 import Config, { middleware } from '../../markus';
 import { mkPathDir } from '../data/file';
+import { pathBuilder } from '../data/path';
 import { error, ERROR_CODE, handlerError } from '../error';
 import { unique } from "../image";
 import { Base64FileManager, BufferFileManager, IFileManager } from './file/import';
@@ -21,10 +22,10 @@ export default class UploadManager {
             this._currentFolder = currentFolder;
             this._count = currentCount;
         } else {
-            this._currentFolder = Path.join(Config.imagePath, unique(9));
+            this._currentFolder = unique(9);
             this._count = 0;
         }
-        mkPathDir(this._currentFolder);
+        mkPathDir(pathBuilder(this._currentFolder));
     }
 
     public generateMulterEngine(form: string): middleware {
@@ -63,8 +64,8 @@ export default class UploadManager {
     }
 
     public createBufferFile(buffer: Buffer, file: Express.Multer.File): IFileManager {
-        const path: string = this.next(file.mimetype);
-        const bufferManager: IFileManager = new BufferFileManager(path, this.release, buffer, file.mimetype);
+        const { folder, filename } = this.next(file.mimetype);
+        const bufferManager: IFileManager = new BufferFileManager(folder, filename, this.release, buffer, file.mimetype);
         return bufferManager;
     }
 
@@ -72,20 +73,26 @@ export default class UploadManager {
         const splited: string[] = base64.split(';');
         const data: string = splited[1].replace(/^base64,/, "");
         const mime: string = splited[0].split(":")[1];
-        const path: string = this.next(mime);
-        const base64Manager: IFileManager = new Base64FileManager(path, this.release, data, mime);
+        const { folder, filename } = this.next(mime);
+        const base64Manager: IFileManager = new Base64FileManager(folder, filename, this.release, data, mime);
         return base64Manager;
     }
 
-    protected next(mime: string): string {
+    protected next(mime: string): {
+        folder: string;
+        filename: string;
+    } {
         const splited: string[] = mime.split('/');
         const type: string = splited.length >= 2 ? splited[1] : 'jpeg';
         if (this._count++ >= Config.uploadLimit) {
-            this._currentFolder = Path.join(Config.imagePath, unique(9));
-            mkPathDir(this._currentFolder);
+            this._currentFolder = unique(9);
+            mkPathDir(pathBuilder(this._currentFolder));
             this._count = 0;
         }
-        return Path.join(this._currentFolder, unique(11) + '.' + type);
+        return {
+            folder: this._currentFolder,
+            filename: unique(11) + '.' + type,
+        };
     }
 
     protected release() {

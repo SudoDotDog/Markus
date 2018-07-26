@@ -4,6 +4,7 @@
  */
 
 import { touchDecrementAndRelease } from "../../util/data/file";
+import { fileBuilder } from "../../util/data/path";
 import { error, ERROR_CODE } from "../../util/error";
 import { IFileManager } from "../../util/manager/file/import";
 import { IAvatarCallback, IAvatarCreationConfig } from "../interface/avatar";
@@ -41,13 +42,14 @@ export const createOrUpdateAvatar = async (option: IAvatarCreationConfig): Promi
             await sameHashFile.save();
             return sameHashFile;
         } else {
-            const path: string = await manager.save();
+            const { folder, filename } = await manager.save();
             const newFile: IFileModel = new FileModel({
                 encoding: option.encoding,
                 hash: option.hash,
                 mime: option.mime,
                 original: option.original,
-                path,
+                folder,
+                filename,
                 size: option.size,
             }).refIncrement();
             await newFile.save();
@@ -66,7 +68,7 @@ export const createOrUpdateAvatar = async (option: IAvatarCreationConfig): Promi
         await avatar.save();
         return {
             avatar: avatar.avatar,
-            path: file.path,
+            path: fileBuilder(file.folder, file.filename),
         };
     } else {
         const newAvatar: IAvatarModel = new AvatarModel({
@@ -76,7 +78,7 @@ export const createOrUpdateAvatar = async (option: IAvatarCreationConfig): Promi
         await newAvatar.save();
         return {
             avatar: newAvatar.avatar,
-            path: file.path,
+            path: fileBuilder(file.folder, file.filename),
         };
     }
 };

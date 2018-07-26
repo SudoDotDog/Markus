@@ -5,30 +5,37 @@
 
 import * as Fs from 'fs';
 import { stringToMD5 } from '../../data/crypto';
+import { fileBuilder } from '../../data/path';
 import { error, ERROR_CODE } from '../../error';
-import { IFileManager } from "./interface";
+import { IFileLink, IFileManager } from "./interface";
 
 export default class Base64FileManager implements IFileManager {
-    private _path: string;
+    private _folder: string;
+    private _filename: string;
     private _base64: string;
     private _mime: string;
     private _release: () => void;
 
-    public constructor(path: string, release: () => void, base64: string, mime: string) {
-        this._path = path;
+    public constructor(folder: string, filename: string, release: () => void, base64: string, mime: string) {
+        this._folder = folder;
+        this._filename = filename;
         this._release = release;
         this._mime = mime;
         this._base64 = base64;
     }
 
-    public save(): Promise<string> {
-        return new Promise<string>((resolve: (path: string) => void, reject: (error: Error) => void) => {
+    public save(): Promise<IFileLink> {
+        return new Promise<IFileLink>((resolve: (link: IFileLink) => void, reject: (error: Error) => void) => {
             const buffer: Buffer = Buffer.from(this._base64, 'base64');
-            Fs.writeFile(this._path, buffer, (err: Error) => {
+            const filepath: string = fileBuilder(this._folder, this._filename);
+            Fs.writeFile(filepath, buffer, (err: Error) => {
                 if (err) {
                     reject(error(ERROR_CODE.IMAGE_SAVE_FAILED));
                 }
-                resolve(this._path);
+                resolve({
+                    folder: this._folder,
+                    filename: this._filename,
+                });
             });
         });
     }

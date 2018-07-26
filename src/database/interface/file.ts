@@ -8,7 +8,8 @@ export interface IFileConfig {
     hash: string;
     mime: string;
     original: string;
-    path: string;
+    folder: string;
+    filename: string;
     size: number;
 }
 

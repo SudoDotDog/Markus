@@ -28,14 +28,15 @@ export const getFileById = async (id: ObjectID): Promise<IFileModel> => {
 
 export const createImage = async (option: IImageCreationConfig): Promise<IImageCallback> => {
     const manager: IFileManager = option.manager;
-    const path: string = await manager.save();
+    const { folder, filename } = await manager.save();
 
     const newFile: IFileModel = new FileModel({
         encoding: option.encoding,
         hash: option.hash,
         mime: option.mime,
         original: option.original,
-        path,
+        folder,
+        filename,
         size: option.size,
     }).refIncrement();
 
