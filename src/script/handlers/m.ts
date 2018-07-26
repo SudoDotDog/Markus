@@ -3,6 +3,7 @@
  * @fileoverview M Handler
  */
 
+// tslint:disable-next-line
 /// <reference path="../../declare/global.ts" />
 
 import { Request, Response } from "express";

@@ -39,94 +39,94 @@ const uploadManager: UploadManager = new UploadManager();
 
 // Handler(s) for Image Get
 app.get(
-    '/w/:id', 
+    '/w/:id',
     ...prepares,
     Handler.G.imageGetBlankWhiteHandler,
 );
 app.get(
-    '/b/:id', 
-    ...prepares, 
+    '/b/:id',
+    ...prepares,
     Handler.G.imageGetBlankBlackHandler,
 );
 
 // Handler(s) for Image Upload
 app.post(
-    '/m/buffer', 
-    ...prepares, 
-    uploadManager.generateMulterEngine('image'), 
-    uploadManager.generateBufferEngine(), 
-    ...permissions, 
+    '/m/buffer',
+    ...prepares,
+    uploadManager.generateMulterEngine('image'),
+    uploadManager.generateBufferEngine(),
+    ...permissions,
     Handler.M.UploadBufferHandler,
 );
 app.post(
-    '/m/base64', 
-    ...prepares, 
-    uploadManager.generateBase64Engine(), 
-    ...permissions, 
+    '/m/base64',
+    ...prepares,
+    uploadManager.generateBase64Engine(),
+    ...permissions,
     Handler.M.UploadBase64Handler,
 );
 
 // Handler(s) for Avatar Get
 app.get(
-    '/a/:avatar', 
-    ...prepares, 
+    '/a/:avatar',
+    ...prepares,
     Handler.Avatar.avatarGetHandler,
 );
 
 // Handler(s) for Avatar Set
 app.post(
-    '/v/buffer', 
-    ...prepares, 
-    uploadManager.generateMulterEngine('image'), 
-    uploadManager.generateBufferEngine(), 
-    ...permissions, 
+    '/v/buffer',
+    ...prepares,
+    uploadManager.generateMulterEngine('image'),
+    uploadManager.generateBufferEngine(),
+    ...permissions,
     Handler.Avatar.avatarBufferHandler,
 );
 app.post(
-    '/v/base64', 
-    ...prepares, 
-    uploadManager.generateBase64Engine(), 
-    ...permissions, 
+    '/v/base64',
+    ...prepares,
+    uploadManager.generateBase64Engine(),
+    ...permissions,
     Handler.Avatar.avatarBase64Handler,
 );
 
 // Handler(s) for Image List Get
 app.post(
-    '/tag', 
-    ...prepares, 
+    '/tag',
+    ...prepares,
     Handler.G.imageGetListByTagHandler,
 );
 
 // Handler(s) for Image status change
 app.post(
-    '/deactivate/id', 
-    ...prepares, 
-    ...permissions, 
+    '/deactivate/id',
+    ...prepares,
+    ...permissions,
     Handler.M.DeactivateImageHandler,
 );
 app.post(
-    '/deactivate/tag', 
-    ...prepares, 
-    ...permissions, 
+    '/deactivate/tag',
+    ...prepares,
+    ...permissions,
     Handler.M.DeactivateTagHandler,
 );
 
 // Handler(s) for debug
 app.post(
-    '/list', 
-    ...prepares, 
+    '/list',
+    ...prepares,
     Handler.Debug.OutputImageIdList,
 );
 app.delete(
-    '/empty', 
-    ...prepares, 
+    '/empty',
+    ...prepares,
     Handler.Debug.emptyDatabaseHandler,
 );
 
 // Handler(s) for 404
 app.all(
-    '*', 
-    ...prepares, 
+    '*',
+    ...prepares,
     Handler.G.fourOFourHandler,
 );
 

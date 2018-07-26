@@ -3,6 +3,7 @@
  * @fileoverview Config
  */
 
+// tslint:disable-next-line
 /// <reference path="./declare/global.ts" />
 
 import { NextFunction, Request, Response } from 'express';
