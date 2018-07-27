@@ -56,7 +56,7 @@ describe('test upload manager util', (): void => {
     });
 
     it('next function should improve count and return a path', async (): Promise<void> => {
-        const path: string = (testContent as any).next('image/jpeg');
-        expect(path.substring(path.length - 4, path.length)).to.be.equal('jpeg');
+        const { filename } = (testContent as any).next('image/jpeg');
+        expect(filename.substring(filename.length - 4, filename.length)).to.be.equal('jpeg');
     });
 });

@@ -20,6 +20,7 @@ describe('test base64 file manager', (): void => {
         const execute: () => void = () => {
             manager = new Base64FileManager(
                 'testPath',
+                'testName',
                 () => {
                     releaseCounter++;
                 },
@@ -56,10 +57,7 @@ describe('test base64 file manager', (): void => {
             path: string;
         }> = restoreWriteFile();
 
-        const buffer: Buffer  = Buffer.from('testBase64', 'base64');
-        expect(result).to.be.deep.equal([{
-            path: 'testPath',
-            content: buffer,
-        }]);
+        const buffer: Buffer = Buffer.from('testBase64', 'base64');
+        expect(result[0].content).to.be.deep.equal(buffer);
     });
 });

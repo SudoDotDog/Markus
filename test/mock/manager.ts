@@ -4,6 +4,7 @@
  */
 
 import { IFileManager } from "../../src/util/manager/file/import";
+import { IFileLink } from "../../src/util/manager/file/interface";
 
 export default class MockManager implements IFileManager {
     private _saveCount: number;
@@ -11,24 +12,29 @@ export default class MockManager implements IFileManager {
     private _hashCount: number;
     private _releaseCount: number;
 
-    private _path: string;
+    private _folder: string;
+    private _filename: string;
     private _hash: string;
     private _mime: string;
 
-    public constructor(path: string, hash: string, mime: string) {
+    public constructor(folder: string, filename: string, hash: string, mime: string) {
         this._hashCount = 0;
         this._mimeCount = 0;
         this._releaseCount = 0;
         this._saveCount = 0;
 
-        this._path = path;
+        this._folder = folder;
+        this._filename = filename;
         this._hash = hash;
         this._mime = mime;
     }
 
-    public async save(): Promise<string> {
+    public async save(): Promise<IFileLink> {
         this._saveCount++;
-        return this._path;
+        return {
+            folder: this._folder,
+            filename: this._filename,
+        };
     }
 
     public mime(): string {

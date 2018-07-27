@@ -27,7 +27,8 @@ describe('test data file util functions', (): void => {
             hash: 'test',
             mime: 'test',
             original: 'test',
-            path: 'somewhere',
+            folder: 'somewhere',
+            filename: 'name',
             size: 1000,
         });
         await removeFile(file);
@@ -44,7 +45,8 @@ describe('test data file util functions', (): void => {
             hash: 'test',
             mime: 'test',
             original: 'test',
-            path: 'somewhere',
+            folder: 'somewhere',
+            filename: 'string',
             size: 1000,
         });
 
@@ -53,11 +55,12 @@ describe('test data file util functions', (): void => {
             hash: 'test',
             mime: 'test',
             original: 'test',
-            path: 'somewhere',
+            folder: 'somewhere',
+            filename: 'name',
             size: 1000,
         })
-        .refIncrement()
-        .refIncrement();
+            .refIncrement()
+            .refIncrement();
         await touchDecrementAndRelease(file);
         await touchDecrementAndRelease(file2);
 

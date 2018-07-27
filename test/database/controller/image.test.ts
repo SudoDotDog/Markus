@@ -27,7 +27,7 @@ export const testImageController = (): void => {
         };
 
         it('create image should give correct image', async (): Promise<void> => {
-            const mock = new MockManager('path', 'hash', 'mime');
+            const mock = new MockManager('path', 'name', 'hash', 'mime');
 
             image = await createImage({
                 encoding: 'test',
@@ -46,7 +46,7 @@ export const testImageController = (): void => {
         }).timeout(3200);
 
         it('create duplicated image with same hash should return same id and unlink same image', async (): Promise<void> => {
-            const mock = new MockManager('path', 'hash', 'mime');
+            const mock = new MockManager('path', 'name', 'hash', 'mime');
 
             const restoreUnlink: () => string[] = mockUnlinkSet();
             duplicatedImage = await createDuplicateImage({

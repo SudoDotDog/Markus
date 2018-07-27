@@ -21,6 +21,7 @@ describe('test base64 file manager', (): void => {
         const execute: () => void = () => {
             manager = new BufferFileManager(
                 'testPath',
+                'testName',
                 () => {
                     releaseCounter++;
                 },
