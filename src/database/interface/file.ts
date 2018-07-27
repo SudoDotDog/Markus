@@ -3,14 +3,17 @@
  * @fileoverview File Interface
  */
 
-export interface IFileConfig {
+export interface IFileProperty {
     encoding: string;
-    hash: string;
     mime: string;
     original: string;
+    size: number;
+}
+
+export interface IFileConfig extends IFileProperty {
     folder: string;
     filename: string;
-    size: number;
+    hash: string;
 }
 
 export interface IFile extends IFileConfig {
