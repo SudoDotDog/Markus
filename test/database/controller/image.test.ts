@@ -2,6 +2,7 @@
  * @author WMXPY
  * @fileoverview Image Controller tests
  */
+
 import { expect } from 'chai';
 import { deactivateImageById, getImageById } from '../../../src/database/controller/image';
 import { createDuplicateImage, createImage, getImageCallbackById, getImagesCallbacksByTag, getImageUserFriendlyCallbackByTag } from '../../../src/database/controller/imageMix';
