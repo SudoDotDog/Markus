@@ -32,9 +32,21 @@ export const getImageList = async (): Promise<IImageListResponse[]> => {
 };
 
 
-export const getActiveImagesByTag = async (tag: string): Promise<IImageModel[]> => {
+export const getActiveImagesByTag = async (tag: ObjectID): Promise<IImageModel[]> => {
     const results: IImageModel[] = await ImageModel.find({
         active: true,
+        tags: tag,
+    });
+
+    if (results.length <= 0) {
+        throw error(ERROR_CODE.NO_IMAGE_UNDER_TARGET_TAG);
+    }
+
+    return results;
+};
+
+export const getAllActiveAndInactiveImagesByTag = async (tag: ObjectID): Promise<IImageModel[]> => {
+    const results: IImageModel[] = await ImageModel.find({
         tags: tag,
     });
 

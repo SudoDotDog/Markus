@@ -51,7 +51,14 @@ export const getOrCreateTagByName = async (name: string): Promise<ITagModel> => 
     }
 };
 
-export const getTagsListByIds
+export const getTagsListByIds = async (ids: ObjectID[]): Promise<ITagModel[]> => {
+    const tags: ITagModel[] = await TagModel.find({
+        _id: {
+            $in: ids,
+        },
+    });
+    return tags;
+};
 
 export const getTagByName = async (name: string): Promise<ITagModel> => {
     const tag: ITagModel | null = await TagModel.findOne({ name });

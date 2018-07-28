@@ -43,8 +43,9 @@ export const deactivateImageById = async (id: ObjectID | string): Promise<IImage
     return result;
 };
 
-export const deactivateImageByTag = async (tag: string): Promise<IImageModel[]> => {
-    const results: IImageModel[] = await Controller.Image.getActiveImagesByTag(tag);
+export const deactivateImageByTagString = async (tagString: string): Promise<IImageModel[]> => {
+    const tag: ITagModel = await Controller.Tag.getTagByName(tagString);
+    const results: IImageModel[] = await Controller.Image.getActiveImagesByTag(tag._id);
 
     results.forEach(async (result: IImageModel) => {
         const file: IFileModel = await Controller.File.getActiveFileById(result.file);
@@ -59,13 +60,14 @@ export const deactivateImageByTag = async (tag: string): Promise<IImageModel[]> 
 
 export const getImageUserFriendlyCallbackByTag = async (tagString: string, includeInactive?: boolean): Promise<IImageUserFriendlyCallback[]> => {
     const tag: ITagModel = await Controller.Tag.getTagByName(tagString);
+    let images: IImageModel[];
 
-    let query: any = {
-        tags: tag,
-    };
-    if (!includeInactive) { query.active = true; }
+    if (includeInactive) {
+        images = await Controller.Image.getAllActiveAndInactiveImagesByTag(tag._id);
+    } else {
+        images = await Controller.Image.getActiveImagesByTag(tag._id);
+    }
 
-    const images: IImageModel[] = await ImageModel.find(query);
     const tagMap: Map<string, ITagModel> = new Map<string, ITagModel>();
 
     let tagIdsArray: ObjectID[] = [];
@@ -73,11 +75,7 @@ export const getImageUserFriendlyCallbackByTag = async (tagString: string, inclu
         tagIdsArray = mergeArray(tagIdsArray, current.tags);
     }
 
-    const tags: ITagModel[] = await TagModel.find({
-        _id: {
-            $in: tagIdsArray,
-        },
-    });
+    const tags: ITagModel[] = await Controller.Tag.getTagsListByIds(tagIdsArray);
 
     for (let current of tags) {
         tagMap.set(current.id.toString(), current);
