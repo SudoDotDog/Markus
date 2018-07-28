@@ -11,7 +11,7 @@ import Config, { middleware } from "../markus";
 import UploadManager from '../util/manager/upload';
 import * as Handler from './handlers/import';
 
-mongoose.connect(Config.db);
+mongoose.connect(Config.host + '/' + Config.database);
 
 const db: mongoose.Connection = mongoose.connection;
 db.on('error', console.log.bind(console, 'connection error:'));

@@ -14,7 +14,8 @@ export type middleware = (req: Request, res: Response, next: NextFunction) => Pr
 
 interface IConfig {
     crossOrigin: string;
-    db: string;
+    host: string;
+    database: string;
     imagePath: string;
     imagePFolder: number;
     isDebug: boolean;
@@ -46,7 +47,8 @@ const validPermissionMiddleware: middleware = async (req: Request, res: Response
 
 const Config: IConfig = {
     crossOrigin: '*',
-    db: 'mongodb://localhost/markus-test',
+    host: 'mongodb://localhost',
+    database: 'markus-test',
     imagePath: 'F:/path',
     imagePFolder: 48,
     isDebug: true,
