@@ -4,6 +4,7 @@
  * @fileoverview Import
  */
 
+import * as Avatar from './avatar';
 import * as Backup from './backup';
 
-export { Backup };
+export { Avatar, Backup };

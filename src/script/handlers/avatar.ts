@@ -4,9 +4,9 @@
  */
 
 import { Request, Response } from "express";
-import * as Controller from '../../database/controller/import';
 import { IAvatarCallback } from '../../database/interface/avatar';
 import { IFileModel } from "../../database/model/file";
+import * as Direct from '../../direct/import';
 import { Icon } from "../../icon/icon";
 import { fileBuilder } from "../../util/data/path";
 import { error, ERROR_CODE, handlerError } from "../../util/error";
@@ -18,7 +18,7 @@ export const avatarGetHandler = async (req: Request, res: Response): Promise<voi
     try {
         const avatar: string = req.params.avatar;
         const text: string | undefined = req.query.text;
-        const callback: IFileModel | null = await Controller.AvatarMix.getFileByAvatar(avatar);
+        const callback: IFileModel | null = await Direct.Avatar.rummageFileByAvatar(avatar);
         if (callback) {
             const filepath: string = fileBuilder(callback.folder, callback.filename);
             res.status(200).sendFile(filepath);
@@ -50,7 +50,7 @@ export const avatarBufferHandler = async (req: Request, res: Response): Promise<
         }
 
         const hash: string = await manager.hash();
-        const callback: IAvatarCallback = await Controller.AvatarMix.createOrUpdateAvatar({
+        const callback: IAvatarCallback = await Direct.Avatar.createOrUpdateAvatar({
             avatar,
             encoding: file.encoding,
             mime: file.mimetype,
@@ -87,7 +87,7 @@ export const avatarBase64Handler = async (req: Request, res: Response): Promise<
         const hash: string = await manager.hash();
         const originalName: string = req.body.original || 'N/A';
 
-        const callback: IAvatarCallback = await Controller.AvatarMix.createOrUpdateAvatar({
+        const callback: IAvatarCallback = await Direct.Avatar.createOrUpdateAvatar({
             avatar,
             encoding: 'base64',
             mime,

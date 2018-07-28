@@ -9,8 +9,23 @@ import { IFileManager } from "../../util/manager/file/import";
 import { IFileConfig, IFileProperty } from '../interface/file';
 import { FileModel, IFileModel } from "../model/file";
 
-export const getFileByHash = async (hash: string): Promise<IFileModel> => {
-    const file: IFileModel | null = await FileModel.findOne({ hash });
+export const rummageSameFile = async (hash: string): Promise<IFileModel | null> => {
+    const file: IFileModel | null = await FileModel.findOne({
+        active: true,
+        hash,
+    });
+    if (file) {
+        return file;
+    } else {
+        return null;
+    }
+};
+
+export const getActiveFileByHash = async (hash: string): Promise<IFileModel> => {
+    const file: IFileModel | null = await FileModel.findOne({
+        active: true,
+        hash,
+    });
     if (file) {
         return file;
     } else {
@@ -18,8 +33,11 @@ export const getFileByHash = async (hash: string): Promise<IFileModel> => {
     }
 };
 
-export const getFileById = async (id: ObjectID): Promise<IFileModel> => {
-    const file: IFileModel | null = await FileModel.findOne({ _id: id });
+export const getActiveFileById = async (id: ObjectID): Promise<IFileModel> => {
+    const file: IFileModel | null = await FileModel.findOne({
+        active: true,
+        _id: id,
+    });
     if (file) {
         return file;
     } else {

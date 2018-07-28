@@ -7,6 +7,15 @@ import { error, ERROR_CODE } from "../../util/error";
 import { IAvatarConfig } from "../interface/avatar";
 import { AvatarModel, IAvatarModel } from "../model/avatar";
 
+export const rummageAvatarByName = async (name: string): Promise<IAvatarModel | null> => {
+    const avatar: IAvatarModel | null = await AvatarModel.findOne({ avatar: name });
+    if (avatar) {
+        return avatar;
+    } else {
+        return null;
+    }
+};
+
 export const getAvatarByName = async (name: string): Promise<IAvatarModel> => {
     const avatar: IAvatarModel | null = await AvatarModel.findOne({ avatar: name });
     if (avatar) {
@@ -39,4 +48,3 @@ export const createOrUpdateAvatarAndSave = async (option: IAvatarConfig): Promis
         return newAvatar;
     }
 };
-
