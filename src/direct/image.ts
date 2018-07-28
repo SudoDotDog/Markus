@@ -7,12 +7,13 @@
 
 import { ObjectID, ObjectId } from "bson";
 import * as Controller from '../database/controller/import';
-import { IImageCallback } from "../database/interface/image";
+import { IImageCallback, IImageUserFriendlyCallback } from "../database/interface/image";
 import { IFileModel } from "../database/model/file";
 import { IImageModel } from "../database/model/image";
+import { ITagModel } from "../database/model/tag";
 import { touchDecrementAndRelease } from "../util/data/file";
 import { error, ERROR_CODE } from "../util/error";
-import { buildImageCallback } from "../util/image";
+import { buildImageCallback, buildImageUserFriendlyCallback, mergeArray } from "../util/image";
 
 export const getImageCallbackById = async (id: ObjectID): Promise<IImageCallback> => {
     const image: IImageModel = await Controller.Image.getImageById(id);
@@ -57,8 +58,7 @@ export const deactivateImageByTag = async (tag: string): Promise<IImageModel[]> 
 
 
 export const getImageUserFriendlyCallbackByTag = async (tagString: string, includeInactive?: boolean): Promise<IImageUserFriendlyCallback[]> => {
-    const tag: ITagModel | null = await TagModel.findOne({ name: tagString });
-    if (!tag) { throw error(ERROR_CODE.TAG_NOT_FOUND); }
+    const tag: ITagModel = await Controller.Tag.getTagByName(tagString);
 
     let query: any = {
         tags: tag,
