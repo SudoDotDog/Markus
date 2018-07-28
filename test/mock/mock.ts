@@ -5,6 +5,7 @@
 
 import * as ChildProcess from 'child_process';
 import * as fs from 'fs';
+import Config from '../../src/markus';
 import { error, ERROR_CODE } from '../../src/util/error';
 
 export class MockExpress {
@@ -24,6 +25,15 @@ export class MockExpress {
         };
     }
 }
+
+export const mockConfig = (config: any): () => void => {
+    const configTemp = Config;
+
+    (Config as any) = config;
+    return () => {
+        (Config as any) = configTemp;
+    };
+};
 
 export const mockUnlinkSet = (): () => string[] => {
     type UnlinkCB = (err: Error | null) => void;

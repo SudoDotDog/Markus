@@ -44,7 +44,7 @@ export const testImageController = (): void => {
             expect(mock.getReleaseCount()).to.be.equal(0);
             expect(mock.getSaveCount()).to.be.equal(1);
             return;
-        }).timeout(3200);
+        }).timeout(4200);
 
         it('create duplicated image with same hash should return same id and unlink same image', async (): Promise<void> => {
             const mock = new MockManager('path', 'name', 'hash', 'mime');
