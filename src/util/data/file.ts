@@ -24,7 +24,6 @@ export const touchDecrementAndRelease = async (file: IFileModel): Promise<void> 
     if (file.touchRemove()) {
         await removeFile(file);
     }
-
     return;
 };
 
