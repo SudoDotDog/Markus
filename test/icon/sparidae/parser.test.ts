@@ -35,7 +35,7 @@ describe('test icon parser', () => {
         expect(testContent.getTwoDigitResult()).to.be.equal("**");
     });
 
-    it('should return first of first and last name while use double digit parser to parse mutiple word', () => {
+    it('should return first of first and last name while use double digit parser to parse multiple word', () => {
         testContent = new Parser("Joshua Liu T");
         expect(testContent.getTwoDigitResult()).to.be.equal("JT");
         testContent = new Parser("T Bag C");
@@ -55,6 +55,10 @@ describe('test icon parser', () => {
         expect(testContent.getThreeDigitResult()).to.be.equal("Tb C");
         testContent = new Parser("T bag");
         expect(testContent.getThreeDigitResult()).to.be.equal("TB g");
+        testContent = new Parser("T ");
+        expect(testContent.getThreeDigitResult()).to.be.equal("T* *");
+        testContent = new Parser("T S");
+        expect(testContent.getThreeDigitResult()).to.be.equal("T* *");
         testContent = new Parser("S DJS SD s");
         expect(testContent.getThreeDigitResult()).to.be.equal("Sd S");
         testContent = new Parser("a");
@@ -63,5 +67,7 @@ describe('test icon parser', () => {
         expect(testContent.getThreeDigitResult()).to.be.equal("As*");
         testContent = new Parser("");
         expect(testContent.getThreeDigitResult()).to.be.equal("***");
+        testContent = new Parser("TCC QQ");
+        expect(testContent.getThreeDigitResult()).to.be.equal("Tc Q");
     });
 });
