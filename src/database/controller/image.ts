@@ -6,7 +6,7 @@
 import { ObjectID } from "bson";
 import { error, ERROR_CODE } from "../../util/error";
 import { imageModelToImageListResponse } from "../../util/image";
-import { IImageListResponse } from "../interface/image";
+import { IImageConfig, IImageListResponse } from "../interface/image";
 import { IImageModel, ImageModel } from "../model/image";
 
 export const getImageById = async (id: ObjectID): Promise<IImageModel> => {
@@ -31,6 +31,15 @@ export const getImageList = async (): Promise<IImageListResponse[]> => {
     });
 };
 
+export const createImage = async (option: IImageConfig): Promise<IImageModel> => {
+    const newImage: IImageModel = new ImageModel({
+        tags: option.tags,
+        file: option.file,
+    });
+
+    await newImage.save();
+    return newImage;
+};
 
 export const getActiveImagesByTag = async (tag: ObjectID): Promise<IImageModel[]> => {
     const results: IImageModel[] = await ImageModel.find({

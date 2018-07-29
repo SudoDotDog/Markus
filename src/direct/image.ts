@@ -7,13 +7,29 @@
 
 import { ObjectID, ObjectId } from "bson";
 import * as Controller from '../database/controller/import';
-import { IImageCallback, IImageUserFriendlyCallback } from "../database/interface/image";
+import { IImageCallback, IImageCreationConfig, IImageUserFriendlyCallback } from "../database/interface/image";
 import { IFileModel } from "../database/model/file";
 import { IImageModel } from "../database/model/image";
 import { ITagModel } from "../database/model/tag";
 import { touchDecrementAndRelease } from "../util/data/file";
 import { error, ERROR_CODE } from "../util/error";
 import { buildImageCallback, buildImageUserFriendlyCallback, mergeArray } from "../util/image";
+import { IFileManager } from "../util/manager/file/import";
+
+export const createImageByIImageCreationConfig = async (option: IImageCreationConfig): Promise<IImageCallback> => {
+    const file: IFileModel = await Controller.File.createOrUpdateAFileByHashAndManager(option.hash, option.manager, {
+        encoding: option.encoding,
+        mime: option.mime,
+        original: option.original,
+        size: option.size,
+    });
+    const tags: ObjectID[] = await Controller.Tag.getTagsIdArrayByNames(option.tags);
+    const image: IImageModel = await Controller.Image.createImage({
+        tags,
+        file: file._id,
+    });
+    return buildImageCallback(image, file);
+};
 
 export const getImageCallbackById = async (id: ObjectID): Promise<IImageCallback> => {
     const image: IImageModel = await Controller.Image.getImageById(id);
@@ -89,5 +105,24 @@ export const getImageUserFriendlyCallbackByTag = async (tagString: string, inclu
             if (currentTag) { current.push(currentTag); }
         }
         return buildImageUserFriendlyCallback(image, current);
+    });
+};
+
+export const getImagesCallbacksByTag = async (tagString: string, includeInactive?: boolean): Promise<IImageCallback[]> => {
+    const tag: ITagModel = await Controller.Tag.getTagByName(tagString);
+
+    let images: IImageModel[];
+    if (includeInactive) {
+        images = await Controller.Image.getAllActiveAndInactiveImagesByTag(tag._id);
+    } else {
+        images = await Controller.Image.getActiveImagesByTag(tag._id);
+    }
+    const fileIdsArray: ObjectID[] = images.map((image) => image.file);
+    const fileMap = await Controller.File.getFileStringModelMapByFileIdsArray(fileIdsArray);
+
+    return images.map((image: IImageModel): IImageCallback => {
+        const currentFile: IFileModel | undefined = fileMap.get(image.file.toString());
+        if (!currentFile) { throw error(ERROR_CODE.FILE_NOT_FOUND); }
+        return buildImageCallback(image, currentFile);
     });
 };
