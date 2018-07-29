@@ -14,7 +14,6 @@ import { ITagModel } from "../database/model/tag";
 import { touchDecrementAndRelease } from "../util/data/file";
 import { error, ERROR_CODE } from "../util/error";
 import { buildImageCallback, buildImageUserFriendlyCallback, mergeArray } from "../util/image";
-import { IFileManager } from "../util/manager/file/import";
 
 export const createImageByIImageCreationConfig = async (option: IImageCreationConfig): Promise<IImageCallback> => {
     const file: IFileModel = await Controller.File.createOrUpdateAFileByHashAndManager(option.hash, option.manager, {

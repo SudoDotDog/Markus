@@ -7,7 +7,7 @@ import { expect } from 'chai';
 import * as mongoose from 'mongoose';
 import { testAvatarDirect } from './direct/avatar.test';
 
-describe('test directs', function (this: Mocha.Suite): void {
+describe.only('test directs', function (this: Mocha.Suite): void {
     let db: mongoose.Connection;
 
     before(function (this: Mocha.Context, next: () => void): void {
