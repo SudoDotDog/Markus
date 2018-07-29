@@ -5,8 +5,10 @@
  */
 
 import { expect } from 'chai';
+import * as Path from 'path';
 import { IImageCallback } from '../../../src/database/interface/image';
 import * as Direct from '../../../src/direct/import';
+import Config from '../../../src/markus';
 import { IFileManager } from '../../../src/util/manager/file/import';
 import MockManager from '../../mock/manager';
 
@@ -26,7 +28,17 @@ export const testImageDirect = (): void => {
                 tags: ['test'],
             });
 
-            expect(image).to.be.deep.equal({});
-        });
+            expect(image).to.be.deep.equal({
+                createdAt: image.createdAt,
+                encoding: "test",
+                id: image.id,
+                mime: "test",
+                original: "test",
+                path: Path.join(Config.imagePath, 'folder', 'filename'),
+                size: 55,
+                tags: image.tags,
+            });
+            return;
+        }).timeout(4200);
     });
 };
