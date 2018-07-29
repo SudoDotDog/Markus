@@ -4,8 +4,7 @@
  */
 
 import { expect } from 'chai';
-import { deactivateImageById, getImageById } from '../../../src/database/controller/image';
-import { createDuplicateImage, createImage, getImageCallbackById, getImagesCallbacksByTag, getImageUserFriendlyCallbackByTag } from '../../../src/database/controller/imageMix';
+import { getImageById } from '../../../src/database/controller/image';
 import { IImageCallback } from '../../../src/database/interface/image';
 import { IImageModel, ImageModel } from '../../../src/database/model/image';
 import { compareError, error, ERROR_CODE } from '../../../src/util/error';

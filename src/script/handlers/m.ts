@@ -7,7 +7,6 @@
 /// <reference path="../../declare/global.ts" />
 
 import { Request, Response } from "express";
-import * as Controller from '../../database/controller/import';
 import { IImageCallback } from "../../database/interface/image";
 import { IImageModel } from "../../database/model/image";
 import * as Direct from '../../direct/import';
@@ -42,7 +41,7 @@ export const UploadBufferHandler = async (req: Request, res: Response): Promise<
 
         const hash: string = await manager.hash();
 
-        const image: IImageCallback = await Controller.ImageMix.createDuplicateImage({
+        const image: IImageCallback = await Direct.Image.createImageByIImageCreationConfig({
             encoding: file.encoding,
             mime: file.mimetype,
             hash,
@@ -98,7 +97,7 @@ export const UploadBase64Handler = async (req: Request, res: Response): Promise<
         const mime: string = manager.mime();
         const hash: string = await manager.hash();
 
-        const image: IImageCallback = await Controller.ImageMix.createDuplicateImage({
+        const image: IImageCallback = await Direct.Image.createImageByIImageCreationConfig({
             encoding: 'base64',
             mime,
             original: originalName,
@@ -148,7 +147,7 @@ export const DeactivateTagHandler = async (req: Request, res: Response): Promise
         }
 
         const tag: string = req.body.tag;
-        const images: IImageModel[] = await Direct.Image.deactivateImageByTag(tag);
+        const images: IImageModel[] = await Direct.Image.deactivateImageByTagString(tag);
 
         res.status(200).send({
             status: RESPONSE.SUCCEED,
