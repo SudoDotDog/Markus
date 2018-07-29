@@ -53,6 +53,8 @@ describe('test icon parser', () => {
         expect(testContent.getThreeDigitResult()).to.be.equal("Sdd");
         testContent = new Parser("T bag cc");
         expect(testContent.getThreeDigitResult()).to.be.equal("Tb C");
+        testContent = new Parser("T bag");
+        expect(testContent.getThreeDigitResult()).to.be.equal("TB g");
         testContent = new Parser("S DJS SD s");
         expect(testContent.getThreeDigitResult()).to.be.equal("Sd S");
         testContent = new Parser("a");
