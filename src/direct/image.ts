@@ -73,7 +73,6 @@ export const deactivateImageByTagString = async (tagString: string): Promise<IIm
     return results;
 };
 
-
 export const getImageUserFriendlyCallbackByTag = async (tagString: string, includeInactive?: boolean): Promise<IImageUserFriendlyCallback[]> => {
     const tag: ITagModel = await Controller.Tag.getTagByName(tagString);
     let images: IImageModel[];
