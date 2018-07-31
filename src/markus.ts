@@ -1,6 +1,6 @@
 /**
  * @author WMXPY
- * @fileoverview Config
+ * @fileoverview Markus Static Configs & Interfaces
  */
 
 // tslint:disable-next-line
@@ -49,7 +49,7 @@ const Config: IConfig = {
     crossOrigin: '*',
     host: 'mongodb://localhost',
     database: 'markus-test',
-    imagePath: '/Users/mengwang/Desktop/test',
+    imagePath: '/Users/user/Desktop/test',
     imagePFolder: 48,
     isDebug: true,
     maxThread: 4,
