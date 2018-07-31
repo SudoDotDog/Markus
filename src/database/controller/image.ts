@@ -21,6 +21,14 @@ export const getImageById = async (id: ObjectID): Promise<IImageModel> => {
     return image;
 };
 
+export const getForceImageById = async (id: ObjectID): Promise<IImageModel | null> => {
+    const image: IImageModel | null = await ImageModel.findOne({
+        _id: id,
+    });
+
+    return image;
+};
+
 export const getImageList = async (): Promise<IImageListResponse[]> => {
     const images: IImageModel[] | null = await ImageModel.find({});
     if (!images) {
