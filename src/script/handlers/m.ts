@@ -7,9 +7,9 @@
 /// <reference path="../../declare/global.ts" />
 
 import { Request, Response } from "express";
-import * as Controller from '../../database/controller/import';
 import { IImageCallback } from "../../database/interface/image";
 import { IImageModel } from "../../database/model/image";
+import * as Direct from '../../direct/import';
 import { error, ERROR_CODE, handlerError } from "../../util/error";
 import { RESPONSE } from '../../util/interface';
 import { IFileManager } from "../../util/manager/file/import";
@@ -41,7 +41,7 @@ export const UploadBufferHandler = async (req: Request, res: Response): Promise<
 
         const hash: string = await manager.hash();
 
-        const image: IImageCallback = await Controller.ImageMix.createDuplicateImage({
+        const image: IImageCallback = await Direct.Image.createImageByIImageCreationConfig({
             encoding: file.encoding,
             mime: file.mimetype,
             hash,
@@ -97,7 +97,7 @@ export const UploadBase64Handler = async (req: Request, res: Response): Promise<
         const mime: string = manager.mime();
         const hash: string = await manager.hash();
 
-        const image: IImageCallback = await Controller.ImageMix.createDuplicateImage({
+        const image: IImageCallback = await Direct.Image.createImageByIImageCreationConfig({
             encoding: 'base64',
             mime,
             original: originalName,
@@ -126,7 +126,7 @@ export const DeactivateImageHandler = async (req: Request, res: Response): Promi
             throw error(ERROR_CODE.PERMISSION_VALID_FAILED);
         }
         const imageId: string = req.body.id;
-        const image: IImageModel = await Controller.Image.deactivateImageById(imageId);
+        const image: IImageModel = await Direct.Image.deactivateImageById(imageId);
 
         res.status(200).send({
             status: RESPONSE.SUCCEED,
@@ -147,7 +147,7 @@ export const DeactivateTagHandler = async (req: Request, res: Response): Promise
         }
 
         const tag: string = req.body.tag;
-        const images: IImageModel[] = await Controller.Image.deactivateImageByTag(tag);
+        const images: IImageModel[] = await Direct.Image.deactivateImageByTagString(tag);
 
         res.status(200).send({
             status: RESPONSE.SUCCEED,

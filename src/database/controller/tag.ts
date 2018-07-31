@@ -4,6 +4,7 @@
  */
 
 import { ObjectID } from "bson";
+import { error, ERROR_CODE } from "../../util/error";
 import { ITagConfig } from "../interface/tag";
 import { ITagModel, TagModel } from "../model/tag";
 
@@ -25,7 +26,7 @@ export const getTagsIdArrayByNames = async (names: string[]): Promise<ObjectID[]
 export const getTagsArrayByNames = async (names: string[]): Promise<ITagModel[]> => {
     const tagArray: ITagModel[] = [];
     for (let name of names) {
-        const current: ITagModel = await getTagByName(name);
+        const current: ITagModel = await getOrCreateTagByName(name);
         tagArray.push(current);
     }
     return tagArray;
@@ -34,10 +35,29 @@ export const getTagsArrayByNames = async (names: string[]): Promise<ITagModel[]>
 export const getTagsMapByNames = async (names: string[]): Promise<Map<string, ITagModel>> => {
     const map: Map<string, ITagModel> = new Map<string, ITagModel>();
     for (let name of names) {
-        const current: ITagModel = await getTagByName(name);
+        const current: ITagModel = await getOrCreateTagByName(name);
         map.set(name, current);
     }
     return map;
+};
+
+export const getOrCreateTagByName = async (name: string): Promise<ITagModel> => {
+    const tag: ITagModel | null = await TagModel.findOne({ name });
+    if (tag) {
+        return tag;
+    } else {
+        const newTag = await createTag({ name });
+        return newTag;
+    }
+};
+
+export const getTagsListByIds = async (ids: ObjectID[]): Promise<ITagModel[]> => {
+    const tags: ITagModel[] = await TagModel.find({
+        _id: {
+            $in: ids,
+        },
+    });
+    return tags;
 };
 
 export const getTagByName = async (name: string): Promise<ITagModel> => {
@@ -45,7 +65,6 @@ export const getTagByName = async (name: string): Promise<ITagModel> => {
     if (tag) {
         return tag;
     } else {
-        const newTag = await createTag({ name });
-        return newTag;
+        throw error(ERROR_CODE.TAG_NOT_FOUND);
     }
 };

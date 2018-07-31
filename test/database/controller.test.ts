@@ -5,7 +5,7 @@
 
 import { expect } from 'chai';
 import * as mongoose from 'mongoose';
-import { testImageController } from './controller/image.test';
+// import { testImageController } from './controller/image.test';
 
 describe('test controllers', function (this: Mocha.Suite): void {
     let db: mongoose.Connection;
@@ -29,7 +29,7 @@ describe('test controllers', function (this: Mocha.Suite): void {
         expect(mongoose.connection.readyState).to.be.equal(1);
     }).timeout(1000);
 
-    testImageController();
+    // testImageController();
 
     after(function (this: any, next: () => void) {
         if (!mongoose.connection.db) {

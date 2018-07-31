@@ -85,6 +85,7 @@ export const createOrUpdateAFileByHashAndManager = async (hash: string, manager:
     if (hashedFile) {
         hashedFile.refIncrement();
         manager.release();
+
         await hashedFile.save();
         return hashedFile;
     } else {
@@ -99,6 +100,21 @@ export const createOrUpdateAFileByHashAndManager = async (hash: string, manager:
             size: property.size,
         });
 
+        await newFile.save();
         return newFile;
     }
+};
+
+export const getFileStringModelMapByFileIdsArray = async (fileIds: ObjectID[]): Promise<Map<string, IFileModel>> => {
+    const fileMap: Map<string, IFileModel> = new Map<string, IFileModel>();
+    const files: IFileModel[] = await FileModel.find({
+        _id: {
+            $in: fileIds,
+        },
+    });
+    for (let file of files) {
+        fileMap.set(file._id.toString(), file);
+    }
+
+    return fileMap;
 };

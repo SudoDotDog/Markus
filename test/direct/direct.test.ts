@@ -6,8 +6,9 @@
 import { expect } from 'chai';
 import * as mongoose from 'mongoose';
 import { testAvatarDirect } from './direct/avatar.test';
+import { testImageDirect } from './direct/image.test';
 
-describe('test directs', function (this: Mocha.Suite): void {
+describe.only('test directs', function (this: Mocha.Suite): void {
     let db: mongoose.Connection;
 
     before(function (this: Mocha.Context, next: () => void): void {
@@ -29,7 +30,8 @@ describe('test directs', function (this: Mocha.Suite): void {
         expect(mongoose.connection.readyState).to.be.equal(1);
     }).timeout(1000);
 
-    testAvatarDirect();
+    // testAvatarDirect();
+    testImageDirect();
 
     after(function (this: any, next: () => void) {
         if (!mongoose.connection.db) {
