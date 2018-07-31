@@ -18,8 +18,8 @@ describe('test upload manager util', (): void => {
         testContent = new UploadManager();
         const result: IMockFsSyncsCB = restoreSyncs();
 
-        expect(result.exist).to.be.lengthOf(1);
-        expect(result.mkdir).to.be.lengthOf(1);
+        expect(result.exist).to.be.lengthOf(0);
+        expect(result.mkdir).to.be.lengthOf(0);
         expect(result.read).to.be.lengthOf(0);
         expect(result.unlink).to.be.lengthOf(0);
         expect(result.write).to.be.lengthOf(0);

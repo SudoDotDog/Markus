@@ -150,7 +150,7 @@ export interface IMockFsSyncsCB {
     exist: string[];
 }
 
-export const monkFsSyncs = (): () => IMockFsSyncsCB => {
+export const monkFsSyncs = (tue?: boolean): () => IMockFsSyncsCB => {
     const tempUnlinkSync: typeof fs.unlinkSync = fs.unlinkSync;
     const tempReadFileSync: typeof fs.readFileSync = fs.readFileSync;
     const tempWriteFileSync: typeof fs.writeFileSync = fs.writeFileSync;
@@ -181,6 +181,7 @@ export const monkFsSyncs = (): () => IMockFsSyncsCB => {
 
     (fs as any).existsSync = (dirPath: string) => {
         existSet.push(dirPath);
+        return tue? tue: false;
     };
 
     return (): IMockFsSyncsCB => {

@@ -3,10 +3,8 @@
  * @fileoverview Base64 File Management Utils
  */
 
-import * as Fs from 'fs';
 import { stringToMD5 } from '../../data/crypto';
-import { fileBuilder } from '../../data/path';
-import { error, ERROR_CODE } from '../../error';
+import { saveImageByBuffer } from '../save';
 import { IFileLink, IFileManager } from "./interface";
 
 export default class Base64FileManager implements IFileManager {
@@ -24,20 +22,10 @@ export default class Base64FileManager implements IFileManager {
         this._base64 = base64;
     }
 
-    public save(): Promise<IFileLink> {
-        return new Promise<IFileLink>((resolve: (link: IFileLink) => void, reject: (error: Error) => void) => {
-            const buffer: Buffer = Buffer.from(this._base64, 'base64');
-            const filepath: string = fileBuilder(this._folder, this._filename);
-            Fs.writeFile(filepath, buffer, (err: Error) => {
-                if (err) {
-                    reject(error(ERROR_CODE.IMAGE_SAVE_FAILED));
-                }
-                resolve({
-                    folder: this._folder,
-                    filename: this._filename,
-                });
-            });
-        });
+    public async save(): Promise<IFileLink> {
+        const buffer: Buffer = Buffer.from(this._base64, 'base64');
+        const link: IFileLink = await saveImageByBuffer(this._folder, this._filename, buffer);
+        return link;
     }
 
     public mime(): string {

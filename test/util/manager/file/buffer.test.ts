@@ -5,7 +5,7 @@
 
 import { expect } from 'chai';
 import { BufferFileManager, IFileManager } from '../../../../src/util/manager/file/import';
-import { mockWriteStream } from '../../../mock/mock';
+import { IMockFsSyncsCB, mockWriteStream, monkFsSyncs, mockWriteFile } from '../../../mock/mock';
 
 describe('test base64 file manager', (): void => {
 
@@ -47,24 +47,52 @@ describe('test base64 file manager', (): void => {
     });
 
     it('save function should return save promise and trigger fs.save', async (): Promise<void> => {
-        const restoreWriteStream: () => {
-            eventList: string[];
-            contentList: any[];
-        } = mockWriteStream();
+        const restoreSyncs = monkFsSyncs();
+        const restoreWriteFile: () => Array<{
+            content: string;
+            path: string;
+        }> = mockWriteFile();
         await manager.save();
 
-        const result: {
-            eventList: string[];
-            contentList: any[];
-        } = restoreWriteStream();
+        const result: Array<{
+            content: string;
+            path: string;
+        }> = restoreWriteFile();
 
+        const syncs: IMockFsSyncsCB = restoreSyncs();
         const buffer: Buffer = Buffer.from('test');
-        expect(result).to.be.deep.equal({
-            eventList: [
-                'error',
-                'finish',
-            ],
-            contentList: [buffer],
+        expect(result[0].content).to.be.deep.equal(buffer);
+        expect(syncs).to.be.deep.equal({
+            unlink: [],
+            read: [],
+            write: [],
+            mkdir: ['F:/path/testPath'],
+            exist: ['F:/path/testPath']
+        });
+    });
+
+    it('save second file should only check exist but not create', async (): Promise<void> => {
+        const restoreSyncs = monkFsSyncs(true);
+        const restoreWriteFile: () => Array<{
+            content: string;
+            path: string;
+        }> = mockWriteFile();
+        await manager.save();
+
+        const result: Array<{
+            content: string;
+            path: string;
+        }> = restoreWriteFile();
+
+        const syncs: IMockFsSyncsCB = restoreSyncs();
+        const buffer: Buffer = Buffer.from('test');
+        expect(result[0].content).to.be.deep.equal(buffer);
+        expect(syncs).to.be.deep.equal({
+            unlink: [],
+            read: [],
+            write: [],
+            mkdir: [],
+            exist: ['F:/path/testPath']
         });
     });
 });

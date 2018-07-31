@@ -5,10 +5,7 @@
 
 import { NextFunction, Request, Response } from 'express';
 import * as Multer from 'multer';
-import * as Path from 'path';
 import Config, { middleware } from '../../markus';
-import { mkPathDir } from '../data/file';
-import { pathBuilder } from '../data/path';
 import { error, ERROR_CODE, handlerError } from '../error';
 import { unique } from "../image";
 import { Base64FileManager, BufferFileManager, IFileManager } from './file/import';
@@ -25,7 +22,6 @@ export default class UploadManager {
             this._currentFolder = unique(9);
             this._count = 0;
         }
-        mkPathDir(pathBuilder(this._currentFolder));
     }
 
     public generateMulterEngine(form: string): middleware {
@@ -86,7 +82,6 @@ export default class UploadManager {
         const type: string = splited.length >= 2 ? splited[1] : 'jpeg';
         if (this._count++ >= Config.uploadLimit) {
             this._currentFolder = unique(9);
-            mkPathDir(pathBuilder(this._currentFolder));
             this._count = 0;
         }
         return {

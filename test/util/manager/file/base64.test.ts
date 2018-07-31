@@ -5,7 +5,7 @@
 
 import { expect } from 'chai';
 import { Base64FileManager, IFileManager } from '../../../../src/util/manager/file/import';
-import { mockWriteFile } from '../../../mock/mock';
+import { IMockFsSyncsCB, mockWriteFile, monkFsSyncs } from '../../../mock/mock';
 
 describe('test base64 file manager', (): void => {
 
@@ -46,6 +46,7 @@ describe('test base64 file manager', (): void => {
     });
 
     it('save function should return save promise and trigger fs.save', async (): Promise<void> => {
+        const restoreSyncs = monkFsSyncs();
         const restoreWriteFile: () => Array<{
             content: string;
             path: string;
@@ -57,6 +58,7 @@ describe('test base64 file manager', (): void => {
             path: string;
         }> = restoreWriteFile();
 
+        const syncs: IMockFsSyncsCB = restoreSyncs();
         const buffer: Buffer = Buffer.from('testBase64', 'base64');
         expect(result[0].content).to.be.deep.equal(buffer);
     });
