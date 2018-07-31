@@ -62,13 +62,13 @@ describe('test base64 file manager', (): void => {
         const syncs: IMockFsSyncsCB = restoreSyncs();
         const buffer: Buffer = Buffer.from('test');
         expect(result[0].content).to.be.deep.equal(buffer);
-        expect(syncs).to.be.deep.equal({
-            unlink: [],
-            read: [],
-            write: [],
-            mkdir: ['F:/path/testPath'],
-            exist: ['F:/path/testPath']
-        });
+
+        expect(syncs).to.be.keys(['mkdir', 'exist','read', 'unlink', 'write']);
+        expect(syncs.mkdir).to.be.lengthOf(1);
+        expect(syncs.exist).to.be.lengthOf(1);
+        expect(syncs.read).to.be.lengthOf(0);
+        expect(syncs.write).to.be.lengthOf(0);
+        expect(syncs.unlink).to.be.lengthOf(0);
     });
 
     it('save second file should only check exist but not create', async (): Promise<void> => {
@@ -87,12 +87,12 @@ describe('test base64 file manager', (): void => {
         const syncs: IMockFsSyncsCB = restoreSyncs();
         const buffer: Buffer = Buffer.from('test');
         expect(result[0].content).to.be.deep.equal(buffer);
-        expect(syncs).to.be.deep.equal({
-            unlink: [],
-            read: [],
-            write: [],
-            mkdir: [],
-            exist: ['F:/path/testPath']
-        });
+
+        expect(syncs).to.be.keys(['mkdir', 'exist','read', 'unlink', 'write']);
+        expect(syncs.mkdir).to.be.lengthOf(0);
+        expect(syncs.exist).to.be.lengthOf(1);
+        expect(syncs.read).to.be.lengthOf(0);
+        expect(syncs.write).to.be.lengthOf(0);
+        expect(syncs.unlink).to.be.lengthOf(0);
     });
 });
