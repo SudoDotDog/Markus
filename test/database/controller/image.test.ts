@@ -3,150 +3,107 @@
  * @fileoverview Image Controller tests
  */
 
+import { ObjectId, ObjectID } from 'bson';
 import { expect } from 'chai';
-import { getImageById } from '../../../src/database/controller/image';
-import { IImageCallback } from '../../../src/database/interface/image';
-import { IImageModel, ImageModel } from '../../../src/database/model/image';
-import { compareError, error, ERROR_CODE } from '../../../src/util/error';
-import MockManager from '../../mock/manager';
-import { mockUnlinkSet } from '../../mock/mock';
+import * as Controller from '../../../src/database/controller/import';
+import { IFileModel } from '../../../src/database/model/file';
+import { IImageModel } from '../../../src/database/model/image';
+import { ITagModel } from '../../../src/database/model/tag';
+import { error, ERROR_CODE, compareError } from '../../../src/util/error';
 
-// export const testImageController = (): void => {
-//     describe('image controller test', (): void => {
-//         let image: IImageCallback;
-//         let duplicatedImage: IImageCallback;
+export const testImageController = (): void => {
+    describe('image controller test', (): void => {
+        let tempImage: IImageModel;
+        let testFile: IFileModel;
+        let testTag: ITagModel;
 
-//         const refreshImage = async (): Promise<void> => {
-//             const temp: IImageCallback | null = await getImageCallbackById(image.id);
-//             if (temp) {
-//                 image = temp;
-//             } else {
-//                 throw error(ERROR_CODE.IMAGE_NOT_FOUND);
-//             }
-//             return;
-//         };
+        before(function (this: Mocha.Context, next: () => void) {
+            this.timeout(4000);
+            Controller.File.createFile({
+                encoding: 'encoding',
+                mime: 'mime',
+                original: 'origin',
+                size: 500,
+                folder: 'test',
+                filename: 'test',
+                hash: 'hash',
+            }).then((file: IFileModel) => {
+                testFile = file;
+                next();
+            });
+        });
 
-//         it('create image should give correct image', async (): Promise<void> => {
-//             const mock = new MockManager('path', 'name', 'hash', 'mime');
+        before(function (this: Mocha.Context, next: () => void) {
+            this.timeout(4000);
+            Controller.Tag.createTag({
+                name: 'test',
+            }).then((tag: ITagModel) => {
+                testTag = tag;
+                next();
+            });
+        });
 
-//             image = await createImage({
-//                 encoding: 'test',
-//                 hash: 'test',
-//                 mime: 'test',
-//                 original: 'test',
-//                 manager: mock,
-//                 size: 15,
-//                 tags: ['a'],
-//             });
+        it('create image should give correct image', async (): Promise<void> => {
+            const image = await Controller.Image.createImage({
+                file: testFile._id,
+                tags: [testTag._id],
+            });
+            expect(image.tags).to.be.deep.equal([
+                testTag._id,
+            ]);
+            tempImage = image;
+            return;
+        }).timeout(3200);
 
-//             expect(image.size).to.be.equal(15);
-//             expect(mock.getReleaseCount()).to.be.equal(0);
-//             expect(mock.getSaveCount()).to.be.equal(1);
-//             return;
-//         }).timeout(4200);
+        it('find image by id should can find the image just created', async (): Promise<void> => {
+            const image = await Controller.Image.getImageById(tempImage._id);
+            expect(image.tags).to.be.deep.equal([
+                testTag._id,
+            ]);
+            return;
+        }).timeout(3200);
 
-//         it('create duplicated image with same hash should return same id and unlink same image', async (): Promise<void> => {
-//             const mock = new MockManager('path', 'name', 'hash', 'mime');
+        it('get image list should return list of images', async (): Promise<void> => {
+            const images = await Controller.Image.getImageList();
+            expect(images).to.be.deep.equal([{
+                active: true,
+                createdAt: tempImage.createdAt,
+                id: tempImage.id,
+                tags: [
+                    testTag.id,
+                ],
+            }]);
+            return;
+        }).timeout(3200);
 
-//             const restoreUnlink: () => string[] = mockUnlinkSet();
-//             duplicatedImage = await createDuplicateImage({
-//                 encoding: 'test',
-//                 hash: 'test',
-//                 mime: 'test',
-//                 original: 'test',
-//                 manager: mock,
-//                 size: 15,
-//                 tags: ['a'],
-//             });
+        it('get active image by tag should return image list of target tag', async (): Promise<void> => {
+            const images = await Controller.Image.getActiveImagesByTag(testTag._id);
+            expect(images).to.be.lengthOf(1);
+            const testId: ObjectID = new ObjectId();
+            let tempError: Error = error(ERROR_CODE.DEFAULT_TEST_ERROR);
+            try {
+                await Controller.Image.getActiveImagesByTag(testId);
+            }catch(err){
+                tempError = err;
+            }
+            const result = compareError(error(ERROR_CODE.NO_IMAGE_UNDER_TARGET_TAG), tempError);
+            expect(result).to.be.true;
+            return;
+        }).timeout(3200);
 
-//             const result: string[] = restoreUnlink();
-//             expect(image.path).to.be.equal(duplicatedImage.path);
-//             expect(result).to.be.lengthOf(0);
-//             expect(mock.getReleaseCount()).to.be.equal(1);
-//             expect(mock.getSaveCount()).to.be.equal(0);
-//             return;
-//         }).timeout(3200);
-
-//         it('get image by id should return image callback', async (): Promise<void> => {
-//             const tempImage: IImageCallback = await getImageCallbackById(image.id);
-
-//             expect(tempImage.createdAt.toString()).to.be.equal(image.createdAt.toString());
-//             return;
-//         }).timeout(3200);
-
-//         it('deactivate image should deactivate image and return image id', async (): Promise<void> => {
-//             const restoreUnlink: () => string[] = mockUnlinkSet();
-//             await deactivateImageById(image.id);
-
-//             const imageModel: IImageModel | null = await ImageModel.findOne({ _id: image.id });
-
-//             const result: string[] = restoreUnlink();
-
-//             // tslint:disable-next-line
-//             expect(imageModel).to.be.not.null;
-//             // tslint:disable-next-line
-//             expect((imageModel as IImageModel).active).to.be.false;
-//             expect(result).to.be.lengthOf(0);
-//             return;
-//         }).timeout(3200);
-
-//         it('get image by id should return throw error when image is deactivate', async (): Promise<void> => {
-//             let testError: Error = error(ERROR_CODE.DEFAULT_TEST_ERROR);
-
-//             try {
-//                 await getImageById(image.id);
-//             } catch (err) {
-//                 testError = err;
-//             } finally {
-//                 const result = compareError(
-//                     testError,
-//                     error(ERROR_CODE.IMAGE_GET_FAILED),
-//                 );
-//                 // tslint:disable-next-line
-//                 expect(result).to.be.true;
-//             }
-//             return;
-//         }).timeout(3200);
-
-//         it('get image by tag should return user friendly callback list', async (): Promise<void> => {
-//             const callbacks = await getImageUserFriendlyCallbackByTag('a');
-
-//             expect(callbacks).to.be.lengthOf(1);
-//             expect(callbacks[0]).to.be.keys([
-//                 'createdAt',
-//                 'id',
-//                 'tags',
-//             ]);
-//             expect(callbacks[0].tags).to.be.lengthOf(1);
-//         }).timeout(3200);
-
-//         it('get image by tag include inactive should return all user friendly callback list', async (): Promise<void> => {
-//             const callbacks = await getImageUserFriendlyCallbackByTag('a', true);
-
-//             expect(callbacks).to.be.lengthOf(2);
-//         }).timeout(3200);
-
-//         it('get image by tag should return callback list', async (): Promise<void> => {
-//             const callbacks = await getImagesCallbacksByTag('a');
-
-//             expect(callbacks).to.be.lengthOf(1);
-//             expect(callbacks[0]).to.be.keys([
-//                 'createdAt',
-//                 'encoding',
-//                 'id',
-//                 'mime',
-//                 'original',
-//                 'path',
-//                 'size',
-//                 'tags',
-//             ]);
-//             expect(callbacks[0].tags).to.be.lengthOf(1);
-//         }).timeout(3200);
-
-//         it('get image by tag include inactive should return all user list', async (): Promise<void> => {
-//             const callbacks = await getImagesCallbacksByTag('a', true);
-
-//             expect(callbacks).to.be.lengthOf(2);
-//         }).timeout(3200);
-//     });
-// };
+        it('get active and inactive image by tag should return image list of target tag', async (): Promise<void> => {
+            const images = await Controller.Image.getAllActiveAndInactiveImagesByTag(testTag._id);
+            expect(images).to.be.lengthOf(1);
+            const testId: ObjectID = new ObjectId();
+            let tempError: Error = error(ERROR_CODE.DEFAULT_TEST_ERROR);
+            try {
+                await Controller.Image.getAllActiveAndInactiveImagesByTag(testId);
+            }catch(err){
+                tempError = err;
+            }
+            const result = compareError(error(ERROR_CODE.NO_IMAGE_UNDER_TARGET_TAG), tempError);
+            expect(result).to.be.true;
+            return;
+        }).timeout(3200);
+    });
+};
