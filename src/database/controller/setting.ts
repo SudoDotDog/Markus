@@ -16,7 +16,7 @@ export const getInternalSettingByName = async <Key extends keyof IInternalSettin
         throw error(ERROR_CODE.SETTING_NOT_FOUND);
     }
     return setting.value;
-}
+};
 
 export const getExternalSettingByName = async (name: string): Promise<any> => {
     const setting: ISettingModel | null = await SettingModel.findOne({
@@ -27,21 +27,29 @@ export const getExternalSettingByName = async (name: string): Promise<any> => {
         throw error(ERROR_CODE.SETTING_NOT_FOUND);
     }
     return setting.value;
-}
+};
 
 export const setInternalSetting = async <Key extends keyof IInternalSetting>(name: Key, value: IInternalSetting[Key]): Promise<ISettingModel> => {
     const setting: ISettingModel = await updateSettingOrCreateSetting(name, SETTING_CATEGORY.INTERNAL, value);
     return setting;
-}
+};
 
 export const setExternalSetting = async (name: string, value: any): Promise<ISettingModel> => {
     const setting: ISettingModel = await updateSettingOrCreateSetting(name, SETTING_CATEGORY.EXTERNAL, value);
     return setting;
-}
+};
+
+export const getAllInternalSetting = async (): Promise<ISettingModel[]> => {
+    const settings: ISettingModel[] = await SettingModel.find({
+        category: SETTING_CATEGORY.INTERNAL,
+    });
+
+    return settings;
+};
 
 const updateSettingOrCreateSetting = async (name: string, category: SETTING_CATEGORY, value: any): Promise<ISettingModel> => {
     const sameSetting: ISettingModel | null = await SettingModel.findOne({
-        category: category,
+        category,
         name,
     });
 

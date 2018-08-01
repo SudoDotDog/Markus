@@ -28,6 +28,7 @@ export enum ERROR_CODE {
     AVATAR_NOT_FOUND = 240,
 
     SETTING_NOT_FOUND = 250,
+    SETTING_NOT_SETTLED = 251,
 
     PERMISSION_VALID_FAILED = 300,
     IMAGE_NOT_UPLOADED = 301,
@@ -60,6 +61,7 @@ export const errorList: {
     230: 'File not found',
     240: 'Avatar not found',
     250: 'Setting not found',
+    251: 'Setting is not settled yet',
     300: 'Permission valid failed',
     301: 'Image not found in request',
     404: 'Request URL not found',
