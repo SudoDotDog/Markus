@@ -2,6 +2,7 @@
     "compileOnSave": false,
     "compilerOptions": {
         "outDir": "../dist",
+        "downlevelIteration": true,
         "inlineSourceMap": true,
         "strict": true,
         "noImplicitReturns": true,
