@@ -24,7 +24,6 @@ export const testImageDirect = (): void => {
 
         it('create image by image creation config should create correctly without same', async (): Promise<void> => {
             const manager: IFileManager = new MockManager('folder', 'filename', 'a', 'b');
-
             const image: IImageCallback = await Direct.Image.createImageByIImageCreationConfig({
                 encoding: 'test',
                 hash: 'a',
@@ -34,7 +33,6 @@ export const testImageDirect = (): void => {
                 size: 55,
                 tags: ['test'],
             });
-
             expect(image).to.be.deep.equal({
                 createdAt: image.createdAt,
                 encoding: "test",
@@ -61,7 +59,6 @@ export const testImageDirect = (): void => {
                 tags: ['test'],
             });
             anotherTempImageId = anotherImage.id;
-
             const userFriendlyCBS: IImageUserFriendlyCallback[] = await Direct.Image.getImageUserFriendlyCallbackByTag('test');
             expect(userFriendlyCBS).to.be.lengthOf(2);
             return;
@@ -69,7 +66,7 @@ export const testImageDirect = (): void => {
 
         it('get image call back by tag should return correct info', async (): Promise<void> => {
             const imageCBS: IImageCallback[] = await Direct.Image.getImagesCallbacksByTag('test');
-
+            // tslint:disable-next-line
             expect(imageCBS).to.be.not.null;
             expect(imageCBS).to.be.lengthOf(2);
             return;
@@ -78,10 +75,10 @@ export const testImageDirect = (): void => {
         it('deactivate image by Id should can delete a image', async (): Promise<void> => {
             const restoreMockUnlink: () => string[] = mockUnlinkSet();
             await deactivateImageById(tempImageId);
-
             const image: IImageModel | null = await Controller.Image.getForceImageById(tempImageId);
-
+            // tslint:disable-next-line
             expect(image).to.be.not.null;
+            // tslint:disable-next-line
             expect((image as any).active).to.be.false;
             const result: string[] = restoreMockUnlink();
             expect(result).to.be.lengthOf(1);
@@ -90,13 +87,11 @@ export const testImageDirect = (): void => {
 
         it('deactivate image by string should work as same', async (): Promise<void> => {
             const restoreMockUnlink: () => string[] = mockUnlinkSet();
-
             await deactivateImageById(anotherTempImageId.toString());
-
-
             const image: IImageModel | null = await Controller.Image.getForceImageById(tempImageId);
-
+            // tslint:disable-next-line
             expect(image).to.be.not.null;
+            // tslint:disable-next-line
             expect((image as any).active).to.be.false;
             const result: string[] = restoreMockUnlink();
             expect(result).to.be.lengthOf(1);

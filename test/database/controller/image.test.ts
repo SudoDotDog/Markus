@@ -9,7 +9,7 @@ import * as Controller from '../../../src/database/controller/import';
 import { IFileModel } from '../../../src/database/model/file';
 import { IImageModel } from '../../../src/database/model/image';
 import { ITagModel } from '../../../src/database/model/tag';
-import { error, ERROR_CODE, compareError } from '../../../src/util/error';
+import { compareError, error, ERROR_CODE } from '../../../src/util/error';
 
 export const testImageController = (): void => {
     describe('image controller test', (): void => {
@@ -83,10 +83,11 @@ export const testImageController = (): void => {
             let tempError: Error = error(ERROR_CODE.DEFAULT_TEST_ERROR);
             try {
                 await Controller.Image.getActiveImagesByTag(testId);
-            }catch(err){
+            } catch (err) {
                 tempError = err;
             }
             const result = compareError(error(ERROR_CODE.NO_IMAGE_UNDER_TARGET_TAG), tempError);
+            // tslint:disable-next-line
             expect(result).to.be.true;
             return;
         }).timeout(3200);
@@ -98,10 +99,11 @@ export const testImageController = (): void => {
             let tempError: Error = error(ERROR_CODE.DEFAULT_TEST_ERROR);
             try {
                 await Controller.Image.getAllActiveAndInactiveImagesByTag(testId);
-            }catch(err){
+            } catch (err) {
                 tempError = err;
             }
             const result = compareError(error(ERROR_CODE.NO_IMAGE_UNDER_TARGET_TAG), tempError);
+            // tslint:disable-next-line
             expect(result).to.be.true;
             return;
         }).timeout(3200);
