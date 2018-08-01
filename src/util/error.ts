@@ -24,7 +24,10 @@ export enum ERROR_CODE {
     IMAGE_NOT_FOUND = 220,
 
     FILE_NOT_FOUND = 230,
+
     AVATAR_NOT_FOUND = 240,
+
+    SETTING_NOT_FOUND = 250,
 
     PERMISSION_VALID_FAILED = 300,
     IMAGE_NOT_UPLOADED = 301,
@@ -33,6 +36,8 @@ export enum ERROR_CODE {
 
     COLOR_INTERNAL_ERROR = 600,
     POINT_INTERNAL_ERROR = 601,
+
+    UNIQUE_ARRAY_CREATION_FAILED = 810,
 
     UNKNOWN_ERROR_CODE = 900,
     INTERNAL_ERROR = 901,
@@ -54,11 +59,13 @@ export const errorList: {
     220: 'Image not found',
     230: 'File not found',
     240: 'Avatar not found',
+    250: 'Setting not found',
     300: 'Permission valid failed',
     301: 'Image not found in request',
     404: 'Request URL not found',
     600: 'Color internal error',
     601: 'Point internal error',
+    810: 'Unique array creation failed',
     900: 'Unknown error code',
     901: 'Internal error, report it at github.com/sudo-dog/markus',
     902: 'Default test error',

@@ -7,9 +7,9 @@ import * as bodyParser from "body-parser";
 import * as express from "express";
 import { NextFunction, Request, Response } from "express";
 import * as mongoose from "mongoose";
-import Config, { middleware } from "../markus";
-import UploadManager from '../util/manager/upload';
-import * as Handler from './handlers/import';
+import Config, { middleware } from "../../markus";
+import UploadManager from '../../util/manager/upload';
+import * as Handler from './../handlers/import';
 
 mongoose.connect(Config.host + '/' + Config.database);
 

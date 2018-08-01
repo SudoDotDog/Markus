@@ -19,13 +19,13 @@ interface IConfig {
     imagePath: string;
     imagePFolder: number;
     isDebug: boolean;
-    maxThread: number;
+    maxThread: number; // keep
     uploadLimit: number;
     portNumber: number;
     verbose: boolean;
     white404ImagePath: string;
     black404ImagePath: string;
-    middleware: {
+    middleware: { // keep
         prepares: middleware[];
         permissions: middleware[];
     };

@@ -16,7 +16,6 @@ export const AvatarSchema: Schema = new Schema({
         type: String,
         required: true,
         index: true,
-        unique: true,
     },
     file: {
         type: Schema.Types.ObjectId,

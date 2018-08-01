@@ -7,24 +7,26 @@ import * as Cluster from 'cluster';
 import * as Http from 'http';
 import { cpus } from 'os';
 import * as Path from 'path';
-import Config from '../markus';
-import { error, ERROR_CODE } from '../util/error';
+import Config from '../../markus';
+import { error, ERROR_CODE } from '../../util/error';
 import app from './app';
 
-if (!Path.isAbsolute(Config.imagePath)) {
-    throw error(ERROR_CODE.IMAGE_PATH_IS_NOT_ABSOLUTE);
-}
-
-if (Config.isDebug) {
-    console.log('!!! YOU ARE RUNNING THIS APPLICATION IN DEBUG MODE !!!');
-    console.log('!!!   MAKE SURE TO CHANGE IT TO PRODUCTION MODE    !!!');
-}
-
-if (Config.verbose) {
-    console.log("My name is Markus; I am one of them; These are your images!");
-}
-
 const numCPUs: number = cpus().length;
+
+if(Cluster.isMaster){
+    if (!Path.isAbsolute(Config.imagePath)) {
+        throw error(ERROR_CODE.IMAGE_PATH_IS_NOT_ABSOLUTE);
+    }
+    
+    if (Config.isDebug) {
+        console.log('!!! YOU ARE RUNNING THIS APPLICATION IN DEBUG MODE !!!');
+        console.log('!!!   MAKE SURE TO CHANGE IT TO PRODUCTION MODE    !!!');
+    }
+    
+    if (Config.verbose) {
+        console.log("My name is Markus; I am one of them; These are your images!");
+    }
+}
 
 if (!Config.isDebug) {
     if (Cluster.isMaster) {

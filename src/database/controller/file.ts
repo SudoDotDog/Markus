@@ -3,7 +3,7 @@
  * @fileoverview File Controller
  */
 
-import { ObjectID } from "../../../node_modules/@types/bson";
+import { ObjectID } from "bson";
 import { error, ERROR_CODE } from "../../util/error";
 import { IFileManager } from "../../util/manager/file/import";
 import { IFileConfig, IFileProperty } from '../interface/file';

@@ -15,7 +15,6 @@ export const TagSchema: Schema = new Schema({
         type: String,
         required: true,
         index: true,
-        unique: true,
     },
 }, {
         timestamps: {
