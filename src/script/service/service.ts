@@ -14,6 +14,13 @@ import app from './app';
 
 const numCPUs: number = cpus().length;
 
+console.log('!!! THIS IS DEPRECATED USE MARKUS INSTEAD !!!');
+console.log('!!! THIS IS DEPRECATED USE MARKUS INSTEAD !!!');
+console.log('!!! THIS IS DEPRECATED USE MARKUS INSTEAD !!!');
+console.log('!!! THIS IS DEPRECATED USE MARKUS INSTEAD !!!');
+console.log('!!! THIS IS DEPRECATED USE MARKUS INSTEAD !!!');
+console.log('!!! THIS IS DEPRECATED USE MARKUS INSTEAD !!!');
+
 if (Cluster.isMaster) {
     if (!Path.isAbsolute(Config.imagePath)) {
         throw error(ERROR_CODE.IMAGE_PATH_IS_NOT_ABSOLUTE);

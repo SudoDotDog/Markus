@@ -14,7 +14,7 @@ export default class UniqueArray<T> implements Iterable<T> {
             this._Array = [];
         } else if (init instanceof Array) {
             if (rest.length > 0) {
-                throw error(ERROR_CODE.UNKNOWN_ERROR_CODE);
+                throw error(ERROR_CODE.UNIQUE_ARRAY_CREATION_FAILED);
             }
             this._Array = init;
         } else if (init) {
