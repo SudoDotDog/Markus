@@ -4,6 +4,8 @@
  * @fileoverview UniqueArray Struct
  */
 
+import { error, ERROR_CODE } from "../error";
+
 export default class UniqueArray<T> implements Iterable<T>{
     private _Array: T[];
 
@@ -12,7 +14,7 @@ export default class UniqueArray<T> implements Iterable<T>{
             this._Array = [];
         } else if (init instanceof Array) {
             if (rest.length > 0) {
-                throw 'INIT';
+                throw error(ERROR_CODE.UNKNOWN_ERROR_CODE);
             }
             this._Array = init;
         } else if (init) {
@@ -39,7 +41,7 @@ export default class UniqueArray<T> implements Iterable<T>{
     }
 
     public get last(): T | undefined {
-        return this._Array[this.length];
+        return this._Array[this.length - 1];
     }
 
     public get(index: number) {
@@ -60,7 +62,8 @@ export default class UniqueArray<T> implements Iterable<T>{
     }
 
     public unshift(...items: T[]): number {
-        for (let item of items) {
+        const reversedItems: T[] = [...items].reverse();
+        for (let item of reversedItems) {
             if (!this.includes(item)) {
                 this._Array.unshift(item);
             }
@@ -68,9 +71,9 @@ export default class UniqueArray<T> implements Iterable<T>{
         return this._Array.length;
     }
 
-    public concat(cats: T[]): UniqueArray<T> {
+    public concat(cats: T[] | UniqueArray<T>): UniqueArray<T> {
         for (let cat of cats) {
-            if (this.includes(cat)) {
+            if (!this.includes(cat)) {
                 this._Array.push(cat);
             }
         }
@@ -102,13 +105,18 @@ export default class UniqueArray<T> implements Iterable<T>{
     }
 
     public splice(start: number, deleteCount: number, add?: T[] | UniqueArray<T>): UniqueArray<T> {
-        let arrAdd: T[];
-        if (add instanceof Array) {
+        let arrAdd: T[] = [];
+        if (add && add instanceof Array) {
             arrAdd = add;
-        } else {
+        } else if (add) {
             arrAdd = (add as UniqueArray<T>).list;
         }
-        const result: T[] = this._Array.splice(start, deleteCount, ...arrAdd)
+        let result: T[] = [];
+        if (arrAdd) {
+            result = this._Array.splice(start, deleteCount, ...arrAdd)
+        } else {
+            result = this._Array.splice(start, deleteCount)
+        }
         return new UniqueArray<T>(result);
     }
 
@@ -117,7 +125,7 @@ export default class UniqueArray<T> implements Iterable<T>{
         return result[0];
     }
 
-    public sort(compareFn: (a: T, b: T) => number): UniqueArray<T> {
+    public sort(compareFn?: (a: T, b: T) => number): UniqueArray<T> {
         const result: T[] = this._Array.sort(compareFn);
         this._Array = result;
         return this;
