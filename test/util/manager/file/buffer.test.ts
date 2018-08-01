@@ -5,7 +5,7 @@
 
 import { expect } from 'chai';
 import { BufferFileManager, IFileManager } from '../../../../src/util/manager/file/import';
-import { IMockFsSyncsCB, mockWriteStream, monkFsSyncs, mockWriteFile } from '../../../mock/mock';
+import { IMockFsSyncsCB, mockWriteFile, monkFsSyncs } from '../../../mock/mock';
 
 describe('test base64 file manager', (): void => {
 
@@ -63,7 +63,7 @@ describe('test base64 file manager', (): void => {
         const buffer: Buffer = Buffer.from('test');
         expect(result[0].content).to.be.deep.equal(buffer);
 
-        expect(syncs).to.be.keys(['mkdir', 'exist','read', 'unlink', 'write']);
+        expect(syncs).to.be.keys(['mkdir', 'exist', 'read', 'unlink', 'write']);
         expect(syncs.mkdir).to.be.lengthOf(1);
         expect(syncs.exist).to.be.lengthOf(1);
         expect(syncs.read).to.be.lengthOf(0);
@@ -88,7 +88,7 @@ describe('test base64 file manager', (): void => {
         const buffer: Buffer = Buffer.from('test');
         expect(result[0].content).to.be.deep.equal(buffer);
 
-        expect(syncs).to.be.keys(['mkdir', 'exist','read', 'unlink', 'write']);
+        expect(syncs).to.be.keys(['mkdir', 'exist', 'read', 'unlink', 'write']);
         expect(syncs.mkdir).to.be.lengthOf(0);
         expect(syncs.exist).to.be.lengthOf(1);
         expect(syncs.read).to.be.lengthOf(0);

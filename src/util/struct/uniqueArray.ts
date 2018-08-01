@@ -6,7 +6,7 @@
 
 import { error, ERROR_CODE } from "../error";
 
-export default class UniqueArray<T> implements Iterable<T>{
+export default class UniqueArray<T> implements Iterable<T> {
     private _Array: T[];
 
     public constructor(init?: T | T[] | UniqueArray<T>, ...rest: T[]) {
@@ -113,9 +113,9 @@ export default class UniqueArray<T> implements Iterable<T>{
         }
         let result: T[] = [];
         if (arrAdd) {
-            result = this._Array.splice(start, deleteCount, ...arrAdd)
+            result = this._Array.splice(start, deleteCount, ...arrAdd);
         } else {
-            result = this._Array.splice(start, deleteCount)
+            result = this._Array.splice(start, deleteCount);
         }
         return new UniqueArray<T>(result);
     }
@@ -143,12 +143,12 @@ export default class UniqueArray<T> implements Iterable<T>{
                     return {
                         done: true,
                         value: (null as any as T),
-                    }
+                    };
                 } else {
                     return {
                         done: false,
-                        value: this._Array[pointer++]
-                    }
+                        value: this._Array[pointer++],
+                    };
                 }
             },
         };

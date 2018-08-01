@@ -18,6 +18,7 @@
         "mongorestore",
         "originalname",
         "splited",
+        "struct",
         "submodule",
         "tshook",
         "ubuild",

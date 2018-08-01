@@ -1,7 +1,6 @@
 /**
  * @author WMXPY
- * @fileoverview Service
- * @deprecated This should only be use when use forever instead of pm2
+ * @fileoverview Single thread service
  */
 
 import * as Cluster from 'cluster';

@@ -4,10 +4,10 @@
  */
 
 import * as Fs from 'fs';
+import { mkPathDir } from '../data/file';
+import { fileBuilder, pathBuilder } from '../data/path';
 import { error, ERROR_CODE } from '../error';
 import { IFileLink } from './file/interface';
-import { mkPathDir } from '../data/file';
-import { pathBuilder, fileBuilder } from '../data/path';
 
 export const saveImageByBuffer = (folder: string, filename: string, buffer: Buffer): Promise<IFileLink> => {
     return new Promise<IFileLink>((resolve: (link: IFileLink) => void, reject: (error: Error) => void) => {

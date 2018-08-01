@@ -11,7 +11,7 @@ describe('test unique array data structure', (): void => {
 
     const getInitUniqueArray: () => UniqueArray<number> = (): UniqueArray<number> => {
         return new UniqueArray<number>(1, 2, 3, 4, 5, 6, 7, 8, 9);
-    }
+    };
 
     it('initial unique array should give correct result', (): void => {
         const array0: UniqueArray<number> = new UniqueArray<number>();
@@ -38,7 +38,7 @@ describe('test unique array data structure', (): void => {
 
     it('push should add unique element to end of array', (): void => {
         const array: UniqueArray<number> = getInitUniqueArray();
-        array.push(10, 11, 11, 10, 12)
+        array.push(10, 11, 11, 10, 12);
         expect(array).to.be.lengthOf(12);
     });
 
@@ -94,7 +94,9 @@ describe('test unique array data structure', (): void => {
         expect(array.indexOf(1)).to.be.equal(0);
         expect(array.indexOf(5)).to.be.equal(4);
         expect(array.indexOf(100)).to.be.equal(-1);
+        // tslint:disable-next-line
         expect(array.includes(0)).to.be.false;
+        // tslint:disable-next-line
         expect(array.includes(1)).to.be.true;
     });
 
