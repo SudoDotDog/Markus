@@ -26,6 +26,43 @@ export class MockExpress {
     }
 }
 
+export interface IMockReadStreamResult {
+    triggered: string[];
+    onFunc: (data: string) => void;
+    onEnd: () => void;
+}
+
+export const mockReadStream = (): () => IMockReadStreamResult => {
+    const tempReadStream: typeof fs.createReadStream = fs.createReadStream;
+    const triggered: string[] = [];
+
+    let onFunc: (data: string) => void;
+    let onEnd: () => void;
+    (fs as any).createReadStream = (path: string) => {
+        return {
+            on: (channel: string, func?: (data: string) => void) => {
+                if (channel === 'data') {
+                    onFunc = (func as (data: string) => void);
+                }
+                if(channel === 'end'){
+                    onEnd = (func as any);
+                }
+                triggered.push(channel);
+            },
+        };
+    }
+
+    return () => {
+        (fs as any).createReadStream = tempReadStream;
+
+        return {
+            triggered,
+            onFunc,
+            onEnd,
+        };
+    };
+};
+
 export const mockConfig = (config: any): () => void => {
     const configTemp = Config;
 
@@ -181,7 +218,7 @@ export const monkFsSyncs = (tue?: boolean): () => IMockFsSyncsCB => {
 
     (fs as any).existsSync = (dirPath: string) => {
         existSet.push(dirPath);
-        return tue? tue: false;
+        return tue ? tue : false;
     };
 
     return (): IMockFsSyncsCB => {

@@ -6,10 +6,10 @@ dbPath := F:/db/
 markus: dev service
 
 service: 
-	node ./dist/script/service.js
+	node ./dist/script/service/markus.js
 
 run:
-	node ./dist/script/service.js
+	node ./dist/script/service/markus.js
 
 dev:
 	tsc --p $(dev)

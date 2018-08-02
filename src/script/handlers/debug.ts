@@ -6,6 +6,7 @@
 import { Request, Response } from "express";
 import * as Controller from '../../database/controller/import';
 import { IImageListResponse } from "../../database/interface/image";
+import * as Direct from '../../direct/import';
 import Config from "../../markus";
 import { error, ERROR_CODE, handlerError } from "../../util/error";
 import { RESPONSE } from '../../util/interface';
@@ -21,7 +22,7 @@ import { RESPONSE } from '../../util/interface';
 export const emptyDatabaseHandler = async (req: Request, res: Response): Promise<void> => {
     try {
         if (Config.isDebug) {
-            await Controller.Mix.emptyDatabase();
+            await Direct.Clean.emptyDatabase();
             res.status(200).send({
                 status: RESPONSE.SUCCEED,
             });

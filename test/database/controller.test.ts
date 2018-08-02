@@ -5,7 +5,10 @@
 
 import { expect } from 'chai';
 import * as mongoose from 'mongoose';
+import { testAvatarController } from './controller/avatar.test';
+import { testFileController } from './controller/file.test';
 import { testImageController } from './controller/image.test';
+import { testSettingController } from './controller/setting.test';
 
 describe('test controllers', function (this: Mocha.Suite): void {
     let db: mongoose.Connection;
@@ -29,7 +32,10 @@ describe('test controllers', function (this: Mocha.Suite): void {
         expect(mongoose.connection.readyState).to.be.equal(1);
     }).timeout(1000);
 
+    testFileController();
     testImageController();
+    testAvatarController();
+    testSettingController();
 
     after(function (this: any, next: () => void) {
         if (!mongoose.connection.db) {

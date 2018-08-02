@@ -48,9 +48,9 @@ const validPermissionMiddleware: middleware = async (req: Request, res: Response
 const Config: IConfig = {
     crossOrigin: '*',
     host: 'mongodb://localhost',
-    database: 'markus-test',
-    imagePath: '/Users/user/Desktop/test',
-    imagePFolder: 48,
+    database: 'markus-test-2',
+    imagePath: '/Users/mengwang/Desktop/test',
+    imagePFolder: 5,
     isDebug: true,
     maxThread: 4,
     uploadLimit: 25,

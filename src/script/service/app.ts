@@ -117,7 +117,7 @@ app.post(
     ...prepares,
     Handler.Debug.OutputImageIdList,
 );
-app.delete(
+app.post(
     '/empty',
     ...prepares,
     Handler.Debug.emptyDatabaseHandler,
