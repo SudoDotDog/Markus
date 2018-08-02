@@ -32,20 +32,20 @@ export const testFileController = (): void => {
 
         it('rummage same file should try to get same file or return null', async (): Promise<void> => {
             const file: IFileModel | null = await Controller.File.rummageSameFile('hash');
-
+            // tslint:disable-next-line
             expect(file).to.be.not.null;
             expect((file as IFileModel)._id.toString()).to.be.equal(testFile._id.toString());
         }).timeout(3200);
 
         it('rummage same file should return null is the hash is new', async (): Promise<void> => {
             const file: IFileModel | null = await Controller.File.rummageSameFile('new hash');
-
+            // tslint:disable-next-line
             expect(file).to.be.null;
         }).timeout(3200);
 
         it('get active file by hash should act correct behavior', async (): Promise<void> => {
             const file: IFileModel | null = await Controller.File.getActiveFileByHash('hash');
-
+            // tslint:disable-next-line
             expect(file).to.be.not.null;
             expect((file as IFileModel)._id.toString()).to.be.equal(testFile._id.toString());
         }).timeout(3200);
@@ -59,6 +59,7 @@ export const testFileController = (): void => {
                 tempError = err;
             }
             const result = compareError(error(ERROR_CODE.FILE_NOT_FOUND), tempError);
+            // tslint:disable-next-line
             expect(result).to.be.true;
         }).timeout(3200);
 

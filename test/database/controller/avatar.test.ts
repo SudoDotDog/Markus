@@ -34,6 +34,7 @@ export const testAvatarController = (): void => {
                 avatar: 'test',
                 file: testFile._id,
             });
+            // tslint:disable-next-line
             expect(avatar.active).to.be.true;
             tempAvatar = avatar;
             return;
@@ -44,6 +45,7 @@ export const testAvatarController = (): void => {
                 avatar: 'another',
                 file: testFile._id,
             });
+            // tslint:disable-next-line
             expect(avatar.active).to.be.true;
             expect(avatar._id.toString()).to.be.not.equal(tempAvatar._id.toString());
             return;
@@ -62,7 +64,7 @@ export const testAvatarController = (): void => {
 
             expect(tempAvatar.file.toString()).to.be.equal(testFile._id.toString());
             expect(tempAvatar.file.toString()).to.be.not.equal(anotherFile._id.toString());
-            
+
             const newAvatar: IAvatarModel = await Controller.Avatar.createOrUpdateAvatarAndSave({
                 avatar: 'test',
                 file: anotherFile._id,
@@ -76,6 +78,7 @@ export const testAvatarController = (): void => {
 
         it('get avatar by name should return correct storage', async (): Promise<void> => {
             const avatar: IAvatarModel = await Controller.Avatar.getAvatarByName('test');
+            // tslint:disable-next-line
             expect(avatar.active).to.be.true;
             expect(avatar._id.toString()).to.be.equal(tempAvatar._id.toString());
             return;
