@@ -27,7 +27,6 @@ help:
 
 clean:
 ifeq ($(OS), Windows_NT)
-	cmd //C del dist
 else
 	rm -rf dist
 endif
