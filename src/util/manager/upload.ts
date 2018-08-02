@@ -80,7 +80,7 @@ export default class UploadManager {
     } {
         const splited: string[] = mime.split('/');
         const type: string = splited.length >= 2 ? splited[1] : 'jpeg';
-        if (this._count++ >= Config.uploadLimit) {
+        if (++this._count >= Config.imagePFolder) {
             this._currentFolder = unique(9);
             this._count = 0;
         }
