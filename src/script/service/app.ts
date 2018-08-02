@@ -28,7 +28,7 @@ app.use(bodyParser.urlencoded({
 app.all('*', (req: Request, res: Response, next: NextFunction) => {
     res.header("Access-Control-Allow-Origin", Config.crossOrigin);
     res.header("X-Powered-By", 'Markus');
-    res.header("X-Markus-Version", "2.0.0");
+    res.header("X-Markus-Version", "3.0.1");
     next();
 });
 
