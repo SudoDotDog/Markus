@@ -17,7 +17,7 @@ let clientVersion: string;
 
 markusVersion().then((version: string) => {
     clientVersion = version;
-}).catch((err) => {
+}).catch((err: Error) => {
     clientVersion = 'X';
     console.log(err);
 });
