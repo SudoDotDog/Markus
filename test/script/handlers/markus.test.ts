@@ -4,12 +4,12 @@
  * @fileoverview Markus Handlers Test
  */
 
+import { ObjectID } from 'bson';
 import { expect } from 'chai';
 import * as Handlers from '../../../src/script/handlers/import';
 import { IMockHandlerResult, MockHandler } from '../../mock/express';
 import MockManager from '../../mock/manager';
 import { mockUnlinkSet } from '../../mock/mock';
-import { ObjectID } from '../../../node_modules/@types/bson';
 
 export const testScriptMarkusHandlers = (): void => {
     describe('markus handler test', (): void => {
@@ -34,10 +34,11 @@ export const testScriptMarkusHandlers = (): void => {
             await Handlers.Markus.UploadBufferHandler(request, response);
 
             const result: IMockHandlerResult = mock.end();
+            // tslint:disable-next-line
             expect(result).to.be.not.null;
             expect(result.status).to.be.equal(200);
             expect(result.body).to.be.keys(['status', 'data']);
-            expect(result.body.data).to.be.keys(['id', 'original'])
+            expect(result.body.data).to.be.keys(['id', 'original']);
             return;
         }).timeout(3200);
 
@@ -53,7 +54,9 @@ export const testScriptMarkusHandlers = (): void => {
                 body('tags', ['base64']);
             const { request, response } = mock.flush();
             await Handlers.Markus.UploadBase64Handler(request, response);
+
             const result: IMockHandlerResult = mock.end();
+            // tslint:disable-next-line
             expect(result).to.be.not.null;
             expect(result.status).to.be.equal(200);
             expect(result.body).to.be.keys(['status', 'data']);
@@ -70,6 +73,7 @@ export const testScriptMarkusHandlers = (): void => {
             await Handlers.Markus.DeactivateTagHandler(request, response);
 
             const result: IMockHandlerResult = mock.end();
+            // tslint:disable-next-line
             expect(result).to.be.not.null;
             expect(result.status).to.be.equal(200);
             expect(result.body).to.be.keys(['status', 'data']);
@@ -85,6 +89,7 @@ export const testScriptMarkusHandlers = (): void => {
             await Handlers.Markus.DeactivateImageHandler(request, response);
 
             const result: IMockHandlerResult = mock.end();
+            // tslint:disable-next-line
             expect(result).to.be.not.null;
             expect(result.status).to.be.equal(200);
             expect(result.body).to.be.keys(['status', 'data']);
@@ -99,6 +104,7 @@ export const testScriptMarkusHandlers = (): void => {
             await Handlers.Markus.MarkusHandler(request, response);
 
             const result: IMockHandlerResult = mock.end();
+            // tslint:disable-next-line
             expect(result).to.be.not.null;
             expect(result.status).to.be.equal(200);
             expect(result.body).to.be.keys(['status', 'data']);

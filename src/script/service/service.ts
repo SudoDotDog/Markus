@@ -11,6 +11,7 @@ import * as Path from 'path';
 import Config from '../../markus';
 import { error, ERROR_CODE } from '../../util/error';
 import app from './app';
+import { logWhenSoftwareStart } from './info';
 
 const numCPUs: number = cpus().length;
 
@@ -26,14 +27,7 @@ if (Cluster.isMaster) {
         throw error(ERROR_CODE.IMAGE_PATH_IS_NOT_ABSOLUTE);
     }
 
-    if (Config.isDebug) {
-        console.log('!!! YOU ARE RUNNING THIS APPLICATION IN DEBUG MODE !!!');
-        console.log('!!!   MAKE SURE TO CHANGE IT TO PRODUCTION MODE    !!!');
-    }
-
-    if (Config.verbose) {
-        console.log("My name is Markus; I am one of them; These are your images!");
-    }
+    logWhenSoftwareStart(Config.verbose, Config.isDebug);
 }
 
 if (!Config.isDebug) {

@@ -26,6 +26,20 @@ export class MockExpress {
     }
 }
 
+export const mockConsoleLog = (): () => string[] => {
+    const tempConsoleLog: typeof console.log = console.log;
+    const logged: string[] = [];
+
+    (console as any).log = (...content: string[]) => {
+        logged.push(...content);
+    };
+
+    return () => {
+        (console as any).log = tempConsoleLog;
+        return logged;
+    };
+};
+
 export interface IMockReadStreamResult {
     triggered: string[];
     onFunc: (data: string) => void;
@@ -44,7 +58,7 @@ export const mockReadStream = (): () => IMockReadStreamResult => {
                 if (channel === 'data') {
                     onFunc = (func as (data: string) => void);
                 }
-                if(channel === 'end'){
+                if (channel === 'end') {
                     onEnd = (func as any);
                 }
                 triggered.push(channel);
