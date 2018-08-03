@@ -13,6 +13,7 @@ import * as Direct from '../../direct/import';
 import { error, ERROR_CODE, handlerError } from "../../util/error";
 import { RESPONSE } from '../../util/interface';
 import { IFileManager } from "../../util/manager/file/import";
+import { markusVersion } from '../../util/struct/agent';
 
 /**
  * POST
@@ -153,6 +154,23 @@ export const DeactivateTagHandler = async (req: Request, res: Response): Promise
             status: RESPONSE.SUCCEED,
             data: {
                 deactivated: images.length,
+            },
+        });
+    } catch (err) {
+        handlerError(res, err);
+    }
+    return;
+};
+
+export const MarkusHandler = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const version: string = await markusVersion();
+
+        res.status(200).send({
+            status: RESPONSE.SUCCEED,
+            data: {
+                Agent: 'Markus',
+                Version: version,
             },
         });
     } catch (err) {

@@ -9,9 +9,18 @@ import { NextFunction, Request, Response } from "express";
 import * as mongoose from "mongoose";
 import Config, { middleware } from "../../markus";
 import UploadManager from '../../util/manager/upload';
-import * as Handler from './../handlers/import';
+import { markusVersion } from "../../util/struct/agent";
+import * as Handler from '../handlers/import';
 
 mongoose.connect(Config.host + '/' + Config.database);
+let clientVersion: string;
+
+markusVersion().then((version: string) => {
+    clientVersion = version;
+}).catch((err) => {
+    clientVersion = 'X';
+    console.log(err);
+});
 
 const db: mongoose.Connection = mongoose.connection;
 db.on('error', console.log.bind(console, 'connection error:'));
@@ -28,7 +37,7 @@ app.use(bodyParser.urlencoded({
 app.all('*', (req: Request, res: Response, next: NextFunction) => {
     res.header("Access-Control-Allow-Origin", Config.crossOrigin);
     res.header("X-Powered-By", 'Markus');
-    res.header("X-Markus-Version", "3.0.1");
+    res.header("X-Markus-Version", clientVersion);
     next();
 });
 
@@ -38,96 +47,35 @@ const permissions: middleware[] = Config.middleware.permissions;
 const uploadManager: UploadManager = new UploadManager();
 
 // Handler(s) for Image Get
-app.get(
-    '/w/:id',
-    ...prepares,
-    Handler.G.imageGetBlankWhiteHandler,
-);
-app.get(
-    '/b/:id',
-    ...prepares,
-    Handler.G.imageGetBlankBlackHandler,
-);
+app.get('/w/:id', ...prepares, Handler.GetImage.imageGetBlankWhiteHandler);
+app.get('/b/:id', ...prepares, Handler.GetImage.imageGetBlankBlackHandler);
 
 // Handler(s) for Image Upload
-app.post(
-    '/m/buffer',
-    ...prepares,
-    uploadManager.generateMulterEngine('image'),
-    uploadManager.generateBufferEngine(),
-    ...permissions,
-    Handler.M.UploadBufferHandler,
-);
-app.post(
-    '/m/base64',
-    ...prepares,
-    uploadManager.generateBase64Engine(),
-    ...permissions,
-    Handler.M.UploadBase64Handler,
-);
+app.post('/m/buffer', ...prepares, uploadManager.generateMulterEngine('image'), uploadManager.generateBufferEngine(), ...permissions, Handler.Markus.UploadBufferHandler);
+app.post('/m/base64', ...prepares, uploadManager.generateBase64Engine(), ...permissions, Handler.Markus.UploadBase64Handler);
 
 // Handler(s) for Avatar Get
-app.get(
-    '/a/:avatar',
-    ...prepares,
-    Handler.Avatar.avatarGetHandler,
-);
+app.get('/a/:avatar', ...prepares, Handler.Avatar.avatarGetHandler);
 
 // Handler(s) for Avatar Set
-app.post(
-    '/v/buffer',
-    ...prepares,
-    uploadManager.generateMulterEngine('image'),
-    uploadManager.generateBufferEngine(),
-    ...permissions,
-    Handler.Avatar.avatarBufferHandler,
-);
-app.post(
-    '/v/base64',
-    ...prepares,
-    uploadManager.generateBase64Engine(),
-    ...permissions,
-    Handler.Avatar.avatarBase64Handler,
-);
+app.post('/v/buffer', ...prepares, uploadManager.generateMulterEngine('image'), uploadManager.generateBufferEngine(), ...permissions, Handler.Avatar.avatarBufferHandler);
+app.post('/v/base64', ...prepares, uploadManager.generateBase64Engine(), ...permissions, Handler.Avatar.avatarBase64Handler);
 
 // Handler(s) for Image List Get
-app.post(
-    '/tag',
-    ...prepares,
-    Handler.G.imageGetListByTagHandler,
-);
+app.post('/tag', ...prepares, Handler.GetImage.imageGetListByTagHandler);
 
 // Handler(s) for Image status change
-app.post(
-    '/deactivate/id',
-    ...prepares,
-    ...permissions,
-    Handler.M.DeactivateImageHandler,
-);
-app.post(
-    '/deactivate/tag',
-    ...prepares,
-    ...permissions,
-    Handler.M.DeactivateTagHandler,
-);
+app.post('/deactivate/id', ...prepares, ...permissions, Handler.Markus.DeactivateImageHandler);
+app.post('/deactivate/tag', ...prepares, ...permissions, Handler.Markus.DeactivateTagHandler);
 
 // Handler(s) for debug
-app.post(
-    '/list',
-    ...prepares,
-    Handler.Debug.OutputImageIdList,
-);
-app.post(
-    '/empty',
-    ...prepares,
-    Handler.Debug.emptyDatabaseHandler,
-);
+app.post('/list', ...prepares, Handler.Debug.OutputImageIdList);
+app.post('/empty', ...prepares, Handler.Debug.emptyDatabaseHandler);
+
+// Handler(s) for agent
+app.get('/', ...prepares, Handler.Markus.MarkusHandler);
 
 // Handler(s) for 404
-app.all(
-    '*',
-    ...prepares,
-    Handler.G.fourOFourHandler,
-);
+app.all('*', ...prepares, Handler.GetImage.fourOFourHandler);
 
 export default app;

@@ -49,7 +49,7 @@ const Config: IConfig = {
     crossOrigin: '*',
     host: 'mongodb://localhost',
     database: 'markus-test-2',
-    imagePath: '/Users/mengwang/Desktop/test',
+    imagePath: '/Users/Desktop/test',
     imagePFolder: 5,
     isDebug: true,
     maxThread: 4,

@@ -9,8 +9,8 @@ import { IImageCallback, IImageListResponse, IImageUserFriendlyCallback } from '
 import { IFileModel } from '../database/model/file';
 import { IImageModel } from '../database/model/image';
 import { ITagModel } from '../database/model/tag';
-import { fileBuilder, pathBuilder } from '../util/data/path';
 import { mkPathDir } from './data/file';
+import { fileBuilder, pathBuilder } from './data/path';
 
 export const createTempFile = (content: string, type: string): string => {
     const tempPath: string = pathBuilder('temp');

@@ -5,7 +5,7 @@
 
 import * as Avatar from './avatar';
 import * as Debug from './debug';
-import * as G from './g';
-import * as M from './m';
+import * as GetImage from './image';
+import * as Markus from './markus';
 
-export { Avatar, Debug, G, M };
+export { Avatar, Debug, GetImage, Markus };
