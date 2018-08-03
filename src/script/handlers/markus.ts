@@ -116,6 +116,7 @@ export const UploadBase64Handler = async (req: Request, res: Response): Promise<
             },
         });
     } catch (err) {
+        console.log(err);
         handlerError(res, err);
     }
     return;
@@ -169,8 +170,8 @@ export const MarkusHandler = async (req: Request, res: Response): Promise<void> 
         res.status(200).send({
             status: RESPONSE.SUCCEED,
             data: {
-                Agent: 'Markus',
-                Version: version,
+                agent: 'Markus',
+                version,
             },
         });
     } catch (err) {
