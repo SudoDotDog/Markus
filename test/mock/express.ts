@@ -14,25 +14,28 @@ export interface IMockHandlerResult {
 }
 
 export interface IMockHandlerRequest {
-    header: Array<{
+    header: (name: string) => string;
+    headers: Array<{
         name: string;
         value: string;
     }>;
     body: {
         [key: string]: any,
     };
-    [key: string]: any,
+    [key: string]: any;
 }
 
 export interface IMockHandlerResponse {
     header: (name: string, value: string) => IMockHandlerResponse;
     send: (content: any) => void;
+    set: (name: string, value: string) => void;
     status: (code: number) => IMockHandlerResponse;
 }
 
 export interface IMockHandlerFlush {
     request: any;
     response: any;
+    nextFunction: () => boolean;
 }
 
 export class MockHandler {
@@ -49,13 +52,15 @@ export class MockHandler {
         };
         this._response = {
             header: this.addHeader.bind(this),
+            set: this.addHeader.bind(this),
             send: this.sendResultBody.bind(this),
             status: this.setStatus.bind(this),
         };
         this._request = {
-            header: [],
+            header: this.getHeaderFromRequest.bind(this),
+            headers: [],
             body: {},
-        }
+        };
     }
 
     public request(name: string, value: any): MockHandler {
@@ -64,14 +69,14 @@ export class MockHandler {
     }
 
     public header(name: string, value: string): MockHandler {
-        this._request.header.push({
+        this._request.headers.push({
             name,
             value,
         });
         return this;
     }
 
-    public body(name: string, value:any): MockHandler {
+    public body(name: string, value: any): MockHandler {
         this._request.body[name] = value;
         return this;
     }
@@ -80,11 +85,26 @@ export class MockHandler {
         return {
             request: this._request,
             response: this._response,
+            nextFunction: this.nextFunction.bind(this),
         };
     }
 
     public end(): IMockHandlerResult {
         return this._result;
+    }
+
+    protected nextFunction(): boolean {
+        this._result.body = 'done';
+        return true;
+    }
+
+    protected getHeaderFromRequest(name: string): string {
+        for (let i of this._request.headers) {
+            if (i.name === name) {
+                return i.value;
+            }
+        }
+        return '';
     }
 
     protected addHeader(name: string, value: string): IMockHandlerResponse {

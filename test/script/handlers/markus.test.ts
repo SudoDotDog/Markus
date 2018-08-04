@@ -117,7 +117,7 @@ export const testScriptMarkusHandlers = (): void => {
                 const unlinkSet: string[] = restoreUnlink();
                 expect(unlinkSet).to.be.lengthOf(2);
                 next();
-            }, 300);
+            }, 200);
             return;
         }).timeout(3200);
     });

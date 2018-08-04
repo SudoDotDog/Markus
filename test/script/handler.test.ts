@@ -5,6 +5,7 @@
 
 import { expect } from 'chai';
 import * as mongoose from 'mongoose';
+import { testScriptAuthHandlers } from './handlers/auth.test';
 import { testScriptMarkusHandlers } from './handlers/markus.test';
 
 describe('test handlers', function (this: Mocha.Suite): void {
@@ -29,6 +30,7 @@ describe('test handlers', function (this: Mocha.Suite): void {
         expect(mongoose.connection.readyState).to.be.equal(1);
     }).timeout(1000);
 
+    testScriptAuthHandlers();
     testScriptMarkusHandlers();
 
     after(function (this: any, next: () => void) {

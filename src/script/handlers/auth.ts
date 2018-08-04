@@ -35,7 +35,11 @@ export const validPermissionBasicAuthMiddleware: middleware = async (req: Reques
     const auth: string | null = parseBasicAuthorization(authHeader);
 
     if (auth) {
-        req.valid = true;
+        if (auth === 'test') {
+            req.valid = true;
+        } else {
+            req.valid = false;
+        }
         next();
     } else {
         res.set('WWW-Authenticate', 'Basic realm=Key');
