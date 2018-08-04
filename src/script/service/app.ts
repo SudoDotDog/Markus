@@ -7,7 +7,8 @@ import * as bodyParser from "body-parser";
 import * as express from "express";
 import { NextFunction, Request, Response } from "express";
 import * as mongoose from "mongoose";
-import Config, { middleware } from "../../markus";
+import { middleware } from '../../interface';
+import Config from "../../markus";
 import UploadManager from '../../util/manager/upload';
 import { markusVersion } from "../../util/struct/agent";
 import * as Handler from '../handlers/import';
@@ -74,6 +75,7 @@ app.post('/empty', ...prepares, Handler.Debug.emptyDatabaseHandler);
 
 // Handler(s) for agent
 app.get('/', ...prepares, Handler.Markus.MarkusHandler);
+app.get('/auth', ...prepares, ...permissions, Handler.Markus.MarkusHandler);
 
 // Handler(s) for 404
 app.all('*', ...prepares, Handler.GetImage.fourOFourHandler);

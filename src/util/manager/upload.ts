@@ -5,7 +5,8 @@
 
 import { NextFunction, Request, Response } from 'express';
 import * as Multer from 'multer';
-import Config, { middleware } from '../../markus';
+import { middleware } from '../../interface';
+import Config from '../../markus';
 import { error, ERROR_CODE, handlerError } from '../error';
 import { unique } from "../image";
 import { Base64FileManager, BufferFileManager, IFileManager } from './file/import';

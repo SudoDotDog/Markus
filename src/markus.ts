@@ -1,16 +1,14 @@
 /**
  * @author WMXPY
- * @fileoverview Markus Static Configs & Interfaces
+ * @fileoverview Markus Static Configs
  */
 
 // tslint:disable-next-line
 /// <reference path="./declare/global.ts" />
 
-import { NextFunction, Request, Response } from 'express';
 import * as Path from 'path';
-import { error, ERROR_CODE, handlerError } from './util/error';
-
-export type middleware = (req: Request, res: Response, next: NextFunction) => Promise<void>;
+import { middleware } from './interface';
+import * as Handler from './script/handlers/import';
 
 interface IConfig {
     crossOrigin: string;
@@ -31,20 +29,6 @@ interface IConfig {
     };
 }
 
-const validPermissionMiddleware: middleware = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    if (req.body.key) {
-        if (req.body.key === 'test') {
-            req.valid = true;
-        } else {
-            req.valid = false;
-        }
-        next();
-        return;
-    } else {
-        handlerError(res, error(ERROR_CODE.PERMISSION_VALID_FAILED));
-    }
-};
-
 const Config: IConfig = {
     crossOrigin: '*',
     host: 'mongodb://localhost',
@@ -60,7 +44,7 @@ const Config: IConfig = {
     black404ImagePath: Path.resolve('assets/404image_black.png'),
     middleware: {
         prepares: [],
-        permissions: [validPermissionMiddleware],
+        permissions: [Handler.Auth.validPermissionBasicAuthMiddleware],
     },
 };
 
