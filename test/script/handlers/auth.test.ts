@@ -4,12 +4,9 @@
  * @fileoverview Auth Handlers Test
  */
 
-import { ObjectID } from 'bson';
 import { expect } from 'chai';
 import * as Handlers from '../../../src/script/handlers/import';
 import { IMockHandlerResult, MockHandler } from '../../mock/express';
-import MockManager from '../../mock/manager';
-import { mockUnlinkSet } from '../../mock/mock';
 
 export const testScriptAuthHandlers = (): void => {
     describe('auth handler test', (): void => {

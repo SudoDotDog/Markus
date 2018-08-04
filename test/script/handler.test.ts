@@ -6,6 +6,7 @@
 import { expect } from 'chai';
 import * as mongoose from 'mongoose';
 import { testScriptAuthHandlers } from './handlers/auth.test';
+import { testScriptAvatarHandlers } from './handlers/avatar.test';
 import { testScriptMarkusHandlers } from './handlers/markus.test';
 
 describe('test handlers', function (this: Mocha.Suite): void {
@@ -31,6 +32,7 @@ describe('test handlers', function (this: Mocha.Suite): void {
     }).timeout(1000);
 
     testScriptAuthHandlers();
+    testScriptAvatarHandlers();
     testScriptMarkusHandlers();
 
     after(function (this: any, next: () => void) {

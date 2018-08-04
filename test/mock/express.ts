@@ -20,7 +20,13 @@ export interface IMockHandlerRequest {
         value: string;
     }>;
     body: {
-        [key: string]: any,
+        [key: string]: any;
+    };
+    query: {
+        [key: string]: string;
+    };
+    params: {
+        [key: string]: string;
     };
     [key: string]: any;
 }
@@ -28,6 +34,7 @@ export interface IMockHandlerRequest {
 export interface IMockHandlerResponse {
     header: (name: string, value: string) => IMockHandlerResponse;
     send: (content: any) => void;
+    sendFile: (content: any) => void;
     set: (name: string, value: string) => void;
     status: (code: number) => IMockHandlerResponse;
 }
@@ -54,11 +61,14 @@ export class MockHandler {
             header: this.addHeader.bind(this),
             set: this.addHeader.bind(this),
             send: this.sendResultBody.bind(this),
+            sendFile: this.sendResultBody.bind(this),
             status: this.setStatus.bind(this),
         };
         this._request = {
             header: this.getHeaderFromRequest.bind(this),
             headers: [],
+            query: {},
+            params: {},
             body: {},
         };
     }
@@ -73,6 +83,16 @@ export class MockHandler {
             name,
             value,
         });
+        return this;
+    }
+
+    public query(name: string, value: string): MockHandler {
+        this._request.query[name] = value;
+        return this;
+    }
+
+    public param(name: string, value: string): MockHandler {
+        this._request.params[name] = value;
         return this;
     }
 
