@@ -14,7 +14,7 @@ export const testScriptAvatarHandlers = (): void => {
 
         it('create a avatar with a buffer should work', async (): Promise<void> => {
             const mock: MockHandler = new MockHandler();
-            const manager: MockManager = new MockManager('folder', 'filename', 'hash', 'mime');
+            const manager: MockManager = new MockManager('folder', 'filename', 'hash-avatar-buffer', 'mime');
 
             mock.request('valid', true)
                 .request('file', {
@@ -40,12 +40,12 @@ export const testScriptAvatarHandlers = (): void => {
 
         it('create a avatar with a base64 string should work', async (): Promise<void> => {
             const mock: MockHandler = new MockHandler();
-            const manager: MockManager = new MockManager('folder', 'filename', 'hash', 'mime');
+            const manager: MockManager = new MockManager('folder', 'filename', 'hash-base64-avatar', 'mime');
 
             mock.request('valid', true)
                 .request('manager', manager)
                 .body('original', 'original')
-                .body('image', 'data:image/jpeg;base64,/9j/4AAQSkZJRgABA-Q')
+                .body('image', 'data:image/jpeg;base64,/9j/4AAQSkZJRgABC-Q')
                 .body('avatar', 'testBase64');
 
             const { request, response } = mock.flush();
