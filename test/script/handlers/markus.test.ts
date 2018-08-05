@@ -42,6 +42,54 @@ export const testScriptMarkusHandlers = (): void => {
             return;
         }).timeout(3200);
 
+        it('create image by buffer should return 400 when valid is false', async (): Promise<void> => {
+            const mock: MockHandler = new MockHandler();
+            const manager: MockManager = new MockManager('folder', 'filename', 'hash', 'mime');
+
+            mock.
+                request('valid', false).
+                request('file', {
+                    encoding: 'encoding',
+                    mimetype: 'mime',
+                    originalname: 'original',
+                    size: 500,
+                }).
+                request('manager', manager).
+                body('tags', 'buffer');
+            const { request, response } = mock.flush();
+            await Handlers.Markus.UploadBufferHandler(request, response);
+
+            const result: IMockHandlerResult = mock.end();
+            // tslint:disable-next-line
+            expect(result).to.be.not.null;
+            expect(result.status).to.be.equal(400);
+            return;
+        }).timeout(3200);
+
+        it('create image by buffer should use string tag as well', async (): Promise<void> => {
+            const mock: MockHandler = new MockHandler();
+            const manager: MockManager = new MockManager('folder', 'filename', 'hash', 'mime');
+
+            mock.
+                request('valid', true).
+                request('file', {
+                    encoding: 'encoding',
+                    mimetype: 'mime',
+                    originalname: 'original',
+                    size: 500,
+                }).
+                request('manager', manager).
+                body('tags', 'buffer');
+            const { request, response } = mock.flush();
+            await Handlers.Markus.UploadBufferHandler(request, response);
+
+            const result: IMockHandlerResult = mock.end();
+            // tslint:disable-next-line
+            expect(result).to.be.not.null;
+            expect(result.status).to.be.equal(200);
+            return;
+        }).timeout(3200);
+
         it('test create image by base64 handler', async (): Promise<void> => {
             const mock: MockHandler = new MockHandler();
             const manager: MockManager = new MockManager('folder', 'filename', 'hash-2', 'mime');
@@ -65,6 +113,26 @@ export const testScriptMarkusHandlers = (): void => {
             return;
         }).timeout(3200);
 
+        it('create image should return 400 when is not valid', async (): Promise<void> => {
+            const mock: MockHandler = new MockHandler();
+            const manager: MockManager = new MockManager('folder', 'filename', 'hash-2', 'mime');
+
+            mock.
+                request('valid', false).
+                request('manager', manager).
+                body('original', 'original').
+                body('image', 'data:image/jpeg;base64,/9j/4AAQSkZJRgABA-Q').
+                body('tags', ['base64']);
+            const { request, response } = mock.flush();
+            await Handlers.Markus.UploadBase64Handler(request, response);
+
+            const result: IMockHandlerResult = mock.end();
+            // tslint:disable-next-line
+            expect(result).to.be.not.null;
+            expect(result.status).to.be.equal(400);
+            return;
+        }).timeout(3200);
+
         it('test deactivate tag handler', async (): Promise<void> => {
             const mock: MockHandler = new MockHandler();
 
@@ -81,6 +149,22 @@ export const testScriptMarkusHandlers = (): void => {
             return;
         }).timeout(3200);
 
+        it('deactivate tag handler should return 400 when is not valid', async (): Promise<void> => {
+            const mock: MockHandler = new MockHandler();
+
+            mock
+                .request('valid', false)
+                .body('tag', 'buffer');
+            const { request, response } = mock.flush();
+            await Handlers.Markus.DeactivateTagHandler(request, response);
+
+            const result: IMockHandlerResult = mock.end();
+            // tslint:disable-next-line
+            expect(result).to.be.not.null;
+            expect(result.status).to.be.equal(400);
+            return;
+        }).timeout(3200);
+
         it('test deactivate image handler', async (): Promise<void> => {
             const mock: MockHandler = new MockHandler();
 
@@ -94,6 +178,22 @@ export const testScriptMarkusHandlers = (): void => {
             expect(result.status).to.be.equal(200);
             expect(result.body).to.be.keys(['status', 'data']);
             expect(result.body.data).to.be.keys(['id']);
+            return;
+        }).timeout(3200);
+
+        it('deactivate image should return 400 when is not valid', async (): Promise<void> => {
+            const mock: MockHandler = new MockHandler();
+
+            mock
+                .request('valid', false)
+                .body('id', tempImageId.toString());
+            const { request, response } = mock.flush();
+            await Handlers.Markus.DeactivateImageHandler(request, response);
+
+            const result: IMockHandlerResult = mock.end();
+            // tslint:disable-next-line
+            expect(result).to.be.not.null;
+            expect(result.status).to.be.equal(400);
             return;
         }).timeout(3200);
 
@@ -115,7 +215,7 @@ export const testScriptMarkusHandlers = (): void => {
         it('restore unlink', (next: () => void): void => {
             setTimeout(() => {
                 const unlinkSet: string[] = restoreUnlink();
-                expect(unlinkSet).to.be.lengthOf(2);
+                expect(unlinkSet.length).to.be.gte(1);
                 next();
             }, 200);
             return;

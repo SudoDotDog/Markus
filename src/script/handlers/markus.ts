@@ -116,7 +116,6 @@ export const UploadBase64Handler = async (req: Request, res: Response): Promise<
             },
         });
     } catch (err) {
-        console.log(err);
         handlerError(res, err);
     }
     return;
