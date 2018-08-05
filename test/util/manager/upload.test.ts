@@ -4,6 +4,7 @@
  */
 
 import { expect } from 'chai';
+import { middleware } from '../../../src/interface';
 import { IFileManager } from '../../../src/util/manager/file/import';
 import UploadManager from '../../../src/util/manager/upload';
 import { IMockFsSyncsCB, monkFsSyncs } from '../../mock/mock';
@@ -34,6 +35,24 @@ describe('test upload manager util', (): void => {
 
         // tslint:disable-next-line
         expect(testContent.generateBufferEngine.bind(testContent)).to.be.not.throw;
+    });
+
+    it('generated multer engine should be not null', (): void => {
+        const engine: middleware = testContent.generateMulterEngine('image');
+        // tslint:disable-next-line
+        expect(engine).to.be.not.null;
+    });
+
+    it('generated buffer engine should be not null', (): void => {
+        const engine: middleware = testContent.generateBufferEngine();
+        // tslint:disable-next-line
+        expect(engine).to.be.not.null;
+    });
+
+    it('generated base64 engine should be not null', (): void => {
+        const engine: middleware = testContent.generateBase64Engine();
+        // tslint:disable-next-line
+        expect(engine).to.be.not.null;
     });
 
     it('create buffer file should return a buffer manager', async (): Promise<void> => {

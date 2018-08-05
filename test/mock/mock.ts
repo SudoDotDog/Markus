@@ -64,7 +64,7 @@ export const mockReadStream = (): () => IMockReadStreamResult => {
                 triggered.push(channel);
             },
         };
-    }
+    };
 
     return () => {
         (fs as any).createReadStream = tempReadStream;
