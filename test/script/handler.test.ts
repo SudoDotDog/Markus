@@ -7,6 +7,7 @@ import { expect } from 'chai';
 import * as mongoose from 'mongoose';
 import { testScriptAuthHandlers } from './handlers/auth.test';
 import { testScriptAvatarHandlers } from './handlers/avatar.test';
+import { testScriptDebugHandlers } from './handlers/debug.test';
 import { testScriptImageHandlers } from './handlers/image.test';
 import { testScriptMarkusHandlers } from './handlers/markus.test';
 
@@ -36,6 +37,7 @@ describe('test handlers', function (this: Mocha.Suite): void {
     testScriptAvatarHandlers();
     testScriptMarkusHandlers();
     testScriptImageHandlers();
+    testScriptDebugHandlers();
 
     after(function (this: any, next: () => void) {
         if (!mongoose.connection.db) {
