@@ -14,7 +14,6 @@ import { IMockHandlerResult, MockHandler } from '../../mock/express';
 
 export const testScriptDebugHandlers = (): void => {
     describe('debug handler test', (): void => {
-        let testImage: IImageModel;
         let testFile: IFileModel;
         let testTag: ITagModel;
 
@@ -50,10 +49,23 @@ export const testScriptDebugHandlers = (): void => {
                 tags: [testTag._id],
                 file: testFile._id,
             }).then((image: IImageModel) => {
-                testImage = image;
                 next();
             });
         });
+
+        it('output image id list should give a list of images', async (): Promise<void> => {
+            const mock: MockHandler = new MockHandler();
+
+            const { request, response } = mock.flush();
+            await Handlers.Debug.OutputImageIdList(request, response);
+
+            const result: IMockHandlerResult = mock.end();
+            // tslint:disable-next-line
+            expect(result).to.be.not.null;
+            expect(result.status).to.be.equal(200);
+            expect(result.body.data.length).to.be.gte(1);
+            return;
+        }).timeout(3200);
 
         it('verify tags is created', async (): Promise<void> => {
             const Tags: ITagModel[] = await TagModel.find({});
