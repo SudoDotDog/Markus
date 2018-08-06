@@ -17,7 +17,7 @@ describe('backup direct test', (): void => {
         });
         const restoreExec = mockChildProcessExec();
 
-        const result = await createBackupInstance();
+        const result = await createBackupInstance('./');
         const commandSet = restoreExec();
         restoreConfig();
         expect(commandSet).to.be.lengthOf(1);
@@ -32,7 +32,7 @@ describe('backup direct test', (): void => {
         });
         const restoreExec = mockChildProcessExec();
 
-        const result = await restoreBackupInstance();
+        const result = await restoreBackupInstance('./');
         const commandSet = restoreExec();
         restoreConfig();
         expect(commandSet).to.be.lengthOf(1);

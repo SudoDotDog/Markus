@@ -26,7 +26,7 @@ export const databaseBackup = async (host: string, name: string, output: string)
     return result;
 };
 
-export const databaseRestore = async (host: string, name: string): Promise<string> => {
+export const databaseRestore = async (host: string, name: string, from: string): Promise<string> => {
     const command = commandBuilder([
         'mongorestore',
         {
@@ -37,6 +37,7 @@ export const databaseRestore = async (host: string, name: string): Promise<strin
             name: '-d',
             value: name,
         },
+        from,
     ]);
 
     const result = await execute(command);
