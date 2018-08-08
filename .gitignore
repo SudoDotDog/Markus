@@ -3,3 +3,4 @@ dist
 coverage
 .nyc_output
 compress_test
+temp
