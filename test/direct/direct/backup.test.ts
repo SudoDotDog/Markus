@@ -28,7 +28,7 @@ export const testBackupDirect = (): void => {
                 size: 500,
                 folder: 'src',
                 filename: 'markus.ts',
-                hash: 'hash',
+                hash: 'hash-backup',
             }).then((file: IFileModel) => {
                 testFile = file;
                 next();
@@ -38,7 +38,7 @@ export const testBackupDirect = (): void => {
         before(function (this: Mocha.Context, next: () => void) {
             this.timeout(4000);
             Controller.Tag.createTag({
-                name: 'test',
+                name: 'test-backup',
             }).then((tag: ITagModel) => {
                 testTag = tag;
                 next();
@@ -60,14 +60,16 @@ export const testBackupDirect = (): void => {
         it('compress image by tag should give correct information', async (): Promise<void> => {
             const restoreConfig = mockConfig({
                 imagePath: Path.resolve('./'),
-            })
+            });
             const result = await compressImagesByTag(testTag.name);
             restoreConfig();
+            // tslint:disable-next-line
             expect(result).to.be.not.null;
             expect(result.bytes).to.be.gte(300);
             expect(result.logs).to.be.lengthOf(0);
+            // tslint:disable-next-line
             expect(result.path).to.be.not.undefined;
             return;
         });
     });
-}
+};

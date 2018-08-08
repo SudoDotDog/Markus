@@ -4,15 +4,15 @@
  * @fileoverview Backup
  */
 
-import Config from '../markus';
-import { databaseBackup, databaseRestore } from "../util/execute/disToleran";
-import { zipFolder, ICompressZipResult } from '../util/execute/compress/compress';
-import { CompressMedium } from '../util/execute/compress/medium';
-import { pathBuilder, fileBuilder } from '../util/data/path';
-import { appropriateCurrentDateName } from '../util/data/date';
 import * as Mix from '../database/mix/import';
 import { IFileModel } from '../database/model/file';
+import Config from '../markus';
+import { appropriateCurrentDateName } from '../util/data/date';
 import { fixConflictName } from '../util/data/file';
+import { fileBuilder, pathBuilder } from '../util/data/path';
+import { ICompressZipResult, zipFolder } from '../util/execute/compress/compress';
+import { CompressMedium } from '../util/execute/compress/medium';
+import { databaseBackup, databaseRestore } from "../util/execute/disToleran";
 
 export const createBackupInstance = async (to: string): Promise<string> => {
     const result: string = await databaseBackup(Config.host, Config.database, to);

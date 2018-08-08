@@ -7,8 +7,8 @@
 import * as Archiver from 'archiver';
 import * as Fs from 'fs';
 import { mkPathDir } from '../../data/file';
-import { ICompressZipResult, fixArchivePath } from './compress';
 import { error, ERROR_CODE } from '../../error';
+import { fixArchivePath, ICompressZipResult } from './compress';
 
 export class CompressMedium {
     private _archiver: Archiver.Archiver;
@@ -48,7 +48,7 @@ export class CompressMedium {
                 resolve(this._result);
             });
             timeout = setTimeout(() => {
-                reject(error(ERROR_CODE.COMPRESS_TIME_OUT))
+                reject(error(ERROR_CODE.COMPRESS_TIME_OUT));
             }, limit);
         });
     }
