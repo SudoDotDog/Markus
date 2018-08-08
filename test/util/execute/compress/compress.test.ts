@@ -7,7 +7,7 @@
 import { expect } from 'chai';
 import * as Fs from 'fs';
 import * as Path from 'path';
-import { ICompressZipResult, unzipArchive, zipFolder } from '../../../src/util/execute/compress';
+import { ICompressZipResult, unzipArchive, zipFolder } from '../../../../src/util/execute/compress/compress';
 
 describe('test compress and decompress', (): void => {
     const folderPath: string = Path.resolve('./typescript');

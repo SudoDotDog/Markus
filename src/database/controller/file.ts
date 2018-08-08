@@ -9,6 +9,11 @@ import { IFileManager } from "../../util/manager/file/import";
 import { IFileConfig, IFileProperty } from '../interface/file';
 import { FileModel, IFileModel } from "../model/file";
 
+export const getFilesByIds = async (ids: ObjectID[]): Promise<IFileModel[]> => {
+    const files: IFileModel[] = await FileModel.find({_id: ids});
+    return files;
+};
+
 export const rummageSameFile = async (hash: string): Promise<IFileModel | null> => {
     const file: IFileModel | null = await FileModel.findOne({
         active: true,

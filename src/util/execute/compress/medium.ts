@@ -1,0 +1,90 @@
+/**
+ * @author WMXPY
+ * @description Execute Compress
+ * @fileoverview Zip Medium
+ */
+
+import * as Archiver from 'archiver';
+import * as Fs from 'fs';
+import { mkPathDir } from '../../data/file';
+import { ICompressZipResult, fixArchivePath } from './compress';
+import { error, ERROR_CODE } from '../../error';
+
+export class CompressMedium {
+    private _archiver: Archiver.Archiver;
+    private _stream: Fs.WriteStream;
+    private _result: ICompressZipResult;
+
+    public constructor(archivePath: string, archiveName: string) {
+        const archiveFilePath: string = fixArchivePath(archivePath, archiveName);
+        this._archiver = Archiver('zip', {
+            zlib: { level: 9 },
+        });
+        mkPathDir(archivePath);
+        this._stream = Fs.createWriteStream(archiveFilePath);
+        this._result = {
+            path: archivePath,
+            bytes: 0,
+            logs: [],
+        };
+        this._prepare();
+    }
+
+    public addFile(path: string, name: string) {
+        this._archiver.append(Fs.createReadStream(path), { name });
+    }
+
+    public addBuffer(buffer: Buffer, name: string) {
+        this._archiver.append(buffer, { name });
+    }
+
+    public finalize(limit: number): Promise<ICompressZipResult> {
+        return new Promise<ICompressZipResult>((resolve: (result: ICompressZipResult) => void, reject: (err: Error) => void) => {
+            this._archiver.finalize();
+            let timeout: NodeJS.Timer;
+            this._stream.on('close', () => {
+                clearTimeout(timeout);
+                this._pointer();
+                resolve(this._result);
+            });
+            timeout = setTimeout(() => {
+                reject(error(ERROR_CODE.COMPRESS_TIME_OUT))
+            }, limit);
+        });
+    }
+
+    protected _prepare(): void {
+        /* istanbul ignore next */
+        this._stream.on('end', () => {
+            this._pointer();
+            this._log('drained');
+        });
+
+        /* istanbul ignore next */
+        this._archiver.on('warning', (err: Archiver.ArchiverError) => {
+            if (err.code === 'ENOENT') {
+                this._log('warning:' + err.message);
+            } else {
+                throw err;
+            }
+        });
+
+        /* istanbul ignore next */
+        this._archiver.on('error', (err: Archiver.ArchiverError) => {
+            throw err;
+        });
+
+        this._archiver.pipe(this._stream);
+    }
+
+    protected _log(info: string): void {
+        this._result.logs.push(info);
+    }
+
+    protected _pointer(): void {
+        const pointer: number = this._archiver.pointer();
+        if (this._result.bytes < pointer) {
+            this._result.bytes = pointer;
+        }
+    }
+}

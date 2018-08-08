@@ -35,6 +35,8 @@ export enum ERROR_CODE {
 
     FOUR_O_FOUR_NOT_FOUND = 404,
 
+    COMPRESS_TIME_OUT = 467,
+
     COLOR_INTERNAL_ERROR = 600,
     POINT_INTERNAL_ERROR = 601,
 
@@ -65,6 +67,7 @@ export const errorList: {
     300: 'Permission valid failed',
     301: 'Image not found in request',
     404: 'Request URL not found',
+    467: 'Compress time out',
     600: 'Color internal error',
     601: 'Point internal error',
     810: 'Unique array creation failed',

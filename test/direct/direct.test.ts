@@ -6,6 +6,7 @@
 import { expect } from 'chai';
 import * as mongoose from 'mongoose';
 import { testAvatarDirect } from './direct/avatar.test';
+import { testBackupDirect } from './direct/backup.test';
 import { testImageDirect } from './direct/image.test';
 
 describe('test directs', function (this: Mocha.Suite): void {
@@ -32,6 +33,7 @@ describe('test directs', function (this: Mocha.Suite): void {
 
     testAvatarDirect();
     testImageDirect();
+    testBackupDirect();
 
     after(function (this: any, next: () => void) {
         if (!mongoose.connection.db) {

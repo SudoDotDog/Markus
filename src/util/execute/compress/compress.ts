@@ -1,14 +1,14 @@
 /**
  * @author WMXPY
- * @description Execute
+ * @description Execute Compress
  * @fileoverview Zip and Unzip Compress Utils
  */
 
 import * as Archiver from 'archiver';
 import * as Fs from 'fs';
 import * as Path from 'path';
-import { mkPathDir } from '../data/file';
-import { commandBuilder, execute } from './command';
+import { mkPathDir } from '../../data/file';
+import { commandBuilder, execute } from '../command';
 
 export interface ICompressZipResult {
     bytes: number;
@@ -16,14 +16,17 @@ export interface ICompressZipResult {
     logs: string[];
 }
 
+export const fixArchivePath = (folder: string, name: string) => {
+    if (Path.extname(name) === '.zip') {
+        return Path.join(folder, name);
+    } else {
+        return Path.join(folder, name + '.zip');
+    }
+};
+
 export const zipFolder = (folderPath: string, archivePath: string, archiveName: string): Promise<ICompressZipResult> => {
     mkPathDir(archivePath);
-    let archiveFilePath: string;
-    if (Path.extname(archiveName) === '.zip') {
-        archiveFilePath = Path.join(archivePath, archiveName);
-    } else {
-        archiveFilePath = Path.join(archivePath, archiveName + '.zip');
-    }
+    const archiveFilePath: string = fixArchivePath(archivePath, archiveName);
 
     return new Promise<ICompressZipResult>((resolve: (result: ICompressZipResult) => void, reject: (err: Error) => void) => {
         const outputStream: Fs.WriteStream = Fs.createWriteStream(archiveFilePath);

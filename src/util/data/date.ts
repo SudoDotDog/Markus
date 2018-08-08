@@ -5,7 +5,7 @@
  */
 
 export const appropriateCurrentDateName = (name: string) => {
-    return `${name}+${appropriateCurrentDateString()}`;
+    return `${name}_${appropriateCurrentDateString()}`;
 };
 
 export const appropriateCurrentDateString = () => {
