@@ -37,7 +37,7 @@ export const compressImagesByTag = async (tag: string): Promise<ICompressZipResu
         originalList.push(original);
         medium.addFile(fileBuilder(file.folder, file.filename), original);
     }
-    const result: ICompressZipResult = await medium.finalize(files.length * 15);
+    const result: ICompressZipResult = await medium.finalize(files.length * 150);
     return result;
 };
 

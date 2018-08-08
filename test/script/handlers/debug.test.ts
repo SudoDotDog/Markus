@@ -60,6 +60,7 @@ export const testScriptDebugHandlers = (): void => {
             await Handlers.Debug.OutputImageIdList(request, response);
 
             const result: IMockHandlerResult = mock.end();
+            console.log(result);
             // tslint:disable-next-line
             expect(result).to.be.not.null;
             expect(result.status).to.be.equal(200);
