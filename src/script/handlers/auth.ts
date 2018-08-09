@@ -67,3 +67,30 @@ export const validPermissionBasicAuthMiddleware: middleware = async (req: Reques
         });
     }
 };
+
+/**
+ * Middleware
+ * Valid permission by query
+ *
+ * @param {Request} req
+ * @param {Response} res
+ * @param {NextFunction} next
+ * @returns {Promise<void>}
+ */
+export const validPermissionQueryMiddleware: middleware = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    const auth: string | undefined = req.query.authorization;
+
+    if (auth) {
+        if (auth === 'test') {
+            req.valid = true;
+        } else {
+            req.valid = false;
+        }
+        next();
+    } else {
+        res.status(401).send({
+            status: RESPONSE.FAILED,
+            error: error(ERROR_CODE.PERMISSION_VALID_FAILED),
+        });
+    }
+};

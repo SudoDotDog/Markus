@@ -5,6 +5,9 @@
 
 import { expect } from 'chai';
 import * as mongoose from 'mongoose';
+import { FileModel, IFileModel } from '../../src/database/model/file';
+import { IImageModel, ImageModel } from '../../src/database/model/image';
+import { ITagModel, TagModel } from '../../src/database/model/tag';
 import { testScriptAuthHandlers } from './handlers/auth.test';
 import { testScriptAvatarHandlers } from './handlers/avatar.test';
 import { testScriptDebugHandlers } from './handlers/debug.test';
@@ -17,7 +20,7 @@ describe('test handlers', function (this: Mocha.Suite): void {
     before(function (this: Mocha.Context, next: () => void): void {
         this.timeout(3000);
         mongoose.connect(
-            'mongodb://localhost/unit-test-1',
+            'mongodb://localhost/markus-unit-test',
             // { useNewUrlParser: true },
         );
 
@@ -37,6 +40,22 @@ describe('test handlers', function (this: Mocha.Suite): void {
     testScriptAvatarHandlers();
     testScriptMarkusHandlers();
     testScriptImageHandlers();
+
+    describe('before handler tests', (): void => {
+        it('before debug handler test', async (): Promise<void> => {
+            const tags: ITagModel[] = await TagModel.find({});
+            const images: IImageModel[] = await ImageModel.find({});
+            const files: IFileModel[] = await FileModel.find({});
+            expect(tags.length).to.be.gte(1);
+            expect(images.length).to.be.gte(1);
+            expect(files.length).to.be.gte(1);
+            
+            // tslint:disable-next-line
+            expect(mongoose.connection.readyState).to.be.equal(1);
+            return;
+        }).timeout(1500);
+    });
+
     testScriptDebugHandlers();
 
     after(function (this: any, next: () => void) {

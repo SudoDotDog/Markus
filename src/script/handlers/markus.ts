@@ -42,7 +42,7 @@ export const UploadBufferHandler = async (req: Request, res: Response): Promise<
 
         const hash: string = await manager.hash();
 
-        const image: IImageCallback = await Direct.Image.createImageByIImageCreationConfig({
+        const image: IImageCallback = await Direct.Image.createImageByIImageCreationConfigWithTagCacheManager({
             encoding: file.encoding,
             mime: file.mimetype,
             hash,
@@ -98,7 +98,7 @@ export const UploadBase64Handler = async (req: Request, res: Response): Promise<
         const mime: string = manager.mime();
         const hash: string = await manager.hash();
 
-        const image: IImageCallback = await Direct.Image.createImageByIImageCreationConfig({
+        const image: IImageCallback = await Direct.Image.createImageByIImageCreationConfigWithTagCacheManager({
             encoding: 'base64',
             mime,
             original: originalName,

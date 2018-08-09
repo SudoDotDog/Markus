@@ -28,6 +28,23 @@ export const testScriptAuthHandlers = (): void => {
             return;
         }).timeout(3200);
 
+        it('test body valid middleware auth failed', async (): Promise<void> => {
+            const mock: MockHandler = new MockHandler();
+
+            mock.
+                body('key', 'hello');
+            const { request, response, nextFunction } = mock.flush();
+            await Handlers.Auth.validPermissionBodyMiddleware(request, response, nextFunction);
+
+            const result: IMockHandlerResult = mock.end();
+            // tslint:disable-next-line
+            expect(result).to.be.not.null;
+            // tslint:disable-next-line
+            expect((request as any).valid).to.be.false;
+            expect(result.body).to.be.equal('done');
+            return;
+        }).timeout(3200);
+
         it('test basic auth valid middleware', async (): Promise<void> => {
             const mock: MockHandler = new MockHandler();
 
@@ -41,6 +58,55 @@ export const testScriptAuthHandlers = (): void => {
             expect(result).to.be.not.null;
             // tslint:disable-next-line
             expect((request as any).valid).to.be.true;
+            expect(result.body).to.be.equal('done');
+            return;
+        }).timeout(3200);
+
+        it('test basic auth valid middleware validate failed', async (): Promise<void> => {
+            const mock: MockHandler = new MockHandler();
+
+            mock.
+                header('authorization', 'Basic hello');
+            const { request, response, nextFunction } = mock.flush();
+            await Handlers.Auth.validPermissionBasicAuthMiddleware(request, response, nextFunction);
+
+            const result: IMockHandlerResult = mock.end();
+            // tslint:disable-next-line
+            expect(result).to.be.not.null;
+            // tslint:disable-next-line
+            expect((request as any).valid).to.be.false;
+            expect(result.body).to.be.equal('done');
+            return;
+        }).timeout(3200);
+
+        it('test query auth valid middleware', async (): Promise<void> => {
+            const mock: MockHandler = new MockHandler();
+
+            mock.query('authorization', 'test');
+            const { request, response, nextFunction } = mock.flush();
+            await Handlers.Auth.validPermissionQueryMiddleware(request, response, nextFunction);
+
+            const result: IMockHandlerResult = mock.end();
+            // tslint:disable-next-line
+            expect(result).to.be.not.null;
+            // tslint:disable-next-line
+            expect((request as any).valid).to.be.true;
+            expect(result.body).to.be.equal('done');
+            return;
+        }).timeout(3200);
+
+        it('test query auth valid middleware when failed', async (): Promise<void> => {
+            const mock: MockHandler = new MockHandler();
+
+            mock.query('authorization', 'hello');
+            const { request, response, nextFunction } = mock.flush();
+            await Handlers.Auth.validPermissionQueryMiddleware(request, response, nextFunction);
+
+            const result: IMockHandlerResult = mock.end();
+            // tslint:disable-next-line
+            expect(result).to.be.not.null;
+            // tslint:disable-next-line
+            expect((request as any).valid).to.be.false;
             expect(result.body).to.be.equal('done');
             return;
         }).timeout(3200);

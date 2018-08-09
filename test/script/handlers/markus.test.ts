@@ -68,7 +68,7 @@ export const testScriptMarkusHandlers = (): void => {
 
         it('create image by buffer should use string tag as well', async (): Promise<void> => {
             const mock: MockHandler = new MockHandler();
-            const manager: MockManager = new MockManager('folder', 'filename', 'hash', 'mime');
+            const manager: MockManager = new MockManager('folder', 'filename', 'hash-markus-create-buffer', 'mime');
 
             mock.
                 request('valid', true).
@@ -92,7 +92,7 @@ export const testScriptMarkusHandlers = (): void => {
 
         it('test create image by base64 handler', async (): Promise<void> => {
             const mock: MockHandler = new MockHandler();
-            const manager: MockManager = new MockManager('folder', 'filename', 'hash-2', 'mime');
+            const manager: MockManager = new MockManager('folder', 'filename', 'hash-image-create-base64', 'mime');
 
             mock.
                 request('valid', true).
@@ -115,7 +115,7 @@ export const testScriptMarkusHandlers = (): void => {
 
         it('create image should return 400 when is not valid', async (): Promise<void> => {
             const mock: MockHandler = new MockHandler();
-            const manager: MockManager = new MockManager('folder', 'filename', 'hash-2', 'mime');
+            const manager: MockManager = new MockManager('folder', 'filename', 'hash-create-image', 'mime');
 
             mock.
                 request('valid', false).

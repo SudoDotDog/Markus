@@ -26,7 +26,7 @@ export const testScriptDebugHandlers = (): void => {
                 size: 500,
                 folder: 'test',
                 filename: 'test',
-                hash: 'hash',
+                hash: 'hash-debug-temp',
             }).then((file: IFileModel) => {
                 testFile = file;
                 next();
@@ -60,6 +60,7 @@ export const testScriptDebugHandlers = (): void => {
             await Handlers.Debug.OutputImageIdList(request, response);
 
             const result: IMockHandlerResult = mock.end();
+
             // tslint:disable-next-line
             expect(result).to.be.not.null;
             expect(result.status).to.be.equal(200);

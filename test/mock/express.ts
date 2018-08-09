@@ -55,7 +55,7 @@ export class MockHandler {
         this._result = {
             status: 0,
             header: [],
-            body: null,
+            body: 'nothing',
         };
         this._response = {
             header: this.addHeader.bind(this),

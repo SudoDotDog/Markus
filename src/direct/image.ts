@@ -13,6 +13,9 @@ import { ITagModel } from "../database/model/tag";
 import { touchDecrementAndRelease } from "../util/data/file";
 import { error, ERROR_CODE } from "../util/error";
 import { buildImageCallback, buildImageUserFriendlyCallback, mergeArray } from "../util/image";
+import { TagCacheManager } from '../util/manager/cache/tag_manager';
+
+const getTagWithTagManager = new TagCacheManager();
 
 export const createImageByIImageCreationConfig = async (option: IImageCreationConfig): Promise<IImageCallback> => {
     const file: IFileModel = await Controller.File.createOrUpdateAFileByHashAndManager(option.hash, option.manager, {
@@ -22,6 +25,25 @@ export const createImageByIImageCreationConfig = async (option: IImageCreationCo
         size: option.size,
     });
     const tags: ObjectID[] = await Controller.Tag.getTagsIdArrayByNames(option.tags);
+    const image: IImageModel = await Controller.Image.createImage({
+        tags,
+        file: file._id,
+    });
+    return buildImageCallback(image, file);
+};
+
+export const createImageByIImageCreationConfigWithTagCacheManager = async (option: IImageCreationConfig): Promise<IImageCallback> => {
+    const file: IFileModel = await Controller.File.createOrUpdateAFileByHashAndManager(option.hash, option.manager, {
+        encoding: option.encoding,
+        mime: option.mime,
+        original: option.original,
+        size: option.size,
+    });
+    const tags: ObjectID[] = [];
+    for(let i of option.tags){
+        const tag = await getTagWithTagManager.rummage(i);
+        tags.push(tag._id);
+    }
     const image: IImageModel = await Controller.Image.createImage({
         tags,
         file: file._id,

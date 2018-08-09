@@ -27,7 +27,7 @@ export const testScriptImageHandlers = (): void => {
                 size: 500,
                 folder: 'test',
                 filename: 'test',
-                hash: 'hash',
+                hash: 'hash-image-before',
             }).then((file: IFileModel) => {
                 testFile = file;
                 next();
@@ -73,7 +73,6 @@ export const testScriptImageHandlers = (): void => {
 
         it('get black bg image by id should return image data', async (): Promise<void> => {
             const mock: MockHandler = new MockHandler();
-
             mock.param('id', testImage.id);
 
             const { request, response } = mock.flush();

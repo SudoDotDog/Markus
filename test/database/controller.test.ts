@@ -17,7 +17,7 @@ describe('test controllers', function (this: Mocha.Suite): void {
     before(function (this: Mocha.Context, next: () => void): void {
         this.timeout(3000);
         mongoose.connect(
-            'mongodb://localhost/unit-test-1',
+            'mongodb://localhost/markus-unit-test',
             // { useNewUrlParser: true },
         );
 
