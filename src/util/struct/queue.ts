@@ -37,8 +37,8 @@ export default class Queue<K, T> {
     }
 
     public has(name: K): boolean {
-        for (let i = 0; i < this._queue.length; i++) {
-            if (name === this._queue[i].name) {
+        for (let i of this._queue) {
+            if (name === i.name) {
                 return true;
             }
         }
@@ -59,9 +59,9 @@ export default class Queue<K, T> {
         }
     }
 
-    protected _rummage(name: K): T | null {
+    protected _rummage(target: K): T | null {
         for (let i = 0; i < this._queue.length; i++) {
-            if (name === this._queue[i].name) {
+            if (target === this._queue[i].name) {
                 const spliced = this._queue.splice(i, 1);
                 if (spliced.length < 1) {
                     throw error(ERROR_CODE.QUEUE_ELEMENT_NOT_EXIST);

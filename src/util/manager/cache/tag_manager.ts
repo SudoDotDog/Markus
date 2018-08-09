@@ -6,8 +6,8 @@
 
 import * as Controller from '../../../database/controller/import';
 import { ITagModel } from "../../../database/model/tag";
-import { sleep } from './wait';
 import Queue from '../../struct/queue';
+import { sleep } from './wait';
 
 export class TagCacheManager {
     private _cache: Queue<string, ITagModel>;
