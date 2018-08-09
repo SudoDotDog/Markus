@@ -8,6 +8,19 @@ import { error, ERROR_CODE } from "../../util/error";
 import { ITagConfig } from "../interface/tag";
 import { ITagModel, TagModel } from "../model/tag";
 
+export const createTagWithOutSave = (options: ITagConfig): ITagModel => {
+    const newTag: ITagModel = new TagModel({
+        name: options.name,
+    });
+
+    return newTag;
+};
+
+export const rummageTag = async (name: string): Promise<ITagModel | null> => {
+    const tag: ITagModel | null = await TagModel.findOne({ name });
+    return tag;
+};
+
 export const createTag = async (options: ITagConfig): Promise<ITagModel> => {
     const newTag: ITagModel = new TagModel({
         name: options.name,
