@@ -9,6 +9,7 @@ import { IImageCallback, IImageUserFriendlyCallback } from "../../database/inter
 import * as Direct from '../../direct/import';
 import Config from "../../markus";
 import { error, ERROR_CODE, handlerError } from "../../util/error";
+import { ICompressZipResult } from "../../util/execute/compress/compress";
 import { RESPONSE } from '../../util/interface';
 
 /**
@@ -86,6 +87,25 @@ export const imageGetBlankBlackHandler = async (req: Request, res: Response): Pr
         res.status(200).sendFile(callback.path);
     } catch (err) {
         res.status(200).sendFile(Config.black404ImagePath);
+    }
+    return;
+};
+
+/**
+ * GET
+ * get image zip file by tag
+ *
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<void>}
+ */
+export const getImageCompressByTag = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const tag: string = req.params.tag;
+        const callback: ICompressZipResult = await Direct.Backup.compressImagesByTag(tag);
+        res.status(200).sendFile(callback.path);
+    } catch (err) {
+        handlerError(res, err);
     }
     return;
 };

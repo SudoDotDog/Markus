@@ -23,7 +23,7 @@ export class CompressMedium {
         mkPathDir(archivePath);
         this._stream = Fs.createWriteStream(archiveFilePath);
         this._result = {
-            path: archivePath,
+            path: archiveFilePath,
             bytes: 0,
             logs: [],
         };

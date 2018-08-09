@@ -13,6 +13,15 @@ import { parseBasicAuthorization } from '../../util/data/auth';
 import { error, ERROR_CODE } from "../../util/error";
 import { RESPONSE } from '../../util/interface';
 
+/**
+ * Middleware
+ * Valid permission by body post
+ *
+ * @param {Request} req
+ * @param {Response} res
+ * @param {NextFunction} next
+ * @returns {Promise<void>}
+ */
 export const validPermissionBodyMiddleware: middleware = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     if (req.body.key) {
         if (req.body.key === 'test') {
@@ -30,6 +39,15 @@ export const validPermissionBodyMiddleware: middleware = async (req: Request, re
     }
 };
 
+/**
+ * Middleware
+ * Valid permission by header
+ *
+ * @param {Request} req
+ * @param {Response} res
+ * @param {NextFunction} next
+ * @returns {Promise<void>}
+ */
 export const validPermissionBasicAuthMiddleware: middleware = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     const authHeader: string | undefined = req.header('authorization');
     const auth: string | null = parseBasicAuthorization(authHeader);

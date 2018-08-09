@@ -63,6 +63,7 @@ app.post('/v/buffer', ...prepares, uploadManager.generateMulterEngine('image'), 
 app.post('/v/base64', ...prepares, uploadManager.generateBase64Engine(), ...permissions, Handler.Avatar.avatarBase64Handler);
 
 // Handler(s) for Image List Get
+app.get('/tag/:tag/compress', ...prepares, Handler.GetImage.getImageCompressByTag);
 app.post('/tag', ...prepares, Handler.GetImage.imageGetListByTagHandler);
 
 // Handler(s) for Image status change

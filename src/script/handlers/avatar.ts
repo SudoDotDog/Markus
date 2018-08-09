@@ -32,7 +32,6 @@ export const avatarGetHandler = async (req: Request, res: Response): Promise<voi
             res.status(200).sendFile(tempFilePath);
         }
     } catch (err) {
-        console.log(err);
         handlerError(res, err);
     }
     return;
