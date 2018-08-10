@@ -21,10 +21,10 @@ make install
 ```bash
 # Use your process daemon controller
 make build
-node dist/script/service.js
+node dist/script/service/service.js
 
 # Run in terminal
-make service
+make
 ```
 
 ## Documents
