@@ -4,3 +4,8 @@
  * @fileoverview Toolbox
  */
 
+import * as MarkusToolbox from './interface';
+
+export {
+    MarkusToolbox,
+};
