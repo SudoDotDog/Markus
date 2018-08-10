@@ -20,6 +20,6 @@ export interface IMarkusTool {
     name: string;
     description: string;
     require: MarkusRequie[];
-    verify: (args: any[]) => boolean;
-    execute: (args: any[]) => void;
+    verify: (...args: any[]) => boolean;
+    execute: (...args: any[]) => Promise<void>;
 }
