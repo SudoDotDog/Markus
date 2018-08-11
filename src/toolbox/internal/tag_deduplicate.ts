@@ -4,12 +4,12 @@
  * @fileoverview Tag Deduplicate
  */
 
-import { IMarkusTool, MarkusController, MarkusDirect, MarkusRequie } from "../interface";
+import { IMarkusResult, IMarkusTool, MarkusController, MarkusDirect, MarkusRequireType } from "../interface";
 
 export default class InternalToolTagDeduplicate implements IMarkusTool {
     public name: string = "Internal-Tag-Duplicate-Remover";
     public description: string = "Remove duplicate tags";
-    public require: MarkusRequie[] = [];
+    public require: MarkusRequireType[] = [];
 
     private _controller: MarkusController;
     private _direct: MarkusDirect;
@@ -26,7 +26,8 @@ export default class InternalToolTagDeduplicate implements IMarkusTool {
         return true;
     }
 
-    public async execute(): Promise<void> {
+    public async execute(): Promise<IMarkusResult[]> {
         await this._controller.Tag.rummageTag('test');
+        return [];
     }
 }
