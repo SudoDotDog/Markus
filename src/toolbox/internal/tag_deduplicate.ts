@@ -4,7 +4,7 @@
  * @fileoverview Tag Deduplicate
  */
 
-import { IMarkusResult, IMarkusTool, MarkusController, MarkusDirect, MarkusRequireType } from "../interface";
+import { IMarkusResult, IMarkusTool, MarkusController, MarkusDirect, MarkusRequireType } from "../toolbox";
 
 export default class InternalToolTagDeduplicate implements IMarkusTool {
     public name: string = "Internal-Tag-Duplicate-Remover";
@@ -14,11 +14,11 @@ export default class InternalToolTagDeduplicate implements IMarkusTool {
     private _controller: MarkusController;
     private _direct: MarkusDirect;
 
-    public controller(controller: MarkusController) {
+    public controller(controller: MarkusController): void {
         this._controller = controller;
     }
 
-    public direct(direct: MarkusDirect) {
+    public direct(direct: MarkusDirect): void {
         this._direct = direct;
     }
 

@@ -9,6 +9,8 @@
 import * as Path from 'path';
 import { middleware } from './interface';
 import * as Handler from './script/handlers/import';
+import * as InternalTools from './toolbox/import';
+import { IMarkusTool } from './toolbox/toolbox';
 
 interface IConfig {
     crossOrigin: string;
@@ -27,6 +29,7 @@ interface IConfig {
         prepares: middleware[];
         permissions: middleware[];
     };
+    tools: IMarkusTool[];
 }
 
 const Config: IConfig = {
@@ -44,8 +47,13 @@ const Config: IConfig = {
     black404ImagePath: Path.resolve('assets/404image_black.png'),
     middleware: {
         prepares: [],
-        permissions: [Handler.Auth.validPermissionBasicAuthMiddleware],
+        permissions: [
+            Handler.Auth.validPermissionBasicAuthMiddleware,
+        ],
     },
+    tools: [
+        InternalTools.InternalToolTagDeduplicate,
+    ],
 };
 
 export default Config;
