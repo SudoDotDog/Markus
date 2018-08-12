@@ -33,10 +33,12 @@ export enum ERROR_CODE {
     PERMISSION_VALID_FAILED = 300,
     IMAGE_NOT_UPLOADED = 301,
 
+    REQUEST_PATTERN_NOT_MATCHED = 401,
     FOUR_O_FOUR_NOT_FOUND = 404,
 
     COMPRESS_TIME_OUT = 467,
     QUEUE_ELEMENT_NOT_EXIST = 481,
+    TARGET_TOOL_NOT_FOUND = 490,
 
     COLOR_INTERNAL_ERROR = 600,
     POINT_INTERNAL_ERROR = 601,
@@ -68,9 +70,11 @@ export const errorList: {
     251: 'Setting is not settled yet',
     300: 'Permission valid failed',
     301: 'Image not found in request',
+    401: 'Request pattern not matched',
     404: 'Request URL not found',
     467: 'Compress time out',
     481: 'Element is not exist in queue',
+    490: 'Target tool is not found',
     600: 'Color internal error',
     601: 'Point internal error',
     810: 'Unique array creation failed',
