@@ -5,13 +5,17 @@
  */
 
 import { Request, Response } from "express";
+import Config from '../../../markus';
 import { IMarkusResult, IMarkusTool, IMarkusToolboxInfo } from "../../../toolbox/toolbox";
 import { getInformationByIMarkusTools } from "../../../toolbox/util/parse";
 import { error, ERROR_CODE, handlerError } from "../../../util/error";
 import { ResponseAgent } from '../util/agent';
 import { installToolbox } from "./install";
 
-const Tools = installToolbox();
+let Tools: IMarkusTool[] = [];
+setImmediate(() => {
+    Tools = installToolbox(Config);
+});
 
 export const markusToolboxExecuteHandler = async (req: Request, res: Response): Promise<void> => {
     try {

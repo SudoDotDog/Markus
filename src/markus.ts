@@ -12,7 +12,7 @@ import * as Handler from './script/handlers/import';
 import * as InternalTools from './toolbox/import';
 import { IMarkusTool } from './toolbox/toolbox';
 
-interface IConfig {
+export interface IConfig {
     crossOrigin: string;
     host: string;
     database: string;
