@@ -14,6 +14,11 @@ export default class InternalToolTagDeduplicate implements IMarkusTool {
     private _controller: MarkusController;
     private _direct: MarkusDirect;
 
+    public constructor() {
+        this._controller = null as any;
+        this._direct = null as any;
+    }
+
     public controller(controller: MarkusController): void {
         this._controller = controller;
     }

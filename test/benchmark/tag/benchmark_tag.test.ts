@@ -36,7 +36,7 @@ describe('test benchmark of tag manager', function (this: Mocha.Suite): void {
     it('multiple running of get tagIds by names will trigger conf sometime', (next: () => void): void => {
         let result: ObjectID[] = [];
         let limit: number = 6;
-        
+
         let count: number = 0;
         const finish = (): void => {
             expect(result).to.be.lengthOf(limit);
@@ -50,7 +50,7 @@ describe('test benchmark of tag manager', function (this: Mocha.Suite): void {
                 }
             });
         }
-    }).timeout(3200);
+    }).timeout(6800);
 
     it('multiple running of get tagIds by names will trigger conf sometime', (next: () => void): void => {
         const tagManager: TagCacheManager = new TagCacheManager();
