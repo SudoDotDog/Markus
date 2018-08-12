@@ -32,6 +32,14 @@ interface IConfig {
     tools: IMarkusTool[];
 }
 
+const Tools: IMarkusTool[] = [
+    new InternalTools.InternalToolTagDeduplicate(),
+];
+const PreparesMiddleware: middleware[] = [
+    Handler.Auth.validPermissionBasicAuthMiddleware,
+];
+const PermissionsMiddleware: middleware[] = [];
+
 const Config: IConfig = {
     crossOrigin: '*',
     host: 'mongodb://localhost',
@@ -46,14 +54,10 @@ const Config: IConfig = {
     white404ImagePath: Path.resolve('assets/404image_white.png'),
     black404ImagePath: Path.resolve('assets/404image_black.png'),
     middleware: {
-        prepares: [],
-        permissions: [
-            Handler.Auth.validPermissionBasicAuthMiddleware,
-        ],
+        prepares: PreparesMiddleware,
+        permissions: PermissionsMiddleware,
     },
-    tools: [
-        InternalTools.InternalToolTagDeduplicate,
-    ],
+    tools: Tools,
 };
 
 export default Config;

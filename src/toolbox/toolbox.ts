@@ -25,8 +25,8 @@ export interface IMarkusResult {
 }
 
 export interface IMarkusTool {
-    controller: (controller: MarkusController) => void;
-    direct: (direct: MarkusDirect) => void;
+    controller?: (controller: MarkusController) => void;
+    direct?: (direct: MarkusDirect) => void;
     name: string;
     description: string;
     require: MarkusRequireType[];
