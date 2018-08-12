@@ -78,6 +78,10 @@ app.post('/empty', ...prepares, Handler.Debug.emptyDatabaseHandler);
 app.get('/', ...prepares, Handler.Markus.MarkusHandler);
 app.get('/auth', ...prepares, ...permissions, Handler.Markus.MarkusHandler);
 
+// Handler(s) for tools
+app.get('/', ...prepares, Handler.Markus.MarkusHandler);
+app.get('/auth', ...prepares, ...permissions, Handler.Markus.MarkusHandler);
+
 // Handler(s) for 404
 app.all('*', ...prepares, Handler.GetImage.fourOFourHandler);
 

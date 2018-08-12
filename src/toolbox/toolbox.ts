@@ -33,3 +33,9 @@ export interface IMarkusTool {
     verify: (...args: any[]) => boolean;
     execute: (...args: any[]) => Promise<IMarkusResult[]>;
 }
+
+export interface IMarkusToolboxInfo {
+    name: string;
+    description: string;
+    require: MarkusRequireType[];
+}
