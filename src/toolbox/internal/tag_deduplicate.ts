@@ -7,7 +7,7 @@
 import { IMarkusResult, IMarkusTool, MarkusController, MarkusDirect, MarkusRequireType } from "../toolbox";
 
 export default class InternalToolTagDeduplicate implements IMarkusTool {
-    public name: string = "Internal-Tag-Duplicate-Remover";
+    public name: string = "@Internal:Tag-Duplicate-Remover";
     public description: string = "Remove duplicate tags";
     public require: MarkusRequireType[] = [];
 

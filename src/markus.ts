@@ -35,9 +35,11 @@ interface IConfig {
 const Tools: IMarkusTool[] = [
     new InternalTools.InternalToolTagDeduplicate(),
 ];
+
 const PreparesMiddleware: middleware[] = [
     Handler.Auth.validPermissionBasicAuthMiddleware,
 ];
+
 const PermissionsMiddleware: middleware[] = [];
 
 const Config: IConfig = {
