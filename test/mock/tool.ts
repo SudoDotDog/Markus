@@ -18,6 +18,9 @@ export class MockMarkusTool implements IMarkusTool {
         this.name = name;
         this.description = description;
         this.require = require;
+
+        this._controller = null as any;
+        this._direct = null as any;
     }
 
     public controller(controller: MarkusController) {
