@@ -42,5 +42,21 @@ export const testTagController = (): void => {
             expect(tag).to.be.not.null;
             return;
         }).timeout(3200);
+
+        it('get tag name with id should return correct result', async (): Promise<void> => {
+            const tag: string = await Controller.Tag.getTagNameByTagId(testTag._id);
+            // tslint:disable-next-line
+            expect(tag).to.be.not.null;
+            expect(tag).to.be.equal(testTag.name);
+            return;
+        }).timeout(3200);
+
+        it('get tag name with id string should return correct result', async (): Promise<void> => {
+            const tag: string = await Controller.Tag.getTagNameByTagIdString(testTag._id);
+            // tslint:disable-next-line
+            expect(tag).to.be.not.null;
+            expect(tag).to.be.equal(testTag.name);
+            return;
+        }).timeout(3200);
     });
 };
