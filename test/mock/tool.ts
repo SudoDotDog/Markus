@@ -14,7 +14,7 @@ export class MockMarkusTool implements IMarkusTool {
     private _controller: MarkusController;
     private _direct: MarkusDirect;
 
-    constructor(name: string, description: string, require: MarkusRequireType[]) {
+    public constructor(name: string, description: string, require: MarkusRequireType[]) {
         this.name = name;
         this.description = description;
         this.require = require;

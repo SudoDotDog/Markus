@@ -5,7 +5,7 @@
  */
 
 import { Request, Response } from "express";
-import Config from '../../../markus';
+import Config, { IConfig } from '../../../markus';
 import { IMarkusResult, IMarkusTool, IMarkusToolboxInfo } from "../../../toolbox/toolbox";
 import { getInformationByIMarkusTools } from "../../../toolbox/util/parse";
 import { error, ERROR_CODE, handlerError } from "../../../util/error";
@@ -13,16 +13,19 @@ import { ResponseAgent } from '../util/agent';
 import { installToolbox } from "./install";
 
 let Tools: IMarkusTool[] = [];
-setImmediate(() => {
+
+export const rebuildTools = () => {
     Tools = installToolbox(Config);
-});
+};
+
+setImmediate(rebuildTools);
 
 export const markusToolboxExecuteHandler = async (req: Request, res: Response): Promise<void> => {
     try {
         const response = new ResponseAgent(res);
         const name: string | undefined = req.body.name;
         const args: any[] = req.body.args;
-        if (!name || !args || !args.length) {
+        if (!name || !args) {
             throw error(ERROR_CODE.REQUEST_PATTERN_NOT_MATCHED);
         }
 

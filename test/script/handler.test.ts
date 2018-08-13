@@ -13,6 +13,7 @@ import { testScriptAvatarHandlers } from './handlers/avatar.test';
 import { testScriptDebugHandlers } from './handlers/debug.test';
 import { testScriptImageHandlers } from './handlers/image.test';
 import { testScriptMarkusHandlers } from './handlers/markus.test';
+import { testScriptToolHandlers } from './handlers/tool/tool.test';
 
 describe('test handlers', function (this: Mocha.Suite): void {
     let db: mongoose.Connection;
@@ -40,6 +41,7 @@ describe('test handlers', function (this: Mocha.Suite): void {
     testScriptAvatarHandlers();
     testScriptMarkusHandlers();
     testScriptImageHandlers();
+    testScriptToolHandlers();
 
     describe('before handler tests', (): void => {
         it('before debug handler test', async (): Promise<void> => {
@@ -49,7 +51,7 @@ describe('test handlers', function (this: Mocha.Suite): void {
             expect(tags.length).to.be.gte(1);
             expect(images.length).to.be.gte(1);
             expect(files.length).to.be.gte(1);
-            
+
             // tslint:disable-next-line
             expect(mongoose.connection.readyState).to.be.equal(1);
             return;
@@ -59,6 +61,7 @@ describe('test handlers', function (this: Mocha.Suite): void {
     testScriptDebugHandlers();
 
     after(function (this: any, next: () => void) {
+        this.timeout(4300);
         if (!mongoose.connection.db) {
             this.skip();
         } else {
