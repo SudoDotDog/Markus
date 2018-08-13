@@ -4,7 +4,7 @@
  * @fileoverview Tag
  */
 
-import { ObjectID, ObjectId } from "bson";
+import { ObjectID } from "bson";
 import * as Controller from '../database/controller/import';
 
 export const getTagStringsNamesMapByTagIds = async (ids: ObjectID[]): Promise<Map<string, string>> => {

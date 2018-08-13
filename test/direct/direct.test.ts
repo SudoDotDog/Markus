@@ -8,6 +8,7 @@ import * as mongoose from 'mongoose';
 import { testAvatarDirect } from './direct/avatar.test';
 import { testBackupDirect } from './direct/backup.test';
 import { testImageDirect } from './direct/image.test';
+import { testTagDirect } from './direct/tag.test';
 
 describe('test directs', function (this: Mocha.Suite): void {
     let db: mongoose.Connection;
@@ -34,6 +35,7 @@ describe('test directs', function (this: Mocha.Suite): void {
     testAvatarDirect();
     testImageDirect();
     testBackupDirect();
+    testTagDirect();
 
     after(function (this: any, next: () => void) {
         if (!mongoose.connection.db) {
