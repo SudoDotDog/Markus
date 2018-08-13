@@ -48,6 +48,8 @@ export const OutputImageIdList = async (req: Request, res: Response): Promise<vo
     try {
         if (Config.isDebug) {
             const images: IImageListResponse[] = await Controller.Image.getImageList();
+            const tagMap: Map<string, string> = await Direct.Tag.getTagStringsNamesMapByTagIds(images.map((image: IImageListResponse) => image.tags))
+
             res.status(200).send({
                 status: RESPONSE.SUCCEED,
                 data: images,

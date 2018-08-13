@@ -81,3 +81,12 @@ export const getTagByName = async (name: string): Promise<ITagModel> => {
         throw error(ERROR_CODE.TAG_NOT_FOUND);
     }
 };
+
+export const getTagNameByTagId = async (id: ObjectID): Promise<string> => {
+    const tag: ITagModel | null = await TagModel.findOne({ _id: id });
+    if (tag) {
+        return tag.name;
+    } else {
+        throw error(ERROR_CODE.TAG_NOT_FOUND);
+    }
+};
