@@ -20,3 +20,17 @@ export const getTagStringsNamesMapByTagIds = async (ids: ObjectID[]): Promise<Ma
 
     return nameMap;
 };
+
+export const getTagStringsNamesMapByTagIdStrings = async (ids: string[]): Promise<Map<string, string>> => {
+    const nameMap: Map<string, string> = new Map<string, string>();
+
+    for (let id of ids) {
+        if (nameMap.has(id)) {
+            continue;
+        }
+        const name: string = await Controller.Tag.getTagNameByTagIdString(id);
+        nameMap.set(id, name);
+    }
+
+    return nameMap;
+};

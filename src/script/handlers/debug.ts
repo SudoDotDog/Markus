@@ -10,6 +10,7 @@ import * as Direct from '../../direct/import';
 import Config from "../../markus";
 import { error, ERROR_CODE, handlerError } from "../../util/error";
 import { RESPONSE } from '../../util/interface';
+import UniqueArray from '../../util/struct/uniqueArray';
 
 /**
  * POST
@@ -48,7 +49,24 @@ export const OutputImageIdList = async (req: Request, res: Response): Promise<vo
     try {
         if (Config.isDebug) {
             const images: IImageListResponse[] = await Controller.Image.getImageList();
-            const tagMap: Map<string, string> = await Direct.Tag.getTagStringsNamesMapByTagIds(images.map((image: IImageListResponse) => image.tags))
+            const tagIds: UniqueArray<string> = new UniqueArray<string>();
+
+            for (let image of images) {
+                tagIds.push(...image.tags);
+            }
+
+            const tagMap: Map<string, string> = await Direct.Tag.getTagStringsNamesMapByTagIdStrings(tagIds.list);
+
+            for (let image of images) {
+                for (let i: number = 0; i < image.tags.length; i++) {
+                    const name: string | undefined = tagMap.get(image.tags[i]);
+                    if (name) {
+                        image.tags[i] = name;
+                    } else {
+                        throw error(ERROR_CODE.INTERNAL_ERROR);
+                    }
+                }
+            }
 
             res.status(200).send({
                 status: RESPONSE.SUCCEED,
