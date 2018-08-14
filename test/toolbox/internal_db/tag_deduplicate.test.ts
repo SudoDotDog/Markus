@@ -71,6 +71,7 @@ export const testTagDeduplicateInternalTool = (): void => {
             (tool as any).controller(Controller);
             (tool as any).direct(Direct);
             const verify: boolean = tool.verify();
+            // tslint:disable-next-line
             expect(verify).to.be.true;
 
             await tool.execute();

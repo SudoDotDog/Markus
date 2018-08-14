@@ -17,6 +17,7 @@ describe('test environment information internal tool', (): void => {
         (tool as any).direct(Direct);
 
         const verified: boolean = tool.verify();
+        // tslint:disable-next-line
         expect(verified).to.be.true;
 
         const result: IMarkusResult[] = await tool.execute();
@@ -26,7 +27,7 @@ describe('test environment information internal tool', (): void => {
                 name: 'CPUS',
                 type: 'STRING',
                 value: 0,
-            }
+            },
         ]);
         return;
     }).timeout(3200);
