@@ -4,7 +4,7 @@
  */
 
 import { expect } from 'chai';
-import { compareError, error, ERROR_CODE } from '../../../src/util/error';
+import { compareError, error, ERROR_CODE } from '../../../src/util/error/error';
 import { commandBuilder, execute } from '../../../src/util/execute/command';
 import { mockChildProcessExec } from '../../mock/mock';
 

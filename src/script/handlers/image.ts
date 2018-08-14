@@ -8,7 +8,7 @@ import { Request, Response } from "express";
 import { IImageCallback, IImageUserFriendlyCallback } from "../../database/interface/image";
 import * as Direct from '../../direct/import';
 import Config from "../../markus";
-import { error, ERROR_CODE, handlerError } from "../../util/error";
+import { error, ERROR_CODE, handlerError } from "../../util/error/error";
 import { ICompressZipResult } from "../../util/execute/compress/compress";
 import { RESPONSE } from '../../util/interface';
 

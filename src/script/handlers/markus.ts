@@ -10,7 +10,7 @@ import { Request, Response } from "express";
 import { IImageCallback } from "../../database/interface/image";
 import { IImageModel } from "../../database/model/image";
 import * as Direct from '../../direct/import';
-import { error, ERROR_CODE, handlerError } from "../../util/error";
+import { error, ERROR_CODE, handlerError } from "../../util/error/error";
 import { RESPONSE } from '../../util/interface';
 import { IFileManager } from "../../util/manager/file/import";
 import { markusVersion } from '../../util/struct/agent';

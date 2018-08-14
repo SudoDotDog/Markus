@@ -6,7 +6,7 @@
 import { expect } from 'chai';
 import * as Controller from '../../../src/database/controller/import';
 import { ITagModel } from '../../../src/database/model/tag';
-import { compareError, error, ERROR_CODE } from '../../../src/util/error';
+import { compareError, error, ERROR_CODE } from '../../../src/util/error/error';
 
 export const testTagController = (): void => {
     describe('test tag controller', (): void => {

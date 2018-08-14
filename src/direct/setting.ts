@@ -6,7 +6,7 @@
 
 import { IInternalSetting } from "../database/interface/setting";
 import { ISettingModel } from "../database/model/setting";
-import { error, ERROR_CODE } from "../util/error";
+import { error, ERROR_CODE } from "../util/error/error";
 
 export const getTargetSettingByAllInternalSettingModels = <Key extends keyof IInternalSetting>(internals: ISettingModel[], setting: Key): IInternalSetting[Key] => {
     for (let internal of internals) {

@@ -5,12 +5,12 @@
  */
 
 import * as OS from 'os';
-import { IMarkusResult, IMarkusTool, MARKUS_REQUIRE_TYPE, MARKUS_RESPONSE_TYPE, MarkusController, MarkusDirect } from "../toolbox";
+import { IMarkusToolResult, IMarkusTool, MARKUS_TOOL_REQUIRE_TYPE, MARKUS_TOOL_RESPONSE_TYPE, MarkusController, MarkusDirect, IMarkusToolEstimate, MARKUS_TOOL_ESTIMATE_TYPE } from "../toolbox";
 
 export default class InternalToolTagDeduplicate implements IMarkusTool {
     public name: string = "@Internal:Environment-Information";
     public description: string = "Return Environment Information";
-    public require: MARKUS_REQUIRE_TYPE[] = [];
+    public require: MARKUS_TOOL_REQUIRE_TYPE[] = [];
 
     private _controller: MarkusController;
     private _direct: MarkusDirect;
@@ -32,10 +32,17 @@ export default class InternalToolTagDeduplicate implements IMarkusTool {
         return true;
     }
 
-    public async execute(): Promise<IMarkusResult[]> {
+    public async estimate(): Promise<IMarkusToolEstimate> {
+        return {
+            time: 0,
+            type: MARKUS_TOOL_ESTIMATE_TYPE.IMMEDIATE,
+        }
+    }
+
+    public async execute(): Promise<IMarkusToolResult[]> {
         const cpus: number = OS.cpus.length;
         return [{
-            type: MARKUS_RESPONSE_TYPE.STRING,
+            type: MARKUS_TOOL_RESPONSE_TYPE.STRING,
             name: 'CPUS',
             value: cpus,
         }];

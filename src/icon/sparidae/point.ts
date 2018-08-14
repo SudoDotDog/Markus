@@ -4,7 +4,7 @@
  * @fileoverview Point Icon Class
  */
 
-import { error, ERROR_CODE } from "../../util/error";
+import { error, ERROR_CODE } from "../../util/error/error";
 
 export interface IPoint {
     x: number;

@@ -9,7 +9,7 @@ import * as Controller from '../../../src/database/controller/import';
 import { IFileModel } from '../../../src/database/model/file';
 import { IImageModel } from '../../../src/database/model/image';
 import { ITagModel } from '../../../src/database/model/tag';
-import { compareError, error, ERROR_CODE } from '../../../src/util/error';
+import { compareError, error, ERROR_CODE } from '../../../src/util/error/error';
 
 export const testImageController = (): void => {
     describe('image controller test', (): void => {

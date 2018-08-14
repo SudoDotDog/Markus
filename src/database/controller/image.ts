@@ -4,7 +4,7 @@
  */
 
 import { ObjectID } from "bson";
-import { error, ERROR_CODE } from "../../util/error";
+import { error, ERROR_CODE } from "../../util/error/error";
 import { imageModelToImageListResponse } from "../../util/image";
 import { IImageConfig, IImageListResponse } from "../interface/image";
 import { IImageModel, ImageModel } from "../model/image";

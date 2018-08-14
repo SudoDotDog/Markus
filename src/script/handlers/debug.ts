@@ -8,7 +8,7 @@ import * as Controller from '../../database/controller/import';
 import { IImageListResponse } from "../../database/interface/image";
 import * as Direct from '../../direct/import';
 import Config from "../../markus";
-import { error, ERROR_CODE, handlerError } from "../../util/error";
+import { error, ERROR_CODE, handlerError } from "../../util/error/error";
 import { RESPONSE } from '../../util/interface';
 import UniqueArray from '../../util/struct/uniqueArray';
 

@@ -4,7 +4,7 @@
  */
 
 import { ObjectID } from "bson";
-import { error, ERROR_CODE } from "../../util/error";
+import { error, ERROR_CODE } from "../../util/error/error";
 import { IFileManager } from "../../util/manager/file/import";
 import { IFileConfig, IFileProperty } from '../interface/file';
 import { FileModel, IFileModel } from "../model/file";

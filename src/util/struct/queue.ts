@@ -4,7 +4,7 @@
  * @fileoverview Queue
  */
 
-import { error, ERROR_CODE } from "../error";
+import { error, ERROR_CODE } from "../error/error";
 
 export default class Queue<K, T> {
     private _limit: number;

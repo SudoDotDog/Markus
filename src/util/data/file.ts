@@ -6,7 +6,7 @@
 import * as Fs from 'fs';
 import * as Path from 'path';
 import { IFileModel } from "../../database/model/file";
-import { error, ERROR_CODE } from "../error";
+import { error, ERROR_CODE } from "../error/error";
 import { uniqueSmall } from '../image';
 import { fileBuilder } from './path';
 

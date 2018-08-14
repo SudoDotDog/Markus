@@ -13,6 +13,31 @@ import { MockMarkusTool } from '../../../mock/tool';
 export const testScriptToolHandlers = (): void => {
     describe('tool handler test', (): void => {
 
+        it('test estimate handler', async (): Promise<void> => {
+            const mock: MockHandler = new MockHandler();
+            const mockTool = new MockMarkusTool('test', 'description', []);
+            const restoreConfig: () => void = mockConfig({
+                tools: [mockTool],
+            });
+            Handlers.Tool.rebuildTools();
+
+            mock.body('name', 'test')
+                .body('args', []);
+            const { request, response } = mock.flush();
+            await Handlers.Tool.markusToolboxEstimateHandler(request, response);
+
+            restoreConfig();
+            Handlers.Tool.rebuildTools();
+
+            const result: IMockHandlerResult = mock.end();
+            // tslint:disable-next-line
+            expect(result).to.be.not.null;
+            expect(result.status).to.be.equal(200);
+            expect(result.body).to.be.keys(['status', 'data']);
+            expect(result.body.data).to.be.keys(['time', 'type']);
+            return;
+        }).timeout(3200);
+
         it('test execute handler', async (): Promise<void> => {
             const mock: MockHandler = new MockHandler();
             const mockTool = new MockMarkusTool('test', 'description', []);

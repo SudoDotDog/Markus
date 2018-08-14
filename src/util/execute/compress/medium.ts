@@ -7,7 +7,7 @@
 import * as Archiver from 'archiver';
 import * as Fs from 'fs';
 import { mkPathDir } from '../../data/file';
-import { error, ERROR_CODE } from '../../error';
+import { error, ERROR_CODE } from '../../error/error';
 import { fixArchivePath, ICompressZipResult } from './compress';
 
 export class CompressMedium {

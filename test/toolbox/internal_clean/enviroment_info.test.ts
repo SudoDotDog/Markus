@@ -7,7 +7,7 @@ import { expect } from 'chai';
 import * as Controller from '../../../src/database/controller/import';
 import * as Direct from '../../../src/direct/import';
 import { EnvironmentInformation } from '../../../src/toolbox/import';
-import { IMarkusResult, IMarkusTool } from '../../../src/toolbox/toolbox';
+import { IMarkusToolResult, IMarkusTool } from '../../../src/toolbox/toolbox';
 
 describe('test environment information internal tool', (): void => {
 
@@ -20,7 +20,7 @@ describe('test environment information internal tool', (): void => {
         // tslint:disable-next-line
         expect(verified).to.be.true;
 
-        const result: IMarkusResult[] = await tool.execute();
+        const result: IMarkusToolResult[] = await tool.execute();
 
         expect(result).to.be.deep.equal([
             {

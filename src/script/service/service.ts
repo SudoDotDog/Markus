@@ -9,7 +9,7 @@ import * as Http from 'http';
 import { cpus } from 'os';
 import * as Path from 'path';
 import Config from '../../markus';
-import { error, ERROR_CODE } from '../../util/error';
+import { error, ERROR_CODE } from '../../util/error/error';
 import app from './app';
 import { logWhenSoftwareStart } from './info';
 

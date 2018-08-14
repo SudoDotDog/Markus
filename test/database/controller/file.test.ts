@@ -6,7 +6,7 @@
 import { expect } from 'chai';
 import * as Controller from '../../../src/database/controller/import';
 import { IFileModel } from '../../../src/database/model/file';
-import { compareError, error, ERROR_CODE } from '../../../src/util/error';
+import { compareError, error, ERROR_CODE } from '../../../src/util/error/error';
 import { IFileManager } from '../../../src/util/manager/file/import';
 import MockManager from '../../mock/manager';
 

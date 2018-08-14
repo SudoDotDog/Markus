@@ -4,7 +4,7 @@
  */
 
 import { ObjectID } from "bson";
-import { error, ERROR_CODE } from "../../util/error";
+import { error, ERROR_CODE } from "../../util/error/error";
 import { ITagConfig } from "../interface/tag";
 import { ITagModel, TagModel } from "../model/tag";
 
@@ -103,6 +103,11 @@ export const getTagNameByTagIdString = async (id: string): Promise<string> => {
 export const getAllTags = async (): Promise<ITagModel[]> => {
     const tags: ITagModel[] = await TagModel.find({});
     return tags;
+};
+
+export const getTagsCount = async (): Promise<number> => {
+    const count: number = await TagModel.count({});
+    return count;
 };
 
 export const Risky_PermanentlyRemoveTag = async (tagId: ObjectID): Promise<void> => {

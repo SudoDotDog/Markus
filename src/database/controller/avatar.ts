@@ -3,7 +3,7 @@
  * @fileoverview Avatar Controller
  */
 
-import { error, ERROR_CODE } from "../../util/error";
+import { error, ERROR_CODE } from "../../util/error/error";
 import { IAvatarConfig } from "../interface/avatar";
 import { AvatarModel, IAvatarModel } from "../model/avatar";
 

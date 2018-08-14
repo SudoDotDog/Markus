@@ -3,7 +3,7 @@
  * @fileoverview Setting Controller
  */
 
-import { error, ERROR_CODE } from "../../util/error";
+import { error, ERROR_CODE } from "../../util/error/error";
 import { IInternalSetting, SETTING_CATEGORY } from "../interface/setting";
 import { ISettingModel, SettingModel } from "../model/setting";
 

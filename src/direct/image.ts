@@ -11,7 +11,7 @@ import { IFileModel } from "../database/model/file";
 import { IImageModel } from "../database/model/image";
 import { ITagModel } from "../database/model/tag";
 import { touchDecrementAndRelease } from "../util/data/file";
-import { error, ERROR_CODE } from "../util/error";
+import { error, ERROR_CODE } from "../util/error/error";
 import { buildImageCallback, buildImageUserFriendlyCallback, mergeArray } from "../util/image";
 import { TagCacheManager } from '../util/manager/cache/tag_manager';
 

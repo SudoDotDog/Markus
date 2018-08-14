@@ -37,13 +37,13 @@ describe('test formula image util functions', (): void => {
         expect(result.substring(0, 1)).to.be.equal('_');
     });
 
-    it('test uniquesmall string gen', (): void => {
+    it('test unique small string gen', (): void => {
         const result = unique(-1);
         expect(result.length).to.be.equal(8);
         expect(result.substring(0, 1)).to.be.equal('_');
     });
 
-    it('test auto uniquesmall string gen', (): void => {
+    it('test auto unique small string gen', (): void => {
         const result = unique();
         expect(result.length).to.be.equal(8);
         expect(result.substring(0, 1)).to.be.equal('_');

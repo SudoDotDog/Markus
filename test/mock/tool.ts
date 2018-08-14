@@ -4,23 +4,17 @@
  * @fileoverview Mock Markus Tool
  */
 
-import {
-    IMarkusResult,
-    IMarkusTool,
-    MARKUS_REQUIRE_TYPE,
-    MarkusController,
-    MarkusDirect,
-} from "../../src/toolbox/toolbox";
+import * as MarkusTool from "../../src/toolbox/toolbox";
 
-export class MockMarkusTool implements IMarkusTool {
+export class MockMarkusTool implements MarkusTool.IMarkusTool {
     public name: string;
     public description: string;
-    public require: MARKUS_REQUIRE_TYPE[];
+    public require: MarkusTool.MARKUS_TOOL_REQUIRE_TYPE[];
 
-    private _controller: MarkusController;
-    private _direct: MarkusDirect;
+    private _controller: MarkusTool.MarkusController;
+    private _direct: MarkusTool.MarkusDirect;
 
-    public constructor(name: string, description: string, require: MARKUS_REQUIRE_TYPE[]) {
+    public constructor(name: string, description: string, require: MarkusTool.MARKUS_TOOL_REQUIRE_TYPE[]) {
         this.name = name;
         this.description = description;
         this.require = require;
@@ -29,11 +23,11 @@ export class MockMarkusTool implements IMarkusTool {
         this._direct = null as any;
     }
 
-    public controller(controller: MarkusController) {
+    public controller(controller: MarkusTool.MarkusController) {
         this._controller = controller;
     }
 
-    public direct(direct: MarkusDirect) {
+    public direct(direct: MarkusTool.MarkusDirect) {
         this._direct = direct;
     }
 
@@ -41,7 +35,14 @@ export class MockMarkusTool implements IMarkusTool {
         return true;
     }
 
-    public async execute(): Promise<IMarkusResult[]> {
+    public async estimate(): Promise<MarkusTool.IMarkusToolEstimate> {
+        return {
+            time: 0,
+            type: MarkusTool.MARKUS_TOOL_ESTIMATE_TYPE.IMMEDIATE,
+        };
+    }
+
+    public async execute(): Promise<MarkusTool.IMarkusToolResult[]> {
         return [];
     }
 }

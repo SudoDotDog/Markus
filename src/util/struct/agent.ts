@@ -6,7 +6,7 @@
 
 import * as Fs from 'fs';
 import * as Path from 'path';
-import { error, ERROR_CODE } from "../error";
+import { error, ERROR_CODE } from "../error/error";
 
 export const markusVersion = (): Promise<string> => {
     return new Promise<string>((resolve: (version: string) => void, reject: (err: Error) => void) => {

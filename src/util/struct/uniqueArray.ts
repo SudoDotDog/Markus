@@ -4,7 +4,7 @@
  * @fileoverview UniqueArray Struct
  */
 
-import { error, ERROR_CODE } from "../error";
+import { error, ERROR_CODE } from "../error/error";
 
 export default class UniqueArray<T> implements Iterable<T> {
     private _Array: T[];

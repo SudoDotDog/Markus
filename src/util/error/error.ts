@@ -1,10 +1,11 @@
 /**
  * @author WMXPY
+ * @description Error Handling
  * @fileoverview Error
  */
 
 import { Response } from "express";
-import { RESPONSE } from "./interface";
+import { RESPONSE } from "../interface";
 
 export enum ERROR_CODE {
     IMAGE_PATH_IS_NOT_ABSOLUTE = 100,
@@ -49,6 +50,8 @@ export enum ERROR_CODE {
     UNKNOWN_ERROR_CODE = 900,
     INTERNAL_ERROR = 901,
     DEFAULT_TEST_ERROR = 902,
+
+    ASSERT_EXIST_ELEMENT_NOT_EXIST = 950,
 }
 
 export const errorList: {
@@ -83,6 +86,7 @@ export const errorList: {
     900: 'Unknown error code',
     901: 'Internal error, report it at github.com/sudo-dog/markus',
     902: 'Default test error',
+    950: 'Assert an element is exist but is not',
 };
 
 /**

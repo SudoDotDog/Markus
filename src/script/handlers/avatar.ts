@@ -9,7 +9,7 @@ import { IFileModel } from "../../database/model/file";
 import * as Direct from '../../direct/import';
 import { Icon } from "../../icon/icon";
 import { fileBuilder } from "../../util/data/path";
-import { error, ERROR_CODE, handlerError } from "../../util/error";
+import { error, ERROR_CODE, handlerError } from "../../util/error/error";
 import { createTempFile } from "../../util/image";
 import { RESPONSE } from "../../util/interface";
 import { IFileManager } from "../../util/manager/file/import";

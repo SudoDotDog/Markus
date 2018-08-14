@@ -10,7 +10,7 @@ import { IFileProperty } from '../database/interface/file';
 import { IAvatarModel } from '../database/model/avatar';
 import { IFileModel } from "../database/model/file";
 import { fileBuilder } from '../util/data/path';
-import { error, ERROR_CODE } from '../util/error';
+import { error, ERROR_CODE } from '../util/error/error';
 import { IFileManager } from '../util/manager/file/import';
 
 export const createOrUpdateAvatar = async (option: IAvatarCreationConfig): Promise<IAvatarCallback> => {

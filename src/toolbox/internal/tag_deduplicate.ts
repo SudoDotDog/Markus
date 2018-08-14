@@ -4,14 +4,14 @@
  * @fileoverview Tag Deduplicate
  */
 
-import { IMarkusResult, IMarkusTool, MarkusController, MarkusDirect, MARKUS_REQUIRE_TYPE } from "../toolbox";
+import { IMarkusToolResult, IMarkusTool, MarkusController, MarkusDirect, MARKUS_TOOL_REQUIRE_TYPE, IMarkusToolEstimate, MARKUS_TOOL_ESTIMATE_TYPE } from "../toolbox";
 import { ITagModel } from "../../database/model/tag";
 import UniqueArray from "../../util/struct/uniqueArray";
 
 export default class InternalToolTagDeduplicate implements IMarkusTool {
     public name: string = "@Internal:Tag-Duplicate-Remover";
     public description: string = "Remove duplicate tags";
-    public require: MARKUS_REQUIRE_TYPE[] = [];
+    public require: MARKUS_TOOL_REQUIRE_TYPE[] = [];
 
     private _controller: MarkusController;
     private _direct: MarkusDirect;
@@ -33,7 +33,16 @@ export default class InternalToolTagDeduplicate implements IMarkusTool {
         return true;
     }
 
-    public async execute(): Promise<IMarkusResult[]> {
+    public async estimate(): Promise<IMarkusToolEstimate> {
+        const count: number = await this._controller.Tag.getTagsCount();
+        const time = Math.round(count / 10);
+        return {
+            time,
+            type: MARKUS_TOOL_ESTIMATE_TYPE.TIME,
+        };
+    }
+
+    public async execute(): Promise<IMarkusToolResult[]> {
         const tags: ITagModel[] = await this._controller.Tag.getAllTags();
         const tagArr: UniqueArray<ITagModel> = new UniqueArray<ITagModel>();
 
