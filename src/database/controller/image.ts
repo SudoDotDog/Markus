@@ -73,3 +73,35 @@ export const getAllActiveAndInactiveImagesByTag = async (tag: ObjectID): Promise
 
     return results;
 };
+
+export const Risky_UpdateAllImageWithOldTagToANewTag = async (oldTag: ObjectID, newTag: ObjectID): Promise<void> => {
+    const results: IImageModel[] = await ImageModel.find({
+        tags: oldTag,
+    });
+
+    for (let image of results) {
+        for (let i: number = 0; i < image.tags.length; i++) {
+            if (image.tags[i].equals(newTag)) {
+                throw error(ERROR_CODE.IMAGE_HAVE_BOTH_DUPLICATE_TAGS);
+            }
+        }
+        let completed: boolean = false;
+
+        for (let i: number = 0; i < image.tags.length; i++) {
+            if (image.tags[i].equals(oldTag)) {
+                const newTags = [...image.tags];
+                newTags[i] = newTag;
+                image.tags = newTags;
+                completed = true;
+            }
+        }
+
+        if (!completed) {
+            throw error(ERROR_CODE.INTERNAL_ERROR);
+        }
+
+        await image.save();
+    }
+    
+    return;
+};

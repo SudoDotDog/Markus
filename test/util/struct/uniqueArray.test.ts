@@ -128,6 +128,23 @@ describe('test unique array data structure', (): void => {
         expect(array.list).to.be.deep.equal(cloned.list);
     });
 
+    it('find should return correct element if matched', (): void => {
+        const array: UniqueArray<number> = new UniqueArray<number>(1, 5, 3, 2, 4);
+        const result: number | null = array.find((element: number) => {
+            return element === 3;
+        });
+        expect(result).to.be.equal(3);
+    });
+
+    it('find should return null if no element is matched', (): void => {
+        const array: UniqueArray<number> = new UniqueArray<number>(1, 5, 3, 2, 4);
+        const result: number | null = array.find((element: number) => {
+            return element === 7;
+        });
+        // tslint:disable-next-line
+        expect(result).to.be.null;
+    });
+
     it('uniqueArray should be iterable', (): void => {
         const array: UniqueArray<number> = getInitUniqueArray();
         const temp: number[] = [];

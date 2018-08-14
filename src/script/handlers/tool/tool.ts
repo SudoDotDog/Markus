@@ -22,7 +22,7 @@ setImmediate(rebuildTools);
 
 export const markusToolboxExecuteHandler = async (req: Request, res: Response): Promise<void> => {
     try {
-        const response = new ResponseAgent(res);
+        const response: ResponseAgent = new ResponseAgent(res);
         const name: string | undefined = req.body.name;
         const args: any[] = req.body.args;
         if (!name || !args) {
@@ -57,7 +57,7 @@ export const markusToolboxExecuteHandler = async (req: Request, res: Response): 
 
 export const markusToolboxListHandler = async (req: Request, res: Response): Promise<void> => {
     try {
-        const response = new ResponseAgent(res);
+        const response: ResponseAgent = new ResponseAgent(res);
         const info: IMarkusToolboxInfo[] = getInformationByIMarkusTools(Tools);
         response.add('tools', info);
         response.send();

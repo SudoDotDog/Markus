@@ -17,6 +17,7 @@ export enum ERROR_CODE {
     IMAGE_GET_LIST_FAILED = 202,
     IMAGE_ID_NOT_VALID = 203,
     IMAGE_UNLINK_FAILED = 204,
+    IMAGE_HAVE_BOTH_DUPLICATE_TAGS = 2091,
 
     NO_IMAGE_UNDER_TARGET_TAG = 210,
     TAG_NOT_FOUND = 211,
@@ -61,6 +62,7 @@ export const errorList: {
     202: 'Image list getting failed',
     203: 'Given ID not a valid imageId',
     204: 'Image unlink failed',
+    2091: 'Image have both duplicated tags',
     210: 'No image under target tag name',
     211: 'Tag not found',
     220: 'Image not found',

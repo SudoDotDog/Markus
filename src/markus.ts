@@ -34,6 +34,7 @@ export interface IConfig {
 
 const Tools: IMarkusTool[] = [
     new InternalTools.InternalToolTagDeduplicate(),
+    new InternalTools.EnvironmentInformation(),
 ];
 
 const PreparesMiddleware: middleware[] = [

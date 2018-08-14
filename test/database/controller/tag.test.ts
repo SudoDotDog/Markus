@@ -6,6 +6,7 @@
 import { expect } from 'chai';
 import * as Controller from '../../../src/database/controller/import';
 import { ITagModel } from '../../../src/database/model/tag';
+import { compareError, error, ERROR_CODE } from '../../../src/util/error';
 
 export const testTagController = (): void => {
     describe('test tag controller', (): void => {
@@ -56,6 +57,19 @@ export const testTagController = (): void => {
             // tslint:disable-next-line
             expect(tag).to.be.not.null;
             expect(tag).to.be.equal(testTag.name);
+            return;
+        }).timeout(3200);
+
+        it('test risky remove tag', async (): Promise<void> => {
+            await Controller.Tag.Risky_PermanentlyRemoveTag(testTag._id);
+            let errorResult: boolean = false;
+            try {
+                await Controller.Tag.getTagByName(testTag.name);
+            } catch (err) {
+                errorResult = compareError(error(ERROR_CODE.TAG_NOT_FOUND), err);
+            }
+            // tslint:disable-next-line
+            expect(errorResult).to.be.true;
             return;
         }).timeout(3200);
     });

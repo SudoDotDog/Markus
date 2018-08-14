@@ -23,7 +23,22 @@ host:
 	mongod --dbpath $(dbPath)
 
 help:
-	echo "make: run application"
+	@echo ""
+	@echo " ┌────────────── Markus Makefile Helps ───────────────────────────────────────────────┐ "
+	@echo " ┝━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┥ "
+	@echo " │ Command      │                                                                     │ "
+	@echo " ┝━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┥ "
+	@echo " │ make         │ Run application                                                     │ "
+	@echo " │ make service │ Run application without build                                       │ "
+	@echo " │ make run     │ Run application without build                                       │ "
+	@echo " │ make dev     │ Build application with development typescript settings              │ "
+	@echo " │ make build   │ Clean up and build application with production typescript settings  │ "
+	@echo " │ make ubuild  │ Build application with development typescript settings              │ "
+	@echo " │ make host    │ Start mongodb service with default dbPath                           │ "
+	@echo " │ make clean   │ Clean up                                                            │ "
+	@echo " │ make install │ Install dependences                                                 │ "
+	@echo " └──────────────┴─────────────────────────────────────────────────────────────────────┘ "
+	@echo ""
 
 clean:
 ifeq ($(OS), Windows_NT)

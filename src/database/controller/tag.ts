@@ -99,3 +99,15 @@ export const getTagNameByTagIdString = async (id: string): Promise<string> => {
         throw error(ERROR_CODE.TAG_NOT_FOUND);
     }
 };
+
+export const getAllTags = async (): Promise<ITagModel[]> => {
+    const tags: ITagModel[] = await TagModel.find({});
+    return tags;
+};
+
+export const Risky_PermanentlyRemoveTag = async (tagId: ObjectID): Promise<void> => {
+    await TagModel.remove({
+        _id: tagId,
+    });
+    return;
+};

@@ -44,6 +44,15 @@ export default class UniqueArray<T> implements Iterable<T> {
         return this._Array[this.length - 1];
     }
 
+    public find(condition: (element: T) => boolean): T | null {
+        for (let i of this._Array) {
+            if (condition(i)) {
+                return i;
+            }
+        }
+        return null;
+    }
+
     public get(index: number) {
         return this._Array[index];
     }
