@@ -14,7 +14,7 @@ install:
  - npm install codecov nyc -g
 
 before_script:
-  - sleep 3
+ - sleep 1
 
 script:
  - nyc mocha
