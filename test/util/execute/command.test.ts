@@ -67,19 +67,12 @@ describe('test command utils', (): void => {
 
     it('execute with std error should reject with std error', async (): Promise<void> => {
         const restoreExec = mockChildProcessExec(false, true);
-        let resultError: Error | null = null;
-        let result: string = '';
-        try {
-            result = await execute('test');
-        } catch (err) {
-            resultError = err;
-        }
 
+        const result = await execute('test');
         const commandSet = restoreExec();
         expect(commandSet).to.be.lengthOf(1);
-        expect(result).to.be.equal('');
-
-        expect(resultError).to.be.equal('902: Default test error');
+        expect(result).to.be.equal('902: Default test error');
+        return;
         return;
     });
 });

@@ -28,4 +28,18 @@ describe('test assert error util functions', (): void => {
         // tslint:disable-next-line
         expect(result).to.be.true;
     });
+
+    it('assert element to be a array should work fine', (): void => {
+        const result: boolean = assert([]).to.be.array();
+        // tslint:disable-next-line
+        expect(result).to.be.true;
+    });
+
+    it('assert element to be a array should work fine, when false', (): void => {
+        const errText: string = error(ERROR_CODE.ASSERT_TYPE_NOT_MATCHED).message;
+        const exec: () => void = () => {
+            assert({ a: 1 }).to.be.array();
+        };
+        expect(exec).to.be.throw(errText);
+    });
 });

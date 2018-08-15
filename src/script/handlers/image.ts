@@ -91,6 +91,7 @@ export const imageGetBlankBlackHandler = async (req: Request, res: Response): Pr
     return;
 };
 
+/* istanbul ignore next */
 /**
  * GET
  * get image zip file by tag

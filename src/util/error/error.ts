@@ -52,6 +52,7 @@ export enum ERROR_CODE {
     DEFAULT_TEST_ERROR = 902,
 
     ASSERT_EXIST_ELEMENT_NOT_EXIST = 950,
+    ASSERT_TYPE_NOT_MATCHED = 951,
 }
 
 export const errorList: {
@@ -87,6 +88,7 @@ export const errorList: {
     901: 'Internal error, report it at github.com/sudo-dog/markus',
     902: 'Default test error',
     950: 'Assert an element is exist but is not',
+    951: 'Type of target element is not matched',
 };
 
 /**

@@ -30,16 +30,14 @@ export const commandBuilder = (elements: ExecCommandElement[]) => {
 };
 
 export const execute = (command: string): Promise<string> => {
-
     return new Promise<string>((resolve: (result: string) => void, reject: (reason?: any) => void) => {
-
         (ChildProcess as any).exec(command, (err: Error, stdout: string, stderr: string) => {
             if (err) {
                 reject(err);
                 return;
             }
             if (stderr) {
-                reject(stderr);
+                resolve(stderr);
                 return;
             }
 

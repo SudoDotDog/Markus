@@ -5,12 +5,19 @@
 
 import { commandBuilder, execute } from './command';
 
+export const fixHostForMongoBackup = (host: string): string => {
+    if(host === 'mongodb://localhost'){
+        return 'localhost';
+    }
+    return host;
+}
+
 export const databaseBackup = async (host: string, name: string, output: string): Promise<string> => {
     const command = commandBuilder([
         'mongodump',
         {
             name: '-h',
-            value: host,
+            value: fixHostForMongoBackup(host),
         },
         {
             name: '-d',
@@ -31,7 +38,7 @@ export const databaseRestore = async (host: string, name: string, from: string):
         'mongorestore',
         {
             name: '-h',
-            value: host,
+            value: fixHostForMongoBackup(host),
         },
         {
             name: '-d',

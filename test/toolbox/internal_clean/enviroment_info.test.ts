@@ -6,13 +6,13 @@
 import { expect } from 'chai';
 import * as Controller from '../../../src/database/controller/import';
 import * as Direct from '../../../src/direct/import';
-import { EnvironmentInformation } from '../../../src/toolbox/import';
+import { InternalEnvironmentInformation } from '../../../src/toolbox/import';
 import { IMarkusToolResult, IMarkusTool } from '../../../src/toolbox/toolbox';
 
 describe('test environment information internal tool', (): void => {
 
     it('execute tool should return displayable environment information', async (): Promise<void> => {
-        const tool: IMarkusTool = new EnvironmentInformation();
+        const tool: IMarkusTool = new InternalEnvironmentInformation();
         (tool as any).controller(Controller);
         (tool as any).direct(Direct);
 

@@ -5,7 +5,7 @@
 
 import * as ChildProcess from 'child_process';
 import * as fs from 'fs';
-import Config from '../../src/markus';
+import Config, { IConfig } from '../../src/markus';
 import { error, ERROR_CODE } from '../../src/util/error/error';
 
 export class MockExpress {
@@ -77,10 +77,12 @@ export const mockReadStream = (): () => IMockReadStreamResult => {
     };
 };
 
-export const mockConfig = (config: any): () => void => {
+export const mockConfig = (config: {
+    [key in keyof IConfig]?: any;
+}): () => void => {
     const configTemp = Config;
 
-    (Config as any) = config;
+    (Config as any) = {...configTemp, ...config};
     return () => {
         (Config as any) = configTemp;
     };

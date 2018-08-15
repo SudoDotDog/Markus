@@ -5,9 +5,11 @@
  */
 
 import InternalToolTagDeduplicate from './internal/tag_deduplicate';
-import EnvironmentInformation from './internal/environment_info';
+import InternalEnvironmentInformation from './internal/environment_info';
+import InternalFullBackup from './internal/full_backup';
 
 export {
+    InternalFullBackup,
     InternalToolTagDeduplicate,
-    EnvironmentInformation,
+    InternalEnvironmentInformation,
 };

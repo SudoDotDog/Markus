@@ -10,16 +10,31 @@ import { IFileModel } from '../database/model/file';
 import { IImageModel } from '../database/model/image';
 import { ITagModel } from '../database/model/tag';
 import { mkPathDir } from './data/file';
-import { fileBuilder, pathBuilder } from './data/path';
+import { fileBuilder, tempPath } from './data/path';
 
 export const createTempFile = (content: string, type: string): string => {
-    const tempPath: string = pathBuilder('temp');
-    mkPathDir(tempPath);
+    const tempFilePath: string = tempPath();
+    mkPathDir(tempFilePath);
 
     const filePath: string = fileBuilder('temp', unique(11) + '.' + type);
     Fs.writeFileSync(filePath, content);
 
     return filePath;
+};
+
+export const determineIsImageByExtName = (extName: string): boolean => {
+    if (extName.substring(0, 1) === '.') {
+        extName = extName.substring(1, extName.length);
+    }
+
+    if (extName === 'jpg'
+        || extName === 'jpeg'
+        || extName === 'png'
+        || extName === 'gif'
+        || extName === 'webp') {
+        return true;
+    }
+    return false;
 };
 
 export const mergeArray: <T>(original: T[], target: T[]) => T[] = <T>(original: T[], target: T[]) => {

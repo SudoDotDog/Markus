@@ -9,6 +9,7 @@ import * as Handlers from '../../../../src/script/handlers/import';
 import { IMockHandlerResult, MockHandler } from '../../../mock/express';
 import { mockConfig } from '../../../mock/mock';
 import { MockMarkusTool } from '../../../mock/tool';
+import * as Path from 'path';
 
 export const testScriptToolHandlers = (): void => {
     describe('tool handler test', (): void => {
@@ -18,6 +19,7 @@ export const testScriptToolHandlers = (): void => {
             const mockTool = new MockMarkusTool('test', 'description', []);
             const restoreConfig: () => void = mockConfig({
                 tools: [mockTool],
+                tempPath: Path.resolve('./temp'),
             });
             Handlers.Tool.rebuildTools();
 
@@ -43,6 +45,7 @@ export const testScriptToolHandlers = (): void => {
             const mockTool = new MockMarkusTool('test', 'description', []);
             const restoreConfig: () => void = mockConfig({
                 tools: [mockTool],
+                tempPath: Path.resolve('./temp'),
             });
             Handlers.Tool.rebuildTools();
 
@@ -68,6 +71,7 @@ export const testScriptToolHandlers = (): void => {
             const mockTool = new MockMarkusTool('test', 'description', []);
             const restoreConfig: () => void = mockConfig({
                 tools: [mockTool],
+                tempPath: Path.resolve('./temp'),
             });
             Handlers.Tool.rebuildTools();
 

@@ -52,6 +52,7 @@ export const getActiveFileById = async (id: ObjectID): Promise<IFileModel> => {
 
 export const createFile = async (option: IFileConfig): Promise<IFileModel> => {
     const newFile: IFileModel = new FileModel({
+        direct: option.direct || false,
         encoding: option.encoding,
         hash: option.hash,
         mime: option.mime,
@@ -67,6 +68,7 @@ export const createFile = async (option: IFileConfig): Promise<IFileModel> => {
 
 export const createFileWithReference = async (option: IFileConfig): Promise<IFileModel> => {
     const newFile: IFileModel = new FileModel({
+        direct: option.direct || false,
         encoding: option.encoding,
         hash: option.hash,
         mime: option.mime,

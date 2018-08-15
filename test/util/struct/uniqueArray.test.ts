@@ -6,12 +6,28 @@
 
 import { expect } from 'chai';
 import UniqueArray from '../../../src/util/struct/uniqueArray';
+import { compareError, error, ERROR_CODE } from '../../../src/util/error/error';
 
 describe('test unique array data structure', (): void => {
 
     const getInitUniqueArray: () => UniqueArray<number> = (): UniqueArray<number> => {
         return new UniqueArray<number>(1, 2, 3, 4, 5, 6, 7, 8, 9);
     };
+
+    it('create array should be failed if format is not right', (): void => {
+        let errorResult: boolean = false;
+        try {
+            new UniqueArray<number>([1, 2], 1, 2);
+        } catch (err) {
+            errorResult = compareError(error(ERROR_CODE.UNIQUE_ARRAY_CREATION_FAILED), err);
+        }
+        expect(errorResult).to.be.true;
+    });
+
+    it('create array with unique array and something wired', (): void => {
+        const newArray = new UniqueArray<number>(new UniqueArray<number>(1,2,3));
+        expect(newArray).to.be.lengthOf(3);
+    });
 
     it('initial unique array should give correct result', (): void => {
         const array0: UniqueArray<number> = new UniqueArray<number>();
@@ -105,6 +121,20 @@ describe('test unique array data structure', (): void => {
         const spliceResult: UniqueArray<number> = array.splice(2, 1);
         expect(spliceResult.list).to.be.deep.equal([3]);
         expect(array.list).to.be.deep.equal([1, 2, 4, 5, 6, 7, 8, 9]);
+    });
+
+    it('splice should have same behavior as normal array with adding insert array', (): void => {
+        const array: UniqueArray<number> = getInitUniqueArray();
+        const spliceResult: UniqueArray<number> = array.splice(2, 1, [11]);
+        expect(spliceResult.list).to.be.deep.equal([3]);
+        expect(array.list).to.be.deep.equal([1, 2, 11, 4, 5, 6, 7, 8, 9]);
+    });
+
+    it('splice should have same behavior as normal array with adding insert unique array', (): void => {
+        const array: UniqueArray<number> = getInitUniqueArray();
+        const spliceResult: UniqueArray<number> = array.splice(2, 1, new UniqueArray<number>(11));
+        expect(spliceResult.list).to.be.deep.equal([3]);
+        expect(array.list).to.be.deep.equal([1, 2, 11, 4, 5, 6, 7, 8, 9]);
     });
 
     it('remove should have remove target element from array', (): void => {

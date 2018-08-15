@@ -17,6 +17,7 @@ export interface IConfig {
     host: string;
     database: string;
     imagePath: string;
+    tempPath: string;
     imagePFolder: number;
     isDebug: boolean;
     maxThread: number; // keep
@@ -34,20 +35,21 @@ export interface IConfig {
 
 const Tools: IMarkusTool[] = [
     new InternalTools.InternalToolTagDeduplicate(),
-    new InternalTools.EnvironmentInformation(),
+    new InternalTools.InternalEnvironmentInformation(),
+    new InternalTools.InternalFullBackup(),
 ];
 
 const PreparesMiddleware: middleware[] = [
     Handler.Auth.validPermissionBasicAuthMiddleware,
 ];
-
 const PermissionsMiddleware: middleware[] = [];
 
 const Config: IConfig = {
     crossOrigin: '*',
     host: 'mongodb://localhost',
     database: 'markus-test-2',
-    imagePath: 'F://path',
+    imagePath: 'F://path/image',
+    tempPath: 'F://path/temp',
     imagePFolder: 5,
     isDebug: true,
     maxThread: 4,

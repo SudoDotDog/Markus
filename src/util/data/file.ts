@@ -47,3 +47,23 @@ export const mkPathDir = (path: string) => {
         Fs.mkdirSync(path);
     }
 };
+
+export const rmRFFolderSync = (targetFolder: string): string[] => {
+    const folder = Path.resolve(targetFolder);
+    const result: string[] = [];
+    const recursiveRemove = (path: string): void => {
+        if (Fs.statSync(path).isDirectory()) {
+            const fileOrDirectory: string[] = Fs.readdirSync(path);
+            for (let fod of fileOrDirectory) {
+                recursiveRemove(Path.join(path, fod));
+            }
+            Fs.rmdirSync(path);
+        } else {
+            result.push(path);
+            Fs.unlinkSync(path);
+        }
+    };
+
+    recursiveRemove(folder);
+    return result;
+};

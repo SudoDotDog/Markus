@@ -60,6 +60,7 @@ export const testBackupDirect = (): void => {
         it('compress image by tag should give correct information', async (): Promise<void> => {
             const restoreConfig = mockConfig({
                 imagePath: Path.resolve('./'),
+                tempPath: Path.resolve('./temp'),
             });
             const result = await compressImagesByTag(testTag.name);
             restoreConfig();

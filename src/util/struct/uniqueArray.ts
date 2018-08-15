@@ -17,14 +17,12 @@ export default class UniqueArray<T> implements Iterable<T> {
                 throw error(ERROR_CODE.UNIQUE_ARRAY_CREATION_FAILED);
             }
             this._Array = init;
-        } else if (init) {
+        } else {
             if (Boolean((init as any).list)) {
                 this._Array = (init as UniqueArray<T>).list;
             } else {
                 this._Array = [(init as T), ...rest];
             }
-        } else {
-            this._Array = [];
         }
     }
 

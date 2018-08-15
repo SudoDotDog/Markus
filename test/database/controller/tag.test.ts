@@ -60,6 +60,20 @@ export const testTagController = (): void => {
             return;
         }).timeout(3200);
 
+        it('get tag map by names should return correct result', async (): Promise<void> => {
+            const result: Map<string, ITagModel> | undefined = await Controller.Tag.getTagsMapByNames([testTag.name]);
+            expect(result).to.be.exist;
+            expect((result as any).size).to.be.equal(1);
+            expect((result as any).get(testTag.name)._id.toString()).to.be.equal(testTag._id.toString());
+            return;
+        }).timeout(3200);
+
+        it('get tags count should return the count of tag database', async (): Promise<void> => {
+            const result: number = await Controller.Tag.getTagsCount();
+            expect(result).to.be.gte(1);
+            return;
+        }).timeout(3200);
+
         it('test risky remove tag', async (): Promise<void> => {
             await Controller.Tag.Risky_PermanentlyRemoveTag(testTag._id);
             let errorResult: boolean = false;

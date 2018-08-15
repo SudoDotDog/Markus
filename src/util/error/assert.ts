@@ -34,15 +34,30 @@ class Assert<T> {
     }
 
     public exist(code: ERROR_CODE = ERROR_CODE.ASSERT_EXIST_ELEMENT_NOT_EXIST): boolean {
+        const result: boolean = this.eachElement((value: T) => {
+            return value != null && value != undefined;
+        });
+        if (!result) {
+            throw error(code);
+        }
+        return true;
+    }
+
+    public array(code: ERROR_CODE = ERROR_CODE.ASSERT_TYPE_NOT_MATCHED): boolean {
+        const result: boolean = this.eachElement((value: T) => {
+            return value instanceof Array;
+        });
+        if (!result) {
+            throw error(code);
+        }
+        return true;
+    }
+
+    protected eachElement(func: (value: T) => boolean) {
         for (let element of this._elements) {
-            if (this._reverse) {
-                if (element != null && element != undefined) {
-                    throw error(code);
-                }
-            } else {
-                if (element == null || element == undefined) {
-                    throw error(code);
-                }
+            const result: boolean = func(element);
+            if(this._reverse === result){
+                return false;
             }
         }
         return true;

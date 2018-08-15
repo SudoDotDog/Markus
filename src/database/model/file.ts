@@ -11,6 +11,10 @@ export const FileSchema: Schema = new Schema({
         type: Boolean,
         default: true,
     },
+    direct: {
+        type: Boolean,
+        default: false,
+    },
     encoding: {
         type: String,
         required: true,

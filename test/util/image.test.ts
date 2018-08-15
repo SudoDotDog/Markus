@@ -4,7 +4,7 @@
  */
 
 import { expect } from 'chai';
-import { combineTagsArray, mergeArray, unique } from '../../src/util/image';
+import { combineTagsArray, mergeArray, unique, determineIsImageByExtName } from '../../src/util/image';
 
 describe('test formula image util functions', (): void => {
     it('merge array function shall return deduplicate array', (): void => {
@@ -47,5 +47,24 @@ describe('test formula image util functions', (): void => {
         const result = unique();
         expect(result.length).to.be.equal(8);
         expect(result.substring(0, 1)).to.be.equal('_');
+    });
+
+    it('determine is image by ext name of file', (): void => {
+        // tslint:disable-next-line
+        expect(determineIsImageByExtName('jpg')).to.be.true;
+        // tslint:disable-next-line
+        expect(determineIsImageByExtName('.jpeg')).to.be.true;
+        // tslint:disable-next-line
+        expect(determineIsImageByExtName('gif')).to.be.true;
+        // tslint:disable-next-line
+        expect(determineIsImageByExtName('png')).to.be.true;
+        // tslint:disable-next-line
+        expect(determineIsImageByExtName('.webp')).to.be.true;
+        // tslint:disable-next-line
+        expect(determineIsImageByExtName('.gif')).to.be.true;
+        // tslint:disable-next-line
+        expect(determineIsImageByExtName('.pdf')).to.be.false;
+        // tslint:disable-next-line
+        expect(determineIsImageByExtName('ppt')).to.be.false;
     });
 });

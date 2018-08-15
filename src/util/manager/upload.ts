@@ -33,6 +33,7 @@ export default class UploadManager {
     }
 
     public generateBufferEngine(): middleware {
+        /* istanbul ignore next */
         const bufferToManagerMiddleware: middleware = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
             const file: Express.Multer.File = req.file;
             if (file) {
@@ -47,6 +48,7 @@ export default class UploadManager {
     }
 
     public generateBase64Engine(): middleware {
+        /* istanbul ignore next */
         const base64ToManagerMiddleware: middleware = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
             const base64: string = req.body.image;
             if (base64) {

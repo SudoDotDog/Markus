@@ -9,13 +9,13 @@ import { IFileModel } from '../database/model/file';
 import Config from '../markus';
 import { appropriateCurrentDateName } from '../util/data/date';
 import { fixConflictName } from '../util/data/file';
-import { fileBuilder, pathBuilder } from '../util/data/path';
+import { fileBuilder, tempPath } from '../util/data/path';
 import { ICompressZipResult, zipFolder } from '../util/execute/compress/compress';
 import { CompressMedium } from '../util/execute/compress/medium';
 import { databaseBackup, databaseRestore } from "../util/execute/disToleran";
 
-export const createBackupInstance = async (to: string): Promise<string> => {
-    const result: string = await databaseBackup(Config.host, Config.database, to);
+export const createBackupInstance = async (to: string, database?: string): Promise<string> => {
+    const result: string = await databaseBackup(Config.host, database || Config.database, to);
     return result;
 };
 
@@ -25,8 +25,8 @@ export const restoreBackupInstance = async (from: string): Promise<string> => {
 };
 
 export const compressImagesByTag = async (tag: string): Promise<ICompressZipResult> => {
-    const tempLocation: string = pathBuilder('temp');
-    const medium: CompressMedium = new CompressMedium(tempLocation, appropriateCurrentDateName('tag' + tag));
+    const tempLocation: string = tempPath();
+    const medium: CompressMedium = new CompressMedium(tempLocation, appropriateCurrentDateName('Markus-Tag-' + tag));
     const files: IFileModel[] = await Mix.Tag.getAllFilesByTag(tag);
     const originalList: string[] = [];
     for (let file of files) {
@@ -43,7 +43,7 @@ export const compressImagesByTag = async (tag: string): Promise<ICompressZipResu
 
 /* istanbul ignore next */
 export const createImageBackupCompressedArchiveFile = async (): Promise<ICompressZipResult> => {
-    const tempLocation: string = pathBuilder('temp');
-    const result: ICompressZipResult = await zipFolder(Config.imagePath, tempLocation, appropriateCurrentDateName('ImageBackUp'));
+    const tempLocation: string = tempPath();
+    const result: ICompressZipResult = await zipFolder(Config.imagePath, tempLocation, appropriateCurrentDateName('Markus-Image-Backup'));
     return result;
 };
