@@ -62,6 +62,7 @@ export const testTagController = (): void => {
 
         it('get tag map by names should return correct result', async (): Promise<void> => {
             const result: Map<string, ITagModel> | undefined = await Controller.Tag.getTagsMapByNames([testTag.name]);
+            // tslint:disable-next-line
             expect(result).to.be.exist;
             expect((result as any).size).to.be.equal(1);
             expect((result as any).get(testTag.name)._id.toString()).to.be.equal(testTag._id.toString());

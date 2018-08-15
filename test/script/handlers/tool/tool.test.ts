@@ -5,11 +5,11 @@
  */
 
 import { expect } from 'chai';
+import * as Path from 'path';
 import * as Handlers from '../../../../src/script/handlers/import';
 import { IMockHandlerResult, MockHandler } from '../../../mock/express';
 import { mockConfig } from '../../../mock/mock';
 import { MockMarkusTool } from '../../../mock/tool';
-import * as Path from 'path';
 
 export const testScriptToolHandlers = (): void => {
     describe('tool handler test', (): void => {

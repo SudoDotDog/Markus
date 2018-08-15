@@ -10,10 +10,9 @@ import { IImageModel } from '../../../src/database/model/image';
 import { ITagModel } from '../../../src/database/model/tag';
 import * as Direct from '../../../src/direct/import';
 import { InternalFullBackup } from '../../../src/toolbox/import';
-import { IMarkusTool, IMarkusToolResult, MARKUS_TOOL_RESPONSE_TYPE } from '../../../src/toolbox/toolbox';
-import { mockConfig } from '../../mock/mock';
-import * as Fs from 'fs';
+import { IMarkusTool, IMarkusToolResult } from '../../../src/toolbox/toolbox';
 import { rmRFFolderSync } from '../../../src/util/data/file';
+import { mockConfig } from '../../mock/mock';
 
 export const testFullBackupInternalTool = (): void => {
     describe('full backup internal tool', (): void => {
@@ -81,7 +80,9 @@ export const testFullBackupInternalTool = (): void => {
             const result: IMarkusToolResult[] = await tool.execute('markus-unit-test');
             restoreConfig();
             expect(result).to.be.lengthOf(3);
+            // tslint:disable-next-line
             expect(result[1].value).to.be.not.null;
+            // tslint:disable-next-line
             expect(result[2].value).to.be.not.null;
             return;
         }).timeout(8900);
