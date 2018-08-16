@@ -4,7 +4,7 @@
  * @fileoverview Assert
  */
 
-import { ERROR_CODE, error } from "./error";
+import { error, ERROR_CODE } from "./error";
 
 class Assert<T> {
     private _elements: T[];
@@ -35,7 +35,7 @@ class Assert<T> {
 
     public exist(code: ERROR_CODE = ERROR_CODE.ASSERT_EXIST_ELEMENT_NOT_EXIST): boolean {
         const result: boolean = this.eachElement((value: T) => {
-            return value != null && value != undefined;
+            return value !== null && value !== undefined;
         });
         if (!result) {
             throw error(code);
@@ -66,7 +66,7 @@ class Assert<T> {
     protected eachElement(func: (value: T) => boolean) {
         for (let element of this._elements) {
             const result: boolean = func(element);
-            if(this._reverse === result){
+            if (this._reverse === result) {
                 return false;
             }
         }

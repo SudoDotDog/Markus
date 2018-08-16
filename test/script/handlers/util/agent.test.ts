@@ -6,8 +6,8 @@
 
 import { expect } from 'chai';
 import { ResponseAgent } from '../../../../src/script/handlers/util/agent';
-import { IMockHandlerResult, MockHandler } from '../../../mock/express';
 import { error, ERROR_CODE } from '../../../../src/util/error/error';
+import { IMockHandlerResult, MockHandler } from '../../../mock/express';
 
 describe('test agent of handler', (): void => {
 
@@ -36,7 +36,7 @@ describe('test agent of handler', (): void => {
         const exec: () => void = () => {
             agent.add('text', 'text');
             agent.addFile('test');
-        }
+        };
         // tslint:disable-next-line
         expect(exec).to.be.throw(error(ERROR_CODE.INTERNAL_RESPONSE_AGENT_CAN_ONLY_SEND_TEXT_OR_FILE).message)
         return;
@@ -66,7 +66,7 @@ describe('test agent of handler', (): void => {
         const exec: () => void = () => {
             agent.addFile('test');
             agent.add('text', 'text');
-        }
+        };
         // tslint:disable-next-line
         expect(exec).to.be.throw(error(ERROR_CODE.INTERNAL_RESPONSE_AGENT_CAN_ONLY_SEND_TEXT_OR_FILE).message)
         return;

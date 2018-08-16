@@ -8,7 +8,7 @@ import { expect } from 'chai';
 import * as Handlers from '../../../src/script/handlers/import';
 import { IMockHandlerResult, MockHandler } from '../../mock/express';
 import MockManager from '../../mock/manager';
-import { monkFsSyncs, IMockFsSyncsCB } from '../../mock/mock';
+import { IMockFsSyncsCB, monkFsSyncs } from '../../mock/mock';
 
 export const testScriptAvatarHandlers = (): void => {
     describe('avatar handler test', (): void => {

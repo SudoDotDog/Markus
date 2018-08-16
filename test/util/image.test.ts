@@ -4,7 +4,7 @@
  */
 
 import { expect } from 'chai';
-import { combineTagsArray, mergeArray, unique, determineIsImageByExtName } from '../../src/util/image';
+import { combineTagsArray, determineIsImageByExtName, mergeArray, unique } from '../../src/util/image';
 
 describe('test formula image util functions', (): void => {
     it('merge array function shall return deduplicate array', (): void => {

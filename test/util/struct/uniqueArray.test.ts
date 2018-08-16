@@ -5,8 +5,8 @@
  */
 
 import { expect } from 'chai';
-import UniqueArray from '../../../src/util/struct/uniqueArray';
 import { compareError, error, ERROR_CODE } from '../../../src/util/error/error';
+import UniqueArray from '../../../src/util/struct/uniqueArray';
 
 describe('test unique array data structure', (): void => {
 
@@ -17,15 +17,16 @@ describe('test unique array data structure', (): void => {
     it('create array should be failed if format is not right', (): void => {
         let errorResult: boolean = false;
         try {
-            new UniqueArray<number>([1, 2], 1, 2);
+            const test = new UniqueArray<number>([1, 2], 1, 2);
         } catch (err) {
             errorResult = compareError(error(ERROR_CODE.UNIQUE_ARRAY_CREATION_FAILED), err);
         }
+        // tslint:disable-next-line
         expect(errorResult).to.be.true;
     });
 
     it('create array with unique array and something wired', (): void => {
-        const newArray = new UniqueArray<number>(new UniqueArray<number>(1,2,3));
+        const newArray = new UniqueArray<number>(new UniqueArray<number>(1, 2, 3));
         expect(newArray).to.be.lengthOf(3);
     });
 
