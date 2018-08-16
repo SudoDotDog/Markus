@@ -4,7 +4,7 @@
  */
 
 import { ObjectId, ObjectID } from "bson";
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import { IImageCallback, IImageUserFriendlyCallback } from "../../database/interface/image";
 import * as Direct from '../../direct/import';
 import Config from "../../markus";
@@ -61,13 +61,15 @@ export const imageGetListByTagHandler = async (req: Request, res: Response): Pro
  * @param {Response} res
  * @returns {Promise<void>}
  */
-export const imageGetBlankWhiteHandler = async (req: Request, res: Response): Promise<void> => {
+export const imageGetBlankWhiteHandler = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const id: ObjectID = new ObjectId(req.params.id);
         const callback: IImageCallback = await Direct.Image.getImageCallbackById(id);
-        res.status(200).sendFile(callback.path);
+        res.agent.addFile(callback.path);
     } catch (err) {
-        res.status(200).sendFile(Config.white404ImagePath);
+        res.agent.addFile(Config.white404ImagePath);
+    } finally {
+        next();
     }
     return;
 };
@@ -100,7 +102,7 @@ export const imageGetBlankBlackHandler = async (req: Request, res: Response): Pr
  * @param {Response} res
  * @returns {Promise<void>}
  */
-export const getImageCompressByTag = async (req: Request, res: Response): Promise<void> => {
+export const imageCompressByTagHandler = async (req: Request, res: Response): Promise<void> => {
     try {
         const tag: string = req.params.tag;
         const callback: ICompressZipResult = await Direct.Backup.compressImagesByTag(tag);
@@ -118,7 +120,7 @@ export const getImageCompressByTag = async (req: Request, res: Response): Promis
  * @param {Request} req
  * @param {Response} res
  */
-export const fourOFourHandler = (req: Request, res: Response): void => {
+export const UnAgent_FourOFourHandler = (req: Request, res: Response): void => {
     res.status(404).send({
         status: RESPONSE.FAILED,
         error: error(ERROR_CODE.FOUR_O_FOUR_NOT_FOUND),

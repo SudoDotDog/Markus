@@ -43,6 +43,16 @@ class Assert<T> {
         return true;
     }
 
+    public true(code: ERROR_CODE = ERROR_CODE.ASSERT_BOOLEAN_OPPOSITE): boolean {
+        const result: boolean = this.eachElement((value: T) => {
+            return Boolean(value);
+        });
+        if (!result) {
+            throw error(code);
+        }
+        return true;
+    }
+
     public array(code: ERROR_CODE = ERROR_CODE.ASSERT_TYPE_NOT_MATCHED): boolean {
         const result: boolean = this.eachElement((value: T) => {
             return value instanceof Array;

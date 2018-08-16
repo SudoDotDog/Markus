@@ -10,7 +10,7 @@ import { IImageModel } from '../../../src/database/model/image';
 import { ITagModel } from '../../../src/database/model/tag';
 import * as Direct from '../../../src/direct/import';
 import { InternalFullBackup } from '../../../src/toolbox/import';
-import { IMarkusTool, IMarkusToolResult } from '../../../src/toolbox/toolbox';
+import { IMarkusTool, IMarkusToolEstimate, IMarkusToolResult, MARKUS_TOOL_ESTIMATE_TYPE } from '../../../src/toolbox/toolbox';
 import { rmRFFolderSync } from '../../../src/util/data/file';
 import { mockConfig } from '../../mock/mock';
 
@@ -63,9 +63,37 @@ export const testFullBackupInternalTool = (): void => {
             });
         });
 
-        it('execute tool should remove duplicated tag', async (): Promise<void> => {
+        it('verify full backup tool should give a boolean', (): void => {
+            const tool: IMarkusTool = new InternalFullBackup();
+            (tool as any).controller(Controller);
+            (tool as any).direct(Direct);
+            const verifyTrue: boolean = tool.verify('markus-unit-test');
+            // tslint:disable-next-line
+            expect(verifyTrue).to.be.true;
+            const verifyFalse: boolean = tool.verify();
+            // tslint:disable-next-line
+            expect(verifyFalse).to.be.false;
+            return;
+        }).timeout(3200);
+
+        it('estimate full backup tool should give a time', async (): Promise<void> => {
+            const tool: IMarkusTool = new InternalFullBackup();
+            (tool as any).controller(Controller);
+            (tool as any).direct(Direct);
+            const verify: boolean = tool.verify('markus-unit-test');
+            // tslint:disable-next-line
+            expect(verify).to.be.true;
+
+            const estimate: IMarkusToolEstimate = await tool.estimate('markus-unit-test');
+            // tslint:disable-next-line
+            expect(estimate.type).to.be.equal(MARKUS_TOOL_ESTIMATE_TYPE.TIME);
+            expect(estimate.time).to.be.gte(0);
+            return;
+        }).timeout(3200);
+
+        it('execute full backup tool should remove duplicated tag', async (): Promise<void> => {
             const restoreConfig: () => void = mockConfig({
-                host: 'mongodb://localhost',
+                host: 'mongodb://localhost:27017',
                 imagePath: './typescript',
                 tempPath: '../markus-temp',
             });

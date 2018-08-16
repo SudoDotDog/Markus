@@ -4,6 +4,10 @@
  * @fileoverview Mock Express Middleware requirements
  */
 
+import { Response } from "express";
+import { ResponseAgent } from "../../src/script/handlers/util/agent";
+import { error, ERROR_CODE } from "../../src/util/error/error";
+
 export interface IMockHandlerResult {
     status: number;
     header: Array<{
@@ -32,6 +36,7 @@ export interface IMockHandlerRequest {
 }
 
 export interface IMockHandlerResponse {
+    agent?: ResponseAgent;
     header: (name: string, value: string) => IMockHandlerResponse;
     send: (content: any) => void;
     sendFile: (content: any) => void;
@@ -46,12 +51,15 @@ export interface IMockHandlerFlush {
 }
 
 export class MockHandler {
+    private _agent: ResponseAgent;
     private _request: IMockHandlerRequest;
     private _response: IMockHandlerResponse;
 
     private _result: IMockHandlerResult;
+    private _useAgent: boolean;
 
-    public constructor() {
+    public constructor(useAgent?: boolean) {
+        this._useAgent = useAgent || false;
         this._result = {
             status: 0,
             header: [],
@@ -64,6 +72,10 @@ export class MockHandler {
             sendFile: this.sendResultBody.bind(this),
             status: this.setStatus.bind(this),
         };
+        this._agent = new ResponseAgent(this._response as Response);
+        if (this._useAgent) {
+            this._response.agent = this._agent;
+        }
         this._request = {
             header: this.getHeaderFromRequest.bind(this),
             headers: [],
@@ -75,6 +87,11 @@ export class MockHandler {
 
     public request(name: string, value: any): MockHandler {
         this._request[name] = value;
+        return this;
+    }
+
+    public agent(name: string, value: any): MockHandler {
+        this._agent.add(name, value);
         return this;
     }
 
@@ -105,7 +122,9 @@ export class MockHandler {
         return {
             request: this._request,
             response: this._response,
-            nextFunction: this.nextFunction.bind(this),
+            nextFunction: this._useAgent ?
+                this.nextAgentFunction.bind(this) :
+                this.nextFunction.bind(this),
         };
     }
 
@@ -115,6 +134,14 @@ export class MockHandler {
 
     protected nextFunction(): boolean {
         this._result.body = 'done';
+        return true;
+    }
+
+    protected nextAgentFunction(): boolean {
+        if (!this._response.agent) {
+            throw error(ERROR_CODE.INTERNAL_ERROR);
+        }
+        this._response.agent.send();
         return true;
     }
 

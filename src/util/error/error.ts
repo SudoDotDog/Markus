@@ -18,7 +18,7 @@ export enum ERROR_CODE {
     IMAGE_GET_LIST_FAILED = 202,
     IMAGE_ID_NOT_VALID = 203,
     IMAGE_UNLINK_FAILED = 204,
-    IMAGE_HAVE_BOTH_DUPLICATE_TAGS = 2091,
+    IMAGE_HAVE_BOTH_DUPLICATE_TAGS = 209,
 
     NO_IMAGE_UNDER_TARGET_TAG = 210,
     TAG_NOT_FOUND = 211,
@@ -50,9 +50,11 @@ export enum ERROR_CODE {
     UNKNOWN_ERROR_CODE = 900,
     INTERNAL_ERROR = 901,
     DEFAULT_TEST_ERROR = 902,
+    INTERNAL_RESPONSE_AGENT_CAN_ONLY_SEND_TEXT_OR_FILE = 903,
 
     ASSERT_EXIST_ELEMENT_NOT_EXIST = 950,
     ASSERT_TYPE_NOT_MATCHED = 951,
+    ASSERT_BOOLEAN_OPPOSITE = 952,
 }
 
 export const errorList: {
@@ -66,7 +68,7 @@ export const errorList: {
     202: 'Image list getting failed',
     203: 'Given ID not a valid imageId',
     204: 'Image unlink failed',
-    2091: 'Image have both duplicated tags',
+    209: 'Image have both duplicated tags',
     210: 'No image under target tag name',
     211: 'Tag not found',
     220: 'Image not found',
@@ -87,8 +89,10 @@ export const errorList: {
     900: 'Unknown error code',
     901: 'Internal error, report it at github.com/sudo-dog/markus',
     902: 'Default test error',
+    903: 'Internal error, response agent can only send file or text',
     950: 'Assert an element is exist but is not',
     951: 'Type of target element is not matched',
+    952: 'Assert an opposite boolean',
 };
 
 /**
@@ -121,10 +125,18 @@ export const compareError = (base: Error, target: Error): boolean => {
 
 export const handlerError = (res: Response, err: Error) => {
     if ((err as any).code) {
-        res.status(400).send({
-            status: RESPONSE.FAILED,
-            error: err,
-        });
+        const errorCode: number = (err as any).code;
+        if (errorCode >= 900) {
+            res.status(500).send({
+                status: RESPONSE.FAILED,
+                error: err,
+            });
+        } else {
+            res.status(400).send({
+                status: RESPONSE.FAILED,
+                error: err,
+            });
+        }
     } else {
         res.status(500).send({
             status: RESPONSE.FAILED,

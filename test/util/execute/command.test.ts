@@ -9,7 +9,6 @@ import { commandBuilder, execute } from '../../../src/util/execute/command';
 import { mockChildProcessExec } from '../../mock/mock';
 
 describe('test command utils', (): void => {
-
     it('command builder should build complex formula', (): void => {
         const result = commandBuilder([
             'mongodump',
@@ -37,8 +36,8 @@ describe('test command utils', (): void => {
 
     it('execute should get expected stdout', async (): Promise<void> => {
         const restoreExec = mockChildProcessExec();
-
         const result = await execute('test');
+        
         const commandSet = restoreExec();
         expect(commandSet).to.be.lengthOf(1);
         expect(result).to.be.equal('succeed');
@@ -58,7 +57,6 @@ describe('test command utils', (): void => {
         const commandSet = restoreExec();
         expect(commandSet).to.be.lengthOf(1);
         expect(result).to.be.equal('');
-
         const compareResult = compareError(error(ERROR_CODE.DEFAULT_TEST_ERROR), (resultError as Error));
         // tslint:disable-next-line
         expect(compareResult).to.be.true;
@@ -72,7 +70,6 @@ describe('test command utils', (): void => {
         const commandSet = restoreExec();
         expect(commandSet).to.be.lengthOf(1);
         expect(result).to.be.equal('902: Default test error');
-        return;
         return;
     });
 });

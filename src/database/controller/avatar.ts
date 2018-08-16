@@ -39,7 +39,6 @@ export const createOrUpdateAvatarAndSave = async (option: IAvatarConfig): Promis
     const avatar: IAvatarModel | null = await AvatarModel.findOne({ avatar: option.avatar });
 
     if (avatar) {
-
         avatar.updateFile(option.file);
         await avatar.save();
         return avatar;

@@ -6,7 +6,7 @@
 import { commandBuilder, execute } from './command';
 
 export const fixHostForMongoBackup = (host: string): string => {
-    if(host === 'mongodb://localhost'){
+    if(host === 'mongodb://localhost:27017'){
         return 'localhost';
     }
     return host;

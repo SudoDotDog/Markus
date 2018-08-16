@@ -63,6 +63,8 @@ export default class Point {
             case 3:
                 resultPoint = { x: 0, y: EDGE.LENGTH - lengthLeft };
                 break;
+
+            /* istanbul ignore next */
             default:
                 throw error(ERROR_CODE.EDGE_OUT_OF_BOUND);
         }

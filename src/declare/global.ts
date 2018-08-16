@@ -3,6 +3,7 @@
  * @fileoverview Global declare
  */
 
+import { ResponseAgent } from "../script/handlers/util/agent";
 import { IFileManager } from "../util/manager/file/import";
 
 declare global {
@@ -11,6 +12,10 @@ declare global {
         interface Request {
             manager: IFileManager;
             valid?: boolean;
+        }
+        
+        interface Response {
+            agent: ResponseAgent;
         }
     }
 }

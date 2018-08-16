@@ -6,21 +6,21 @@ dbPath := F:/db/
 markus: dev service
 
 service: 
-	node ./dist/script/service/markus.js
+	@node ./dist/script/service/markus.js
 
 run:
-	node ./dist/script/service/markus.js
+	@node ./dist/script/service/markus.js
 
 dev:
-	tsc --p $(dev)
+	@tsc --p $(dev)
 
 build: clean ubuild
 
 ubuild:
-	tsc --p $(build)
+	@tsc --p $(build)
 
 host:
-	mongod --dbpath $(dbPath)
+	@mongod --dbpath $(dbPath)
 
 help:
 	@echo ""
@@ -43,9 +43,10 @@ help:
 clean:
 ifeq ($(OS), Windows_NT)
 else
-	rm -rf dist
+	@rm -rf dist
 endif
 
 install:
-	npm install
-	npm install --only=dev
+	@echo "Install Dependences From NPM"
+	@npm install
+	@npm install --only=dev

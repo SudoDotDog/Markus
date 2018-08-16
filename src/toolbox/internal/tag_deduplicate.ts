@@ -35,7 +35,7 @@ export default class InternalToolTagDeduplicate implements IMarkusTool {
 
     public async estimate(): Promise<IMarkusToolEstimate> {
         const count: number = await this._controller.Tag.getTagsCount();
-        const time = Math.round(count / 10);
+        const time = Math.round(count / 2);
         return {
             time,
             type: MARKUS_TOOL_ESTIMATE_TYPE.TIME,

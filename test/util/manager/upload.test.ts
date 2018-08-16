@@ -13,12 +13,23 @@ describe('test upload manager util', (): void => {
 
     let testContent: UploadManager;
 
+    it('creation of upload manager', (): void => {
+        const restoreSyncs: () => IMockFsSyncsCB = monkFsSyncs();
+        testContent = new UploadManager('test', 0);
+
+        const result: IMockFsSyncsCB = restoreSyncs();
+        expect(result.exist).to.be.lengthOf(0);
+        expect(result.mkdir).to.be.lengthOf(0);
+        expect(result.read).to.be.lengthOf(0);
+        expect(result.unlink).to.be.lengthOf(0);
+        expect(result.write).to.be.lengthOf(0);
+    });
+
     it('construct upload manager will trigger exist check and make dir', (): void => {
         const restoreSyncs: () => IMockFsSyncsCB = monkFsSyncs();
-
         testContent = new UploadManager();
-        const result: IMockFsSyncsCB = restoreSyncs();
 
+        const result: IMockFsSyncsCB = restoreSyncs();
         expect(result.exist).to.be.lengthOf(0);
         expect(result.mkdir).to.be.lengthOf(0);
         expect(result.read).to.be.lengthOf(0);
@@ -29,10 +40,8 @@ describe('test upload manager util', (): void => {
     it('generate engines functions should not throw an error', (): void => {
         // tslint:disable-next-line
         expect(testContent.generateMulterEngine.bind(testContent, 'image')).to.be.not.throw;
-
         // tslint:disable-next-line
         expect(testContent.generateBase64Engine.bind(testContent)).to.be.not.throw;
-
         // tslint:disable-next-line
         expect(testContent.generateBufferEngine.bind(testContent)).to.be.not.throw;
     });

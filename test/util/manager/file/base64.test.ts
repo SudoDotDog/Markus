@@ -8,7 +8,6 @@ import { Base64FileManager, IFileManager } from '../../../../src/util/manager/fi
 import { IMockFsSyncsCB, mockWriteFile, monkFsSyncs } from '../../../mock/mock';
 
 describe('test base64 file manager', (): void => {
-
     let manager: IFileManager;
     let releaseCounter: number;
 
@@ -28,6 +27,7 @@ describe('test base64 file manager', (): void => {
                 'testMime',
             );
         };
+
         expect(execute).to.be.not.throw();
     });
 
@@ -37,11 +37,13 @@ describe('test base64 file manager', (): void => {
 
     it('hash function should return hash of base64', async (): Promise<void> => {
         const result = await manager.hash();
+
         expect(result).to.be.equal('2410f797db45392124023fdba6ad0a2a');
     });
 
     it('release function should call release func', (): void => {
         manager.release();
+
         expect(releaseCounter).to.be.equal(1);
     });
 
@@ -57,9 +59,10 @@ describe('test base64 file manager', (): void => {
             content: string;
             path: string;
         }> = restoreWriteFile();
-
         const syncs: IMockFsSyncsCB = restoreSyncs();
         const buffer: Buffer = Buffer.from('testBase64', 'base64');
         expect(result[0].content).to.be.deep.equal(buffer);
+        // tslint:disable-next-line
+        expect(syncs).to.be.not.null;
     });
 });

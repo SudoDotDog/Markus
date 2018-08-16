@@ -20,6 +20,7 @@ export const fixConflictName = (name: string) => {
 export const releaseStorage = (path: string): Promise<void> => {
     return new Promise<void>((resolve: () => void, reject: (err: Error) => void) => {
         Fs.unlink(path, (err: Error | null): void => {
+            /* istanbul ignore next */
             if (err) {
                 reject(error(ERROR_CODE.IMAGE_UNLINK_FAILED));
             }

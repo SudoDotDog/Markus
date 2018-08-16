@@ -42,4 +42,18 @@ describe('test assert error util functions', (): void => {
         };
         expect(exec).to.be.throw(errText);
     });
+
+    it('assert element true should be fine if element is true', (): void => {
+        const result: boolean = assert(true).to.be.true();
+        // tslint:disable-next-line
+        expect(result).to.be.true;
+    });
+
+    it('assert element true should throw when element is not', (): void => {
+        const errText: string = error(ERROR_CODE.ASSERT_BOOLEAN_OPPOSITE).message;
+        const exec: () => void = () => {
+            assert(false).to.be.true();
+        };
+        expect(exec).to.be.throw(errText);
+    });
 });

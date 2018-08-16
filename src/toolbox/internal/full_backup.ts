@@ -42,7 +42,7 @@ export default class InternalToolTagDeduplicate implements IMarkusTool {
     public async estimate(database: string): Promise<IMarkusToolEstimate> {
         return {
             time: 0,
-            type: MARKUS_TOOL_ESTIMATE_TYPE.IMMEDIATE,
+            type: MARKUS_TOOL_ESTIMATE_TYPE.TIME,
         }
     }
 

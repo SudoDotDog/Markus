@@ -6,10 +6,11 @@
 // tslint:disable-next-line
 /// <reference path="../../declare/global.ts" />
 
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { IImageCallback } from "../../database/interface/image";
 import { IImageModel } from "../../database/model/image";
 import * as Direct from '../../direct/import';
+import { assert } from "../../util/error/assert";
 import { error, ERROR_CODE, handlerError } from "../../util/error/error";
 import { RESPONSE } from '../../util/interface';
 import { IFileManager } from "../../util/manager/file/import";
@@ -121,58 +122,51 @@ export const UploadBase64Handler = async (req: Request, res: Response): Promise<
     return;
 };
 
-export const DeactivateImageHandler = async (req: Request, res: Response): Promise<void> => {
+export const DeactivateImageHandler = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-        if (!req.valid) {
-            throw error(ERROR_CODE.PERMISSION_VALID_FAILED);
-        }
+        assert(req.valid).to.be.true(ERROR_CODE.PERMISSION_VALID_FAILED);
         const imageId: string = req.body.id;
         const image: IImageModel = await Direct.Image.deactivateImageById(imageId);
-
-        res.status(200).send({
-            status: RESPONSE.SUCCEED,
-            data: {
-                id: image.id,
-            },
-        });
+        res.agent.add('id', image._id.toString());
+        next();
     } catch (err) {
         handlerError(res, err);
     }
     return;
 };
 
-export const DeactivateTagHandler = async (req: Request, res: Response): Promise<void> => {
+export const DeactivateTagHandler = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-        if (!req.valid) {
-            throw error(ERROR_CODE.PERMISSION_VALID_FAILED);
-        }
-
+        assert(req.valid).to.be.true(ERROR_CODE.PERMISSION_VALID_FAILED);
         const tag: string = req.body.tag;
         const images: IImageModel[] = await Direct.Image.deactivateImageByTagString(tag);
-
-        res.status(200).send({
-            status: RESPONSE.SUCCEED,
-            data: {
-                deactivated: images.length,
-            },
-        });
+        res.agent.add('deactivated', images.length);
+        next();
     } catch (err) {
         handlerError(res, err);
     }
     return;
 };
 
-export const MarkusHandler = async (req: Request, res: Response): Promise<void> => {
+export const MarkusHandler = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const version: string = await markusVersion();
+        res.agent.add('agent', 'Markus');
+        res.agent.add('version', version);
+        next();
+    } catch (err) {
+        handlerError(res, err);
+    }
+    return;
+};
 
-        res.status(200).send({
-            status: RESPONSE.SUCCEED,
-            data: {
-                agent: 'Markus',
-                version,
-            },
-        });
+export const FlushHandler = async (req: Request, res: Response): Promise<void> => {
+    try {
+        if (res.agent) {
+            res.agent.send();
+        } else {
+            throw error(ERROR_CODE.INTERNAL_ERROR);
+        }
     } catch (err) {
         handlerError(res, err);
     }

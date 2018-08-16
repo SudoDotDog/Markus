@@ -9,7 +9,7 @@ import * as Multer from 'multer';
 import * as Path from 'path';
 import Config from '../markus';
 import { mkPathDir } from './data/file';
-import { error, ERROR_CODE } from './error';
+import { error, ERROR_CODE } from './error/error';
 import { unique } from './image';
 
 export const Upload = (): Multer.Instance => {

@@ -11,6 +11,7 @@ import { IFileModel } from '../../../src/database/model/file';
 import { IImageModel } from '../../../src/database/model/image';
 import { ITagModel } from '../../../src/database/model/tag';
 import { compressImagesByTag } from '../../../src/direct/backup';
+import { rmRFFolderSync } from '../../../src/util/data/file';
 import { mockConfig } from '../../mock/mock';
 
 export const testBackupDirect = (): void => {
@@ -67,10 +68,20 @@ export const testBackupDirect = (): void => {
             // tslint:disable-next-line
             expect(result).to.be.not.null;
             expect(result.bytes).to.be.gte(300);
-            expect(result.logs).to.be.lengthOf(0);
+            expect(result.logs).to.be.lengthOf(1);
+            expect(result.logs).to.be.deep.equal([
+                'finalize',
+            ]);
             // tslint:disable-next-line
             expect(result.path).to.be.not.undefined;
             return;
         });
+
+        it('clean up backup tag compress file should be passed', async (): Promise<void> => {
+            const tempPath: string = './temp';
+            const result: string[] = rmRFFolderSync(tempPath);
+            expect(result.length).to.be.gte(1);
+            return;
+        }).timeout(4200);
     });
 };

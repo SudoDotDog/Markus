@@ -29,6 +29,7 @@ export interface IConfig {
     middleware: { // keep
         prepares: middleware[];
         permissions: middleware[];
+        after: middleware[];
     };
     tools: IMarkusTool[];
 }
@@ -43,10 +44,11 @@ const PreparesMiddleware: middleware[] = [
     Handler.Auth.validPermissionBasicAuthMiddleware,
 ];
 const PermissionsMiddleware: middleware[] = [];
+const AfterMiddleware: middleware[] = [];
 
 const Config: IConfig = {
     crossOrigin: '*',
-    host: 'mongodb://localhost',
+    host: 'mongodb://localhost:27017',
     database: 'markus-test-2',
     imagePath: 'F://path/image',
     tempPath: 'F://path/temp',
@@ -61,6 +63,7 @@ const Config: IConfig = {
     middleware: {
         prepares: PreparesMiddleware,
         permissions: PermissionsMiddleware,
+        after: AfterMiddleware,
     },
     tools: Tools,
 };

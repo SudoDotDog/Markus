@@ -57,9 +57,7 @@ export const testScriptImageHandlers = (): void => {
 
         it('get image by id should return image data', async (): Promise<void> => {
             const mock: MockHandler = new MockHandler();
-
             mock.param('id', testImage.id);
-
             const { request, response } = mock.flush();
             await Handlers.GetImage.imageGetHandler(request, response);
 
@@ -74,7 +72,19 @@ export const testScriptImageHandlers = (): void => {
         it('get black bg image by id should return image data', async (): Promise<void> => {
             const mock: MockHandler = new MockHandler();
             mock.param('id', testImage.id);
+            const { request, response } = mock.flush();
+            await Handlers.GetImage.imageGetBlankBlackHandler(request, response);
 
+            const result: IMockHandlerResult = mock.end();
+            // tslint:disable-next-line
+            expect(result).to.be.not.null;
+            expect(result.status).to.be.equal(200);
+            expect(typeof result.body).to.be.equal('string');
+            return;
+        }).timeout(3200);
+
+        it('get black bg image by id should return image data even if the image is not exist', async (): Promise<void> => {
+            const mock: MockHandler = new MockHandler();
             const { request, response } = mock.flush();
             await Handlers.GetImage.imageGetBlankBlackHandler(request, response);
 
@@ -87,12 +97,23 @@ export const testScriptImageHandlers = (): void => {
         }).timeout(3200);
 
         it('get white bg image by id should return image data', async (): Promise<void> => {
-            const mock: MockHandler = new MockHandler();
-
+            const mock: MockHandler = new MockHandler(true);
             mock.param('id', testImage.id);
+            const { request, response, nextFunction } = mock.flush();
+            await Handlers.GetImage.imageGetBlankWhiteHandler(request, response, nextFunction);
 
-            const { request, response } = mock.flush();
-            await Handlers.GetImage.imageGetBlankWhiteHandler(request, response);
+            const result: IMockHandlerResult = mock.end();
+            // tslint:disable-next-line
+            expect(result).to.be.not.null;
+            expect(result.status).to.be.equal(200);
+            expect(typeof result.body).to.be.equal('string');
+            return;
+        }).timeout(3200);
+
+        it('get white bg image by id should return image data even if image is not exist', async (): Promise<void> => {
+            const mock: MockHandler = new MockHandler(true);
+            const { request, response, nextFunction } = mock.flush();
+            await Handlers.GetImage.imageGetBlankWhiteHandler(request, response, nextFunction);
 
             const result: IMockHandlerResult = mock.end();
             // tslint:disable-next-line
@@ -104,10 +125,7 @@ export const testScriptImageHandlers = (): void => {
 
         it('get list by tag handler should return correct result', async (): Promise<void> => {
             const mock: MockHandler = new MockHandler();
-
-            mock
-                .body('tag', 'test-for-image-handler');
-
+            mock.body('tag', 'test-for-image-handler');
             const { request, response } = mock.flush();
             await Handlers.GetImage.imageGetListByTagHandler(request, response);
 
@@ -121,11 +139,9 @@ export const testScriptImageHandlers = (): void => {
 
         it('404 handler should return template message', async (): Promise<void> => {
             const mock: MockHandler = new MockHandler();
-
             mock.param('id', testImage.id);
-
             const { request, response } = mock.flush();
-            await Handlers.GetImage.fourOFourHandler(request, response);
+            await Handlers.GetImage.UnAgent_FourOFourHandler(request, response);
 
             const result: IMockHandlerResult = mock.end();
             // tslint:disable-next-line

@@ -1,6 +1,7 @@
 {
     "compileOnSave": false,
     "compilerOptions": {
+        "alwaysStrict": true,
         "outDir": "../dist",
         "removeComments": true,
         "downlevelIteration": true,

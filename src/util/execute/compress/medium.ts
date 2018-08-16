@@ -45,6 +45,7 @@ export class CompressMedium {
             this._stream.on('close', () => {
                 clearTimeout(timeout);
                 this._pointer();
+                this._log('finalize');
                 resolve(this._result);
             });
             timeout = setTimeout(() => {
