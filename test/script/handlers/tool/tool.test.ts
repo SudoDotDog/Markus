@@ -36,7 +36,30 @@ export const testScriptToolHandlers = (): void => {
             expect(result).to.be.not.null;
             expect(result.status).to.be.equal(200);
             expect(result.body).to.be.keys(['status', 'data']);
-            expect(result.body.data).to.be.keys(['time', 'type']);
+            expect(result.body.data).to.be.keys(['time', 'type', 'teapots']);
+            return;
+        }).timeout(3200);
+
+        it('estimate handler should return 400 if input is not valid', async (): Promise<void> => {
+            const mock: MockHandler = new MockHandler();
+            const mockTool = new MockMarkusTool('test', 'description', []);
+            const restoreConfig: () => void = mockConfig({
+                tools: [mockTool],
+                tempPath: Path.resolve('./temp'),
+            });
+            Handlers.Tool.rebuildTools();
+
+            mock.body('name', 'test');
+            const { request, response } = mock.flush();
+            await Handlers.Tool.markusToolboxEstimateHandler(request, response);
+
+            restoreConfig();
+            Handlers.Tool.rebuildTools();
+
+            const result: IMockHandlerResult = mock.end();
+            // tslint:disable-next-line
+            expect(result).to.be.not.null;
+            expect(result.status).to.be.equal(400);
             return;
         }).timeout(3200);
 
@@ -62,7 +85,30 @@ export const testScriptToolHandlers = (): void => {
             expect(result).to.be.not.null;
             expect(result.status).to.be.equal(200);
             expect(result.body).to.be.keys(['status', 'data']);
-            expect(result.body.data).to.be.keys(['result']);
+            expect(result.body.data).to.be.keys(['result', 'teapots']);
+            return;
+        }).timeout(3200);
+
+        it('execute handler should return 400 if input is not valid', async (): Promise<void> => {
+            const mock: MockHandler = new MockHandler();
+            const mockTool = new MockMarkusTool('test', 'description', []);
+            const restoreConfig: () => void = mockConfig({
+                tools: [mockTool],
+                tempPath: Path.resolve('./temp'),
+            });
+            Handlers.Tool.rebuildTools();
+
+            mock.body('name', 'test');
+            const { request, response } = mock.flush();
+            await Handlers.Tool.markusToolboxExecuteHandler(request, response);
+
+            restoreConfig();
+            Handlers.Tool.rebuildTools();
+
+            const result: IMockHandlerResult = mock.end();
+            // tslint:disable-next-line
+            expect(result).to.be.not.null;
+            expect(result.status).to.be.equal(400);
             return;
         }).timeout(3200);
 

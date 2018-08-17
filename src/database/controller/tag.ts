@@ -105,6 +105,13 @@ export const getAllTags = async (): Promise<ITagModel[]> => {
     return tags;
 };
 
+export const getAllActiveTags = async (): Promise<ITagModel[]> => {
+    const tags: ITagModel[] = await TagModel.find({
+        active: true,
+    });
+    return tags;
+};
+
 export const getTagsCount = async (): Promise<number> => {
     const count: number = await TagModel.countDocuments({});
     return count;

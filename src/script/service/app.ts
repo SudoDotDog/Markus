@@ -81,6 +81,9 @@ app.post('/v/base64', uploadManager.generateBase64Engine(), ...permissions, Hand
 app.get('/tag/:tag/compress', Handler.GetImage.imageCompressByTagHandler);
 app.post('/tag', Handler.GetImage.imageGetListByTagHandler);
 
+// Handler(s) for Tag List Get
+app.post('/tag/list', ...permissions, Handler.GetImage.allTagUserFriendlyListHandler, ...afters);
+
 // Handler(s) for Image status change
 app.post('/deactivate/id', ...permissions, Handler.Markus.DeactivateImageHandler, ...afters);
 app.post('/deactivate/tag', ...permissions, Handler.Markus.DeactivateTagHandler, ...afters);

@@ -34,6 +34,7 @@ export const markusToolboxEstimateHandler = async (req: Request, res: Response):
         const result: IMarkusToolEstimate = await tool.estimate(...args);
         response.add('type', result.type);
         response.add('time', result.time);
+        response.add('teapots', tool.teapots);
         response.send();
     } catch (err) {
         handlerError(res, err);
@@ -53,6 +54,7 @@ export const markusToolboxExecuteHandler = async (req: Request, res: Response): 
         const tool: IMarkusTool = findToolAndMatchFromToolbox(Tools, name);
         const result: IMarkusToolResult[] = await tool.execute(...args);
         response.add('result', result);
+        response.add('teapots', tool.teapots);
         response.send();
     } catch (err) {
         handlerError(res, err);

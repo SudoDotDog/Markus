@@ -107,7 +107,7 @@ export const testFullBackupInternalTool = (): void => {
 
             const result: IMarkusToolResult[] = await tool.execute('markus-unit-test');
             restoreConfig();
-            expect(result).to.be.lengthOf(3);
+            expect(result).to.be.lengthOf(5);
             // tslint:disable-next-line
             expect(result[1].value).to.be.not.null;
             // tslint:disable-next-line

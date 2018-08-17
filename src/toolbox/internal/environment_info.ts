@@ -5,26 +5,27 @@
  */
 
 import * as OS from 'os';
-import { IMarkusToolResult, IMarkusTool, MARKUS_TOOL_REQUIRE_TYPE, MARKUS_TOOL_RESPONSE_TYPE, MarkusController, MarkusDirect, IMarkusToolEstimate, MARKUS_TOOL_ESTIMATE_TYPE } from "../toolbox";
+import * as toolbox from "../toolbox";
 
-export default class InternalToolTagDeduplicate implements IMarkusTool {
-    public name: string = "@Internal:Environment-Information";
-    public description: string = "Return Environment Information";
-    public require: MARKUS_TOOL_REQUIRE_TYPE[] = [];
+export default class InternalToolTagDeduplicate implements toolbox.IMarkusTool {
+    public readonly name: string = "@Internal:Environment-Information";
+    public readonly description: string = "Return Environment Information";
+    public readonly require: toolbox.MARKUS_TOOL_REQUIRE_TYPE[] = [];
+    public teapots: toolbox.IMarkusToolTeapot[] = [];
 
-    private _controller: MarkusController;
-    private _direct: MarkusDirect;
+    private _controller: toolbox.MarkusController;
+    private _direct: toolbox.MarkusDirect;
 
     public constructor() {
         this._controller = null as any;
         this._direct = null as any;
     }
 
-    public controller(controller: MarkusController): void {
+    public controller(controller: toolbox.MarkusController): void {
         this._controller = controller;
     }
 
-    public direct(direct: MarkusDirect): void {
+    public direct(direct: toolbox.MarkusDirect): void {
         this._direct = direct;
     }
 
@@ -32,17 +33,17 @@ export default class InternalToolTagDeduplicate implements IMarkusTool {
         return true;
     }
 
-    public async estimate(): Promise<IMarkusToolEstimate> {
+    public async estimate(): Promise<toolbox.IMarkusToolEstimate> {
         return {
             time: 0,
-            type: MARKUS_TOOL_ESTIMATE_TYPE.IMMEDIATE,
+            type: toolbox.MARKUS_TOOL_ESTIMATE_TYPE.IMMEDIATE,
         }
     }
 
-    public async execute(): Promise<IMarkusToolResult[]> {
+    public async execute(): Promise<toolbox.IMarkusToolResult[]> {
         const cpus: number = OS.cpus.length;
         return [{
-            type: MARKUS_TOOL_RESPONSE_TYPE.STRING,
+            type: toolbox.MARKUS_TOOL_RESPONSE_TYPE.STRING,
             name: 'CPUS',
             value: cpus,
         }];

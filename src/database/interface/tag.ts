@@ -12,3 +12,9 @@ export interface ITag extends ITagConfig {
     createdAt: Date;
     updatedAt: Date;
 }
+
+export interface ITagUserFriendly {
+    name: string;
+    count: number;
+    createdAt: Date;
+}

@@ -74,6 +74,14 @@ export const getAllActiveAndInactiveImagesByTag = async (tag: ObjectID): Promise
     return results;
 };
 
+export const getImageCountByTagId = async (tagId: ObjectID): Promise<number> => {
+    const count: number = await ImageModel.countDocuments({
+        tags: tagId,
+    });
+
+    return count;
+};
+
 export const Risky_UpdateAllImageWithOldTagToANewTag = async (oldTag: ObjectID, newTag: ObjectID): Promise<void> => {
     const results: IImageModel[] = await ImageModel.find({
         tags: oldTag,
@@ -97,11 +105,12 @@ export const Risky_UpdateAllImageWithOldTagToANewTag = async (oldTag: ObjectID, 
         }
 
         if (!completed) {
+            /* istanbul ignore next */
             throw error(ERROR_CODE.INTERNAL_ERROR);
         }
 
         await image.save();
     }
-    
+
     return;
 };

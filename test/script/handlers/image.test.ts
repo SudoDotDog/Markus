@@ -137,6 +137,19 @@ export const testScriptImageHandlers = (): void => {
             return;
         }).timeout(3200);
 
+        it('get all tags handler should return correct result', async (): Promise<void> => {
+            const mock: MockHandler = new MockHandler(true);
+            const { request, response, nextFunction } = mock.flush();
+            await Handlers.GetImage.allTagUserFriendlyListHandler(request, response, nextFunction);
+
+            const result: IMockHandlerResult = mock.end();
+            // tslint:disable-next-line
+            expect(result).to.be.not.null;
+            expect(result.status).to.be.equal(200);
+            expect(result.body).to.be.keys(['status', 'data']);
+            return;
+        }).timeout(3200);
+
         it('404 handler should return template message', async (): Promise<void> => {
             const mock: MockHandler = new MockHandler();
             mock.param('id', testImage.id);

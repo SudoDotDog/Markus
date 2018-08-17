@@ -15,7 +15,7 @@ describe('test upload manager util', (): void => {
 
     it('creation of upload manager', (): void => {
         const restoreSyncs: () => IMockFsSyncsCB = monkFsSyncs();
-        testContent = new UploadManager('test', 0);
+        testContent = new UploadManager('test', 15);
 
         const result: IMockFsSyncsCB = restoreSyncs();
         expect(result.exist).to.be.lengthOf(0);

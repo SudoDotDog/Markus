@@ -36,7 +36,7 @@ export const testImageController = (): void => {
         before(function (this: Mocha.Context, next: () => void) {
             this.timeout(4000);
             Controller.Tag.createTag({
-                name: 'test',
+                name: 'test-image-controller',
             }).then((tag: ITagModel) => {
                 testTag = tag;
                 next();
@@ -93,7 +93,7 @@ export const testImageController = (): void => {
         }).timeout(3200);
 
         it('get active and inactive image by tag should return image list of target tag', async (): Promise<void> => {
-            const images = await Controller.Image.getAllActiveAndInactiveImagesByTag(testTag._id);
+            const images: IImageModel[] = await Controller.Image.getAllActiveAndInactiveImagesByTag(testTag._id);
             expect(images).to.be.lengthOf(1);
             const testId: ObjectID = new ObjectId();
             let tempError: Error = error(ERROR_CODE.DEFAULT_TEST_ERROR);
@@ -105,6 +105,12 @@ export const testImageController = (): void => {
             const result = compareError(error(ERROR_CODE.NO_IMAGE_UNDER_TARGET_TAG), tempError);
             // tslint:disable-next-line
             expect(result).to.be.true;
+            return;
+        }).timeout(3200);
+
+        it('get image count by tag should return number of tag', async (): Promise<void> => {
+            const images: number = await Controller.Image.getImageCountByTagId(testTag._id);
+            expect(images).to.be.equal(1);
             return;
         }).timeout(3200);
     });

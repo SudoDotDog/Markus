@@ -7,17 +7,28 @@
 import * as MarkusTool from "../../src/toolbox/toolbox";
 
 export class MockMarkusTool implements MarkusTool.IMarkusTool {
-    public name: string;
-    public description: string;
-    public require: MarkusTool.MARKUS_TOOL_REQUIRE_TYPE[];
+    public readonly name: string;
+    public readonly description: string;
+    public readonly require: MarkusTool.MARKUS_TOOL_REQUIRE_TYPE[];
+    public teapots: MarkusTool.IMarkusToolTeapot[];
 
     private _controller: MarkusTool.MarkusController;
     private _direct: MarkusTool.MarkusDirect;
 
-    public constructor(name: string, description: string, require: MarkusTool.MARKUS_TOOL_REQUIRE_TYPE[]) {
+    public shouldVerify: boolean;
+
+    public constructor(
+        name: string,
+        description: string = 'mock markus tool',
+        require: MarkusTool.MARKUS_TOOL_REQUIRE_TYPE[] = [],
+        teapots: MarkusTool.IMarkusToolTeapot[] = [],
+    ) {
         this.name = name;
         this.description = description;
         this.require = require;
+        this.teapots = teapots;
+
+        this.shouldVerify = true;
 
         this._controller = null as any;
         this._direct = null as any;
@@ -32,7 +43,7 @@ export class MockMarkusTool implements MarkusTool.IMarkusTool {
     }
 
     public verify(): boolean {
-        return true;
+        return this.shouldVerify;
     }
 
     public async estimate(): Promise<MarkusTool.IMarkusToolEstimate> {

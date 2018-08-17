@@ -12,6 +12,7 @@ export const getInformationByIMarkusTools = (tools: IMarkusTool[]): IMarkusToolb
             name: tool.name,
             description: tool.description,
             require: tool.require,
+            teapots: tool.teapots,
         };
     });
 };

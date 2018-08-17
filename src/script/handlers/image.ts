@@ -4,8 +4,9 @@
  */
 
 import { ObjectId, ObjectID } from "bson";
-import { Request, Response, NextFunction } from "express";
+import { NextFunction, Request, Response } from "express";
 import { IImageCallback, IImageUserFriendlyCallback } from "../../database/interface/image";
+import { ITagUserFriendly } from "../../database/interface/tag";
 import * as Direct from '../../direct/import';
 import Config from "../../markus";
 import { error, ERROR_CODE, handlerError } from "../../util/error/error";
@@ -107,6 +108,17 @@ export const imageCompressByTagHandler = async (req: Request, res: Response): Pr
         const tag: string = req.params.tag;
         const callback: ICompressZipResult = await Direct.Backup.compressImagesByTag(tag);
         res.status(200).sendFile(callback.path);
+    } catch (err) {
+        handlerError(res, err);
+    }
+    return;
+};
+
+export const allTagUserFriendlyListHandler = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+        const tags: ITagUserFriendly[] = await Direct.Tag.getAllActiveTagUserFriendlyList();
+        res.agent.add('list', tags);
+        next();
     } catch (err) {
         handlerError(res, err);
     }

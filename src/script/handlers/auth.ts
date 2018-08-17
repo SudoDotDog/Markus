@@ -23,8 +23,14 @@ import { RESPONSE } from '../../util/interface';
  * @returns {Promise<void>}
  */
 export const validPermissionBodyMiddleware: middleware = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    if (req.body.key) {
-        if (req.body.key === 'test') {
+    if (req.valid) {
+        next();
+        return;
+    }
+
+    const key: string | undefined = req.body.key;
+    if (key) {
+        if (key === 'test') {
             req.valid = true;
         } else {
             req.valid = false;
@@ -49,6 +55,11 @@ export const validPermissionBodyMiddleware: middleware = async (req: Request, re
  * @returns {Promise<void>}
  */
 export const validPermissionBasicAuthMiddleware: middleware = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    if (req.valid) {
+        next();
+        return;
+    }
+
     const authHeader: string | undefined = req.header('authorization');
     const auth: string | null = parseBasicAuthorization(authHeader);
 
@@ -78,8 +89,12 @@ export const validPermissionBasicAuthMiddleware: middleware = async (req: Reques
  * @returns {Promise<void>}
  */
 export const validPermissionQueryMiddleware: middleware = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    if (req.valid) {
+        next();
+        return;
+    }
+    
     const auth: string | undefined = req.query.authorization;
-
     if (auth) {
         if (auth === 'test') {
             req.valid = true;

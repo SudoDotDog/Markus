@@ -92,7 +92,8 @@ export default class UploadManager {
             filename: unique(11) + '.' + type,
         };
     }
-
+    
+    /* istanbul ignore next */
     protected release() {
         this._count--;
     }

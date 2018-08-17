@@ -6,6 +6,7 @@
 
 import { expect } from 'chai';
 import * as Controller from '../../../src/database/controller/import';
+import { ITagUserFriendly } from '../../../src/database/interface/tag';
 import { ITagModel } from '../../../src/database/model/tag';
 import * as Direct from '../../../src/direct/import';
 
@@ -36,6 +37,14 @@ export const testTagDirect = (): void => {
             // tslint:disable-next-line
             expect(name).to.be.not.null;
             expect(name.get(testTag._id.toString())).to.be.equal(testTag.name);
+            return;
+        }).timeout(4200);
+
+        it('get all tag user friendly result should return correct list', async (): Promise<void> => {
+            const tags: ITagUserFriendly[] = await Direct.Tag.getAllActiveTagUserFriendlyList();
+            // tslint:disable-next-line
+            expect(tags).to.be.not.null;
+            expect(tags.length).to.be.gte(1);
             return;
         }).timeout(4200);
     });

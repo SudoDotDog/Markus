@@ -35,10 +35,16 @@ export interface IMarkusToolEstimate {
     time: number;
 }
 
-export interface IMarkusTool {
-    description: string;
+export interface IMarkusToolTeapot {
     name: string;
-    require: MARKUS_TOOL_REQUIRE_TYPE[];
+    value: any;
+}
+
+export interface IMarkusTool {
+    readonly description: string;
+    readonly name: string;
+    readonly require: MARKUS_TOOL_REQUIRE_TYPE[];
+    teapots: IMarkusToolTeapot[];
 
     controller?: (controller: MarkusController) => void;
     direct?: (direct: MarkusDirect) => void;
@@ -52,4 +58,5 @@ export interface IMarkusToolboxInfo {
     name: string;
     description: string;
     require: MARKUS_TOOL_REQUIRE_TYPE[];
+    teapots: IMarkusToolTeapot[];
 }

@@ -4,28 +4,29 @@
  * @fileoverview Tag Deduplicate
  */
 
-import { IMarkusToolResult, IMarkusTool, MarkusController, MarkusDirect, MARKUS_TOOL_REQUIRE_TYPE, IMarkusToolEstimate, MARKUS_TOOL_ESTIMATE_TYPE } from "../toolbox";
 import { ITagModel } from "../../database/model/tag";
 import UniqueArray from "../../util/struct/uniqueArray";
+import * as toolbox from "../toolbox";
 
-export default class InternalToolTagDeduplicate implements IMarkusTool {
-    public name: string = "@Internal:Tag-Duplicate-Remover";
-    public description: string = "Remove duplicate tags";
-    public require: MARKUS_TOOL_REQUIRE_TYPE[] = [];
+export default class InternalToolTagDeduplicate implements toolbox.IMarkusTool {
+    public readonly name: string = "@Internal:Tag-Duplicate-Remover";
+    public readonly description: string = "Remove duplicate tags";
+    public readonly require: toolbox.MARKUS_TOOL_REQUIRE_TYPE[] = [];
+    public teapots: toolbox.IMarkusToolTeapot[] = [];
 
-    private _controller: MarkusController;
-    private _direct: MarkusDirect;
+    private _controller: toolbox.MarkusController;
+    private _direct: toolbox.MarkusDirect;
 
     public constructor() {
         this._controller = null as any;
         this._direct = null as any;
     }
 
-    public controller(controller: MarkusController): void {
+    public controller(controller: toolbox.MarkusController): void {
         this._controller = controller;
     }
 
-    public direct(direct: MarkusDirect): void {
+    public direct(direct: toolbox.MarkusDirect): void {
         this._direct = direct;
     }
 
@@ -33,16 +34,16 @@ export default class InternalToolTagDeduplicate implements IMarkusTool {
         return true;
     }
 
-    public async estimate(): Promise<IMarkusToolEstimate> {
+    public async estimate(): Promise<toolbox.IMarkusToolEstimate> {
         const count: number = await this._controller.Tag.getTagsCount();
         const time = Math.round(count / 2);
         return {
             time,
-            type: MARKUS_TOOL_ESTIMATE_TYPE.TIME,
+            type: toolbox.MARKUS_TOOL_ESTIMATE_TYPE.TIME,
         };
     }
 
-    public async execute(): Promise<IMarkusToolResult[]> {
+    public async execute(): Promise<toolbox.IMarkusToolResult[]> {
         const tags: ITagModel[] = await this._controller.Tag.getAllTags();
         const tagArr: UniqueArray<ITagModel> = new UniqueArray<ITagModel>();
 
