@@ -12,10 +12,10 @@ export class MockMarkusTool implements MarkusTool.IMarkusTool {
     public readonly require: MarkusTool.MARKUS_TOOL_REQUIRE_TYPE[];
     public teapots: MarkusTool.IMarkusToolTeapot[];
 
+    public shouldVerify: boolean = false;
+
     private _controller: MarkusTool.MarkusController;
     private _direct: MarkusTool.MarkusDirect;
-
-    public shouldVerify: boolean;
 
     public constructor(
         name: string,

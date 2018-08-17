@@ -48,7 +48,7 @@ export default class InternalToolTagDeduplicate implements toolbox.IMarkusTool {
         const tagArr: UniqueArray<ITagModel> = new UniqueArray<ITagModel>();
 
         for (let tag of tags) {
-            const value: ITagModel | null = this.isIncluded(tag, tagArr)
+            const value: ITagModel | null = this.isIncluded(tag, tagArr);
             if (value) {
                 const { latest, removing } = this.determineRemoving(tag, value);
                 await this._controller.Image.Risky_UpdateAllImageWithOldTagToANewTag(removing._id, latest._id);
@@ -84,6 +84,6 @@ export default class InternalToolTagDeduplicate implements toolbox.IMarkusTool {
         return {
             latest,
             removing,
-        }
+        };
     }
 }

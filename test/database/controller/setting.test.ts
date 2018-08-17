@@ -50,9 +50,10 @@ export const testSettingController = (): void => {
             let compareResult: boolean = false;
             try {
                 await Controller.Setting.getExternalSettingByName('nothing' as INTERNAL_SETTING);
-            }catch(err){
+            } catch (err) {
                 compareResult = compareError(error(ERROR_CODE.SETTING_NOT_FOUND), err);
             }
+            // tslint:disable-next-line
             expect(compareResult).to.be.true;
         }).timeout(3200);
 
@@ -65,9 +66,10 @@ export const testSettingController = (): void => {
             let compareResult: boolean = false;
             try {
                 await Controller.Setting.getInternalSettingByName('nothing' as INTERNAL_SETTING);
-            }catch(err){
+            } catch (err) {
                 compareResult = compareError(error(ERROR_CODE.SETTING_NOT_FOUND), err);
             }
+            // tslint:disable-next-line
             expect(compareResult).to.be.true;
         }).timeout(3200);
 

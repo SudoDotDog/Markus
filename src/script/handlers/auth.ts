@@ -93,7 +93,7 @@ export const validPermissionQueryMiddleware: middleware = async (req: Request, r
         next();
         return;
     }
-    
+
     const auth: string | undefined = req.query.authorization;
     if (auth) {
         if (auth === 'test') {

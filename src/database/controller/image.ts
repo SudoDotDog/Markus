@@ -88,8 +88,8 @@ export const Risky_UpdateAllImageWithOldTagToANewTag = async (oldTag: ObjectID, 
     });
 
     for (let image of results) {
-        for (let i: number = 0; i < image.tags.length; i++) {
-            if (image.tags[i].equals(newTag)) {
+        for (let tag of image.tags) {
+            if (tag.equals(newTag)) {
                 throw error(ERROR_CODE.IMAGE_HAVE_BOTH_DUPLICATE_TAGS);
             }
         }

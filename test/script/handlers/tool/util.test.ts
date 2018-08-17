@@ -4,7 +4,7 @@
  */
 
 import { expect } from 'chai';
-import { findToolFromToolbox, findToolAndMatchFromToolbox } from '../../../../src/script/handlers/tool/util';
+import { findToolAndMatchFromToolbox, findToolFromToolbox } from '../../../../src/script/handlers/tool/util';
 import { IMarkusTool } from '../../../../src/toolbox/toolbox';
 import { error, ERROR_CODE } from '../../../../src/util/error/error';
 import { MockMarkusTool } from '../../../mock/tool';
@@ -20,8 +20,9 @@ describe('test util of tool finding utils', (): void => {
         const testTool: MockMarkusTool = new MockMarkusTool('test', 'test', []);
         const exec: () => void = () => {
             const result: IMarkusTool = findToolFromToolbox([testTool], 'hello');
+            // tslint:disable-next-line
             expect(result).to.be.null;
-        };  
+        };
         expect(exec).to.be.throw(error(ERROR_CODE.TARGET_TOOL_NOT_FOUND).message);
     });
 
@@ -30,8 +31,9 @@ describe('test util of tool finding utils', (): void => {
         testTool.shouldVerify = false;
         const exec: () => void = () => {
             const result: IMarkusTool = findToolAndMatchFromToolbox([testTool], 'test');
+            // tslint:disable-next-line
             expect(result).to.be.null;
-        };  
+        };
         expect(exec).to.be.throw(error(ERROR_CODE.REQUEST_PATTERN_NOT_MATCHED).message);
     });
 });

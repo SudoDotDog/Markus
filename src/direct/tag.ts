@@ -40,7 +40,7 @@ export const getTagStringsNamesMapByTagIdStrings = async (ids: string[]): Promis
 export const getAllActiveTagUserFriendlyList = async (): Promise<ITagUserFriendly[]> => {
     const tags: ITagModel[] = await Controller.Tag.getAllActiveTags();
     const result: ITagUserFriendly[] = [];
-    for(let tag of tags){
+    for (let tag of tags) {
         const count: number = await Controller.Image.getImageCountByTagId(tag._id);
         result.push({
             name: tag.name,

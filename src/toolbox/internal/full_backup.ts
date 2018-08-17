@@ -58,11 +58,11 @@ export default class InternalToolTagDeduplicate implements toolbox.IMarkusTool {
             type: toolbox.MARKUS_TOOL_RESPONSE_TYPE.STRING,
             name: 'Logs',
             value: instanceLogResult.length,
-        },{
+        }, {
             type: toolbox.MARKUS_TOOL_RESPONSE_TYPE.STRING,
             name: 'Database_size',
             value: databaseZipResult.bytes,
-        },{
+        }, {
             type: toolbox.MARKUS_TOOL_RESPONSE_TYPE.STRING,
             name: 'Pictures_size',
             value: picturesZipResult.bytes,
