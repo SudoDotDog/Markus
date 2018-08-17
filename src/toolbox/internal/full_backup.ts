@@ -44,7 +44,7 @@ export default class InternalToolTagDeduplicate implements toolbox.IMarkusTool {
         return {
             time: 0,
             type: toolbox.MARKUS_TOOL_ESTIMATE_TYPE.TIME,
-        }
+        };
     }
 
     public async execute(database: string): Promise<toolbox.IMarkusToolResult[]> {
