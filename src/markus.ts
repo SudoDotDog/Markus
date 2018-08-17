@@ -41,7 +41,7 @@ const Tools: IMarkusTool[] = [
 ];
 
 const PreparesMiddleware: middleware[] = [
-    Handler.Auth.validPermissionBasicAuthMiddleware,
+    Handler.Auth.validPermissionBodyMiddleware,
 ];
 const PermissionsMiddleware: middleware[] = [];
 const AfterMiddleware: middleware[] = [];
