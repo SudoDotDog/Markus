@@ -40,10 +40,10 @@ const Tools: IMarkusTool[] = [
     new InternalTools.InternalFullBackup(),
 ];
 
-const PreparesMiddleware: middleware[] = [
+const PreparesMiddleware: middleware[] = [];
+const PermissionsMiddleware: middleware[] = [
     Handler.Auth.validPermissionBodyMiddleware,
 ];
-const PermissionsMiddleware: middleware[] = [];
 const AfterMiddleware: middleware[] = [];
 
 const Config: IConfig = {
