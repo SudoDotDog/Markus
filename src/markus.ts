@@ -12,6 +12,11 @@ import * as Handler from './script/handlers/import';
 import * as InternalTools from './toolbox/import';
 import { IMarkusTool } from './toolbox/toolbox';
 
+export enum MODE {
+    AMAZON_S3 = "AMAZONS3",
+    FILE_SYSTEM = "FILESYSTEM",
+}
+
 export interface IConfig {
     crossOrigin: string;
     host: string;
@@ -26,6 +31,7 @@ export interface IConfig {
     verbose: boolean;
     white404ImagePath: string;
     black404ImagePath: string;
+    mode: MODE;
     middleware: { // keep
         prepares: middleware[];
         permissions: middleware[];
@@ -62,6 +68,7 @@ const Config: IConfig = {
     verbose: false,
     white404ImagePath: Path.resolve('assets/404image_white.png'),
     black404ImagePath: Path.resolve('assets/404image_black.png'),
+    mode: MODE.FILE_SYSTEM,
     middleware: {
         prepares: PreparesMiddleware,
         permissions: PermissionsMiddleware,

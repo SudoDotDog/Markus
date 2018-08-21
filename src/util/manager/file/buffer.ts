@@ -4,7 +4,7 @@
  */
 
 import { hashBuffer } from '../../data/crypto';
-import { saveImageByBuffer } from '../save';
+import { saveImageByBuffer, saveS3ImageByBuffer } from '../save';
 import { IFileLink, IFileManager } from "./interface";
 
 export default class BufferFileManager implements IFileManager {
