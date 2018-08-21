@@ -118,7 +118,7 @@ export const getTagsCount = async (): Promise<number> => {
 };
 
 export const Risky_PermanentlyRemoveTag = async (tagId: ObjectID): Promise<void> => {
-    await TagModel.remove({
+    await TagModel.deleteMany({
         _id: tagId,
     });
     return;

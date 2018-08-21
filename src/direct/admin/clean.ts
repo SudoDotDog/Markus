@@ -11,10 +11,10 @@ import { SettingModel } from "../../database/model/setting";
 import { TagModel } from "../../database/model/tag";
 
 export const emptyDatabase = async (): Promise<void> => {
-    await AvatarModel.remove({});
-    await ImageModel.remove({});
-    await TagModel.remove({});
-    await FileModel.remove({});
-    await SettingModel.remove({});
+    await AvatarModel.deleteMany({});
+    await ImageModel.deleteMany({});
+    await TagModel.deleteMany({});
+    await FileModel.deleteMany({});
+    await SettingModel.deleteMany({});
     return;
 };
