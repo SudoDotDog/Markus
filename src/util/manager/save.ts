@@ -38,12 +38,20 @@ export const saveImageByBuffer: ImageSaveFunction = (folder: string, filename: s
 
 export const generateSaveS3ImageByBuffer: () => ImageSaveFunction = () => {
     const S3: AWS.S3 = new AWS.S3();
+    if (!Config.S3) {
+        throw error(ERROR_CODE.AMAZON_S3_CONFIG_NOT_FOUND);
+    }
+
     S3.config.update({
         accessKeyId: Config.S3.accessKeyId,
         secretAccessKey: Config.S3.secretAccessKey,
     });
     const saveS3ImageByBuffer: ImageSaveFunction = (folder: string, filename: string, buffer: Buffer): Promise<IFileLink> => {
         return new Promise<IFileLink>((resolve: (link: IFileLink) => void, reject: (error: Error) => void) => {
+            if (!Config.S3) {
+                throw error(ERROR_CODE.AMAZON_S3_CONFIG_NOT_FOUND);
+            }
+
             S3.putObject({
                 Bucket: Config.S3.bucket,
                 Key: folder + filename,

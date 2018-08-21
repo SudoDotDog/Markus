@@ -52,6 +52,8 @@ export enum ERROR_CODE {
     DEFAULT_TEST_ERROR = 902,
     INTERNAL_RESPONSE_AGENT_CAN_ONLY_SEND_TEXT_OR_FILE = 903,
 
+    AMAZON_S3_CONFIG_NOT_FOUND = 910,
+
     ASSERT_EXIST_ELEMENT_NOT_EXIST = 950,
     ASSERT_TYPE_NOT_MATCHED = 951,
     ASSERT_BOOLEAN_OPPOSITE = 952,
@@ -90,6 +92,7 @@ export const errorList: {
     901: 'Internal error, report it at github.com/sudo-dog/markus',
     902: 'Default test error',
     903: 'Internal error, response agent can only send file or text',
+    910: 'Amazon S3 config is required',
     950: 'Assert an element is exist but is not',
     951: 'Type of target element is not matched',
     952: 'Assert an opposite boolean',
