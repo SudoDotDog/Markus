@@ -4,8 +4,10 @@
  */
 
 import { hashBuffer } from '../../data/crypto';
-import { saveImageByBuffer, saveS3ImageByBuffer } from '../save';
+import { getSaveImageByBufferFunction, ImageSaveFunction } from '../save';
 import { IFileLink, IFileManager } from "./interface";
+
+const saveImageByBuffer: ImageSaveFunction = getSaveImageByBufferFunction();
 
 export default class BufferFileManager implements IFileManager {
     private _folder: string;

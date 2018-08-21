@@ -8,7 +8,7 @@ import Config from '../../markus';
 
 export const tempPath = (): string => {
     return Config.tempPath;
-}
+};
 
 export const pathBuilder = (folder: string, imagePath?: string): string => {
     if (imagePath) {

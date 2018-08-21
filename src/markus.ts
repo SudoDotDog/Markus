@@ -38,6 +38,12 @@ export interface IConfig {
         after: middleware[];
     };
     tools: IMarkusTool[];
+
+    S3?: {
+        bucket: string;
+        accessKeyId: string;
+        secretAccessKey: string;
+    };
 }
 
 const Tools: IMarkusTool[] = [

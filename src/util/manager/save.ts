@@ -3,6 +3,7 @@
  * @fileoverview Management Utils Save
  */
 
+import * as AWS from 'aws-sdk';
 import * as Fs from 'fs';
 import Config, { MODE } from '../../markus';
 import { mkPathDir } from '../data/file';
@@ -14,7 +15,7 @@ export type ImageSaveFunction = (folder: string, filename: string, buffer: Buffe
 
 export const getSaveImageByBufferFunction = () => {
     if (Config.mode === MODE.AMAZON_S3) {
-        return saveS3ImageByBuffer;
+        return generateSaveS3ImageByBuffer();
     }
     return saveImageByBuffer;
 };
@@ -35,6 +36,30 @@ export const saveImageByBuffer: ImageSaveFunction = (folder: string, filename: s
     });
 };
 
-export const saveS3ImageByBuffer: ImageSaveFunction = (folder: string, filename: string, buffer: Buffer): Promise<IFileLink> => {
+export const generateSaveS3ImageByBuffer: () => ImageSaveFunction = () => {
+    const S3: AWS.S3 = new AWS.S3();
+    S3.config.update({
+        accessKeyId: Config.S3.accessKeyId,
+        secretAccessKey: Config.S3.secretAccessKey,
+    });
+    const saveS3ImageByBuffer: ImageSaveFunction = (folder: string, filename: string, buffer: Buffer): Promise<IFileLink> => {
+        return new Promise<IFileLink>((resolve: (link: IFileLink) => void, reject: (error: Error) => void) => {
+            S3.putObject({
+                Bucket: Config.S3.bucket,
+                Key: folder + filename,
+                Body: buffer,
+                ACL: 'public-read',
+            }, (err: AWS.AWSError, data: AWS.S3.PutObjectOutput) => {
+                if (err) {
+                    reject(err);
+                }
 
+                resolve({
+                    folder,
+                    filename,
+                });
+            });
+        });
+    };
+    return saveS3ImageByBuffer;
 };

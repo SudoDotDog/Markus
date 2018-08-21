@@ -4,8 +4,10 @@
  */
 
 import { stringToMD5 } from '../../data/crypto';
-import { saveImageByBuffer } from '../save';
+import { getSaveImageByBufferFunction, ImageSaveFunction } from '../save';
 import { IFileLink, IFileManager } from "./interface";
+
+const saveImageByBuffer: ImageSaveFunction = getSaveImageByBufferFunction();
 
 export default class Base64FileManager implements IFileManager {
     private _folder: string;
