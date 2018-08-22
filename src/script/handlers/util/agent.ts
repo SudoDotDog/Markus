@@ -34,6 +34,16 @@ export class ResponseAgent {
         return this;
     }
 
+    public smartFileSend(path: string): ResponseAgent {
+        console.log(path, path.substring(0, 4));
+        if (path.substring(0, 4) === 'http') {
+            this.redirect(path);
+        } else {
+            this.addFile(path);
+        }
+        return this;
+    }
+
     public redirect(path: string): ResponseAgent {
         if (this._file || this._count > 0) {
             throw error(ERROR_CODE.INTERNAL_RESPONSE_AGENT_CAN_ONLY_SEND_TEXT_OR_FILE);

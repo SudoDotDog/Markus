@@ -33,6 +33,8 @@ export const validPermissionBodyMiddleware: middleware = async (req: Request, re
         } else {
             req.valid = false;
         }
+    } else {
+        req.valid = false;
     }
     next();
     return;
@@ -62,6 +64,8 @@ export const validPermissionBasicAuthMiddleware: middleware = async (req: Reques
         } else {
             req.valid = false;
         }
+    } else {
+        req.valid = false;
     }
     next();
     return;
@@ -89,6 +93,8 @@ export const validPermissionQueryMiddleware: middleware = async (req: Request, r
         } else {
             req.valid = false;
         }
+    } else {
+        req.valid = false;
     }
     next();
     return;

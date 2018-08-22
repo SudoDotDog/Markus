@@ -66,7 +66,7 @@ export const testScriptAuthHandlers = (): void => {
             // tslint:disable-next-line
             expect(result).to.be.not.null;
             // tslint:disable-next-line
-            expect(result.status).to.be.equal(401);
+            expect(request.valid).to.be.false;
             return;
         }).timeout(3200);
 
@@ -125,7 +125,7 @@ export const testScriptAuthHandlers = (): void => {
             // tslint:disable-next-line
             expect(result).to.be.not.null;
             // tslint:disable-next-line
-            expect(result.status).to.be.equal(401);
+            expect(request.valid).to.be.false;
             return;
         }).timeout(3200);
 
@@ -184,7 +184,7 @@ export const testScriptAuthHandlers = (): void => {
             // tslint:disable-next-line
             expect(result).to.be.not.null;
             // tslint:disable-next-line
-            expect(result.status).to.be.equal(401);
+            expect(request.valid).to.be.false;
             return;
         }).timeout(3200);
 

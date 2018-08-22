@@ -70,10 +70,10 @@ export const testScriptImageHandlers = (): void => {
         }).timeout(3200);
 
         it('get black bg image by id should return image data', async (): Promise<void> => {
-            const mock: MockHandler = new MockHandler();
+            const mock: MockHandler = new MockHandler(true);
             mock.param('id', testImage.id);
-            const { request, response } = mock.flush();
-            await Handlers.GetImage.imageGetBlankBlackHandler(request, response);
+            const { request, response, nextFunction } = mock.flush();
+            await Handlers.GetImage.imageGetBlankBlackHandler(request, response, nextFunction);
 
             const result: IMockHandlerResult = mock.end();
             // tslint:disable-next-line
@@ -84,9 +84,9 @@ export const testScriptImageHandlers = (): void => {
         }).timeout(3200);
 
         it('get black bg image by id should return image data even if the image is not exist', async (): Promise<void> => {
-            const mock: MockHandler = new MockHandler();
-            const { request, response } = mock.flush();
-            await Handlers.GetImage.imageGetBlankBlackHandler(request, response);
+            const mock: MockHandler = new MockHandler(true);
+            const { request, response, nextFunction } = mock.flush();
+            await Handlers.GetImage.imageGetBlankBlackHandler(request, response, nextFunction);
 
             const result: IMockHandlerResult = mock.end();
             // tslint:disable-next-line
