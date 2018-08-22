@@ -11,6 +11,7 @@ import { IImageModel } from '../database/model/image';
 import { ITagModel } from '../database/model/tag';
 import { mkPathDir } from './data/file';
 import { fileBuilder, tempPath } from './data/path';
+import { getImageLoadPathBuilder, ImageLoadFunction } from './manager/load';
 
 export const createTempFile = (content: string, type: string): string => {
     const tempFilePath: string = tempPath();
@@ -67,13 +68,14 @@ export const imageModelToImageListResponse = (image: IImageModel): IImageListRes
 };
 
 export const buildImageCallback = (image: IImageModel, file: IFileModel): IImageCallback => {
+    const loadPathBuilder: ImageLoadFunction = getImageLoadPathBuilder();
     return {
         id: image.id,
         createdAt: image.createdAt,
         encoding: file.encoding,
         mime: file.mime,
         original: file.original,
-        path: fileBuilder(file.folder, file.filename),
+        path: loadPathBuilder(file.folder, file.filename),
         size: file.size,
         tags: image.tags.map((id: ObjectID) => id.toString()),
     };

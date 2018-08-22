@@ -10,8 +10,6 @@
 import { NextFunction, Request, Response } from "express";
 import { middleware } from "../../interface";
 import { parseBasicAuthorization } from '../../util/data/auth';
-import { error, ERROR_CODE } from "../../util/error/error";
-import { RESPONSE } from '../../util/interface';
 
 /**
  * Middleware
