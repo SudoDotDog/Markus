@@ -9,6 +9,7 @@ import Config, { MODE } from '../../markus';
 import { mkPathDir } from '../data/file';
 import { fileBuilder, pathBuilder } from '../data/path';
 import { error, ERROR_CODE } from '../error/error';
+import { s3ExternalFileKeyBuilder } from '../external/s3';
 import { IFileLink } from './file/interface';
 
 export type ImageSaveFunction = (folder: string, filename: string, buffer: Buffer) => Promise<IFileLink>;
@@ -54,7 +55,7 @@ export const generateSaveS3ImageByBuffer: () => ImageSaveFunction = () => {
 
             S3.putObject({
                 Bucket: Config.S3.bucket,
-                Key: folder + '+' + filename,
+                Key: s3ExternalFileKeyBuilder(folder, filename),
                 Body: buffer,
                 ACL: 'public-read',
             }, (err: AWS.AWSError, data: AWS.S3.PutObjectOutput) => {

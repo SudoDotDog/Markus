@@ -10,8 +10,6 @@
 import { NextFunction, Request, Response } from "express";
 import { middleware } from "../../interface";
 import { parseBasicAuthorization } from '../../util/data/auth';
-import { error, ERROR_CODE } from "../../util/error/error";
-import { RESPONSE } from '../../util/interface';
 
 /**
  * Middleware
@@ -35,6 +33,8 @@ export const validPermissionBodyMiddleware: middleware = async (req: Request, re
         } else {
             req.valid = false;
         }
+    } else {
+        req.valid = false;
     }
     next();
     return;
@@ -64,6 +64,8 @@ export const validPermissionBasicAuthMiddleware: middleware = async (req: Reques
         } else {
             req.valid = false;
         }
+    } else {
+        req.valid = false;
     }
     next();
     return;
@@ -91,6 +93,8 @@ export const validPermissionQueryMiddleware: middleware = async (req: Request, r
         } else {
             req.valid = false;
         }
+    } else {
+        req.valid = false;
     }
     next();
     return;

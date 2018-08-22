@@ -43,6 +43,7 @@ export interface IConfig {
         bucket: string;
         accessKeyId: string;
         secretAccessKey: string;
+        getPath: string;
     };
 }
 

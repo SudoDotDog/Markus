@@ -66,9 +66,9 @@ export const imageGetBlankWhiteHandler = async (req: Request, res: Response, nex
     try {
         const id: ObjectID = new ObjectId(req.params.id);
         const callback: IImageCallback = await Direct.Image.getImageCallbackById(id);
-        res.agent.addFile(callback.path);
+        res.agent.smartFileSend(callback.path);
     } catch (err) {
-        res.agent.addFile(Config.white404ImagePath);
+        res.agent.smartFileSend(Config.white404ImagePath);
     } finally {
         next();
     }
@@ -83,13 +83,15 @@ export const imageGetBlankWhiteHandler = async (req: Request, res: Response, nex
  * @param {Response} res
  * @returns {Promise<void>}
  */
-export const imageGetBlankBlackHandler = async (req: Request, res: Response): Promise<void> => {
+export const imageGetBlankBlackHandler = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const id: ObjectID = new ObjectId(req.params.id);
         const callback: IImageCallback = await Direct.Image.getImageCallbackById(id);
-        res.status(200).sendFile(callback.path);
+        res.agent.smartFileSend(callback.path);
     } catch (err) {
-        res.status(200).sendFile(Config.black404ImagePath);
+        res.agent.smartFileSend(Config.white404ImagePath);
+    } finally {
+        next();
     }
     return;
 };

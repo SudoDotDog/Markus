@@ -13,7 +13,8 @@ declare global {
             manager: IFileManager;
             valid?: boolean;
         }
-        
+
+        // tslint:disable-next-line
         interface Response {
             agent: ResponseAgent;
         }
