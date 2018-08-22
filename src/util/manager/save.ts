@@ -54,7 +54,7 @@ export const generateSaveS3ImageByBuffer: () => ImageSaveFunction = () => {
 
             S3.putObject({
                 Bucket: Config.S3.bucket,
-                Key: folder + filename,
+                Key: folder + '+' + filename,
                 Body: buffer,
                 ACL: 'public-read',
             }, (err: AWS.AWSError, data: AWS.S3.PutObjectOutput) => {
