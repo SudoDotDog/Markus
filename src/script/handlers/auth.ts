@@ -35,14 +35,9 @@ export const validPermissionBodyMiddleware: middleware = async (req: Request, re
         } else {
             req.valid = false;
         }
-        next();
-        return;
-    } else {
-        res.status(401).send({
-            status: RESPONSE.FAILED,
-            error: error(ERROR_CODE.PERMISSION_VALID_FAILED),
-        });
     }
+    next();
+    return;
 };
 
 /**
@@ -69,14 +64,9 @@ export const validPermissionBasicAuthMiddleware: middleware = async (req: Reques
         } else {
             req.valid = false;
         }
-        next();
-    } else {
-        res.set('WWW-Authenticate', 'Basic realm=Key');
-        res.status(401).send({
-            status: RESPONSE.FAILED,
-            error: error(ERROR_CODE.PERMISSION_VALID_FAILED),
-        });
     }
+    next();
+    return;
 };
 
 /**
@@ -101,11 +91,7 @@ export const validPermissionQueryMiddleware: middleware = async (req: Request, r
         } else {
             req.valid = false;
         }
-        next();
-    } else {
-        res.status(401).send({
-            status: RESPONSE.FAILED,
-            error: error(ERROR_CODE.PERMISSION_VALID_FAILED),
-        });
     }
+    next();
+    return;
 };
