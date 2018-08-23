@@ -42,6 +42,42 @@ export const compressImagesByTag = async (tag: string): Promise<ICompressZipResu
 };
 
 /* istanbul ignore next */
+export const compressImageFromLocalStorageByTag = async (tag: string): Promise<ICompressZipResult> => {
+    const tempLocation: string = tempPath();
+    const medium: CompressMedium = new CompressMedium(tempLocation, appropriateCurrentDateName('Markus-Tag-' + tag));
+    const files: IFileModel[] = await Mix.Tag.getAllFilesByTag(tag);
+    const originalList: string[] = [];
+    for (let file of files) {
+        let original: string = file.original;
+        if (originalList.includes(file.original)) {
+            original = fixConflictName(original);
+        }
+        originalList.push(original);
+        medium.addFile(fileBuilder(file.folder, file.filename), original);
+    }
+    const result: ICompressZipResult = await medium.finalize(files.length * 150);
+    return result;
+};
+
+/* istanbul ignore next */
+export const compressImageFromAmazonS3ByTag = async (tag: string): Promise<ICompressZipResult> => {
+    const tempLocation: string = tempPath();
+    const medium: CompressMedium = new CompressMedium(tempLocation, appropriateCurrentDateName('Markus-Tag-' + tag));
+    const files: IFileModel[] = await Mix.Tag.getAllFilesByTag(tag);
+    const originalList: string[] = [];
+    for (let file of files) {
+        let original: string = file.original;
+        if (originalList.includes(file.original)) {
+            original = fixConflictName(original);
+        }
+        originalList.push(original);
+        medium.addFile(fileBuilder(file.folder, file.filename), original);
+    }
+    const result: ICompressZipResult = await medium.finalize(files.length * 150);
+    return result;
+};
+
+/* istanbul ignore next */
 export const createImageBackupCompressedArchiveFile = async (): Promise<ICompressZipResult> => {
     const tempLocation: string = tempPath();
     const result: ICompressZipResult = await zipFolder(Config.imagePath, tempLocation, appropriateCurrentDateName('Markus-Image-Backup'));
