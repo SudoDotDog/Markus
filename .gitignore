@@ -1,6 +1,14 @@
+# Node dependency
 node_modules
+
+# Build
 dist
 coverage
 .nyc_output
+
+# Temp and Test
 compress_test
 temp
+
+# Config file
+markus.conf
