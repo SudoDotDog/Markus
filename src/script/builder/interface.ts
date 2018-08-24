@@ -1,3 +1,9 @@
+/**
+ * @author WMXPY
+ * @description Route Builder
+ * @fileoverview Interfaces
+ */
+
 export interface IExpressBuilder {
     route: (route: IExpressRoute) => IExpressBuilder;
     routes: (routes: IExpressRoute[]) => IExpressBuilder;

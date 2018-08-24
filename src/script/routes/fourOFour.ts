@@ -1,4 +1,10 @@
-import { IExpressRoute } from '../builder/interface';
+/**
+ * @author WMXPY
+ * @description Routes
+ * @fileoverview 404 handler
+ */
+
+import { IExpressRoute, ROUTE_MODE } from '../builder/interface';
 
 export default class RouteAllFourOFour implements IExpressRoute {
     public readonly path: string = '*';
