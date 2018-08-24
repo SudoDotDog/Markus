@@ -20,9 +20,12 @@ export enum ROUTE_MODE {
 
 export interface IExpressRoute {
     readonly path: string;
-    readonly stack: any[];
     readonly mode: any;
+
+    readonly before: boolean;
     readonly authorization: boolean;
+    readonly stack: any[];
+    readonly after: boolean;
 
     available: (route: ROUTE_MODE) => boolean;
 }
