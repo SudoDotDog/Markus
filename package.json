@@ -40,7 +40,7 @@
   "homepage": "https://github.com/sudo-dog/Markus#readme",
   "dependencies": {
     "archiver": "^3.0.0",
-    "aws-sdk": "^2.298.0",
+    "aws-sdk": "^2.299.0",
     "bkc": "^3.1.2",
     "body-parser": "^1.18.3",
     "bson": "^3.0.2",
