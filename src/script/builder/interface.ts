@@ -4,9 +4,16 @@
  * @fileoverview Interfaces
  */
 
+import { Express, RequestHandler } from "express";
+import { IConfig } from "../../markus";
+
 export interface IExpressBuilder {
+    app: Express;
+
     route: (route: IExpressRoute) => IExpressBuilder;
     routes: (routes: IExpressRoute[]) => IExpressBuilder;
+    header: (name: string, value: string) => IExpressBuilder;
+
     flush: () => void;
 }
 
@@ -18,14 +25,21 @@ export enum ROUTE_MODE {
     ALL = 'ALL',
 }
 
+export type ExpressNextFunction = () => void;
+
 export interface IExpressRoute {
     readonly path: string;
     readonly mode: any;
 
-    readonly before: boolean;
+    readonly prepare: boolean;
     readonly authorization: boolean;
-    readonly stack: any[];
+    readonly stack: RequestHandler[];
     readonly after: boolean;
 
-    available: (route: ROUTE_MODE) => boolean;
+    available: (route: IConfig) => boolean;
+}
+
+export interface IExpressHeader {
+    name: string;
+    value: string;
 }

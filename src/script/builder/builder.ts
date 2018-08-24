@@ -4,16 +4,41 @@
  * @fileoverview Class
  */
 
-import { Express } from "express";
-import { IExpressBuilder, IExpressRoute } from "./interface";
+import * as express from "express";
+import Config from '../../markus';
+import { error, ERROR_CODE, handlerError } from "../../util/error/error";
+import { IExpressBuilder, IExpressHeader, IExpressRoute, ROUTE_MODE } from "./interface";
+
+export const internalExpressBuilderFlushHandler: express.RequestHandler = (req: express.Request, res: express.Response): void => {
+    try {
+        if (res.agent) {
+            res.agent.send();
+        } else {
+            throw error(ERROR_CODE.INTERNAL_ERROR);
+        }
+    } catch (err) {
+        handlerError(res, err);
+    }
+    return;
+};
 
 export default class ExpressBuilder implements IExpressBuilder {
     private _routes: IExpressRoute[];
-    private _app: Express;
+    private _app: express.Express;
+    private _headers: IExpressHeader[];
 
-    public constructor(app: Express) {
+    public constructor(app?: express.Express) {
         this._routes = [];
-        this._app = app;
+        this._headers = [];
+        if (app) {
+            this._app = app;
+        } else {
+            this._app = express();
+        }
+    }
+
+    public get app(): express.Express {
+        return this._app;
     }
 
     public route(route: IExpressRoute): IExpressBuilder {
@@ -26,7 +51,55 @@ export default class ExpressBuilder implements IExpressBuilder {
         return this;
     }
 
+    public header(name: string, value: string): IExpressBuilder {
+        this._headers.push({
+            name,
+            value,
+        });
+        return this;
+    }
+
     public flush() {
-        console.log(this._app);
+        this._routes.forEach(this._routeMount.bind(this));
+        return this._app;
+    }
+
+    protected _routeMount(route: IExpressRoute) {
+        if (!route.available(Config)) {
+            return;
+        }
+
+        const handlers: express.RequestHandler[] = [];
+        if (route.prepare) {
+            handlers.push(...Config.middleware.prepares);
+        }
+        if (route.authorization) {
+            handlers.push(...Config.middleware.permissions);
+        }
+        handlers.push(...route.stack);
+        if (route.after) {
+            handlers.push(...Config.middleware.after);
+        }
+        handlers.push(internalExpressBuilderFlushHandler);
+
+        switch (route.mode) {
+            case ROUTE_MODE.ALL:
+                this._app.all(route.path, ...handlers);
+                break;
+            case ROUTE_MODE.DELETE:
+                this._app.delete(route.path, ...handlers);
+                break;
+            case ROUTE_MODE.GET:
+                this._app.get(route.path, ...handlers);
+                break;
+            case ROUTE_MODE.POST:
+                this._app.post(route.path, ...handlers);
+                break;
+            case ROUTE_MODE.PUT:
+                this._app.put(route.path, ...handlers);
+                break;
+            default:
+                throw error(ERROR_CODE.INTERNAL_EXPRESS_AGENT);
+        }
     }
 }

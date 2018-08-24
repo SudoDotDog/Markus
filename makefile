@@ -3,6 +3,8 @@ dev := typescript/tsconfig.dev.json
 
 dbPath := F:/db/
 
+tsc := node_modules/.bin/tsc
+
 markus: dev service
 
 service: 
@@ -12,12 +14,12 @@ run:
 	@node ./dist/script/service/markus.js
 
 dev:
-	@tsc --p $(dev)
+	@$(tsc) --p $(dev)
 
 build: clean ubuild
 
 ubuild:
-	@tsc --p $(build)
+	@$(tsc) --p $(build)
 
 host:
 	@mongod --dbpath $(dbPath)
