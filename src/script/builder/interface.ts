@@ -7,7 +7,7 @@
 export interface IExpressBuilder {
     route: (route: IExpressRoute) => IExpressBuilder;
     routes: (routes: IExpressRoute[]) => IExpressBuilder;
-    flush: () => any;
+    flush: () => void;
 }
 
 export enum ROUTE_MODE {
