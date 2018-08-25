@@ -60,6 +60,9 @@ export class ResponseAgent {
 
     public addFile(path: string): ResponseAgent {
         this.checkFailed();
+        if (this._file) {
+            throw error(ERROR_CODE.INTERNAL_RESPONSE_CAN_ONLY_SEND_ONE_FILE);
+        }
         if (this._count > 0 || this._redirect) {
             throw error(ERROR_CODE.INTERNAL_RESPONSE_AGENT_CAN_ONLY_SEND_TEXT_OR_FILE);
         }

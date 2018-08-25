@@ -15,6 +15,10 @@ class Assert<T> {
         this._reverse = false;
     }
 
+    public get is(): Assert<T> {
+        return this;
+    }
+
     public get to(): Assert<T> {
         return this;
     }

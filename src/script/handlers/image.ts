@@ -98,6 +98,7 @@ export const imageGetBlankBlackHandler = async (req: Request, res: Response, nex
 
 /* istanbul ignore next */
 /**
+ * DEPRECATED, USE ROUTE VERSION INSTEAD
  * GET
  * get image zip file by tag
  *
@@ -116,6 +117,15 @@ export const imageCompressByTagHandler = async (req: Request, res: Response): Pr
     return;
 };
 
+/**
+ * POST
+ * Get tag list with user friendly format
+ *
+ * @param {Request} req
+ * @param {Response} res
+ * @param {NextFunction} next
+ * @returns {Promise<void>}
+ */
 export const allTagUserFriendlyListHandler = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         const tags: ITagUserFriendly[] = await Direct.Tag.getAllActiveTagUserFriendlyList();

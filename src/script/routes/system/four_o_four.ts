@@ -5,9 +5,9 @@
  */
 
 import { Request, RequestHandler, Response } from "express";
-import { IConfig } from '../../markus';
-import { error, ERROR_CODE } from "../../util/error/error";
-import { ExpressNextFunction, IExpressRoute, ROUTE_MODE } from '../builder/interface';
+import { IConfig, MODE } from '../../../markus';
+import { error, ERROR_CODE } from "../../../util/error/error";
+import { ExpressNextFunction, IExpressRoute, ROUTE_MODE } from '../../builder/interface';
 
 export default class RouteAllFourOFour implements IExpressRoute {
     public readonly path: string = '*';
@@ -21,7 +21,10 @@ export default class RouteAllFourOFour implements IExpressRoute {
     public readonly after: boolean = true;
 
     public available(config: IConfig) {
-        return true;
+        if (config.mode === MODE.FILE_SYSTEM) {
+            return true;
+        }
+        return false;
     }
 
     protected async handle(req: Request, res: Response, next: ExpressNextFunction): Promise<void> {

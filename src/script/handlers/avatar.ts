@@ -3,6 +3,9 @@
  * @fileoverview Avatar Handler
  */
 
+// tslint:disable-next-line
+/// <reference path="../../declare/global.ts" />
+
 import { Request, Response } from "express";
 import { IAvatarCallback } from '../../database/interface/avatar';
 import { IFileModel } from "../../database/model/file";

@@ -53,6 +53,7 @@ export enum ERROR_CODE {
     INTERNAL_RESPONSE_AGENT_CAN_ONLY_SEND_TEXT_OR_FILE = 903,
     INTERNAL_RESPONSE_ALREADY_FAILED = 904,
     INTERNAL_EXPRESS_AGENT = 905,
+    INTERNAL_RESPONSE_CAN_ONLY_SEND_ONE_FILE = 906,
 
     AMAZON_S3_CONFIG_NOT_FOUND = 910,
 
@@ -96,6 +97,7 @@ export const errorList: {
     903: 'Internal error, response agent can only send file or text',
     904: 'Internal error, response already failed',
     905: 'Internal error, express builder',
+    906: 'Internal error, response can only send one file',
     910: 'Amazon S3 config is required',
     950: 'Assert an element is exist but is not',
     951: 'Type of target element is not matched',
