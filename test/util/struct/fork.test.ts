@@ -25,7 +25,7 @@ describe('test queue data structure', (): void => {
         fork.add(3);
         expect(fork).to.be.lengthOf(3);
         expect(fork.list).to.be.deep.equal([
-            1, 2, 3,
+            1, 1, 3,
         ]);
     });
 
