@@ -4,13 +4,16 @@
  * @fileoverview Tool Util
  */
 
+import Config from "../../../markus";
 import { IMarkusTool } from "../../../toolbox/toolbox";
 import { error, ERROR_CODE } from "../../../util/error/error";
 
 export const findToolFromToolbox = (tools: IMarkusTool[], name: string): IMarkusTool => {
     for (let tool of tools) {
         if (tool.name === name) {
-            return tool;
+            if (tool.available(Config)) {
+                return tool;
+            }
         }
     }
     throw error(ERROR_CODE.TARGET_TOOL_NOT_FOUND);
