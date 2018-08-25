@@ -5,8 +5,8 @@
 
 import { expect } from 'chai';
 import * as mongoose from 'mongoose';
-import { testTagDeduplicateInternalTool } from './internal_db/tag_deduplicate.test';
 import { testFullBackupInternalTool } from './internal_db/full_backup.test';
+import { testTagDeduplicateInternalTool } from './internal_db/tag_deduplicate.test';
 
 describe('test internal tools', function (this: Mocha.Suite): void {
     let db: mongoose.Connection;

@@ -5,6 +5,7 @@
  */
 
 import { ITagModel } from "../../database/model/tag";
+import { IConfig } from "../../markus";
 import UniqueArray from "../../util/struct/uniqueArray";
 import * as toolbox from "../toolbox";
 
@@ -28,6 +29,10 @@ export default class InternalToolTagDeduplicate implements toolbox.IMarkusTool {
 
     public direct(direct: toolbox.MarkusDirect): void {
         this._direct = direct;
+    }
+
+    public available(config: IConfig): boolean {
+        return true;
     }
 
     public verify(): boolean {

@@ -6,6 +6,7 @@
 
 import * as Controller from '../database/controller/import';
 import * as Direct from '../direct/import';
+import { IConfig } from '../markus';
 
 export enum MARKUS_TOOL_REQUIRE_TYPE {
     STRING = "STRING",
@@ -46,9 +47,11 @@ export interface IMarkusTool {
     readonly require: MARKUS_TOOL_REQUIRE_TYPE[];
     teapots: IMarkusToolTeapot[];
 
+    available: (config: IConfig) => boolean;
+
     controller?: (controller: MarkusController) => void;
     direct?: (direct: MarkusDirect) => void;
-    
+
     estimate: (...args: any[]) => Promise<IMarkusToolEstimate>;
     execute: (...args: any[]) => Promise<IMarkusToolResult[]>;
     verify: (...args: any[]) => boolean;

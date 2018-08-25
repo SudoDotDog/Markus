@@ -9,6 +9,7 @@ import * as Controller from '../../../src/database/controller/import';
 import { IImageModel } from '../../../src/database/model/image';
 import { ITagModel } from '../../../src/database/model/tag';
 import * as Direct from '../../../src/direct/import';
+import Config from '../../../src/markus';
 import { InternalToolTagDeduplicate } from '../../../src/toolbox/import';
 import { IMarkusTool, IMarkusToolEstimate, MARKUS_TOOL_ESTIMATE_TYPE } from '../../../src/toolbox/toolbox';
 
@@ -78,6 +79,16 @@ export const testTagDeduplicateInternalTool = (): void => {
             // tslint:disable-next-line
             expect(estimate.type).to.be.equal(MARKUS_TOOL_ESTIMATE_TYPE.TIME);
             expect(estimate.time).to.be.gte(1);
+            return;
+        }).timeout(3200);
+
+        it('test available', async (): Promise<void> => {
+            const tool: IMarkusTool = new InternalToolTagDeduplicate();
+            (tool as any).controller(Controller);
+            (tool as any).direct(Direct);
+            const result: boolean = tool.available(Config);
+            // tslint:disable-next-line
+            expect(result).to.be.true;
             return;
         }).timeout(3200);
 

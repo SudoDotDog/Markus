@@ -4,6 +4,7 @@
  * @fileoverview Mock Markus Tool
  */
 
+import { IConfig } from "../../src/markus";
 import * as MarkusTool from "../../src/toolbox/toolbox";
 
 export class MockMarkusTool implements MarkusTool.IMarkusTool {
@@ -40,6 +41,10 @@ export class MockMarkusTool implements MarkusTool.IMarkusTool {
 
     public direct(direct: MarkusTool.MarkusDirect) {
         this._direct = direct;
+    }
+
+    public available(config: IConfig) {
+        return true;
     }
 
     public verify(): boolean {

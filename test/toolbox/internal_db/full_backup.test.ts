@@ -9,6 +9,7 @@ import * as Controller from '../../../src/database/controller/import';
 import { IImageModel } from '../../../src/database/model/image';
 import { ITagModel } from '../../../src/database/model/tag';
 import * as Direct from '../../../src/direct/import';
+import Config, { MODE } from '../../../src/markus';
 import { InternalFullBackup } from '../../../src/toolbox/import';
 import { IMarkusTool, IMarkusToolEstimate, IMarkusToolResult, MARKUS_TOOL_ESTIMATE_TYPE } from '../../../src/toolbox/toolbox';
 import { rmRFFolderSync } from '../../../src/util/data/file';
@@ -114,6 +115,38 @@ export const testFullBackupInternalTool = (): void => {
             expect(result[2].value).to.be.not.null;
             return;
         }).timeout(8900);
+
+        it('test when tool is not available', async (): Promise<void> => {
+            const restoreConfig: () => void = mockConfig({
+                mode: MODE.AMAZON_S3,
+            });
+
+            const tool: IMarkusTool = new InternalFullBackup();
+            (tool as any).controller(Controller);
+            (tool as any).direct(Direct);
+            const result: boolean = tool.available(Config);
+            // tslint:disable-next-line
+            expect(result).to.be.false;
+
+            restoreConfig();
+            return;
+        }).timeout(3200);
+
+        it('test when tool is available', async (): Promise<void> => {
+            const restoreConfig: () => void = mockConfig({
+                mode: MODE.FILE_SYSTEM,
+            });
+
+            const tool: IMarkusTool = new InternalFullBackup();
+            (tool as any).controller(Controller);
+            (tool as any).direct(Direct);
+            const result: boolean = tool.available(Config);
+            // tslint:disable-next-line
+            expect(result).to.be.true;
+
+            restoreConfig();
+            return;
+        }).timeout(3200);
 
         it('clean up temp file should be fine', async (): Promise<void> => {
             const tempPath: string = '../markus-temp';

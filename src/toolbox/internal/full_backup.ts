@@ -5,7 +5,7 @@
  */
 
 import * as Path from 'path';
-import Config from '../../markus';
+import Config, { IConfig, MODE } from '../../markus';
 import { appropriateCurrentDateName } from '../../util/data/date';
 import { tempPath } from "../../util/data/path";
 import * as compress from '../../util/execute/compress/compress';
@@ -31,6 +31,13 @@ export default class InternalToolTagDeduplicate implements toolbox.IMarkusTool {
 
     public direct(direct: toolbox.MarkusDirect): void {
         this._direct = direct;
+    }
+
+    public available(config: IConfig): boolean {
+        if (config.mode === MODE.FILE_SYSTEM) {
+            return true;
+        }
+        return false;
     }
 
     public verify(database: string): boolean {

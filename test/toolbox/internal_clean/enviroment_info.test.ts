@@ -6,6 +6,7 @@
 import { expect } from 'chai';
 import * as Controller from '../../../src/database/controller/import';
 import * as Direct from '../../../src/direct/import';
+import Config from '../../../src/markus';
 import { InternalEnvironmentInformation } from '../../../src/toolbox/import';
 import { IMarkusTool, IMarkusToolEstimate, IMarkusToolResult, MARKUS_TOOL_ESTIMATE_TYPE } from '../../../src/toolbox/toolbox';
 
@@ -23,6 +24,16 @@ describe('test environment information internal tool', (): void => {
         // tslint:disable-next-line
         expect(estimate.type).to.be.equal(MARKUS_TOOL_ESTIMATE_TYPE.IMMEDIATE);
         expect(estimate.time).to.be.equal(0);
+        return;
+    }).timeout(3200);
+
+    it('test available', async (): Promise<void> => {
+        const tool: IMarkusTool = new InternalEnvironmentInformation();
+        (tool as any).controller(Controller);
+        (tool as any).direct(Direct);
+        const result: boolean = tool.available(Config);
+        // tslint:disable-next-line
+        expect(result).to.be.true;
         return;
     }).timeout(3200);
 

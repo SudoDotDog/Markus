@@ -5,6 +5,7 @@
  */
 
 import * as OS from 'os';
+import { IConfig } from '../../markus';
 import * as toolbox from "../toolbox";
 
 export default class InternalToolTagDeduplicate implements toolbox.IMarkusTool {
@@ -29,6 +30,10 @@ export default class InternalToolTagDeduplicate implements toolbox.IMarkusTool {
         this._direct = direct;
     }
 
+    public available(config: IConfig): boolean {
+        return true;
+    }
+
     public verify(): boolean {
         return true;
     }
@@ -37,7 +42,7 @@ export default class InternalToolTagDeduplicate implements toolbox.IMarkusTool {
         return {
             time: 0,
             type: toolbox.MARKUS_TOOL_ESTIMATE_TYPE.IMMEDIATE,
-        }
+        };
     }
 
     public async execute(): Promise<toolbox.IMarkusToolResult[]> {

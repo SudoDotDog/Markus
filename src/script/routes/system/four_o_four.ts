@@ -21,10 +21,7 @@ export default class RouteAllFourOFour implements IExpressRoute {
     public readonly after: boolean = true;
 
     public available(config: IConfig) {
-        if (config.mode === MODE.FILE_SYSTEM) {
-            return true;
-        }
-        return false;
+        return true;
     }
 
     protected async handle(req: Request, res: Response, next: ExpressNextFunction): Promise<void> {
