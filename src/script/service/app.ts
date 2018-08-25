@@ -79,7 +79,8 @@ app.post('/v/buffer', ...prepares, uploadManager.generateMulterEngine('image'), 
 app.post('/v/base64', ...prepares, uploadManager.generateBase64Engine(), ...permissions, Handler.Avatar.avatarBase64Handler);
 
 // Handler(s) for Image List Get
-app.get('/tag/:tag/compress', ...prepares, Handler.GetImage.imageCompressByTagHandler);
+appBuilder.route(new Route.CompressByTag());
+// app.get('/tag/:tag/compress', ...prepares, Handler.GetImage.imageCompressByTagHandler);
 app.post('/tag', ...prepares, Handler.GetImage.imageGetListByTagHandler);
 
 // Handler(s) for Tag List Get
@@ -93,7 +94,7 @@ app.post('/deactivate/tag', ...prepares, ...permissions, Handler.Markus.Deactiva
 app.post('/list', ...prepares, Handler.Debug.OutputImageIdList);
 app.post('/empty', ...prepares, Handler.Debug.emptyDatabaseHandler);
 
-// Handler(s) for toolsvgb
+// Handler(s) for tools
 app.get('/tool', ...prepares, Handler.Tool.markusToolboxListHandler);
 app.post('/execute', ...prepares, ...permissions, Handler.Tool.markusToolboxExecuteHandler);
 

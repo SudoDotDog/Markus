@@ -31,7 +31,7 @@ export default class RouteCompressByTag implements IExpressRoute {
 
     protected async handler(req: Request, res: Response, next: ExpressNextFunction): Promise<void> {
         try {
-            const tag: string = req.params.tag;
+            const tag: string = req.params.tagId;
             const callback: ICompressZipResult = await Direct.Backup.compressImagesByTag(tag);
             res.agent.addFile(callback.path);
             next();

@@ -6,7 +6,7 @@
 
 import { Request, Response } from "express";
 import Config from '../../../markus';
-import { IMarkusTool, IMarkusToolboxInfo, IMarkusToolResult, IMarkusToolEstimate } from "../../../toolbox/toolbox";
+import { IMarkusTool, IMarkusToolboxInfo, IMarkusToolEstimate, IMarkusToolResult } from "../../../toolbox/toolbox";
 import { getInformationByIMarkusTools } from "../../../toolbox/util/parse";
 import { error, ERROR_CODE, handlerError } from "../../../util/error/error";
 import { ResponseAgent } from '../util/agent';

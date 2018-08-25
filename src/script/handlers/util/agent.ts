@@ -79,7 +79,6 @@ export class ResponseAgent {
     }
 
     public send() {
-        console.log(this._failed);
         if (this._failed) {
             this._response.status(this._failed.code).send({
                 status: RESPONSE.FAILED,

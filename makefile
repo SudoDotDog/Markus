@@ -2,8 +2,12 @@ build := typescript/tsconfig.build.json
 dev := typescript/tsconfig.dev.json
 
 dbPath := F:/db/
+ifeq ($(OS), Windows_NT)
+	tsc := .\node_modules\.bin\tsc
+else
+	tsc := node_modules/.bin/tsc
+endif
 
-tsc := node_modules/.bin/tsc
 
 markus: dev service
 
