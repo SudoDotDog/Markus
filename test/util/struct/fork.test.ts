@@ -45,6 +45,6 @@ describe('test queue data structure', (): void => {
         expect(result).to.be.true;
         const result2: boolean = fork.has((element) => element.name === 'test-3');
         // tslint:disable-next-line
-        expect(result).to.be.false;
+        expect(result2).to.be.false;
     });
 });
