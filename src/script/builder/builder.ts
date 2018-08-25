@@ -7,6 +7,7 @@
 import * as express from "express";
 import Config from '../../markus';
 import { error, ERROR_CODE, handlerError } from "../../util/error/error";
+import Fork from '../../util/struct/fork';
 import { IExpressBuilder, IExpressHeader, IExpressRoute, ROUTE_MODE } from "./interface";
 
 export const internalExpressBuilderFlushHandler: express.RequestHandler = (req: express.Request, res: express.Response): void => {
@@ -23,12 +24,12 @@ export const internalExpressBuilderFlushHandler: express.RequestHandler = (req: 
 };
 
 export default class ExpressBuilder implements IExpressBuilder {
-    private _routes: IExpressRoute[];
+    private _routes: Fork<IExpressRoute>;
     private _app: express.Express;
     private _headers: IExpressHeader[];
 
     public constructor(app?: express.Express) {
-        this._routes = [];
+        this._routes = new Fork<IExpressRoute>();
         this._headers = [];
         if (app) {
             this._app = app;
@@ -42,12 +43,22 @@ export default class ExpressBuilder implements IExpressBuilder {
     }
 
     public route(route: IExpressRoute): IExpressBuilder {
-        this._routes.push(route);
+        const exist: boolean = this._routes.has((element: IExpressRoute) => {
+            return (element.path === route.path)
+                && (element.mode === route.mode);
+        });
+        if (exist) {
+            throw error(ERROR_CODE.INTERNAL_EXPRESS_BUILDER_ROUTE_CANT_BE_SAME);
+        }
+
+        this._routes.add(route);
         return this;
     }
 
     public routes(routes: IExpressRoute[]): IExpressBuilder {
-        this._routes.push(...routes);
+        for (let route of routes) {
+            this.route(route);
+        }
         return this;
     }
 
@@ -60,7 +71,7 @@ export default class ExpressBuilder implements IExpressBuilder {
     }
 
     public flush() {
-        this._routes.forEach(this._routeMount.bind(this));
+        this._routes.list.forEach(this._routeMount.bind(this));
         return this._app;
     }
 

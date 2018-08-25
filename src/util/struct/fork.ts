@@ -19,11 +19,16 @@ export default class Fork<T> {
         return this._list.length;
     }
 
-    public add(element: T) {
-        this._list.push(element);
+    public get list(): T[] {
+        return this._list;
     }
 
-    public has(fn: (element: T) => boolean) {
+    public add(element: T): Fork<T> {
+        this._list.push(element);
+        return this;
+    }
+
+    public has(fn: (element: T) => boolean): boolean {
         for (let i of this._list) {
             if (fn(i)) {
                 return true;
