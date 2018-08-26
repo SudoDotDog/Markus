@@ -82,7 +82,7 @@ export const mockConfig = (config: {
 }): () => void => {
     const configTemp = Config;
 
-    (Config as any) = {...configTemp, ...config};
+    (Config as any) = { ...configTemp, ...config };
     return () => {
         (Config as any) = configTemp;
     };
@@ -168,6 +168,7 @@ export const mockWriteStream = (): () => {
     (fs as any).createWriteStream = (path: string) => {
         let finishFunc: eventCB;
         return {
+            writable: true,
             on: (event: string, cb: eventCB) => {
                 if (event === 'finish') {
                     finishFunc = cb;

@@ -24,22 +24,21 @@ export default class FileLogAgent {
         this.logError = this.logError.bind(this);
         this.logInfo = this.logInfo.bind(this);
         this.onError = this.onError.bind(this);
+        this.func = this.func.bind(this);
 
         this._stream.on('finish', this.logInfo);
         this._stream.on('error', this.onError);
     }
 
-    public func(): (content: string) => void {
-        return (content: string): void => {
-            if (!this._stream.writable) {
-                throw error(ERROR_CODE.LOG_STREAM_NOT_WRITABLE);
+    public func(content: string): void {
+        if (!this._stream.writable) {
+            throw error(ERROR_CODE.LOG_STREAM_NOT_WRITABLE);
+        }
+        this._stream.write(content, 'UTF8', (err: Error | null | undefined) => {
+            if (err) {
+                throw err;
             }
-            this._stream.write(content, 'UTF8', (err: Error) => {
-                if (err) {
-                    throw err;
-                }
-            });
-        };
+        });
     }
 
     public end(): void {
