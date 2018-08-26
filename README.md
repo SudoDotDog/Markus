@@ -37,6 +37,12 @@ node dist/script/service/service.js
 make
 ```
 
+## Test
+
+```bash
+make tests
+```
+
 ## Documents
 
 ### APIS

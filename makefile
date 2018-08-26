@@ -1,12 +1,16 @@
+# Paths
 build := typescript/tsconfig.build.json
 dev := typescript/tsconfig.dev.json
 dbPath := F:/db/
+
+# NPX functions
 ifeq ($(OS), Windows_NT)
 	tsc := .\node_modules\.bin\tsc
+	mocha := .\node_modules\.bin\mocha
 else
 	tsc := node_modules/.bin/tsc
+	mocha := node_modules/.bin/mocha
 endif
-
 
 markus: dev run
 
@@ -27,6 +31,10 @@ ubuild:
 host:
 	@mongod --dbpath $(dbPath)
 
+tests:
+	@echo "[INFO] Testing with Mocha"
+	@$(mocha)
+
 help:
 	@echo ""
 	@echo " ┌────────────── Markus Makefile Helps ───────────────────────────────────────────────┐ "
@@ -37,6 +45,7 @@ help:
 	@echo " │ make service │ Run application without build                                       │ "
 	@echo " │ make run     │ Run application without build                                       │ "
 	@echo " │ make dev     │ Build application with development typescript settings              │ "
+	@echo " │ make test    │ Test application with mocha and ts-node                             │ "
 	@echo " │ make build   │ Clean up and build application with production typescript settings  │ "
 	@echo " │ make ubuild  │ Build application with development typescript settings              │ "
 	@echo " │ make host    │ Start mongodb service with default dbPath                           │ "
