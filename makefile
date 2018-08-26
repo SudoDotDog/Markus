@@ -50,6 +50,8 @@ clean:
 ifeq ($(OS), Windows_NT)
 else
 	@rm -rf dist
+	@rm -rf .nyc-output
+	@rm -rf coverage
 endif
 
 install:

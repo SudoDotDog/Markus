@@ -11,9 +11,19 @@
 
 ## Install
 
+### Via Clone
+
 ```bash
 git clone https://github.com/sudo-dog/Markus.git
 make install
+```
+
+### Via script
+
+```bash
+curl -sSL https://raw.githubusercontent.com/sudo-dog/Markus/master/bin/install.sh | sudo sh -
+# or
+wget -qO- https://raw.githubusercontent.com/sudo-dog/Markus/master/bin/install.sh | sudo sh -
 ```
 
 ## Host
