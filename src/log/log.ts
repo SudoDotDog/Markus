@@ -9,9 +9,16 @@ import { LOG_MODE } from "./interface";
 
 export default class Log {
     private _mode: LOG_MODE;
+    private _func: (content: string) => void;
 
     public constructor(mode: LOG_MODE) {
         this._mode = mode;
+        this._func = console.log;
+    }
+
+    public func(func: (content: string) => void): Log {
+        this._func = func;
+        return this;
     }
 
     public error(str: string): Log {
@@ -20,7 +27,7 @@ export default class Log {
             LOG_MODE.WARNING,
             LOG_MODE.INFO,
         ]);
-        console.log(`[ERR!] ${appropriateDateStringWithTime(new Date())} ${str}`);
+        this._func(`[ERR!] ${appropriateDateStringWithTime(new Date())} ${str}`);
         return this;
     }
 
@@ -29,7 +36,7 @@ export default class Log {
             LOG_MODE.WARNING,
             LOG_MODE.INFO,
         ]);
-        console.log(`[WARN] ${appropriateDateStringWithTime(new Date())} ${str}`);
+        this._func(`[WARN] ${appropriateDateStringWithTime(new Date())} ${str}`);
         return this;
     }
 
@@ -37,7 +44,7 @@ export default class Log {
         this.expect([
             LOG_MODE.INFO,
         ]);
-        console.log(`[INFO] ${appropriateDateStringWithTime(new Date())} ${str}`);
+        this._func(`[INFO] ${appropriateDateStringWithTime(new Date())} ${str}`);
         return this;
     }
 
