@@ -26,8 +26,15 @@ export default class FileLogAgent {
         this.onError = this.onError.bind(this);
         this.func = this.func.bind(this);
 
-        this._stream.on('finish', this.logInfo);
+        this._stream.on('finish', () => {
+            this.logInfo('File Log Agent - Closed');
+        });
         this._stream.on('error', this.onError);
+    }
+
+    public approach(logAgent: Log): FileLogAgent {
+        this._logAgent = logAgent;
+        return this;
     }
 
     public func(content: string): void {

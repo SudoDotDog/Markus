@@ -69,4 +69,25 @@ describe('test log file agent class', (): void => {
             next();
         }, 200);
     }).timeout(600);
+
+    it('internal log agent', (): void => {
+        const restoreWriteableStream = mockWriteStream();
+        const restoreSync = monkFsSyncs();
+
+        const agent: Log = new Log(LOG_MODE.ALL);
+        const fileAgent: FileLogAgent = new FileLogAgent('test');
+        agent.func(fileAgent.func);
+        fileAgent.approach(agent);
+        agent.info('test');
+
+        fileAgent.end();
+        const result = restoreWriteableStream();
+        expect(agent).to.be.lengthOf(2);
+        expect(result.contentList).to.be.lengthOf(2);
+        expect(result.eventList).to.be.lengthOf(2);
+
+        const syncResult = restoreSync();
+        expect(syncResult.exist).to.be.lengthOf(1);
+        expect(syncResult.mkdir).to.be.lengthOf(1);
+    }).timeout(600);
 });
