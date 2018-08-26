@@ -9,12 +9,12 @@ import { NextFunction, Request, Response } from "express";
 import * as mongoose from "mongoose";
 import { middleware } from '../../interface';
 import Config from "../../markus";
+import ExpressBuilder from "../../service/builder/builder";
+import * as Route from '../../service/routes/import';
 import UploadManager from '../../util/manager/upload';
 import { markusVersion } from "../../util/struct/agent";
-import ExpressBuilder from "../builder/builder";
 import * as Handler from '../handlers/import';
 import { ResponseAgent } from "../handlers/util/agent";
-import * as Route from '../routes/import';
 
 mongoose.connect(
     Config.host + '/' + Config.database,
