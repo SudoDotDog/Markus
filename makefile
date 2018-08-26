@@ -1,6 +1,5 @@
 build := typescript/tsconfig.build.json
 dev := typescript/tsconfig.dev.json
-
 dbPath := F:/db/
 ifeq ($(OS), Windows_NT)
 	tsc := .\node_modules\.bin\tsc
@@ -9,20 +8,20 @@ else
 endif
 
 
-markus: dev service
-
-service: 
-	@node ./dist/script/service/markus.js
+markus: dev run
 
 run:
+	@echo "[INFO] Starting service"
 	@node ./dist/script/service/markus.js
 
 dev:
+	@echo "[INFO] Building for development"
 	@$(tsc) --p $(dev)
 
 build: clean ubuild
 
 ubuild:
+	@echo "[INFO] Building for production"
 	@$(tsc) --p $(build)
 
 host:
@@ -49,12 +48,13 @@ help:
 clean:
 ifeq ($(OS), Windows_NT)
 else
+	@echo "[INFO] Cleaning dist files"
 	@rm -rf dist
 	@rm -rf .nyc-output
 	@rm -rf coverage
 endif
 
 install:
-	@echo "Install Dependences From NPM"
+	@echo "[INFO] Install Dependences"
 	@npm install
 	@npm install --only=dev
