@@ -159,7 +159,7 @@ describe('test unique array data structure', (): void => {
         expect(array.list).to.be.deep.equal(cloned.list);
     });
 
-    it('find should return correct element if matched', (): void => {
+    it('function find should return correct element if matched', (): void => {
         const array: UniqueArray<number> = new UniqueArray<number>(1, 5, 3, 2, 4);
         const result: number | null = array.find((element: number) => {
             return element === 3;
