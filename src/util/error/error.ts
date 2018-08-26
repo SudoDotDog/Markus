@@ -47,6 +47,8 @@ export enum ERROR_CODE {
 
     UNIQUE_ARRAY_CREATION_FAILED = 810,
 
+    LOG_STREAM_NOT_WRITABLE = 840,
+
     UNKNOWN_ERROR_CODE = 900,
     INTERNAL_ERROR = 901,
     DEFAULT_TEST_ERROR = 902,
@@ -93,6 +95,7 @@ export const errorList: {
     600: 'Color internal error',
     601: 'Point internal error',
     810: 'Unique array creation failed',
+    840: 'Log stream not write able',
     900: 'Unknown error code',
     901: 'Internal error, report it at github.com/sudo-dog/markus',
     902: 'Default test error',
