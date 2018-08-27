@@ -17,7 +17,7 @@ export enum MODE {
     FILE_SYSTEM = "FILESYSTEM",
 }
 
-export interface IConfig {
+export interface IMarkusConfConfig {
     crossOrigin: string;
     host: string;
     database: string;
@@ -32,12 +32,6 @@ export interface IConfig {
     white404ImagePath: string;
     black404ImagePath: string;
     mode: MODE;
-    middleware: { // keep
-        prepares: middleware[];
-        permissions: middleware[];
-        after: middleware[];
-    };
-    tools: IMarkusTool[];
 
     S3?: {
         bucket: string;
@@ -45,6 +39,15 @@ export interface IConfig {
         secretAccessKey: string;
         getPath: string;
     };
+}
+
+export interface IConfig extends IMarkusConfConfig {
+    middleware: { // keep
+        prepares: middleware[];
+        permissions: middleware[];
+        after: middleware[];
+    };
+    tools: IMarkusTool[];
 }
 
 const Tools: IMarkusTool[] = [

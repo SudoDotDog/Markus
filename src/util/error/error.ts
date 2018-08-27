@@ -11,6 +11,8 @@ export enum ERROR_CODE {
     IMAGE_PATH_IS_NOT_ABSOLUTE = 100,
     DEBUG_ONLY_FUNCTION_CALLED_IN_PRODUCTION = 101,
 
+    MARKUS_CONFIG_FILE_SYNTEX_NOT_CORRECT = 130,
+
     EDGE_OUT_OF_BOUND = 155,
 
     IMAGE_GET_FAILED = 200,
@@ -73,6 +75,7 @@ export const errorList: {
 } = {
     100: 'Image path in config is not a absolute path',
     101: 'Debug function should only call in debug environment',
+    120: 'Syntax of markus config file is not correct',
     155: 'Edge out of bound',
     200: 'Image getting failed',
     201: 'Image saving failed',
