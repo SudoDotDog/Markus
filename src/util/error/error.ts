@@ -59,8 +59,9 @@ export enum ERROR_CODE {
     INTERNAL_EXPRESS_BUILDER_ROUTE_CANT_BE_SAME = 907,
     INTERNAL_COMPRESS_TARGET_FILE_NOT_FOUND = 908,
     INTERNAL_EXPRESS_BUILDER_EXTENSION_NAME_CANT_BE_SAME = 909,
+    INTERNAL_EXPRESS_BUILDER_PRE_MOUNT_CONFLICT = 910,
 
-    AMAZON_S3_CONFIG_NOT_FOUND = 910,
+    AMAZON_S3_CONFIG_NOT_FOUND = 930,
 
     ASSERT_EXIST_ELEMENT_NOT_EXIST = 950,
     ASSERT_TYPE_NOT_MATCHED = 951,
@@ -106,7 +107,9 @@ export const errorList: {
     906: 'Internal error, response can only send one file',
     907: 'Internal error, express builder route can not be same',
     908: 'Internal error, compress target file not found',
-    910: 'Amazon S3 config is required',
+    909: 'Internal error, express builder extension name can not be same',
+    910: 'Internal error, express builder pre mount conflict',
+    930: 'Amazon S3 config is required',
     950: 'Assert an element is exist but is not',
     951: 'Type of target element is not matched',
     952: 'Assert an opposite boolean',

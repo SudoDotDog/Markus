@@ -42,6 +42,7 @@ export default class ExpressBuilder implements IExpressBuilder {
 
         this._routeMount = this._routeMount.bind(this);
         this._extensionMount = this._extensionMount.bind(this);
+        this._extensionPreMount = this._extensionPreMount.bind(this);
     }
 
     public get app(): express.Express {
@@ -77,6 +78,10 @@ export default class ExpressBuilder implements IExpressBuilder {
         }
 
         this._extensions.add(extension);
+        if (extension.preMount) {
+            this._extensionPreMount(extension);
+        }
+
         return this;
     }
 
@@ -89,13 +94,28 @@ export default class ExpressBuilder implements IExpressBuilder {
     }
 
     public flush() {
-        this._routes.list.forEach(this._routeMount);
         this._extensions.list.forEach(this._extensionMount);
+        this._routes.list.forEach(this._routeMount);
+
         return this._app;
+    }
+
+    protected _extensionPreMount(extension: IExpressExtension) {
+        if (!extension.available(Config)) {
+            return;
+        }
+        if (!extension.preMount) {
+            throw error(ERROR_CODE.INTERNAL_EXPRESS_BUILDER_PRE_MOUNT_CONFLICT);
+        }
+
+        extension.install(this._app);
     }
 
     protected _extensionMount(extension: IExpressExtension) {
         if (!extension.available(Config)) {
+            return;
+        }
+        if (extension.preMount) {
             return;
         }
 

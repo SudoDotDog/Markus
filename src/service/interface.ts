@@ -46,6 +46,7 @@ export interface IExpressHeader {
 
 export interface IExpressExtension {
     readonly name: string;
+    readonly preMount: boolean;
 
     available: (config: IConfig) => boolean;
     install: (app: Express) => void;
