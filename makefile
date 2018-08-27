@@ -1,6 +1,8 @@
 # Paths
 build := typescript/tsconfig.build.json
 dev := typescript/tsconfig.dev.json
+script := typescript/tsconfig.script.json
+
 dbPath := F:/db/
 
 # NPX functions
@@ -13,27 +15,6 @@ else
 endif
 
 markus: dev run
-
-run:
-	@echo "[INFO] Starting service"
-	@node ./dist/script/service/markus.js
-
-dev:
-	@echo "[INFO] Building for development"
-	@$(tsc) --p $(dev)
-
-build: clean ubuild
-
-ubuild:
-	@echo "[INFO] Building for production"
-	@$(tsc) --p $(build)
-
-host:
-	@mongod --dbpath $(dbPath)
-
-tests:
-	@echo "[INFO] Testing with Mocha"
-	@$(mocha)
 
 help:
 	@echo ""
@@ -54,11 +35,41 @@ help:
 	@echo " └──────────────┴─────────────────────────────────────────────────────────────────────┘ "
 	@echo ""
 
+generate: buildScript
+	@echo "[INFO] Generating Handler Documents"
+	@node ./dist_script/gen/doc_handlers.js
+
+run:
+	@echo "[INFO] Starting service"
+	@node ./dist/script/service/markus.js
+
+dev:
+	@echo "[INFO] Building for development"
+	@$(tsc) --p $(dev)
+
+build: clean ubuild
+
+ubuild:
+	@echo "[INFO] Building for production"
+	@$(tsc) --p $(build)
+
+buildScript:
+	@echo "[INFO] Building scripts"
+	@$(tsc) --p $(script)
+
+host:
+	@mongod --dbpath $(dbPath)
+
+tests:
+	@echo "[INFO] Testing with Mocha"
+	@$(mocha)
+
 clean:
 ifeq ($(OS), Windows_NT)
 else
 	@echo "[INFO] Cleaning dist files"
 	@rm -rf dist
+	@rm -rf dist_script
 	@rm -rf .nyc_output
 	@rm -rf coverage
 endif

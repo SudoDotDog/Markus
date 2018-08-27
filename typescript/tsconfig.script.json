@@ -1,0 +1,29 @@
+{
+    "compileOnSave": false,
+    "compilerOptions": {
+        "alwaysStrict": true,
+        "outDir": "../dist_script",
+        "removeComments": true,
+        "downlevelIteration": true,
+        "inlineSourceMap": true,
+        "strict": true,
+        "noImplicitReturns": true,
+        "noImplicitAny": true,
+        "module": "commonjs",
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "moduleResolution": "node",
+        "target": "es5",
+        "lib": [
+            "es2016"
+        ]
+    },
+    "exclude": [
+        "node_modules",
+        "test",
+        "src"
+    ],
+    "include": [
+        "../script/**/*"
+    ]
+}

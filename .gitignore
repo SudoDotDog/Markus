@@ -3,6 +3,7 @@ node_modules
 
 # Build
 dist
+dist_script
 coverage
 .nyc_output
 
