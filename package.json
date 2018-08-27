@@ -24,7 +24,8 @@
       ".ts"
     ],
     "include": [
-      "src/**/*.ts"
+      "src/**/*.ts",
+      "script/**/*.ts"
     ],
     "instrument": true,
     "reporter": [
