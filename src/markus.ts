@@ -18,7 +18,7 @@ export enum MODE {
 }
 
 export interface IMarkusConfConfig {
-    crossOrigin: string;
+    crossOrigin?: string;
     host: string;
     database: string;
     imagePath: string;
@@ -65,7 +65,6 @@ const PermissionsMiddleware: middleware[] = [
 const AfterMiddleware: middleware[] = [];
 
 const Config: IConfig = {
-    crossOrigin: '*',
     host: 'mongodb://localhost:27017',
     database: 'markus-test-2',
     imagePath: 'F://path/image',

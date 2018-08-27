@@ -5,7 +5,6 @@
  */
 
 import { expect } from 'chai';
-import { readMarkusConfFileSync } from '../../../src/util/external/conf';
 
 describe('test util external conf', (): void => {
     it('read conf sync should return conf file bkc object', (): void => {

@@ -5,7 +5,7 @@
  */
 
 import bkc from 'bkc';
-import { ICallable } from 'bkc/dist/types/callable';
+import { ICallable, IBkcOptions } from 'bkc/dist/types/callable';
 import * as Fs from 'fs';
 import * as Path from 'path';
 import { IMarkusConfConfig, MODE } from '../../markus';
@@ -13,7 +13,6 @@ import { error, ERROR_CODE } from '../error/error';
 
 export const getMarkusConfigTemplate = (): IMarkusConfConfig => {
     return {
-        crossOrigin: '*',
         host: 'mongodb://localhost:27017',
         database: 'markus-test-2',
         imagePath: 'F://path/image',
@@ -33,11 +32,21 @@ export const getMarkusConfigTemplate = (): IMarkusConfConfig => {
 export default class MarkusConfigReader {
     private _config: IMarkusConfConfig;
 
-    public constructor(){
+    public constructor() {
         this._config = getMarkusConfigTemplate();
     }
-    
-    protected _buildConfig() {
+
+    public read() {
+        const path: string = this._getConfigPath();
+        const content: string = Fs.readFileSync(path, 'UTF8');
+        bkc(content, this._buildConfig());
+    }
+
+    protected _getConfigPath(): string {
+        return Path.join(__dirname, '..', '..', '..', 'markus.conf');
+    }
+
+    protected _buildConfig(): IBkcOptions {
         const externals: ICallable[] = [
             {
                 command: 'set',
@@ -50,38 +59,18 @@ export default class MarkusConfigReader {
                         throw error(ERROR_CODE.MARKUS_CONFIG_FILE_SYNTEX_NOT_CORRECT);
                     }
 
+                    const key: string = args[0];
+                    const value: any = args[1];
 
-                }
-            }
-        ]
+                    this._config[key] = value;
+                },
+            },
+        ];
+
+        return {
+            externals,
+            instants: [],
+            vars: [],
+        }
     }
 }
-
-
-
-export const readMarkusConfFileSync = () => {
-    const path: string = getConfFilePath();
-    const content: string = Fs.readFileSync(path, 'UTF8');
-    bkc(content, {
-        externals: [
-            {
-                command: 'hello',
-                func: (args: string[]) => {
-                    console.log(args);
-                }
-            }
-        ],
-        instants: [
-            {
-                command: 'yy',
-                func: (arg) => {
-                    return 1 + arg;
-                }
-            }
-        ]
-    });
-};
-
-export const getConfFilePath = (): string => {
-    return Path.join(__dirname, '..', '..', '..', 'markus.conf');
-};
