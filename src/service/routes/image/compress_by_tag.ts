@@ -1,7 +1,7 @@
 /**
  * @author WMXPY
  * @description Routes
- * @fileoverview 404 handler
+ * @fileoverview Compress By Tag handler
  */
 
 import { Request, RequestHandler, Response } from "express";
@@ -9,7 +9,7 @@ import * as Direct from "../../../direct/import";
 import { IConfig, MODE } from '../../../markus';
 import { handlerError } from "../../../util/error/error";
 import { ICompressZipResult } from "../../../util/execute/compress/compress";
-import { ExpressNextFunction, IExpressRoute, ROUTE_MODE } from '../../builder/interface';
+import { ExpressNextFunction, IExpressRoute, ROUTE_MODE } from '../../interface';
 
 export default class RouteCompressByTag implements IExpressRoute {
     public readonly path: string = '/tag/:tagId/compress';

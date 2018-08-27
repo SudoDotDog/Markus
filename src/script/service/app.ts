@@ -9,7 +9,7 @@ import { NextFunction, Request, Response } from "express";
 import * as mongoose from "mongoose";
 import { middleware } from '../../interface';
 import Config from "../../markus";
-import ExpressBuilder from "../../service/builder/builder";
+import ExpressBuilder from "../../service/builder";
 import * as Route from '../../service/routes/import';
 import UploadManager from '../../util/manager/upload';
 import { markusVersion } from "../../util/struct/agent";
@@ -33,6 +33,8 @@ const db: mongoose.Connection = mongoose.connection;
 db.on('error', console.log.bind(console, 'connection error:'));
 
 const app: express.Express = express();
+const appBuilder: ExpressBuilder = new ExpressBuilder(app);
+
 app.use(bodyParser.json({
     limit: Config.uploadLimit + 'mb',
 }));
@@ -57,8 +59,6 @@ const afters: middleware[] = [
     Handler.Markus.FlushHandler,
 ];
 
-const appBuilder: ExpressBuilder = new ExpressBuilder(app);
-
 // Handler(s) for user agent
 app.get('/', ...prepares, Handler.Markus.MarkusHandler, ...afters);
 app.get('/auth', ...prepares, ...permissions, Handler.Markus.MarkusHandler, ...afters);
@@ -79,7 +79,7 @@ app.post('/v/buffer', ...prepares, uploadManager.generateMulterEngine('image'), 
 app.post('/v/base64', ...prepares, uploadManager.generateBase64Engine(), ...permissions, Handler.Avatar.avatarBase64Handler);
 
 // Handler(s) for Image List Get
-appBuilder.route(new Route.CompressByTag());
+appBuilder.route(new Route.RouteCompressByTag());
 app.post('/tag', ...prepares, Handler.GetImage.imageGetListByTagHandler);
 
 // Handler(s) for Tag List Get

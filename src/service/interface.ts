@@ -5,7 +5,7 @@
  */
 
 import { Express, RequestHandler } from "express";
-import { IConfig } from "../../markus";
+import { IConfig } from "../markus";
 
 export interface IExpressBuilder {
     app: Express;

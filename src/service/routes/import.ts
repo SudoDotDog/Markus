@@ -4,8 +4,9 @@
  * @fileoverview Imports
  */
 
-import CompressByTag from './image/compress_by_tag';
+import RouteGetImage from './file/get_image';
+import RouteCompressByTag from './image/compress_by_tag';
 import RouteFourOFour from './system/four_o_four';
 
-export { CompressByTag, RouteFourOFour };
+export { RouteCompressByTag, RouteFourOFour, RouteGetImage };
 

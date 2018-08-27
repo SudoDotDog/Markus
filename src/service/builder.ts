@@ -5,9 +5,9 @@
  */
 
 import * as express from "express";
-import Config from '../../markus';
-import { error, ERROR_CODE, handlerError } from "../../util/error/error";
-import Fork from '../../util/struct/fork';
+import Config from '../markus';
+import { error, ERROR_CODE, handlerError } from "../util/error/error";
+import Fork from '../util/struct/fork';
 import { IExpressBuilder, IExpressHeader, IExpressRoute, ROUTE_MODE } from "./interface";
 
 export const internalExpressBuilderFlushHandler: express.RequestHandler = (req: express.Request, res: express.Response): void => {

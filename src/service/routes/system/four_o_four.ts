@@ -5,9 +5,9 @@
  */
 
 import { Request, RequestHandler, Response } from "express";
-import { IConfig, MODE } from '../../../markus';
+import { IConfig } from '../../../markus';
 import { error, ERROR_CODE } from "../../../util/error/error";
-import { ExpressNextFunction, IExpressRoute, ROUTE_MODE } from '../../builder/interface';
+import { ExpressNextFunction, IExpressRoute, ROUTE_MODE } from '../../interface';
 
 export default class RouteAllFourOFour implements IExpressRoute {
     public readonly path: string = '*';
