@@ -29,17 +29,24 @@ export type ExpressNextFunction = () => void;
 
 export interface IExpressRoute {
     readonly path: string;
-    readonly mode: any;
+    readonly mode: ROUTE_MODE;
 
     readonly prepare: boolean;
     readonly authorization: boolean;
     readonly stack: RequestHandler[];
     readonly after: boolean;
 
-    available: (route: IConfig) => boolean;
+    available: (config: IConfig) => boolean;
 }
 
 export interface IExpressHeader {
     name: string;
     value: string;
+}
+
+export interface IExpressExtension {
+    readonly name: string;
+
+    available: (config: IConfig) => boolean;
+    install: (app: Express) => void;
 }

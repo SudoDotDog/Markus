@@ -1,0 +1,30 @@
+/**
+ * @author WMXPY
+ * @description Extension
+ * @fileoverview Body Parser Json
+ */
+
+import * as bodyParser from "body-parser";
+import { Express } from "express";
+import { IConfig } from '../../markus';
+import { IExpressExtension } from '../interface';
+
+export default class ExtensionBodyParserJson implements IExpressExtension {
+    public readonly name: string = 'ME@Internal:Body-Parser-Json';
+
+    private _limit: number;
+
+    public constructor(uploadLimit: number) {
+        this._limit = uploadLimit;
+    }
+
+    public available(config: IConfig) {
+        return true;
+    }
+
+    public install(app: Express) {
+        app.use(bodyParser.json({
+            limit: this._limit + 'mb',
+        }));
+    }
+}

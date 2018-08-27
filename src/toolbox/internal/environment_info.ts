@@ -9,7 +9,7 @@ import { IConfig } from '../../markus';
 import * as toolbox from "../toolbox";
 
 export default class InternalToolTagDeduplicate implements toolbox.IMarkusTool {
-    public readonly name: string = "@Internal:Environment-Information";
+    public readonly name: string = "MT@Internal:Environment-Information";
     public readonly description: string = "Return Environment Information";
     public readonly require: toolbox.MARKUS_TOOL_REQUIRE_TYPE[] = [];
     public teapots: toolbox.IMarkusToolTeapot[] = [];

@@ -8,7 +8,7 @@ import * as express from "express";
 import Config from '../markus';
 import { error, ERROR_CODE, handlerError } from "../util/error/error";
 import Fork from '../util/struct/fork';
-import { IExpressBuilder, IExpressHeader, IExpressRoute, ROUTE_MODE } from "./interface";
+import { IExpressBuilder, IExpressExtension, IExpressHeader, IExpressRoute, ROUTE_MODE } from "./interface";
 
 export const internalExpressBuilderFlushHandler: express.RequestHandler = (req: express.Request, res: express.Response): void => {
     try {
@@ -25,17 +25,23 @@ export const internalExpressBuilderFlushHandler: express.RequestHandler = (req: 
 
 export default class ExpressBuilder implements IExpressBuilder {
     private _routes: Fork<IExpressRoute>;
+    private _extensions: Fork<IExpressExtension>;
     private _app: express.Express;
     private _headers: IExpressHeader[];
 
     public constructor(app?: express.Express) {
         this._routes = new Fork<IExpressRoute>();
+        this._extensions = new Fork<IExpressExtension>();
         this._headers = [];
+
         if (app) {
             this._app = app;
         } else {
             this._app = express();
         }
+
+        this._routeMount = this._routeMount.bind(this);
+        this._extensionMount = this._extensionMount.bind(this);
     }
 
     public get app(): express.Express {
@@ -62,6 +68,18 @@ export default class ExpressBuilder implements IExpressBuilder {
         return this;
     }
 
+    public use(extension: IExpressExtension): IExpressBuilder {
+        const exist: boolean = this._extensions.has((element: IExpressExtension) => {
+            return element.name === extension.name;
+        });
+        if (exist) {
+            throw error(ERROR_CODE.INTERNAL_EXPRESS_BUILDER_EXTENSION_NAME_CANT_BE_SAME);
+        }
+
+        this._extensions.add(extension);
+        return this;
+    }
+
     public header(name: string, value: string): IExpressBuilder {
         this._headers.push({
             name,
@@ -71,8 +89,17 @@ export default class ExpressBuilder implements IExpressBuilder {
     }
 
     public flush() {
-        this._routes.list.forEach(this._routeMount.bind(this));
+        this._routes.list.forEach(this._routeMount);
+        this._extensions.list.forEach(this._extensionMount);
         return this._app;
+    }
+
+    protected _extensionMount(extension: IExpressExtension) {
+        if (!extension.available(Config)) {
+            return;
+        }
+
+        extension.install(this._app);
     }
 
     protected _routeMount(route: IExpressRoute) {
