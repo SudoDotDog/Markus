@@ -44,7 +44,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.all('*', (req: Request, res: Response, next: NextFunction) => {
-    if(Config.crossOrigin){
+    if (Config.crossOrigin) {
         res.header("Access-Control-Allow-Origin", Config.crossOrigin);
     }
     res.header("X-Powered-By", 'Markus');
