@@ -36,6 +36,7 @@ export default class Log {
             LOG_MODE.ERROR,
             LOG_MODE.WARNING,
             LOG_MODE.INFO,
+            LOG_MODE.DEBUG,
         ])) {
             this._func(`[ERR!] ${appropriateDateStringWithTime(new Date())} ${str}`);
         }
@@ -46,6 +47,7 @@ export default class Log {
         if (this._expect([
             LOG_MODE.WARNING,
             LOG_MODE.INFO,
+            LOG_MODE.DEBUG,
         ])) {
             this._func(`[WARN] ${appropriateDateStringWithTime(new Date())} ${str}`);
         }
@@ -55,8 +57,18 @@ export default class Log {
     public info(str: string): Log {
         if (this._expect([
             LOG_MODE.INFO,
+            LOG_MODE.DEBUG,
         ])) {
             this._func(`[INFO] ${appropriateDateStringWithTime(new Date())} ${str}`);
+        }
+        return this;
+    }
+
+    public debug(str: string): Log {
+        if (this._expect([
+            LOG_MODE.DEBUG,
+        ])) {
+            this._func(`[DBUG] ${appropriateDateStringWithTime(new Date())} ${str}`);
         }
         return this;
     }
