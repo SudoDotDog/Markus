@@ -59,7 +59,7 @@ export default class MarkusConfigReader {
                         throw error(ERROR_CODE.MARKUS_CONFIG_FILE_SYNTAX_NOT_CORRECT);
                     }
 
-                    const key: string = args[0];
+                    const key: keyof IMarkusConfConfig = args[0] as any;
                     const value: any = args[1];
 
                     this._config[key] = value;
