@@ -68,6 +68,8 @@ export enum ERROR_CODE {
     ASSERT_EXIST_ELEMENT_NOT_EXIST = 950,
     ASSERT_TYPE_NOT_MATCHED = 951,
     ASSERT_BOOLEAN_OPPOSITE = 952,
+
+    INTERNAL_DOC_BUILDER_ROUTE_CANT_BE_SAME = 980,
 }
 
 export const errorList: {
@@ -116,6 +118,7 @@ export const errorList: {
     950: 'Assert an element is exist but is not',
     951: 'Type of target element is not matched',
     952: 'Assert an opposite boolean',
+    980: 'Doc service error, builder route can not be same'
 };
 
 /**

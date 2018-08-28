@@ -11,6 +11,7 @@ import { middleware } from '../../interface';
 import Config from "../../markus";
 import ExpressBuilder from "../../service/builder";
 import * as Route from '../../service/routes/import';
+import * as Extension from '../../service/extension/import';
 import UploadManager from '../../util/manager/upload';
 import { markusVersion } from "../../util/struct/agent";
 import * as Handler from '../handlers/import';
@@ -34,6 +35,8 @@ db.on('error', console.log.bind(console, 'connection error:'));
 
 const app: express.Express = express();
 const appBuilder: ExpressBuilder = new ExpressBuilder(app);
+
+appBuilder.use(new Extension.ExtensionDocGenerate());
 
 app.use(bodyParser.json({
     limit: Config.uploadLimit + 'mb',
