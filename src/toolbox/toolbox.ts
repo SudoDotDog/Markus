@@ -6,7 +6,7 @@
 
 import * as Controller from '../database/controller/import';
 import * as Direct from '../direct/import';
-import { IConfig } from '../markus';
+import { IConfig } from '../interface';
 
 export enum MARKUS_TOOL_REQUIRE_TYPE {
     STRING = "STRING",

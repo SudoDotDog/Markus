@@ -54,7 +54,23 @@ describe('test log main class', (): void => {
         expect(temps.logs).to.be.lengthOf(3);
     });
 
-    it('in info mode, all logs should be printed', (): void => {
+    it('in debug mode, debug should be printed', (): void => {
+        const agent: Log = new Log(LOG_MODE.DEBUG);
+        const temps: {
+            func: (content: string) => void;
+            logs: string[];
+        } = createSimpleMockLogFunction();
+        agent.func(temps.func);
+        agent.error('test')
+            .info('test')
+            .warning('test')
+            .debug('test');
+
+        expect(agent).to.be.lengthOf(4);
+        expect(temps.logs).to.be.lengthOf(4);
+    });
+
+    it('in info mode, without debug should be printed', (): void => {
         const agent: Log = new Log(LOG_MODE.INFO);
         const temps: {
             func: (content: string) => void;
@@ -63,7 +79,9 @@ describe('test log main class', (): void => {
         agent.func(temps.func);
         agent.error('test')
             .info('test')
-            .warning('test');
+            .warning('test')
+            .debug('test');
+
         expect(agent).to.be.lengthOf(3);
         expect(temps.logs).to.be.lengthOf(3);
     });
@@ -79,8 +97,9 @@ describe('test log main class', (): void => {
             .info('test')
             .warning('test')
             .debug('test');
-        expect(agent).to.be.lengthOf(3);
-        expect(temps.logs).to.be.lengthOf(3);
+
+        expect(agent).to.be.lengthOf(2);
+        expect(temps.logs).to.be.lengthOf(2);
     });
 
     it('in error mode, only error should be printed out', (): void => {

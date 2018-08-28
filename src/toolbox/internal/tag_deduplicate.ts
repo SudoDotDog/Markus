@@ -5,7 +5,7 @@
  */
 
 import { ITagModel } from "../../database/model/tag";
-import { IConfig } from "../../markus";
+import { IConfig } from "../../interface";
 import UniqueArray from "../../util/struct/uniqueArray";
 import * as toolbox from "../toolbox";
 

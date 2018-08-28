@@ -6,7 +6,7 @@
 
 import * as Controller from '../../../database/controller/import';
 import * as Direct from '../../../direct/import';
-import { IConfig } from '../../../markus';
+import { IConfig } from '../../../interface';
 import { IMarkusTool } from "../../../toolbox/toolbox";
 
 export const installToolbox = (Config: IConfig): IMarkusTool[] => {

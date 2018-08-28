@@ -6,7 +6,7 @@
 
 import * as bodyParser from "body-parser";
 import { Express } from "express";
-import { IConfig } from '../../markus';
+import { IConfig } from "../../interface";
 import { IExpressExtension } from '../interface';
 
 export default class ExtensionBodyParserJson implements IExpressExtension {

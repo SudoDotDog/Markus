@@ -3,7 +3,8 @@
  * @fileoverview Management Utils Load
  */
 
-import Config, { MODE } from "../../markus";
+import { MODE } from "../../interface";
+import Config from "../../markus";
 import { fileBuilder } from "../data/path";
 import { s3ExternalFilePathBuilder } from "../external/s3";
 

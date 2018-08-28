@@ -5,7 +5,8 @@
 
 import * as AWS from 'aws-sdk';
 import * as Fs from 'fs';
-import Config, { MODE } from '../../markus';
+import { MODE } from '../../interface';
+import Config from '../../markus';
 import { mkPathDir } from '../data/file';
 import { fileBuilder, pathBuilder } from '../data/path';
 import { error, ERROR_CODE } from '../error/error';

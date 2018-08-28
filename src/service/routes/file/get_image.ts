@@ -8,7 +8,7 @@ import { ObjectID, ObjectId } from "bson";
 import { Request, RequestHandler, Response } from "express";
 import { IImageCallback } from "../../../database/interface/image";
 import * as Direct from "../../../direct/import";
-import { IConfig } from '../../../markus';
+import { IConfig } from "../../../interface";
 import { ExpressNextFunction, IExpressRoute, ROUTE_MODE } from '../../interface';
 
 export default class RouteGetImageByPath implements IExpressRoute {

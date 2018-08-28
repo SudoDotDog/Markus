@@ -5,10 +5,10 @@
  */
 
 import bkc from 'bkc';
-import { ICallable, IBkcOptions } from 'bkc/dist/types/callable';
+import { IBkcOptions, ICallable } from 'bkc/dist/types/callable';
 import * as Fs from 'fs';
 import * as Path from 'path';
-import { IMarkusConfConfig, MODE } from '../../markus';
+import { IMarkusConfConfig, MODE } from '../../interface';
 import { error, ERROR_CODE } from '../error/error';
 
 export const getMarkusConfigTemplate = (): IMarkusConfConfig => {
@@ -26,8 +26,8 @@ export const getMarkusConfigTemplate = (): IMarkusConfConfig => {
         white404ImagePath: Path.resolve('assets/404image_white.png'),
         black404ImagePath: Path.resolve('assets/404image_black.png'),
         mode: MODE.FILE_SYSTEM,
-    }
-}
+    };
+};
 
 export default class MarkusConfigReader {
     private _config: IMarkusConfConfig;
@@ -52,11 +52,11 @@ export default class MarkusConfigReader {
                 command: 'set',
                 func: (args: string[]) => {
                     if (!(args instanceof Array)) {
-                        throw error(ERROR_CODE.MARKUS_CONFIG_FILE_SYNTEX_NOT_CORRECT);
+                        throw error(ERROR_CODE.MARKUS_CONFIG_FILE_SYNTAX_NOT_CORRECT);
                     }
 
                     if (args.length !== 2) {
-                        throw error(ERROR_CODE.MARKUS_CONFIG_FILE_SYNTEX_NOT_CORRECT);
+                        throw error(ERROR_CODE.MARKUS_CONFIG_FILE_SYNTAX_NOT_CORRECT);
                     }
 
                     const key: string = args[0];
@@ -71,6 +71,6 @@ export default class MarkusConfigReader {
             externals,
             instants: [],
             vars: [],
-        }
+        };
     }
 }

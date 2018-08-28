@@ -5,7 +5,8 @@
  */
 
 import * as Path from 'path';
-import Config, { IConfig, MODE } from '../../markus';
+import { IConfig, MODE } from '../../interface';
+import Config from '../../markus';
 import { appropriateCurrentDateName } from '../../util/data/date';
 import { tempPath } from "../../util/data/path";
 import * as compress from '../../util/execute/compress/compress';

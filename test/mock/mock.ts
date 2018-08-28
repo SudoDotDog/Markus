@@ -5,7 +5,8 @@
 
 import * as ChildProcess from 'child_process';
 import * as fs from 'fs';
-import Config, { IConfig } from '../../src/markus';
+import { IConfig } from '../../src/interface';
+import Config from '../../src/markus';
 import { error, ERROR_CODE } from '../../src/util/error/error';
 
 export class MockExpress {

@@ -5,7 +5,7 @@
  */
 
 import * as OS from 'os';
-import { IConfig } from '../../markus';
+import { IConfig } from '../../interface';
 import * as toolbox from "../toolbox";
 
 export default class InternalToolTagDeduplicate implements toolbox.IMarkusTool {

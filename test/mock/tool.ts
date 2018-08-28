@@ -4,7 +4,7 @@
  * @fileoverview Mock Markus Tool
  */
 
-import { IConfig } from "../../src/markus";
+import { IConfig } from "../../src/interface";
 import * as MarkusTool from "../../src/toolbox/toolbox";
 
 export class MockMarkusTool implements MarkusTool.IMarkusTool {
