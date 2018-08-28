@@ -77,9 +77,10 @@ describe('test log main class', (): void => {
         agent.func(temps.func);
         agent.error('test')
             .info('test')
-            .warning('test');
-        expect(agent).to.be.lengthOf(2);
-        expect(temps.logs).to.be.lengthOf(2);
+            .warning('test')
+            .debug('test');
+        expect(agent).to.be.lengthOf(3);
+        expect(temps.logs).to.be.lengthOf(3);
     });
 
     it('in error mode, only error should be printed out', (): void => {
