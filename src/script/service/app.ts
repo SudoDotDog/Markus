@@ -7,7 +7,7 @@ import * as bodyParser from "body-parser";
 import * as express from "express";
 import { NextFunction, Request, Response } from "express";
 import * as mongoose from "mongoose";
-import { middleware } from '../../interface';
+import { middleware, MODE } from '../../interface';
 import Config from "../../markus";
 import ExpressBuilder from "../../service/builder";
 import * as Route from '../../service/routes/import';
@@ -16,6 +16,10 @@ import UploadManager from '../../util/manager/upload';
 import { markusVersion } from "../../util/struct/agent";
 import * as Handler from '../handlers/import';
 import { ResponseAgent } from "../handlers/util/agent";
+import Log from '../../log/log';
+import { LOG_MODE } from "../../log/interface";
+
+const log: Log = new Log(Config.isDebug ? LOG_MODE.DEBUG : LOG_MODE.WARNING);
 
 mongoose.connect(
     Config.host + '/' + Config.database,
@@ -47,6 +51,8 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.all('*', (req: Request, res: Response, next: NextFunction) => {
+    req.log = log;
+
     if (Config.crossOrigin) {
         res.header("Access-Control-Allow-Origin", Config.crossOrigin);
     }
