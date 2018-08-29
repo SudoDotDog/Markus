@@ -5,10 +5,10 @@
  */
 
 import { Request, RequestHandler, Response } from "express";
-import DocRouteBuilder from './builder';
 import * as Route from '../service/routes/import';
+import DocRouteBuilder from './builder';
 
-export const DocHanlder: RequestHandler = (req: Request, res: Response): void => {
+export const DocHandler: RequestHandler = (req: Request, res: Response): void => {
     const docBuilder: DocRouteBuilder = new DocRouteBuilder();
     docBuilder.routes([
         new Route.RouteCompressByTag(),
@@ -16,6 +16,18 @@ export const DocHanlder: RequestHandler = (req: Request, res: Response): void =>
         new Route.RouteGetImage('black not found image', '/b'),
         new Route.RouteGetImage('white not found image', '/w'),
     ]);
-    
+
+    console.log(req.originalUrl);
+};
+
+export const DocIndexHandler: RequestHandler = (req: Request, res: Response): void => {
+    const docBuilder: DocRouteBuilder = new DocRouteBuilder();
+    docBuilder.routes([
+        new Route.RouteCompressByTag(),
+        new Route.RouteFourOFour(),
+        new Route.RouteGetImage('black not found image', '/b'),
+        new Route.RouteGetImage('white not found image', '/w'),
+    ]);
+
     console.log(req);
 };

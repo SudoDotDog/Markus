@@ -27,18 +27,18 @@ export enum ROUTE_MODE {
 
 export type ExpressNextFunction = () => void;
 
-interface IPRIVATE_ExpressAssertionType_UNION {
+interface IPrivateExpressAssertionTypeUNION {
     name: string;
     type: EXPRESS_ASSERTION_TYPES.ARRAY | EXPRESS_ASSERTION_TYPES.OBJECT;
     child: ExpressAssertionType;
 }
 
-interface IPRIVATE_ExpressAssertionType_END {
+interface IPrivateExpressAssertionTypeEND {
     name: string;
     type: EXPRESS_ASSERTION_TYPES.STRING | EXPRESS_ASSERTION_TYPES.BOOLEAN | EXPRESS_ASSERTION_TYPES.NUMBER;
 }
 
-export type ExpressAssertionType = IPRIVATE_ExpressAssertionType_UNION | IPRIVATE_ExpressAssertionType_END;
+export type ExpressAssertionType = IPrivateExpressAssertionTypeUNION | IPrivateExpressAssertionTypeEND;
 
 export enum EXPRESS_ASSERTION_TYPES {
     STRING = 'STRING',
@@ -48,7 +48,13 @@ export enum EXPRESS_ASSERTION_TYPES {
     OBJECT = 'OBJECT',
 }
 
+export interface IExpressHeader {
+    name: string;
+    value: string;
+}
+
 export interface IExpressRoute {
+    readonly name: string;
     readonly path: string;
     readonly mode: ROUTE_MODE;
 
@@ -57,17 +63,14 @@ export interface IExpressRoute {
     readonly stack: RequestHandler[];
     readonly after: boolean;
 
+    readonly ignoreInDoc?: boolean;
+
     readonly assertBody?: ExpressAssertionType[];
     readonly assertQuery?: ExpressAssertionType[];
 
     readonly doc?: IDocInformation;
 
     available: (config: IConfig) => boolean;
-}
-
-export interface IExpressHeader {
-    name: string;
-    value: string;
 }
 
 export interface IExpressExtension {

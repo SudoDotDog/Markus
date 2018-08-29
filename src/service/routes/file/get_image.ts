@@ -12,6 +12,7 @@ import { IConfig } from "../../../interface";
 import { ExpressNextFunction, IExpressRoute, ROUTE_MODE } from '../../interface';
 
 export default class RouteGetImageByPath implements IExpressRoute {
+    public readonly name: string = 'MR@Internal:Route-Get-Image-By-Path';
     public readonly path: string;
     public readonly mode: ROUTE_MODE = ROUTE_MODE.GET;
 

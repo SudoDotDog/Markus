@@ -5,7 +5,7 @@
  */
 
 import { Express } from "express";
-import { DocHanlder } from "../../doc/handler";
+import { DocHandler, DocIndexHandler } from "../../doc/handler";
 import { IConfig } from "../../interface";
 import { IExpressExtension } from '../interface';
 
@@ -21,6 +21,7 @@ export default class ExtensionDocGenerate implements IExpressExtension {
     }
 
     public install(app: Express) {
-        app.get('./doc/*', DocHanlder);
+        app.get('/doc', DocIndexHandler);
+        app.get('/doc/*', DocHandler);
     }
 }
