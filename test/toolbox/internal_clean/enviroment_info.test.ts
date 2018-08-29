@@ -6,7 +6,6 @@
 import { expect } from 'chai';
 import * as Controller from '../../../src/database/controller/import';
 import * as Direct from '../../../src/direct/import';
-import Config from '../../../src/markus';
 import { InternalEnvironmentInformation } from '../../../src/toolbox/import';
 import { IMarkusTool, IMarkusToolEstimate, IMarkusToolResult, MARKUS_TOOL_ESTIMATE_TYPE } from '../../../src/toolbox/toolbox';
 
@@ -31,7 +30,7 @@ describe('test environment information internal tool', (): void => {
         const tool: IMarkusTool = new InternalEnvironmentInformation();
         (tool as any).controller(Controller);
         (tool as any).direct(Direct);
-        const result: boolean = tool.available(Config);
+        const result: boolean = tool.available(global.MarkusConfig);
         // tslint:disable-next-line
         expect(result).to.be.true;
         return;
