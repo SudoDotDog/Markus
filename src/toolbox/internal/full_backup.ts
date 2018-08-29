@@ -6,7 +6,6 @@
 
 import * as Path from 'path';
 import { IConfig, MODE } from '../../interface';
-import Config from '../../markus';
 import { appropriateCurrentDateName } from '../../util/data/date';
 import { tempPath } from "../../util/data/path";
 import * as compress from '../../util/execute/compress/compress';
@@ -61,7 +60,7 @@ export default class InternalToolTagDeduplicate implements toolbox.IMarkusTool {
         const instancePath: string = Path.join(tempLocation, database);
 
         const databaseZipResult: compress.ICompressZipResult = await compress.zipFolder(instancePath, tempLocation, appropriateCurrentDateName(database + '-Database'));
-        const picturesZipResult: compress.ICompressZipResult = await compress.zipFolder(Config.imagePath, tempLocation, appropriateCurrentDateName(database + '-Pictures'));
+        const picturesZipResult: compress.ICompressZipResult = await compress.zipFolder(global.MarkusConfig.imagePath, tempLocation, appropriateCurrentDateName(database + '-Pictures'));
         return [{
             type: toolbox.MARKUS_TOOL_RESPONSE_TYPE.STRING,
             name: 'Logs',

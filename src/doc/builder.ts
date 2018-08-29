@@ -38,4 +38,18 @@ export default class DocRouteBuilder {
         }
         return this;
     }
+
+    public flush(): IExpressRoute[] {
+        const prebuilt:IExpressRoute[] = [];
+
+        for(let route of this._routes.list){
+            if(route.ignoreInDoc){
+                continue;
+            }
+            if(!route.available(global.MarkusConfig)){
+                continue;
+            }
+        }
+        return prebuilt;
+    }
 }

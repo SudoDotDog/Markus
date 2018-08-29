@@ -5,6 +5,7 @@
 
 import { expect } from 'chai';
 import * as mongoose from 'mongoose';
+import { initMarkusGlobalConfig } from '../../src/markus';
 import { testAvatarDirect } from './direct/avatar.test';
 import { testBackupDirect } from './direct/backup.test';
 import { testImageDirect } from './direct/image.test';
@@ -14,6 +15,7 @@ describe('test directs', function (this: Mocha.Suite): void {
     let db: mongoose.Connection;
 
     before(function (this: Mocha.Context, next: () => void): void {
+        initMarkusGlobalConfig();
         this.timeout(3000);
         mongoose.connect(
             'mongodb://localhost:27017/markus-unit-test',

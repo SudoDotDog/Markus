@@ -8,7 +8,7 @@ import { expect } from 'chai';
 import * as Path from 'path';
 import * as Handlers from '../../../../src/script/handlers/import';
 import { IMockHandlerResult, MockHandler } from '../../../mock/express';
-import { mockConfig } from '../../../mock/mock';
+import { mockConfig, mockExtensionConfig } from '../../../mock/mock';
 import { MockMarkusTool } from '../../../mock/tool';
 
 export const testScriptToolHandlers = (): void => {
@@ -17,10 +17,12 @@ export const testScriptToolHandlers = (): void => {
         it('test estimate handler', async (): Promise<void> => {
             const mock: MockHandler = new MockHandler();
             const mockTool = new MockMarkusTool('test', 'description', []);
-            const restoreConfig: () => void = mockConfig({
+            const restoreConfig: () => void = mockExtensionConfig({
                 tools: [mockTool],
-                tempPath: Path.resolve('./temp'),
             });
+            const restoreGlobalConfig: () => void = mockConfig({
+                tempPath: Path.resolve('./temp'),
+            })
             Handlers.Tool.rebuildTools();
 
             mock.body('name', 'test')
@@ -29,6 +31,7 @@ export const testScriptToolHandlers = (): void => {
             await Handlers.Tool.markusToolboxEstimateHandler(request, response);
 
             restoreConfig();
+            restoreGlobalConfig();
             Handlers.Tool.rebuildTools();
 
             const result: IMockHandlerResult = mock.end();
@@ -43,10 +46,12 @@ export const testScriptToolHandlers = (): void => {
         it('estimate handler should return 400 if input is not valid', async (): Promise<void> => {
             const mock: MockHandler = new MockHandler();
             const mockTool = new MockMarkusTool('test', 'description', []);
-            const restoreConfig: () => void = mockConfig({
+            const restoreConfig: () => void = mockExtensionConfig({
                 tools: [mockTool],
-                tempPath: Path.resolve('./temp'),
             });
+            const restoreGlobalConfig: () => void = mockConfig({
+                tempPath: Path.resolve('./temp'),
+            })
             Handlers.Tool.rebuildTools();
 
             mock.body('name', 'test');
@@ -54,6 +59,7 @@ export const testScriptToolHandlers = (): void => {
             await Handlers.Tool.markusToolboxEstimateHandler(request, response);
 
             restoreConfig();
+            restoreGlobalConfig();
             Handlers.Tool.rebuildTools();
 
             const result: IMockHandlerResult = mock.end();
@@ -66,10 +72,12 @@ export const testScriptToolHandlers = (): void => {
         it('test execute handler', async (): Promise<void> => {
             const mock: MockHandler = new MockHandler();
             const mockTool = new MockMarkusTool('test', 'description', []);
-            const restoreConfig: () => void = mockConfig({
+            const restoreConfig: () => void = mockExtensionConfig({
                 tools: [mockTool],
-                tempPath: Path.resolve('./temp'),
             });
+            const restoreGlobalConfig: () => void = mockConfig({
+                tempPath: Path.resolve('./temp'),
+            })
             Handlers.Tool.rebuildTools();
 
             mock.body('name', 'test')
@@ -78,6 +86,7 @@ export const testScriptToolHandlers = (): void => {
             await Handlers.Tool.markusToolboxExecuteHandler(request, response);
 
             restoreConfig();
+            restoreGlobalConfig();
             Handlers.Tool.rebuildTools();
 
             const result: IMockHandlerResult = mock.end();
@@ -92,10 +101,12 @@ export const testScriptToolHandlers = (): void => {
         it('execute handler should return 400 if input is not valid', async (): Promise<void> => {
             const mock: MockHandler = new MockHandler();
             const mockTool = new MockMarkusTool('test', 'description', []);
-            const restoreConfig: () => void = mockConfig({
+            const restoreConfig: () => void = mockExtensionConfig({
                 tools: [mockTool],
-                tempPath: Path.resolve('./temp'),
             });
+            const restoreGlobalConfig: () => void = mockConfig({
+                tempPath: Path.resolve('./temp'),
+            })
             Handlers.Tool.rebuildTools();
 
             mock.body('name', 'test');
@@ -103,6 +114,7 @@ export const testScriptToolHandlers = (): void => {
             await Handlers.Tool.markusToolboxExecuteHandler(request, response);
 
             restoreConfig();
+            restoreGlobalConfig();
             Handlers.Tool.rebuildTools();
 
             const result: IMockHandlerResult = mock.end();
@@ -115,16 +127,19 @@ export const testScriptToolHandlers = (): void => {
         it('test list handler', async (): Promise<void> => {
             const mock: MockHandler = new MockHandler();
             const mockTool = new MockMarkusTool('test', 'description', []);
-            const restoreConfig: () => void = mockConfig({
+            const restoreConfig: () => void = mockExtensionConfig({
                 tools: [mockTool],
-                tempPath: Path.resolve('./temp'),
             });
+            const restoreGlobalConfig: () => void = mockConfig({
+                tempPath: Path.resolve('./temp'),
+            })
             Handlers.Tool.rebuildTools();
 
             const { request, response } = mock.flush();
             await Handlers.Tool.markusToolboxListHandler(request, response);
 
             restoreConfig();
+            restoreGlobalConfig();
             Handlers.Tool.rebuildTools();
 
             const result: IMockHandlerResult = mock.end();

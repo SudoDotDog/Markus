@@ -8,7 +8,6 @@ import { NextFunction, Request, Response } from "express";
 import { IImageCallback, IImageUserFriendlyCallback } from "../../database/interface/image";
 import { ITagUserFriendly } from "../../database/interface/tag";
 import * as Direct from '../../direct/import';
-import Config from "../../markus";
 import { error, ERROR_CODE, handlerError } from "../../util/error/error";
 import { ICompressZipResult } from "../../util/execute/compress/compress";
 import { RESPONSE } from '../../util/interface';
@@ -68,7 +67,7 @@ export const imageGetBlankWhiteHandler = async (req: Request, res: Response, nex
         const callback: IImageCallback = await Direct.Image.getImageCallbackById(id);
         res.agent.smartFileSend(callback.path);
     } catch (err) {
-        res.agent.smartFileSend(Config.white404ImagePath);
+        res.agent.smartFileSend(global.MarkusConfig.white404ImagePath);
     } finally {
         next();
     }
@@ -89,7 +88,7 @@ export const imageGetBlankBlackHandler = async (req: Request, res: Response, nex
         const callback: IImageCallback = await Direct.Image.getImageCallbackById(id);
         res.agent.smartFileSend(callback.path);
     } catch (err) {
-        res.agent.smartFileSend(Config.white404ImagePath);
+        res.agent.smartFileSend(global.MarkusConfig.white404ImagePath);
     } finally {
         next();
     }

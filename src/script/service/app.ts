@@ -7,22 +7,23 @@ import * as bodyParser from "body-parser";
 import * as express from "express";
 import { NextFunction, Request, Response } from "express";
 import * as mongoose from "mongoose";
-import { middleware, MODE } from '../../interface';
-import Config from "../../markus";
+import { middleware } from '../../interface';
+import { LOG_MODE } from "../../log/interface";
+import Log from '../../log/log';
+import { initMarkusGlobalConfig, MarkusExtensionConfig } from "../../markus";
 import ExpressBuilder from "../../service/builder";
-import * as Route from '../../service/routes/import';
 import * as Extension from '../../service/extension/import';
+import * as Route from '../../service/routes/import';
 import UploadManager from '../../util/manager/upload';
 import { markusVersion } from "../../util/struct/agent";
 import * as Handler from '../handlers/import';
 import { ResponseAgent } from "../handlers/util/agent";
-import Log from '../../log/log';
-import { LOG_MODE } from "../../log/interface";
 
-const log: Log = new Log(Config.isDebug ? LOG_MODE.DEBUG : LOG_MODE.WARNING);
+initMarkusGlobalConfig();
 
+const log: Log = new Log(global.MarkusConfig.isDebug ? LOG_MODE.DEBUG : LOG_MODE.WARNING);
 mongoose.connect(
-    Config.host + '/' + Config.database,
+    global.MarkusConfig.host + '/' + global.MarkusConfig.database,
     { useNewUrlParser: true },
 );
 let clientVersion: string = '?';
@@ -43,18 +44,18 @@ const appBuilder: ExpressBuilder = new ExpressBuilder(app);
 appBuilder.use(new Extension.ExtensionDocGenerate());
 
 app.use(bodyParser.json({
-    limit: Config.uploadLimit + 'mb',
+    limit: global.MarkusConfig.uploadLimit + 'mb',
 }));
 app.use(bodyParser.urlencoded({
     extended: true,
-    limit: Config.uploadLimit + 'mb',
+    limit: global.MarkusConfig.uploadLimit + 'mb',
 }));
 
 app.all('*', (req: Request, res: Response, next: NextFunction) => {
     req.log = log;
 
-    if (Config.crossOrigin) {
-        res.header("Access-Control-Allow-Origin", Config.crossOrigin);
+    if (global.MarkusConfig.crossOrigin) {
+        res.header("Access-Control-Allow-Origin", global.MarkusConfig.crossOrigin);
     }
     res.header("X-Powered-By", 'Markus');
     res.header("X-Markus-Version", clientVersion);
@@ -63,10 +64,10 @@ app.all('*', (req: Request, res: Response, next: NextFunction) => {
 });
 
 const uploadManager: UploadManager = new UploadManager();
-const prepares: middleware[] = Config.middleware.prepares;
-const permissions: middleware[] = Config.middleware.permissions;
+const prepares: middleware[] = MarkusExtensionConfig.middleware.prepares;
+const permissions: middleware[] = MarkusExtensionConfig.middleware.permissions;
 const afters: middleware[] = [
-    ...Config.middleware.after,
+    ...MarkusExtensionConfig.middleware.after,
     Handler.Markus.FlushHandler,
 ];
 

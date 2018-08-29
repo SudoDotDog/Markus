@@ -3,9 +3,12 @@
  * @fileoverview Global declare
  */
 
+import { IConfig } from "../interface";
 import Log from "../log/log";
 import { ResponseAgent } from "../script/handlers/util/agent";
 import { IFileManager } from "../util/manager/file/import";
+
+
 
 declare global {
     namespace Express {
@@ -19,6 +22,12 @@ declare global {
         // tslint:disable-next-line
         interface Response {
             agent: ResponseAgent;
+        }
+    }
+
+    namespace NodeJS {
+        interface Global {
+            MarkusConfig: IConfig;
         }
     }
 }

@@ -6,7 +6,6 @@
 import { NextFunction, Request, Response } from 'express';
 import * as Multer from 'multer';
 import { middleware } from '../../interface';
-import Config from '../../markus';
 import { error, ERROR_CODE, handlerError } from '../error/error';
 import { unique } from "../image";
 import { Base64FileManager, BufferFileManager, IFileManager } from './file/import';
@@ -83,7 +82,7 @@ export default class UploadManager {
     } {
         const splited: string[] = mime.split('/');
         const type: string = splited.length >= 2 ? splited[1] : 'jpeg';
-        if (++this._count >= Config.imagePFolder) {
+        if (++this._count >= global.MarkusConfig.imagePFolder) {
             this._currentFolder = unique(9);
             this._count = 0;
         }

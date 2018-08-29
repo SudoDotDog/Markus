@@ -6,7 +6,6 @@
 
 import * as Mix from '../database/mix/import';
 import { IFileModel } from '../database/model/file';
-import Config from '../markus';
 import { appropriateCurrentDateName } from '../util/data/date';
 import { fixConflictName } from '../util/data/file';
 import { fileBuilder, tempPath } from '../util/data/path';
@@ -15,12 +14,12 @@ import { CompressMedium } from '../util/execute/compress/medium';
 import { databaseBackup, databaseRestore } from "../util/execute/disToleran";
 
 export const createBackupInstance = async (to: string, database?: string): Promise<string> => {
-    const result: string = await databaseBackup(Config.host, database || Config.database, to);
+    const result: string = await databaseBackup(global.MarkusConfig.host, database || global.MarkusConfig.database, to);
     return result;
 };
 
 export const restoreBackupInstance = async (from: string): Promise<string> => {
-    const result: string = await databaseRestore(Config.host, Config.database, from);
+    const result: string = await databaseRestore(global.MarkusConfig.host, global.MarkusConfig.database, from);
     return result;
 };
 
@@ -80,6 +79,6 @@ export const compressImageFromAmazonS3ByTag = async (tag: string): Promise<IComp
 /* istanbul ignore next */
 export const createImageBackupCompressedArchiveFile = async (): Promise<ICompressZipResult> => {
     const tempLocation: string = tempPath();
-    const result: ICompressZipResult = await zipFolder(Config.imagePath, tempLocation, appropriateCurrentDateName('Markus-Image-Backup'));
+    const result: ICompressZipResult = await zipFolder(global.MarkusConfig.imagePath, tempLocation, appropriateCurrentDateName('Markus-Image-Backup'));
     return result;
 };

@@ -9,7 +9,6 @@ import * as Controller from '../../../src/database/controller/import';
 import { IImageModel } from '../../../src/database/model/image';
 import { ITagModel } from '../../../src/database/model/tag';
 import * as Direct from '../../../src/direct/import';
-import Config from '../../../src/markus';
 import { InternalToolTagDeduplicate } from '../../../src/toolbox/import';
 import { IMarkusTool, IMarkusToolEstimate, MARKUS_TOOL_ESTIMATE_TYPE } from '../../../src/toolbox/toolbox';
 
@@ -86,7 +85,7 @@ export const testTagDeduplicateInternalTool = (): void => {
             const tool: IMarkusTool = new InternalToolTagDeduplicate();
             (tool as any).controller(Controller);
             (tool as any).direct(Direct);
-            const result: boolean = tool.available(Config);
+            const result: boolean = tool.available(global.MarkusConfig);
             // tslint:disable-next-line
             expect(result).to.be.true;
             return;

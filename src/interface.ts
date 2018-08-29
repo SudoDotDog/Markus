@@ -16,7 +16,7 @@ export enum MODE {
     FILE_SYSTEM = "FILESYSTEM",
 }
 
-export interface IMarkusConfConfig {
+export interface IConfig {
     crossOrigin?: string;
     host: string;
     database: string;
@@ -40,7 +40,7 @@ export interface IMarkusConfConfig {
     };
 }
 
-export interface IConfig extends IMarkusConfConfig {
+export interface IMarkusExtensionConfig {
     middleware: { // keep
         prepares: middleware[];
         permissions: middleware[];

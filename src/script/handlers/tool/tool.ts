@@ -5,7 +5,7 @@
  */
 
 import { Request, Response } from "express";
-import Config from '../../../markus';
+import { MarkusExtensionConfig } from "../../../markus";
 import { IMarkusTool, IMarkusToolboxInfo, IMarkusToolEstimate, IMarkusToolResult } from "../../../toolbox/toolbox";
 import { getInformationByIMarkusTools } from "../../../toolbox/util/parse";
 import { error, ERROR_CODE, handlerError } from "../../../util/error/error";
@@ -16,7 +16,7 @@ import { findToolAndMatchFromToolbox } from "./util";
 let Tools: IMarkusTool[] = [];
 
 export const rebuildTools = () => {
-    Tools = installToolbox(Config);
+    Tools = installToolbox(MarkusExtensionConfig);
 };
 
 setImmediate(rebuildTools);

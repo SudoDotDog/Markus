@@ -5,7 +5,7 @@
  */
 
 import * as express from "express";
-import Config from '../markus';
+import { MarkusExtensionConfig } from "../markus";
 import { error, ERROR_CODE, handlerError } from "../util/error/error";
 import Fork from '../util/struct/fork';
 import { IExpressBuilder, IExpressExtension, IExpressHeader, IExpressRoute, ROUTE_MODE } from "./interface";
@@ -101,7 +101,7 @@ export default class ExpressBuilder implements IExpressBuilder {
     }
 
     protected _extensionPreMount(extension: IExpressExtension) {
-        if (!extension.available(Config)) {
+        if (!extension.available(global.MarkusConfig)) {
             return;
         }
         if (!extension.preMount) {
@@ -112,7 +112,7 @@ export default class ExpressBuilder implements IExpressBuilder {
     }
 
     protected _extensionMount(extension: IExpressExtension) {
-        if (!extension.available(Config)) {
+        if (!extension.available(global.MarkusConfig)) {
             return;
         }
         if (extension.preMount) {
@@ -123,20 +123,20 @@ export default class ExpressBuilder implements IExpressBuilder {
     }
 
     protected _routeMount(route: IExpressRoute) {
-        if (!route.available(Config)) {
+        if (!route.available(global.MarkusConfig)) {
             return;
         }
 
         const handlers: express.RequestHandler[] = [];
         if (route.prepare) {
-            handlers.push(...Config.middleware.prepares);
+            handlers.push(...MarkusExtensionConfig.middleware.prepares);
         }
         if (route.authorization) {
-            handlers.push(...Config.middleware.permissions);
+            handlers.push(...MarkusExtensionConfig.middleware.permissions);
         }
         handlers.push(...route.stack);
         if (route.after) {
-            handlers.push(...Config.middleware.after);
+            handlers.push(...MarkusExtensionConfig.middleware.after);
         }
         handlers.push(internalExpressBuilderFlushHandler);
 

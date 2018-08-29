@@ -7,8 +7,6 @@ import { hashBuffer } from '../../data/crypto';
 import { getSaveImageByBufferFunction, ImageSaveFunction } from '../save';
 import { IFileLink, IFileManager } from "./interface";
 
-const saveImageByBuffer: ImageSaveFunction = getSaveImageByBufferFunction();
-
 export default class BufferFileManager implements IFileManager {
     private _folder: string;
     private _filename: string;
@@ -25,6 +23,8 @@ export default class BufferFileManager implements IFileManager {
     }
 
     public async save(): Promise<IFileLink> {
+        const saveImageByBuffer: ImageSaveFunction = getSaveImageByBufferFunction();
+
         const link: IFileLink = await saveImageByBuffer(this._folder, this._filename, this._buffer);
         return link;
     }
