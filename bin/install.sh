@@ -14,7 +14,7 @@
 # Print url of github issue, exit program
 fail()
 {
-    echo '> Go to https://github.com/sudo-dog/Markus for more information'
+    echo '[INFO] Go to https://github.com/sudo-dog/Markus for more information'
 
     # Exit program
     exit 0
@@ -25,33 +25,33 @@ fail()
 installNode()
 {
     if command -v yum >/dev/null 2>&1; then
-        echo '> Installing Node with yum'
+        echo '[INFO] Installing Node with yum'
         # Fetch source script
         curl --silent --location https://rpm.nodesource.com/setup_9.x | sudo bash -
         # Install nodeJS
         sudo yum -y install nodejs
         # Install install build tools
-        echo '> Installing build tools with yum'
+        echo '[INFO] Installing build tools with yum'
         sudo yum install gcc-c++ make
     elif command -v apt-get >/dev/null 2>&1; then
-        echo '> Installing Node with apt-get'
+        echo '[INFO] Installing Node with apt-get'
         # Fetch source script
         curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
         # Install nodeJS
         sudo apt-get install -y nodejs
         # Install install build tools
-        echo '> Installing build tools with apt-get'
+        echo '[INFO] Installing build tools with apt-get'
         sudo apt-get install -y build-essential
     elif command -v pacman >/dev/null 2>&1; then
-        echo '> Installing Node with pacman'
+        echo '[INFO] Installing Node with pacman'
         # Install nodeJS
         pacman -S nodejs npm
     elif command -v pkg >/dev/null 2>&1; then
-        echo '> Installing Node with pkg'
+        echo '[INFO] Installing Node with pkg'
         # Install nodeJS 
         pkg install nodejs-current
     else 
-        echo '> ! No exists package manager'
+        echo '[ERR!] No exists package manager'
         # Echo failed message and quit
         fail
     fi
@@ -60,7 +60,7 @@ installNode()
 # Install Markus
 installMarkus()
 {
-    echo '> Installing Markus with git'
+    echo '[INFO] Installing Markus with git'
     # Cloning Markus
     git clone https://github.com/sudo-dog/Markus.git markus
     cd markus
@@ -71,17 +71,17 @@ installMarkus()
 installGit()
 {
     if command -v git >/dev/null 2>&1; then
-        echo '> Git is already installed'
+        echo '[INFO] Git is already installed'
     else
-        echo '> Installing git'
+        echo '[INFO] Installing git'
         apt-get install git
         sudo apt-get install python-software-properties
         sudo apt-get install software-properties-common 
         # double check git is installed
         if command -v git >/dev/null 2>&1; then
-            echo '> Git Installed'
+            echo '[INFO] Git Installed'
         else
-            echo '> Git Install Failed'
+            echo '[ERR!] Git Install Failed'
             # Echo failed message and quit
             fail
         fi
@@ -93,16 +93,24 @@ installGit()
 if command -v node >/dev/null 2>&1; then
     # if node is exist, try if npm is exist
     if command -v npm >/dev/null 2>&1; then
-        # if npm exist, install Markus
-        installMarkus
+        # if npm exist, skip and install Markus
     else 
         # if npm in not exist, node js is not installed successfully
         installNode
-        installMarkus
     fi
+
+    # if git is exist, try if git is exist
+    if command -v git >/dev/null 2>&1; then
+        # if git exist, skip and install Markus
+    else 
+        # if git in not exist, install it
+        installGit
+    fi
+    
+    installMarkus
 else 
     installNode
     installMarkus
 fi
 
-echo '> Completed'
+echo '[INFO] Completed'
