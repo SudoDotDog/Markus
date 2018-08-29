@@ -2,6 +2,8 @@
  * @author WMXPY
  * @fileoverview Data Path Utils
  */
+// tslint:disable-next-line
+/// <reference path="../../declare/global.ts" />
 
 import * as Path from 'path';
 

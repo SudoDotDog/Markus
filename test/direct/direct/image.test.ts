@@ -12,7 +12,6 @@ import { IImageCallback, IImageUserFriendlyCallback } from '../../../src/databas
 import { IImageModel } from '../../../src/database/model/image';
 import { deactivateImageById } from '../../../src/direct/image';
 import * as Direct from '../../../src/direct/import';
-import Config from '../../../src/markus';
 import { IFileManager } from '../../../src/util/manager/file/import';
 import MockManager from '../../mock/manager';
 import { mockUnlinkSet } from '../../mock/mock';
@@ -39,7 +38,7 @@ export const testImageDirect = (): void => {
                 id: image.id,
                 mime: "test",
                 original: "test",
-                path: Path.join(Config.imagePath, 'folder', 'filename'),
+                path: Path.join(global.MarkusConfig.imagePath, 'folder', 'filename'),
                 size: 55,
                 tags: image.tags,
             });
