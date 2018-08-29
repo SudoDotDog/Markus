@@ -25,12 +25,15 @@ export default class DocCardTemplateRenderer implements IDocTemplateRenderer {
             .add('margin-bottom', '30px')
             .add('padding', '15px')
             .add('border', '1px solid black');
+        const textStyle = new StyleBuilder()
+            .add('font-size', '26px')
+            .add('font-weight', 'bold');
 
         return (`
         <div style="${outerStyle.build()}">
             <div>
-                <img src="${this._icon}" width="100px" height="100px">
-                ${this._title}
+                <img src="${this._icon}" width="100px" height="100px" border="1px solid black">
+                <span style="${textStyle.build()}">${this._title}</span>
             </div>
             <hr>
             ${this._content.join('<br>')}
