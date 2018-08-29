@@ -20,7 +20,10 @@ export default class DocOuterParentTemplateRenderer implements IDocTemplateRende
                 <title>Markus - Document</title>
             </head>
             <body>
-                ${this._childs.map((renderer: IDocTemplateRenderer) => renderer.build()).join('')}
+                <h1>Markus Documentation</h1>
+                <div>
+                    ${this._childs.map((renderer: IDocTemplateRenderer) => renderer.build()).join('')}
+                </div>
             </body>
         </html>
     `)

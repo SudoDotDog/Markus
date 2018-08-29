@@ -40,15 +40,16 @@ export default class DocRouteBuilder {
     }
 
     public flush(): IExpressRoute[] {
-        const prebuilt:IExpressRoute[] = [];
+        const prebuilt: IExpressRoute[] = [];
 
-        for(let route of this._routes.list){
-            if(route.ignoreInDoc){
+        for (let route of this._routes.list) {
+            if (route.ignoreInDoc) {
                 continue;
             }
-            if(!route.available(global.MarkusConfig)){
+            if (!route.available(global.MarkusConfig)) {
                 continue;
             }
+            prebuilt.push(route);
         }
         return prebuilt;
     }
