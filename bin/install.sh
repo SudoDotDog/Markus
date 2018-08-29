@@ -61,10 +61,18 @@ installNode()
 installMarkus()
 {
     echo '[INFO] Installing Markus with git'
+
     # Cloning Markus
     git clone https://github.com/sudo-dog/Markus.git markus
+
+    # Install dependences
     cd markus
     make install
+
+    # Build
+    make build
+    echo ''
+    echo '[INFO] Run "dist/script/service/markus.js"'
 }
 
 # Install git
