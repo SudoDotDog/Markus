@@ -45,15 +45,13 @@ make tests
 
 ## Documents
 
+### Config
+
+[Config your markus.conf](https://github.com/sudo-dog/Markus/wiki/Admin-Testing-API)
+
 ### APIS
 
 Host your markus service in debug mode, and launch `<markus host domain>/doc` to see auto generated documentation.
-
-> Following of docs are mostly out of date
-> -   [Admin](https://github.com/sudo-dog/Markus/wiki/Admin-Testing-API)
-> -   [Get Image](https://github.com/sudo-dog/Markus/wiki/Get-Image-API)
-> -   [Modify](https://github.com/sudo-dog/Markus/wiki/Modify-Image-API)
-> -   [Upload](https://github.com/sudo-dog/Markus/wiki/Upload-Image-API)
 
 ### Markus SDKs
 

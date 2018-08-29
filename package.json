@@ -2,7 +2,7 @@
   "name": "markus",
   "version": "3.3.3",
   "description": ":rainbow: My name is Markus; I am one of them; These are your images!",
-  "main": "dist/service.js",
+  "main": "dist/script/service/markus.js",
   "scripts": {
     "test": "mocha"
   },
