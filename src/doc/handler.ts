@@ -8,7 +8,9 @@ import { Request, RequestHandler, Response } from "express";
 import { IExpressRoute } from "../service/interface";
 import * as Route from '../service/routes/import';
 import DocRouteBuilder from './builder';
-import { docTemplateComponentCard } from './template/components/card';
+import DocCardTemplateRenderer from './template/components/card';
+import { IDocTemplateRenderer } from "./interface";
+import DocOuterParentTemplateRenderer from "./template/parent";
 
 export const getBuiltDocRoute = (): DocRouteBuilder => {
     const docBuilder: DocRouteBuilder = new DocRouteBuilder();
@@ -21,24 +23,18 @@ export const getBuiltDocRoute = (): DocRouteBuilder => {
     return docBuilder;
 };
 
-export const DocHandler: RequestHandler = (req: Request, res: Response): void => {
-    console.log(req.originalUrl);
-    res.send(getBuiltDocRoute().list.map((route: IExpressRoute) => {
-        return docTemplateComponentCard(route.name,
-            route.doc ? route.doc.name.en : route.name,
-            [route.doc ? route.doc.description.en : route.name]);
-    }).join(''));
-};
-
 export const DocIndexHandler: RequestHandler = (req: Request, res: Response): void => {
     console.log(req.originalUrl);
-    res.send(getBuiltDocRoute().list.map((route: IExpressRoute) => {
-        return docTemplateComponentCard('/a/' + route.name,
-            route.doc ? route.doc.name.en : route.name,
-            [
-                route.doc ? route.doc.description.en : route.name,
-                route.path,
-                route.mode,
-            ]);
-    }).join(''));
+    const cards: IDocTemplateRenderer[] = getBuiltDocRoute().list.map((route: IExpressRoute)=>{
+        return new DocCardTemplateRenderer('/a/' + route.name,
+        route.doc ? route.doc.name.en : route.name,
+        [
+            route.doc ? route.doc.description.en : route.name,
+            route.path,
+            route.mode,
+        ]);
+    });
+
+    const outer: IDocTemplateRenderer = new DocOuterParentTemplateRenderer(cards);
+    res.send(outer.build());
 };

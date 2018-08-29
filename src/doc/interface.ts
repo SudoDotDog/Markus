@@ -22,3 +22,7 @@ export interface IMarkusRouteInformation {
     readonly assertQuery?: ExpressAssertionType[];
     readonly doc?: IDocInformation;
 }
+
+export interface IDocTemplateRenderer {
+    build: () => string;
+}

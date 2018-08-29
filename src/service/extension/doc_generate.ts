@@ -5,7 +5,7 @@
  */
 
 import { Express } from "express";
-import { DocHandler, DocIndexHandler } from "../../doc/handler";
+import { DocIndexHandler } from "../../doc/handler";
 import { IConfig } from "../../interface";
 import { IExpressExtension } from '../interface';
 

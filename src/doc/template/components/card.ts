@@ -4,21 +4,36 @@
  * @fileoverview Card
  */
 
+import { IDocTemplateRenderer } from '../../interface';
 import StyleBuilder from '../style';
 
-export const docTemplateComponentCard = (icon: string, title: string, content: string[]) => {
-    const outerStyle = new StyleBuilder()
-        .add('width', '100%')
-        .add('border', '1px solid black');
+export default class DocCardTemplateRenderer implements IDocTemplateRenderer {
+    private _icon: string;
+    private _title: string;
+    private _content: string[];
 
-    return (`
+    public constructor(icon: string, title: string, content: string[]) {
+        this._icon = icon;
+        this._title = title;
+        this._content = content;
+    }
+
+    public build() {
+        const outerStyle = new StyleBuilder()
+            .add('width', 'auto')
+            .add('margin', '30px')
+            .add('padding', '15px')
+            .add('border', '1px solid black');
+
+        return (`
         <div style="${outerStyle.build()}">
             <div>
-                <img src="${icon}" width="100px" height="100px">
-                ${title}
+                <img src="${this._icon}" width="100px" height="100px">
+                ${this._title}
             </div>
             <hr>
-            ${content.join('<br>')}
+            ${this._content.join('<br>')}
         </div>
     `)
-};
+    }
+}
