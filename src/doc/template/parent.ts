@@ -17,7 +17,7 @@ export default class DocOuterParentTemplateRenderer implements IDocTemplateRende
         return (`
         <html>
             <head>
-                <title>Doc</title>
+                <title>Markus - Document</title>
             </head>
             <body>
                 ${this._childs.map((renderer: IDocTemplateRenderer) => renderer.build()).join('')}
