@@ -5,7 +5,6 @@
  */
 
 import { Request, RequestHandler, Response } from "express";
-import { IConfig } from "../../../interface";
 import { error, ERROR_CODE } from "../../../util/error/error";
 import { ExpressNextFunction, IExpressRoute, ROUTE_MODE } from '../../interface';
 
@@ -23,7 +22,7 @@ export default class RouteAllFourOFour implements IExpressRoute {
     ];
     public readonly after: boolean = true;
 
-    public available(config: IConfig) {
+    public available() {
         return true;
     }
 

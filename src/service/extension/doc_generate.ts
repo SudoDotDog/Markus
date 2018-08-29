@@ -6,15 +6,14 @@
 
 import { Express } from "express";
 import { DocIndexHandler } from "../../doc/handler";
-import { IConfig } from "../../interface";
 import { IExpressExtension } from '../interface';
 
 export default class ExtensionDocGenerate implements IExpressExtension {
     public readonly name: string = 'ME@Internal:Doc-Generate';
     public readonly preMount: boolean = false;
 
-    public available(config: IConfig) {
-        if (config.isDebug) {
+    public available() {
+        if (global.MarkusConfig.isDebug) {
             return true;
         }
         return false;

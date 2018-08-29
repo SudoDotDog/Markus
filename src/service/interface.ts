@@ -70,14 +70,14 @@ export interface IExpressRoute {
 
     readonly doc?: IDocInformation;
 
-    available: (config: IConfig) => boolean;
+    available: () => boolean;
 }
 
 export interface IExpressExtension {
     readonly name: string;
     readonly preMount: boolean;
 
-    available: (config: IConfig) => boolean;
+    available: () => boolean;
     install: (app: Express) => void;
 }
 

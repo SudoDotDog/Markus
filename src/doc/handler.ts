@@ -19,6 +19,7 @@ export const getBuiltDocRoute = (): DocRouteBuilder => {
         new Route.RouteFourOFour(),
         new Route.RouteGetImage('black not found image', '/b'),
         new Route.RouteGetImage('white not found image', '/w'),
+        new Route.RouteUploadAvatarByBuffer(true),
     ]);
     return docBuilder;
 };

@@ -6,7 +6,6 @@
 
 import * as bodyParser from "body-parser";
 import { Express } from "express";
-import { IConfig } from "../../interface";
 import { IExpressExtension } from '../interface';
 
 export default class ExtensionBodyParserJson implements IExpressExtension {
@@ -19,7 +18,7 @@ export default class ExtensionBodyParserJson implements IExpressExtension {
         this._limit = uploadLimit;
     }
 
-    public available(config: IConfig) {
+    public available() {
         return true;
     }
 

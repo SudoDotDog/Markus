@@ -101,7 +101,7 @@ export default class ExpressBuilder implements IExpressBuilder {
     }
 
     protected _extensionPreMount(extension: IExpressExtension) {
-        if (!extension.available(global.MarkusConfig)) {
+        if (!extension.available()) {
             return;
         }
         if (!extension.preMount) {
@@ -112,7 +112,7 @@ export default class ExpressBuilder implements IExpressBuilder {
     }
 
     protected _extensionMount(extension: IExpressExtension) {
-        if (!extension.available(global.MarkusConfig)) {
+        if (!extension.available()) {
             return;
         }
         if (extension.preMount) {
@@ -123,7 +123,7 @@ export default class ExpressBuilder implements IExpressBuilder {
     }
 
     protected _routeMount(route: IExpressRoute) {
-        if (!route.available(global.MarkusConfig)) {
+        if (!route.available()) {
             return;
         }
 

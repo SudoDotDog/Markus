@@ -70,6 +70,7 @@ export enum ERROR_CODE {
     ASSERT_BOOLEAN_OPPOSITE = 952,
 
     INTERNAL_DOC_BUILDER_ROUTE_CANT_BE_SAME = 980,
+    INTERNAL_DOC_CONSTRUCTOR_NOT_FUFILLED = 981,
 }
 
 export const errorList: {
@@ -119,6 +120,7 @@ export const errorList: {
     951: 'Type of target element is not matched',
     952: 'Assert an opposite boolean',
     980: 'Doc service error, builder route can not be same',
+    981: 'Internal error, constructure must be filled out of doc mode',
 };
 
 /**

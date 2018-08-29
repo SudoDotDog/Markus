@@ -46,7 +46,7 @@ export default class DocRouteBuilder {
             if (route.ignoreInDoc) {
                 continue;
             }
-            if (!route.available(global.MarkusConfig)) {
+            if (!route.available()) {
                 continue;
             }
             prebuilt.push(route);
