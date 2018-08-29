@@ -8,12 +8,12 @@ import bkc from 'bkc';
 import { IBkcOptions, ICallable } from 'bkc/dist/types/callable';
 import * as Fs from 'fs';
 import * as Path from 'path';
-import { IMarkusConfConfig } from '../../interface';
+import { IConfig } from '../../interface';
 import { error, ERROR_CODE } from '../error/error';
 import { getMarkusConfigTemplate } from './template';
 
 export default class MarkusConfigReader {
-    private _config: IMarkusConfConfig;
+    private _config: IConfig;
 
     public constructor() {
         this._config = getMarkusConfigTemplate();
@@ -42,7 +42,7 @@ export default class MarkusConfigReader {
                         throw error(ERROR_CODE.MARKUS_CONFIG_FILE_SYNTAX_NOT_CORRECT);
                     }
 
-                    const key: keyof IMarkusConfConfig = args[0] as any;
+                    const key: keyof IConfig = args[0] as any;
                     const value: any = args[1];
 
                     this._config[key] = value;

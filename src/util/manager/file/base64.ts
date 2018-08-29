@@ -7,8 +7,6 @@ import { stringToMD5 } from '../../data/crypto';
 import { getSaveImageByBufferFunction, ImageSaveFunction } from '../save';
 import { IFileLink, IFileManager } from "./interface";
 
-const saveImageByBuffer: ImageSaveFunction = getSaveImageByBufferFunction();
-
 export default class Base64FileManager implements IFileManager {
     private _folder: string;
     private _filename: string;
@@ -25,6 +23,8 @@ export default class Base64FileManager implements IFileManager {
     }
 
     public async save(): Promise<IFileLink> {
+        const saveImageByBuffer: ImageSaveFunction = getSaveImageByBufferFunction();
+        
         const buffer: Buffer = Buffer.from(this._base64, 'base64');
         const link: IFileLink = await saveImageByBuffer(this._folder, this._filename, buffer);
         return link;

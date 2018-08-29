@@ -5,9 +5,9 @@
  */
 
 import * as Path from 'path';
-import { IMarkusConfConfig, MODE } from "../../interface";
+import { IConfig, MODE } from "../../interface";
 
-export const getMarkusConfigTemplate = (): IMarkusConfConfig => {
+export const getMarkusConfigTemplate = (): IConfig => {
     return {
         host: 'mongodb://localhost:27017',
         database: 'markus-test-2',

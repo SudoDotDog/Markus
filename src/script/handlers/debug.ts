@@ -7,7 +7,6 @@ import { Request, Response } from "express";
 import * as Controller from '../../database/controller/import';
 import { IImageListResponse } from "../../database/interface/image";
 import * as Direct from '../../direct/import';
-import Config from "../../markus";
 import { error, ERROR_CODE, handlerError } from "../../util/error/error";
 import { RESPONSE } from '../../util/interface';
 import UniqueArray from '../../util/struct/uniqueArray';
@@ -22,7 +21,7 @@ import UniqueArray from '../../util/struct/uniqueArray';
  */
 export const emptyDatabaseHandler = async (req: Request, res: Response): Promise<void> => {
     try {
-        if (Config.isDebug) {
+        if (global.MarkusConfig.isDebug) {
             await Direct.Clean.emptyDatabase();
             res.status(200).send({
                 status: RESPONSE.SUCCEED,
@@ -47,7 +46,7 @@ export const emptyDatabaseHandler = async (req: Request, res: Response): Promise
  */
 export const OutputImageIdList = async (req: Request, res: Response): Promise<void> => {
     try {
-        if (Config.isDebug) {
+        if (global.MarkusConfig.isDebug) {
             const images: IImageListResponse[] = await Controller.Image.getImageList();
             const tagIds: UniqueArray<string> = new UniqueArray<string>();
 

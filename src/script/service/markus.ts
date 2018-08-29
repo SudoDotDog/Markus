@@ -4,11 +4,12 @@
  */
 
 import * as Http from 'http';
-import Config from '../../markus';
+import { initMarkusGlobalConfig } from '../../markus';
 import app from './app';
 import { logWhenSoftwareStart } from './info';
 
-logWhenSoftwareStart(Config.verbose, Config.isDebug);
+initMarkusGlobalConfig();
+logWhenSoftwareStart(global.MarkusConfig.verbose, global.MarkusConfig.isDebug);
 
 const HttpServer: Http.Server = Http.createServer(app);
-HttpServer.listen(Config.portNumber);
+HttpServer.listen(global.MarkusConfig.portNumber);
