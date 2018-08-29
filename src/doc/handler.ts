@@ -24,13 +24,21 @@ export const getBuiltDocRoute = (): DocRouteBuilder => {
 export const DocHandler: RequestHandler = (req: Request, res: Response): void => {
     console.log(req.originalUrl);
     res.send(getBuiltDocRoute().list.map((route: IExpressRoute) => {
-        return docTemplateComponentCard(route.name, route.doc ? route.doc.name.en : route.name, route.doc ? route.doc.description.en : route.name)
+        return docTemplateComponentCard(route.name,
+            route.doc ? route.doc.name.en : route.name,
+            [route.doc ? route.doc.description.en : route.name]);
     }).join(''));
 };
 
 export const DocIndexHandler: RequestHandler = (req: Request, res: Response): void => {
     console.log(req.originalUrl);
     res.send(getBuiltDocRoute().list.map((route: IExpressRoute) => {
-        return docTemplateComponentCard('/a/'+route.name, route.doc ? route.doc.name.en : route.name, route.doc ? route.doc.description.en : route.name)
+        return docTemplateComponentCard('/a/' + route.name,
+            route.doc ? route.doc.name.en : route.name,
+            [
+                route.doc ? route.doc.description.en : route.name,
+                route.path,
+                route.mode,
+            ]);
     }).join(''));
 };

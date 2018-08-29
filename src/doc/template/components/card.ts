@@ -6,7 +6,7 @@
 
 import StyleBuilder from '../style';
 
-export const docTemplateComponentCard = (icon: string, title: string, content: string) => {
+export const docTemplateComponentCard = (icon: string, title: string, content: string[]) => {
     const outerStyle = new StyleBuilder()
         .add('width', '100%')
         .add('border', '1px solid black');
@@ -18,7 +18,7 @@ export const docTemplateComponentCard = (icon: string, title: string, content: s
                 ${title}
             </div>
             <hr>
-            ${content}
+            ${content.join('<br>')}
         </div>
     `)
 };

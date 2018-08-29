@@ -22,6 +22,5 @@ export default class ExtensionDocGenerate implements IExpressExtension {
 
     public install(app: Express) {
         app.get('/doc', DocIndexHandler);
-        app.get('/doc/*', DocHandler);
     }
 }
