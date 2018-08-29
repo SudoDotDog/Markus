@@ -187,7 +187,7 @@ describe('test unique array data structure', (): void => {
             a: 1,
             b: 'test',
         });
-        array.setInclude((target, base) => {
+        array.same((target, base) => {
             return target.a === base.a;
         });
         const result: boolean = array.includes({

@@ -105,7 +105,7 @@ export default class UniqueArray<T> implements Iterable<T> {
         this._Array.forEach(each);
     }
 
-    public setInclude(func: (target: T, base: T) => boolean): UniqueArray<T> {
+    public same(func: (target: T, base: T) => boolean): UniqueArray<T> {
         this._includeFunc = func;
         return this;
     }
