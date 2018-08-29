@@ -176,6 +176,28 @@ describe('test unique array data structure', (): void => {
         expect(result).to.be.null;
     });
 
+    it('set include function', (): void => {
+        const array: UniqueArray<{
+            a: number;
+            b: string;
+        }> = new UniqueArray<{
+            a: number;
+            b: string;
+        }>({
+            a: 1,
+            b: 'test',
+        });
+        array.setInclude((target, base) => {
+            return target.a === base.a;
+        });
+        const result: boolean = array.includes({
+            a: 1,
+            b: 'test',
+        });
+        // tslint:disable-next-line
+        expect(result).to.be.true;
+    });
+
     it('uniqueArray should be iterable', (): void => {
         const array: UniqueArray<number> = getInitUniqueArray();
         const temp: number[] = [];

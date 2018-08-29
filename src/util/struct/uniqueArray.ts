@@ -8,6 +8,7 @@ import { error, ERROR_CODE } from "../error/error";
 
 export default class UniqueArray<T> implements Iterable<T> {
     private _Array: T[];
+    private _includeFunc: (target: T, base: T) => boolean;
 
     public constructor(init?: T | T[] | UniqueArray<T>, ...rest: T[]) {
         if (!init) {
@@ -24,6 +25,7 @@ export default class UniqueArray<T> implements Iterable<T> {
                 this._Array = [(init as T), ...rest];
             }
         }
+        this._includeFunc = this.defaultInclude;
     }
 
     public get list(): T[] {
@@ -103,8 +105,18 @@ export default class UniqueArray<T> implements Iterable<T> {
         this._Array.forEach(each);
     }
 
+    public setInclude(func: (target: T, base: T) => boolean): UniqueArray<T> {
+        this._includeFunc = func;
+        return this;
+    }
+
     public includes(item: T): boolean {
-        return this._Array.includes(item);
+        for (let i of this._Array) {
+            if (this._includeFunc(item, i)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public indexOf(item: T): number {
@@ -161,5 +173,9 @@ export default class UniqueArray<T> implements Iterable<T> {
         };
         iterator.next = iterator.next.bind(this);
         return iterator as IterableIterator<T>;
+    }
+
+    protected defaultInclude(target: T, base: T): boolean {
+        return target === base;
     }
 }
