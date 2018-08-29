@@ -10,7 +10,7 @@ import { IFileModel } from '../database/model/file';
 import { IImageModel } from '../database/model/image';
 import { ITagModel } from '../database/model/tag';
 import { mkPathDir } from './data/file';
-import { fileBuilder, tempPath } from './data/path';
+import { fileBuilder, pathBuilder, tempPath } from './data/path';
 import { getImageLoadPathBuilder, ImageLoadFunction } from './manager/load';
 
 export const createTempFile = (content: string, type: string): string => {
@@ -18,8 +18,9 @@ export const createTempFile = (content: string, type: string): string => {
     mkPathDir(tempFilePath);
 
     const filePath: string = fileBuilder('temp', unique(11) + '.' + type);
-    Fs.writeFileSync(filePath, content);
+    mkPathDir(pathBuilder('temp'));
 
+    Fs.writeFileSync(filePath, content);
     return filePath;
 };
 

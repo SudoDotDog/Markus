@@ -15,6 +15,10 @@ export default class DocRouteBuilder {
         this._routes = new Fork<IExpressRoute>();
     }
 
+    public get list(): IExpressRoute[] {
+        return this._routes.list;
+    }
+
     public route(route: IExpressRoute): DocRouteBuilder {
         const exist: boolean = this._routes.has((element: IExpressRoute) => {
             return (element.path === route.path)

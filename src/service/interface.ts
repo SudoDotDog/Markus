@@ -83,7 +83,7 @@ export interface IExpressExtension {
 
 export interface IText {
     en: string;
-    ch?: string;
+    zh?: string;
 }
 
 export interface IDocInformation {
