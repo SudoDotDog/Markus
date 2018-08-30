@@ -77,7 +77,7 @@ app.get('/auth', ...prepares, ...permissions, Handler.Markus.MarkusHandler, ...a
 
 // Handler(s) for Image Get
 app.get('/w/:id', ...prepares, Handler.GetImage.imageGetBlankWhiteHandler, ...afters);
-app.get('/b/:id', ...prepares, Handler.GetImage.imageGetBlankBlackHandler);
+app.get('/b/:id', ...prepares, Handler.GetImage.imageGetBlankBlackHandler, ...afters);
 
 // Handler(s) for Image Upload
 app.post('/m/buffer', ...prepares, uploadManager.generateMulterEngine('image'), uploadManager.generateBufferEngine(), ...permissions, Handler.Markus.UploadBufferHandler);

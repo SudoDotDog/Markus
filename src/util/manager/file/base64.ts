@@ -3,14 +3,14 @@
  * @fileoverview Base64 File Management Utils
  */
 
-import { stringToMD5 } from '../../data/crypto';
+import { hashBuffer } from '../../data/crypto';
 import { getSaveImageByBufferFunction, ImageSaveFunction } from '../save';
 import { IFileLink, IFileManager } from "./interface";
 
 export default class Base64FileManager implements IFileManager {
     private _folder: string;
     private _filename: string;
-    private _base64: string;
+    private _buffer: Buffer;
     private _mime: string;
     private _release: () => void;
 
@@ -19,14 +19,13 @@ export default class Base64FileManager implements IFileManager {
         this._filename = filename;
         this._release = release;
         this._mime = mime;
-        this._base64 = base64;
+        this._buffer = Buffer.from(base64, 'base64');
     }
 
     public async save(): Promise<IFileLink> {
         const saveImageByBuffer: ImageSaveFunction = getSaveImageByBufferFunction();
         
-        const buffer: Buffer = Buffer.from(this._base64, 'base64');
-        const link: IFileLink = await saveImageByBuffer(this._folder, this._filename, buffer);
+        const link: IFileLink = await saveImageByBuffer(this._folder, this._filename, this._buffer);
         return link;
     }
 
@@ -35,7 +34,7 @@ export default class Base64FileManager implements IFileManager {
     }
 
     public async hash(): Promise<string> {
-        const hash: string = stringToMD5(this._base64);
+        const hash: string = await hashBuffer(this._buffer);
         return hash;
     }
 
