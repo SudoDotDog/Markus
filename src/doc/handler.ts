@@ -11,15 +11,17 @@ import DocRouteBuilder from './builder';
 import DocTableCardTemplateRenderer from './template/components/tableCard';
 import { IDocTemplateRenderer } from "./interface";
 import DocOuterParentTemplateRenderer from "./template/parent";
+import { SERVICE_ROUTE_UPLOAD_BUFFER_MODE } from "../service/routes/upload/upload_buffer";
 
 export const getBuiltDocRoute = (): DocRouteBuilder => {
     const docBuilder: DocRouteBuilder = new DocRouteBuilder();
     docBuilder.routes([
         new Route.RouteCompressByTag(),
         new Route.RouteFourOFour(),
-        new Route.RouteGetImage('black not found image', '/b'),
-        new Route.RouteGetImage('white not found image', '/w'),
-        new Route.RouteUploadAvatarByBuffer(true),
+        new Route.RouteGetImage('black not found image', '/b', 'Black'),
+        new Route.RouteGetImage('white not found image', '/w', 'White'),
+        new Route.RouteUploadByBuffer(SERVICE_ROUTE_UPLOAD_BUFFER_MODE.DOC, '/v/buffer', 'Avatar'),
+        new Route.RouteUploadByBuffer(SERVICE_ROUTE_UPLOAD_BUFFER_MODE.DOC, '/m/buffer', 'Image'),
     ]);
     return docBuilder;
 };

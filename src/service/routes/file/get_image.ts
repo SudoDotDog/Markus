@@ -24,9 +24,10 @@ export default class RouteGetImageByPath implements IExpressRoute {
 
     private _emptyPath: string;
 
-    public constructor(emptyPicturePath: string, listenPath: string) {
+    public constructor(emptyPicturePath: string, listenPath: string, suffix: string) {
         this._emptyPath = emptyPicturePath;
         this.path = listenPath;
+        this.name = this.name + '-' + suffix;
     }
 
     public available() {

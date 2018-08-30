@@ -26,3 +26,7 @@ export const fileBuilder = (folder: string, fileName: string, imagePath?: string
         return Path.join(global.MarkusConfig.imagePath, folder, fileName);
     }
 };
+
+export const concatSuffix = (original: string, suffix: string) => {
+
+};

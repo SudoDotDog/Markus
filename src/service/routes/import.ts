@@ -4,10 +4,10 @@
  * @fileoverview Imports
  */
 
-import RouteUploadAvatarByBuffer from './avatar/avatar_buffer';
 import RouteGetImage from './file/get_image';
 import RouteCompressByTag from './image/compress_by_tag';
 import RouteFourOFour from './system/four_o_four';
+import RouteUploadByBuffer from './upload/upload_buffer';
 
-export { RouteCompressByTag, RouteFourOFour, RouteGetImage, RouteUploadAvatarByBuffer };
+export { RouteCompressByTag, RouteFourOFour, RouteGetImage, RouteUploadByBuffer };
 
