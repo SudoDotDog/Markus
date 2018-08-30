@@ -80,6 +80,15 @@ export class ResponseAgent {
 
     public send() {
         if (this._failed) {
+            // const code: number | undefined = (this._failed.err as any).code;
+            // let finalCode: number = 500;
+            // if (code) {
+            //     if (code >= 900) {
+            //         finalCode = 500;
+            //     } else {
+            //         finalCode = 400;
+            //     }
+            // }
             this._response.status(this._failed.code).send({
                 status: RESPONSE.FAILED,
                 error: secureError(this._failed.err),

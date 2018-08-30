@@ -25,6 +25,8 @@ export const getBuiltDocRoute = (): DocRouteBuilder => {
         new Route.RouteFourOFour(),
         new Route.RouteGetImage('black not found image', '/b', 'Black'),
         new Route.RouteGetImage('white not found image', '/w', 'White'),
+        new Route.RouteGetImagesByTag(),
+        new Route.RouteTagList(),
         new Route.RouteUploadByBuffer(SERVICE_ROUTE_UPLOAD_BUFFER_MODE.DOC, '/v/buffer', 'Avatar'),
         new Route.RouteUploadByBuffer(SERVICE_ROUTE_UPLOAD_BUFFER_MODE.DOC, '/m/buffer', 'Image'),
         new Route.RouteGetTool(tools),

@@ -35,7 +35,6 @@ export default class DocCardTemplateRenderer implements IDocTemplateRenderer {
                 <img src="${this._icon}" width="100px" height="100px" border="1px solid black">
                 <span style="${textStyle.build()}">${this._title}</span>
             </div>
-            <hr>
             ${this._content.join('<br>')}
         </div>
     `)
