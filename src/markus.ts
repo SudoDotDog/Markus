@@ -45,7 +45,6 @@ export const initMarkusGlobalConfig = () => {
         white404ImagePath: Path.resolve('assets/404image_white.png'),
         black404ImagePath: Path.resolve('assets/404image_black.png'),
         mode: MODE.FILE_SYSTEM,
-
     };
 }
 
