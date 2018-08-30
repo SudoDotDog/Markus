@@ -4,9 +4,7 @@
  * @fileoverview Internal Toolbox Imports
  */
 
-import InternalEnvironmentInformation from './internal/environment_info';
-import InternalFullBackup from './internal/full_backup';
-import InternalToolTagDeduplicate from './internal/tag_deduplicate';
-
-export { InternalFullBackup, InternalToolTagDeduplicate, InternalEnvironmentInformation };
+export { default as InternalEnvironmentInformation } from './internal/environment_info';
+export { default as InternalFullBackup } from './internal/full_backup';
+export { default as InternalToolTagDeduplicate } from './internal/tag_deduplicate';
 

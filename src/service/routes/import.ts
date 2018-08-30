@@ -4,28 +4,15 @@
  * @fileoverview Imports
  */
 
-import RouteCompressByTag from './image/compress_by_tag';
-import RouteGetImage from './image/get_image';
-import RouteGetImagesByTag from './image/get_images_by_tag';
-import RouteTagList from './image/get_tag_list';
-import RouteFourOFour from './system/four_o_four';
-import RouteEstimateTool from './tool/estimate_tool';
-import RouteExecuteTool from './tool/execute_tool';
-import RouteGetTool from './tool/get_tool';
-import RouteUploadByBase64 from './upload/upload_base64';
-import RouteUploadByBuffer from './upload/upload_buffer';
-
-// const exportable = {
-//     RouteCompressByTag,
-//     RouteFourOFour,
-//     RouteGetImage,
-//     RouteUploadByBuffer,
-//     RouteEstimateTool,
-//     RouteExecuteTool,
-//     RouteGetTool,
-//     RouteGetImagesByTag,
-//     RouteTagList,
-// }
-
-export { RouteCompressByTag, RouteFourOFour, RouteGetImage, RouteUploadByBase64, RouteUploadByBuffer, RouteEstimateTool, RouteExecuteTool, RouteGetTool, RouteGetImagesByTag, RouteTagList };
-
+export { default as RouteCompressByTag } from './image/compress_by_tag';
+export { default as RouteDeactivateImageById } from './image/deactivate_id';
+export { default as RouteDeactivateImagesByTag } from './image/deactivate_tag';
+export { default as RouteGetImage } from './image/get_image';
+export { default as RouteGetImagesByTag } from './image/get_images_by_tag';
+export { default as RouteTagList } from './image/get_tag_list';
+export { default as RouteFourOFour } from './system/four_o_four';
+export { default as RouteEstimateTool } from './tool/estimate_tool';
+export { default as RouteExecuteTool } from './tool/execute_tool';
+export { default as RouteGetTool } from './tool/get_tool';
+export { default as RouteUploadByBase64 } from './upload/upload_base64';
+export { default as RouteUploadByBuffer } from './upload/upload_buffer';

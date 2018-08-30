@@ -4,6 +4,9 @@
  * @fileoverview Error
  */
 
+// tslint:disable-next-line
+/// <reference path="../../declare/global.ts" />
+
 import { Response } from "express";
 import { RESPONSE } from "../interface";
 
@@ -162,7 +165,6 @@ export const secureError = (err: Error): Error => {
         return err;
     } else {
         if ((err as any).code) {
-            const errorCode: number = (err as any).code;
             return err;
         } else {
             return error(ERROR_CODE.UNKNOWN_ERROR_CODE);
