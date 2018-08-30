@@ -9,7 +9,7 @@ import { Express } from "express";
 import { IExpressExtension } from '../interface';
 
 export default class ExtensionBodyParserJson implements IExpressExtension {
-    public readonly name: string = 'ME@Internal:Body-Parser-Json';
+    public readonly name: string = 'ME@Internal:Extension^Body-Parser-Json';
     public readonly preMount: boolean = true;
 
     private _limit: number;

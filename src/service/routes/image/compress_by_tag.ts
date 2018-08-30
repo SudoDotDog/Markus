@@ -12,7 +12,7 @@ import { ICompressZipResult } from "../../../util/execute/compress/compress";
 import { ExpressNextFunction, IDocInformation, IExpressRoute, ROUTE_MODE } from '../../interface';
 
 export default class RouteCompressByTag implements IExpressRoute {
-    public readonly name: string = 'MR@Internal:Route-Compress-By-Tag';
+    public readonly name: string = 'MR@Internal:Route^Compress-By-Tag';
     public readonly path: string = '/tag/:tagId/compress';
     public readonly mode: ROUTE_MODE = ROUTE_MODE.GET;
 

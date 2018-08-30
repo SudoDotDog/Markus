@@ -12,7 +12,7 @@ import * as compress from '../../util/execute/compress/compress';
 import * as toolbox from "../toolbox";
 
 export default class InternalToolTagDeduplicate implements toolbox.IMarkusTool {
-    public readonly name: string = "MT@Internal:Full-Backup";
+    public readonly name: string = "MT@Internal:Tool^Full-Backup";
     public readonly description: string = "Backup entire system and return download link";
     public readonly require: toolbox.MARKUS_TOOL_REQUIRE_TYPE[] = [];
     public teapots: toolbox.IMarkusToolTeapot[] = [];

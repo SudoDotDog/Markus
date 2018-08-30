@@ -9,7 +9,7 @@ import { DocIndexHandler } from "../../doc/handler";
 import { IExpressExtension } from '../interface';
 
 export default class ExtensionDocGenerate implements IExpressExtension {
-    public readonly name: string = 'ME@Internal:Doc-Generate';
+    public readonly name: string = 'ME@Internal:Extension^Doc-Generate';
     public readonly preMount: boolean = false;
 
     public available() {

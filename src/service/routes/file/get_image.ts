@@ -8,10 +8,11 @@ import { ObjectID, ObjectId } from "bson";
 import { Request, RequestHandler, Response } from "express";
 import { IImageCallback } from "../../../database/interface/image";
 import * as Direct from "../../../direct/import";
+import { concatSuffix } from "../../../util/data/path";
 import { ExpressNextFunction, IExpressRoute, ROUTE_MODE } from '../../interface';
 
 export default class RouteGetImageByPath implements IExpressRoute {
-    public readonly name: string = 'MR@Internal:Route-Get-Image-By-Path';
+    public readonly name: string = 'MR@Internal:Route^Get-Image-By-Path';
     public readonly path: string;
     public readonly mode: ROUTE_MODE = ROUTE_MODE.GET;
 
@@ -27,7 +28,7 @@ export default class RouteGetImageByPath implements IExpressRoute {
     public constructor(emptyPicturePath: string, listenPath: string, suffix: string) {
         this._emptyPath = emptyPicturePath;
         this.path = listenPath;
-        this.name = this.name + '-' + suffix;
+        this.name = concatSuffix(this.name, suffix);
     }
 
     public available() {

@@ -9,7 +9,7 @@ import { error, ERROR_CODE } from "../../../util/error/error";
 import { ExpressNextFunction, IExpressRoute, ROUTE_MODE } from '../../interface';
 
 export default class RouteAllFourOFour implements IExpressRoute {
-    public readonly name: string = 'MR@Internal:Route-Four-O-Four';
+    public readonly name: string = 'MR@Internal:Route^Four-O-Four';
     public readonly path: string = '*';
     public readonly mode: ROUTE_MODE = ROUTE_MODE.ALL;
 

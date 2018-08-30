@@ -7,6 +7,7 @@
 import { Request, RequestHandler, Response } from "express";
 import { IImageCallback } from "../../../database/interface/image";
 import * as Direct from "../../../direct/import";
+import { concatSuffix } from "../../../util/data/path";
 import { error, ERROR_CODE } from "../../../util/error/error";
 import { IFileManager } from "../../../util/manager/file/import";
 import { ExpressNextFunction, IExpressRoute, ROUTE_MODE } from '../../interface';
@@ -18,7 +19,7 @@ export enum SERVICE_ROUTE_UPLOAD_BUFFER_MODE {
 }
 
 export default class RouteUploadAvatarByBuffer implements IExpressRoute {
-    public readonly name: string = 'MR@Internal:Route-Upload-By-Buffer';
+    public readonly name: string = 'MR@Internal:Route^Upload-By-Buffer';
     public readonly path: string;
     public readonly mode: ROUTE_MODE = ROUTE_MODE.POST;
 
@@ -29,7 +30,7 @@ export default class RouteUploadAvatarByBuffer implements IExpressRoute {
 
     public constructor(docMode: SERVICE_ROUTE_UPLOAD_BUFFER_MODE, route: string, suffix: string, multerEngine?: RequestHandler, uploadEngine?: RequestHandler) {
         this.path = route;
-        this.name = this.name + '-' + suffix;
+        this.name = concatSuffix(this.name, suffix);
         if (docMode !== SERVICE_ROUTE_UPLOAD_BUFFER_MODE.DOC) {
             if (!multerEngine || !uploadEngine || !suffix) {
                 throw error(ERROR_CODE.INTERNAL_DOC_CONSTRUCTOR_NOT_FUFILLED);

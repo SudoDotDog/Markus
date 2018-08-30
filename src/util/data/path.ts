@@ -28,5 +28,9 @@ export const fileBuilder = (folder: string, fileName: string, imagePath?: string
 };
 
 export const concatSuffix = (original: string, suffix: string) => {
-
+    if (!suffix || suffix.length < 1) {
+        return original;
+    }
+    const parsed: string = suffix.substring(0, 1).toUpperCase() + suffix.substring(1, suffix.length).toLowerCase();
+    return original + '-' + parsed;
 };
