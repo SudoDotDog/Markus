@@ -12,6 +12,7 @@ import RouteFourOFour from './system/four_o_four';
 import RouteEstimateTool from './tool/estimate_tool';
 import RouteExecuteTool from './tool/execute_tool';
 import RouteGetTool from './tool/get_tool';
+import RouteUploadByBase64 from './upload/upload_base64';
 import RouteUploadByBuffer from './upload/upload_buffer';
 
 // const exportable = {
@@ -26,5 +27,5 @@ import RouteUploadByBuffer from './upload/upload_buffer';
 //     RouteTagList,
 // }
 
-export { RouteCompressByTag, RouteFourOFour, RouteGetImage, RouteUploadByBuffer, RouteEstimateTool, RouteExecuteTool, RouteGetTool, RouteGetImagesByTag, RouteTagList };
+export { RouteCompressByTag, RouteFourOFour, RouteGetImage, RouteUploadByBase64, RouteUploadByBuffer, RouteEstimateTool, RouteExecuteTool, RouteGetTool, RouteGetImagesByTag, RouteTagList };
 

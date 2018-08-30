@@ -18,21 +18,22 @@ markus: dev run
 
 help:
 	@echo ""
-	@echo " ┌────────────── Markus Makefile Helps ───────────────────────────────────────────────┐ "
-	@echo " ┝━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┥ "
-	@echo " │ Command      │                                                                     │ "
-	@echo " ┝━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┥ "
-	@echo " │ make         │ Run application                                                     │ "
-	@echo " │ make service │ Run application without build                                       │ "
-	@echo " │ make run     │ Run application without build                                       │ "
-	@echo " │ make dev     │ Build application with development typescript settings              │ "
-	@echo " │ make test    │ Test application with mocha and ts-node                             │ "
-	@echo " │ make build   │ Clean up and build application with production typescript settings  │ "
-	@echo " │ make ubuild  │ Build application with development typescript settings              │ "
-	@echo " │ make host    │ Start mongodb service with default dbPath                           │ "
-	@echo " │ make clean   │ Clean up                                                            │ "
-	@echo " │ make install │ Install dependences                                                 │ "
-	@echo " └──────────────┴─────────────────────────────────────────────────────────────────────┘ "
+	@echo " ┌─────────────── Markus Makefile Helps ───────────────────────────────────────────────┐ "
+	@echo " ┝━━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┥ "
+	@echo " │ Command       │                                                                     │ "
+	@echo " ┝━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┥ "
+	@echo " │ make          │ Run application                                                     │ "
+	@echo " │ make service  │ Run application without build                                       │ "
+	@echo " │ make run      │ Run application without build                                       │ "
+	@echo " │ make dev      │ Build application with development typescript settings              │ "
+	@echo " │ make test     │ Test application with mocha and ts-node                             │ "
+	@echo " │ make build    │ Clean up and build application with production typescript settings  │ "
+	@echo " │ make ubuild   │ Build application with development typescript settings              │ "
+	@echo " │ make host     │ Start mongodb service with default dbPath                           │ "
+	@echo " │ make clean    │ Clean up                                                            │ "
+	@echo " │ make cleanall │ Clean up include dependence files                                   │ "
+	@echo " │ make install  │ Install dependences                                                 │ "
+	@echo " └───────────────┴─────────────────────────────────────────────────────────────────────┘ "
 	@echo ""
 
 generate: buildScript
@@ -63,6 +64,13 @@ host:
 tests:
 	@echo "[INFO] Testing with Mocha"
 	@$(mocha)
+
+cleanall: clean
+ifeq ($(OS), Windows_NT)
+else
+	@echo "[INFO] Cleaning dependence files"
+	@rm -rf node_modules
+endif	
 
 clean:
 ifeq ($(OS), Windows_NT)

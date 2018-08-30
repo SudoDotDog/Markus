@@ -34,7 +34,7 @@ export default class RouteUploadAvatarByBuffer implements IExpressRoute {
         this.name = concatSuffix(this.name, suffix);
         if (docMode !== SERVICE_ROUTE_UPLOAD_BUFFER_MODE.DOC) {
             if (!multerEngine || !uploadEngine || !suffix) {
-                throw error(ERROR_CODE.INTERNAL_DOC_CONSTRUCTOR_NOT_FUFILLED);
+                throw error(ERROR_CODE.INTERNAL_DOC_CONSTRUCTOR_NOT_FULFILLED);
             }
             let handler: RequestHandler;
             switch (docMode) {
@@ -45,7 +45,7 @@ export default class RouteUploadAvatarByBuffer implements IExpressRoute {
                     handler = this.imageHandler;
                     break;
                 default:
-                    throw error(ERROR_CODE.INTERNAL_DOC_CONSTRUCTOR_NOT_FUFILLED);
+                    throw error(ERROR_CODE.INTERNAL_DOC_CONSTRUCTOR_NOT_FULFILLED);
             }
             this.stack = [
                 multerEngine,
@@ -64,22 +64,26 @@ export default class RouteUploadAvatarByBuffer implements IExpressRoute {
     protected async avatarHandler(req: Request, res: Response, next: ExpressNextFunction): Promise<void> {
         try {
             const avatar: string = req.body.avatar;
-            const file: Express.Multer.File = req.file;
             const manager: IFileManager = req.manager;
+
             if (!req.valid) {
                 manager.release();
                 throw error(ERROR_CODE.PERMISSION_VALID_FAILED);
             }
 
+            const base64Image: string = req.body.image;
+            const mime: string = manager.mime();
             const hash: string = await manager.hash();
+            const originalName: string = req.body.original || 'N/A';
+
             const callback: IAvatarCallback = await Direct.Avatar.createOrUpdateAvatar({
                 avatar,
-                encoding: file.encoding,
-                mime: file.mimetype,
-                original: file.originalname,
+                encoding: 'base64',
+                mime,
+                original: originalName,
                 hash,
                 manager,
-                size: file.size,
+                size: base64Image.length,
             });
             res.agent.add('avatar', callback.avatar);
         } catch (err) {

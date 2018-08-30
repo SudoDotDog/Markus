@@ -15,6 +15,7 @@ import DocRouteBuilder from './builder';
 import { IDocTemplateRenderer } from "./interface";
 import DocTableCardTemplateRenderer from './template/components/tableCard';
 import DocOuterParentTemplateRenderer from "./template/parent";
+import { SERVICE_ROUTE_UPLOAD_BASE64_MODE } from "../service/routes/upload/upload_base64";
 
 export const getBuiltDocRoute = (): DocRouteBuilder => {
     const docBuilder: DocRouteBuilder = new DocRouteBuilder();
@@ -28,7 +29,9 @@ export const getBuiltDocRoute = (): DocRouteBuilder => {
         new Route.RouteGetImagesByTag(),
         new Route.RouteTagList(),
         new Route.RouteUploadByBuffer(SERVICE_ROUTE_UPLOAD_BUFFER_MODE.DOC, '/v/buffer', 'Avatar'),
+        new Route.RouteUploadByBase64(SERVICE_ROUTE_UPLOAD_BASE64_MODE.DOC, '/v/base64', 'Avatar'),
         new Route.RouteUploadByBuffer(SERVICE_ROUTE_UPLOAD_BUFFER_MODE.DOC, '/m/buffer', 'Image'),
+        new Route.RouteUploadByBase64(SERVICE_ROUTE_UPLOAD_BASE64_MODE.DOC, '/m/base64', 'Image'),
         new Route.RouteGetTool(tools),
         new Route.RouteEstimateTool(tools),
         new Route.RouteExecuteTool(tools),
