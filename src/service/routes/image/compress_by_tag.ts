@@ -23,15 +23,6 @@ export default class RouteCompressByTag implements IExpressRoute {
     ];
     public readonly after: boolean = true;
 
-    public readonly doc: IDocInformation = {
-        name: {
-            en: 'Get compressed images by tag',
-        },
-        description: {
-            en: 'Get compressed images by tag',
-        }
-    }
-
     public available() {
         if (global.MarkusConfig.mode === MODE.FILE_SYSTEM) {
             return true;
@@ -49,5 +40,15 @@ export default class RouteCompressByTag implements IExpressRoute {
             handlerError(res, err);
         }
         return;
+    }
+
+    public readonly doc: IDocInformation = {
+        name: {
+            EN: 'Get compressed images by tag',
+            ZH: '根据标签下载压缩包',
+        },
+        description: {
+            EN: 'Get compressed images by tag',
+        }
     }
 }

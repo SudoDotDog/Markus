@@ -6,6 +6,7 @@
 
 import { Express, RequestHandler } from "express";
 import { IConfig } from "../interface";
+import { String } from "aws-sdk/clients/appsync";
 
 export interface IExpressBuilder {
     app: Express;
@@ -82,8 +83,8 @@ export interface IExpressExtension {
 }
 
 export interface IText {
-    en: string;
-    zh?: string;
+    EN: string;
+    ZH?: string;
 }
 
 export interface IDocInformation {

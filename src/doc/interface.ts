@@ -11,6 +11,18 @@ export interface IDocStyle {
     value: string;
 }
 
+export enum DOC_TABLE_ELEMENT_IMPORTANT_LEVEL {
+    NORMAL = 0,
+    MAJOR = 1,
+    CRITICAL = 2,
+}
+
+export interface IDocTableElement {
+    name: String;
+    value: string;
+    important?: DOC_TABLE_ELEMENT_IMPORTANT_LEVEL;
+}
+
 export interface IMarkusRouteInformation {
     readonly name: string;
     readonly path: string;

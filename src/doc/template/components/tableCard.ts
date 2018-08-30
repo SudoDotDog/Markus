@@ -4,21 +4,15 @@
  * @fileoverview Table Card
  */
 
-import { IDocTemplateRenderer } from '../../interface';
+import { IDocTableElement, IDocTemplateRenderer } from '../../interface';
 import StyleBuilder from '../style';
 
 export default class DocTableCardTemplateRenderer implements IDocTemplateRenderer {
     private _icon: string;
     private _title: string;
-    private _content: Array<{
-        left: string;
-        right: string;
-    }>;
+    private _content: IDocTableElement[];
 
-    public constructor(icon: string, title: string, content: Array<{
-        left: string;
-        right: string;
-    }>) {
+    public constructor(icon: string, title: string, content: IDocTableElement[]) {
         this._icon = icon;
         this._title = title;
         this._content = content;
@@ -54,10 +48,7 @@ export default class DocTableCardTemplateRenderer implements IDocTemplateRendere
     `)
     }
 
-    protected getRow(row: {
-        left: string;
-        right: string;
-    }) {
+    protected getRow(row: IDocTableElement) {
         const leftStyle = new StyleBuilder()
             .add('border', '1px solid black')
             .add('width', '25%')
@@ -73,10 +64,10 @@ export default class DocTableCardTemplateRenderer implements IDocTemplateRendere
         return `
             <tr style="${rightStyle.build()}">
                 <td style="${leftStyle.build()}">
-                    ${row.left}
+                    ${row.name}
                 </td>
                 <td style="${rightStyle.build()}">
-                    ${row.right}
+                    ${row.value}
                 </td>
             </tr>
         `;

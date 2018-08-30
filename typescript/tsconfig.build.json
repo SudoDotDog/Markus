@@ -13,6 +13,7 @@
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
         "moduleResolution": "node",
+        "resolveJsonModule": true,
         "target": "es5",
         "lib": [
             "es2016"

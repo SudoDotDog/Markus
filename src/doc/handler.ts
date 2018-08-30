@@ -16,6 +16,7 @@ import DocRouteBuilder from './builder';
 import { IDocTemplateRenderer } from "./interface";
 import DocTableCardTemplateRenderer from './template/components/tableCard';
 import DocOuterParentTemplateRenderer from "./template/parent";
+import LanguageTextProcessor from '../service/language';
 
 export const getBuiltDocRoute = (): DocRouteBuilder => {
     const docBuilder: DocRouteBuilder = new DocRouteBuilder();
@@ -47,27 +48,24 @@ export const getBuiltDocRoute = (): DocRouteBuilder => {
 };
 
 export const DocIndexHandler: RequestHandler = (req: Request, res: Response): void => {
+    const language: string | undefined = req.query.language;
+    const processor: LanguageTextProcessor = new LanguageTextProcessor(language);
     const cards: IDocTemplateRenderer[] = getBuiltDocRoute().flush().map((route: IExpressRoute) => {
         return new DocTableCardTemplateRenderer('/a/' + route.name + '/?text=@E',
-            route.doc ? route.doc.name.en : route.name,
-            [
-                {
-                    left: 'Description',
-                    right: route.doc ? route.doc.description.en : route.name,
-                },
-                {
-                    left: 'path',
-                    right: route.path,
-                },
-                {
-                    left: 'mode',
-                    right: route.mode,
-                },
-                {
-                    left: 'authorization',
-                    right: route.authorization ? 'YES' : 'NO',
-                }
-            ]);
+            route.doc ? processor.from(route.doc.name) : route.name,
+            [{
+                name: 'description',
+                value: route.doc ? processor.from(route.doc.description) : route.name,
+            }, {
+                name: 'path',
+                value: route.path,
+            }, {
+                name: 'mode',
+                value: route.mode,
+            }, {
+                name: 'authorization',
+                value: route.authorization ? 'YES' : 'NO',
+            }]);
     });
 
     const outer: IDocTemplateRenderer = new DocOuterParentTemplateRenderer(cards);
