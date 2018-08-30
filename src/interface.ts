@@ -40,6 +40,31 @@ export interface IConfig {
     };
 }
 
+export interface IConfigTemplate {
+    crossOrigin: number;
+    host: number;
+    database: number;
+    imagePath: number;
+    tempPath: number;
+    imagePFolder: number;
+    isDebug: number;
+    maxThread: number;
+    uploadLimit: number;
+    portNumber: number;
+    verbose: number;
+    white404ImagePath: number;
+    black404ImagePath: number;
+    mode: number;
+    S3_bucket: number;
+    S3_accessKeyId: number;
+    S3_secretAccessKey: number;
+    S3_getPath: number;
+}
+
+export type Partial<T> = {
+    [P in keyof T]?: T[P];
+}
+
 export interface IMarkusExtensionConfig {
     middleware: { // keep
         prepares: middleware[];

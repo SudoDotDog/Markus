@@ -12,7 +12,7 @@ compress_test
 temp
 
 # Config file
-# markus.conf
+markus.conf
 
 # Temp file
 test.html

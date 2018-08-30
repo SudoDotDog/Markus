@@ -26,6 +26,7 @@ help:
 	@echo " │ make service  │ Run application without build                                       │ "
 	@echo " │ make run      │ Run application without build                                       │ "
 	@echo " │ make dev      │ Build application with development typescript settings              │ "
+	@echo " │ make conf     │ Get template markus.conf file                                       │ "
 	@echo " │ make test     │ Test application with mocha and ts-node                             │ "
 	@echo " │ make build    │ Clean up and build application with production typescript settings  │ "
 	@echo " │ make ubuild   │ Build application with development typescript settings              │ "
@@ -39,6 +40,10 @@ help:
 generate: buildScript
 	@echo "[INFO] Generating Handler Documents"
 	@node ./dist_script/gen/doc_handlers.js
+
+conf: buildScript
+	@echo "[INFO] Get template conf file"
+	@node ./dist_script/cli/conf.js
 
 run:
 	@echo "[INFO] Starting service"

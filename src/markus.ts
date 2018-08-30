@@ -7,10 +7,11 @@
 /// <reference path="./declare/global.ts" />
 
 import * as Path from 'path';
-import { middleware, MODE, IMarkusExtensionConfig } from './interface';
+import { middleware, MODE, IMarkusExtensionConfig, IConfig } from './interface';
 import * as Handler from './script/handlers/import';
 import * as InternalTools from './toolbox/import';
 import { IMarkusTool } from './toolbox/toolbox';
+import MarkusConfigReader from './util/external/conf';
 
 const Tools: IMarkusTool[] = [
     new InternalTools.InternalToolTagDeduplicate(),
@@ -30,22 +31,11 @@ export const initMarkusGlobalConfig = () => {
     if (global.MarkusConfig) {
         return;
     }
-    
-    global.MarkusConfig = {
-        host: 'mongodb://localhost:27017',
-        database: 'markus-test-2',
-        imagePath: '/Users/mwang/Desktop/image',
-        tempPath: '/Users/mwang/Desktop/temp',
-        imagePFolder: 5,
-        isDebug: true,
-        maxThread: 4,
-        uploadLimit: 25,
-        portNumber: 8080,
-        verbose: false,
-        white404ImagePath: Path.resolve('assets/404image_white.png'),
-        black404ImagePath: Path.resolve('assets/404image_black.png'),
-        mode: MODE.FILE_SYSTEM,
-    };
+
+    const reader: MarkusConfigReader = new MarkusConfigReader();
+    const config: IConfig = reader.read();
+
+    global.MarkusConfig = config;
 }
 
 export const MarkusExtensionConfig: IMarkusExtensionConfig = {

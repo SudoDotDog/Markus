@@ -67,6 +67,7 @@ export enum ERROR_CODE {
     INTERNAL_EXPRESS_BUILDER_PRE_MOUNT_CONFLICT = 910,
 
     AMAZON_S3_CONFIG_NOT_FOUND = 930,
+    CONFIG_NOT_AVAILABLE = 931,
 
     ASSERT_EXIST_ELEMENT_NOT_EXIST = 950,
     ASSERT_TYPE_NOT_MATCHED = 951,
@@ -119,6 +120,7 @@ export const errorList: {
     909: 'Internal error, express builder extension name can not be same',
     910: 'Internal error, express builder pre mount conflict',
     930: 'Amazon S3 config is required',
+    931: 'Config file is not available',
     950: 'Assert an element is exist but is not',
     951: 'Type of target element is not matched',
     952: 'Assert an opposite boolean',
