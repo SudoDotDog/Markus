@@ -5,7 +5,7 @@
  */
 
 import { Response } from "express";
-import { error, ERROR_CODE } from "../../../util/error/error";
+import { error, ERROR_CODE, secureError } from "../../../util/error/error";
 import { RESPONSE } from "../../../util/interface";
 
 export class ResponseAgent {
@@ -82,7 +82,7 @@ export class ResponseAgent {
         if (this._failed) {
             this._response.status(this._failed.code).send({
                 status: RESPONSE.FAILED,
-                error: this._failed.err,
+                error: secureError(this._failed.err),
             });
             return;
         }

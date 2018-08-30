@@ -5,6 +5,7 @@
  */
 
 import { Request, RequestHandler, Response } from "express";
+import { IAvatarCallback } from "../../../database/interface/avatar";
 import { IImageCallback } from "../../../database/interface/image";
 import * as Direct from "../../../direct/import";
 import { concatSuffix } from "../../../util/data/path";
@@ -62,6 +63,7 @@ export default class RouteUploadAvatarByBuffer implements IExpressRoute {
 
     protected async avatarHandler(req: Request, res: Response, next: ExpressNextFunction): Promise<void> {
         try {
+            const avatar: string = req.body.avatar;
             const file: Express.Multer.File = req.file;
             const manager: IFileManager = req.manager;
             if (!req.valid) {
@@ -69,29 +71,21 @@ export default class RouteUploadAvatarByBuffer implements IExpressRoute {
                 throw error(ERROR_CODE.PERMISSION_VALID_FAILED);
             }
 
-            const preTags: string[] | string = req.body.tags;
-            let tags: string[] = [];
-            if (typeof preTags === 'string') {
-                tags = preTags.split(',');
-            } else {
-                tags = preTags;
-            }
-
             const hash: string = await manager.hash();
-
-            const image: IImageCallback = await Direct.Image.createImageByIImageCreationConfigWithTagCacheManager({
+            const callback: IAvatarCallback = await Direct.Avatar.createOrUpdateAvatar({
+                avatar,
                 encoding: file.encoding,
                 mime: file.mimetype,
-                hash,
                 original: file.originalname,
+                hash,
                 manager,
                 size: file.size,
-                tags,
             });
-            res.agent.add('original', image.original)
-                .add('id', image.id);
+            res.agent.add('avatar', callback.avatar);
         } catch (err) {
             res.agent.failed(400, err);
+        } finally {
+            next();
         }
         return;
     }
@@ -128,6 +122,8 @@ export default class RouteUploadAvatarByBuffer implements IExpressRoute {
                 .add('id', image.id);
         } catch (err) {
             res.agent.failed(400, err);
+        } finally {
+            next();
         }
         return;
     }

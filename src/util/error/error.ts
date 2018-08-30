@@ -157,6 +157,19 @@ export const compareError = (base: Error, target: Error): boolean => {
     );
 };
 
+export const secureError = (err: Error): Error => {
+    if (global.MarkusConfig.isDebug) {
+        return err;
+    } else {
+        if ((err as any).code) {
+            const errorCode: number = (err as any).code;
+            return err;
+        } else {
+            return error(ERROR_CODE.UNKNOWN_ERROR_CODE);
+        }
+    }
+}
+
 export const handlerError = (res: Response, err: Error) => {
     if ((err as any).code) {
         const errorCode: number = (err as any).code;
