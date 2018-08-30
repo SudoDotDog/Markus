@@ -79,7 +79,7 @@ describe('test upload manager util', (): void => {
         const manager: IFileManager = testContent.createBase64File('image/:jpeg;base64,:something');
         const hash: string = await manager.hash();
 
-        expect(hash).to.be.equal('c779f793354d8f3fc88f7ca79d4a70eb');
+        expect(hash).to.be.equal('d238ce760c0a4fd61028194389b40b2d');
         return;
     });
 

@@ -38,7 +38,7 @@ describe('test base64 file manager', (): void => {
     it('hash function should return hash of base64', async (): Promise<void> => {
         const result = await manager.hash();
 
-        expect(result).to.be.equal('2410f797db45392124023fdba6ad0a2a');
+        expect(result).to.be.equal('9b9d6fc057dd7324787c8f1fd4dcbd2f');
     });
 
     it('release function should call release func', (): void => {
