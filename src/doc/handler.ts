@@ -29,7 +29,7 @@ export const getBuiltDocRoute = (): DocRouteBuilder => {
 export const DocIndexHandler: RequestHandler = (req: Request, res: Response): void => {
     console.log(req.originalUrl);
     const cards: IDocTemplateRenderer[] = getBuiltDocRoute().flush().map((route: IExpressRoute) => {
-        return new DocTableCardTemplateRenderer('/a/' + route.name,
+        return new DocTableCardTemplateRenderer('/a/' + route.name + '/?text=@E',
             route.doc ? route.doc.name.en : route.name,
             [
                 {

@@ -29,6 +29,9 @@ export default class Buffer {
     }
 
     public text(point: IPoint, fontSize: number): Buffer {
+        if (!this._text) {
+            return this;
+        }
         this.resultBuffer += "<text x=\"";
         this.resultBuffer += point.x + "\" ";
         this.resultBuffer += "y=\"";

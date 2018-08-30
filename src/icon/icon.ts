@@ -14,7 +14,14 @@ export const Icon = (str: string, display?: string) => {
     const generator: Generator = new Generator(str);
     const point: Point = new Point();
     const parser: Parser = new Parser(str);
-    const buffer: Buffer = new Buffer(display || parser.getTwoDigitResult());
+    let buffer: Buffer;
+    if (display) {
+        buffer = new Buffer(display);
+    } else if (display === '') {
+        buffer = new Buffer(display);
+    } else {
+        buffer = new Buffer(parser.getTwoDigitResult());
+    }
     const color: Color = new Color(chaetodon(generator.splice(27, 30)));
 
     const points: IPoint[] = [

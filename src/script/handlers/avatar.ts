@@ -28,7 +28,11 @@ export const avatarGetHandler = async (req: Request, res: Response): Promise<voi
         } else {
             let tempFilePath: string;
             if (text) {
-                tempFilePath = createTempFile(Icon(avatar, text), 'svg');
+                if (text === '@E') {
+                    tempFilePath = createTempFile(Icon(avatar, ''), 'svg');
+                } else {
+                    tempFilePath = createTempFile(Icon(avatar, text), 'svg');
+                }
             } else {
                 tempFilePath = createTempFile(Icon(avatar), 'svg');
             }
