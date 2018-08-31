@@ -22,7 +22,7 @@ export const testScriptToolHandlers = (): void => {
             });
             const restoreGlobalConfig: () => void = mockConfig({
                 tempPath: Path.resolve('./temp'),
-            })
+            });
             Handlers.Tool.rebuildTools();
 
             mock.body('name', 'test')
@@ -51,7 +51,7 @@ export const testScriptToolHandlers = (): void => {
             });
             const restoreGlobalConfig: () => void = mockConfig({
                 tempPath: Path.resolve('./temp'),
-            })
+            });
             Handlers.Tool.rebuildTools();
 
             mock.body('name', 'test');
@@ -77,7 +77,7 @@ export const testScriptToolHandlers = (): void => {
             });
             const restoreGlobalConfig: () => void = mockConfig({
                 tempPath: Path.resolve('./temp'),
-            })
+            });
             Handlers.Tool.rebuildTools();
 
             mock.body('name', 'test')
@@ -106,7 +106,7 @@ export const testScriptToolHandlers = (): void => {
             });
             const restoreGlobalConfig: () => void = mockConfig({
                 tempPath: Path.resolve('./temp'),
-            })
+            });
             Handlers.Tool.rebuildTools();
 
             mock.body('name', 'test');
@@ -132,7 +132,7 @@ export const testScriptToolHandlers = (): void => {
             });
             const restoreGlobalConfig: () => void = mockConfig({
                 tempPath: Path.resolve('./temp'),
-            })
+            });
             Handlers.Tool.rebuildTools();
 
             const { request, response } = mock.flush();
