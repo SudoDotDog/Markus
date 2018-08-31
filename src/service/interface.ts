@@ -68,6 +68,14 @@ export enum EXPRESS_ASSERTION_TYPES_END {
     FILE = 'FILE',
 }
 
+export enum EXPRESS_SPECIAL_MARK {
+    DEPRECATED = 'DEPRECATED',
+    REMOVED = 'REMOVED',
+    RISKY = 'RISKY',
+    WARNING = 'WARNING',
+    DEBUG = 'DEBUG',
+}
+
 export interface IExpressHeader {
     name: string;
     value: string;
@@ -89,8 +97,9 @@ export interface IExpressRoute {
     readonly assertBody?: ExpressAssertionJSONType;
     readonly assertQuery?: ExpressAssertionJSONType;
     readonly assertResponse?: ExpressAssertionJSONType;
+    readonly specialMark?: EXPRESS_SPECIAL_MARK[];
 
-    readonly doc?: IDocInformation;
+    readonly doc?: IDocInformation | null;
 
     available: () => boolean;
 }

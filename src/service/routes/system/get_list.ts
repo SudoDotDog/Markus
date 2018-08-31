@@ -10,7 +10,7 @@ import { IImageListResponse } from "../../../database/interface/image";
 import * as Direct from "../../../direct/import";
 import { error, ERROR_CODE } from "../../../util/error/error";
 import UniqueArray from "../../../util/struct/uniqueArray";
-import { ExpressNextFunction, IExpressRoute, ROUTE_MODE } from '../../interface';
+import { ExpressNextFunction, EXPRESS_SPECIAL_MARK, IExpressRoute, ROUTE_MODE } from '../../interface';
 
 export default class RouteRiskyGetList implements IExpressRoute {
     public readonly name: string = 'MR@Internal:Route^Risky_Get_List';
@@ -23,6 +23,8 @@ export default class RouteRiskyGetList implements IExpressRoute {
         this.handle,
     ];
     public readonly after: boolean = true;
+
+    public readonly specialMark: EXPRESS_SPECIAL_MARK[] = [EXPRESS_SPECIAL_MARK.DEBUG, EXPRESS_SPECIAL_MARK.RISKY];
 
     public available() {
         if (global.MarkusConfig.isDebug) {

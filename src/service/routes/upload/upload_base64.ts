@@ -11,7 +11,7 @@ import * as Direct from "../../../direct/import";
 import { concatSuffix } from "../../../util/data/path";
 import { error, ERROR_CODE } from "../../../util/error/error";
 import { IFileManager } from "../../../util/manager/file/import";
-import { ExpressAssertionJSONType, ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, EXPRESS_POST_SUBMIT_FORMAT, IExpressRoute, ROUTE_MODE } from '../../interface';
+import { ExpressAssertionJSONType, ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, EXPRESS_POST_SUBMIT_FORMAT, IExpressRoute, ROUTE_MODE, IDocInformation } from '../../interface';
 
 export enum SERVICE_ROUTE_UPLOAD_BASE64_MODE {
     AVATAR = 'AVATAR',
@@ -33,11 +33,23 @@ export default class RouteUploadAvatarByBase64 implements IExpressRoute {
     public readonly postType: EXPRESS_POST_SUBMIT_FORMAT = EXPRESS_POST_SUBMIT_FORMAT.JSON;
     public readonly assertBody: ExpressAssertionJSONType;
 
+    public readonly doc: IDocInformation | null;
+
     public constructor(docMode: SERVICE_ROUTE_UPLOAD_BASE64_MODE, route: string, suffix: string, uploadEngine?: RequestHandler) {
         this.path = route;
         this.name = concatSuffix(this.name, suffix);
         this.assertBody = {};
+        this.doc = null;
         if (docMode === SERVICE_ROUTE_UPLOAD_BASE64_MODE.AVATAR_DOC) {
+            // Documents
+            this.doc = {
+                name: {
+                    EN: 'Upload avatar by base64',
+                },
+                description: {
+                    EN: 'Replace target name\'s avatar by uploaded image',
+                }
+            }
             this.assertBody = {
                 avatar: EXPRESS_ASSERTION_TYPES_END.STRING,
                 image: EXPRESS_ASSERTION_TYPES_END.STRING,
@@ -49,6 +61,15 @@ export default class RouteUploadAvatarByBase64 implements IExpressRoute {
         }
 
         if (docMode === SERVICE_ROUTE_UPLOAD_BASE64_MODE.IMAGE_DOC) {
+            // Documents
+            this.doc = {
+                name: {
+                    EN: 'Upload image by base64',
+                },
+                description: {
+                    EN: 'Add image to server, return id of uploaded image',
+                }
+            }
             this.assertBody = {
                 tags: EXPRESS_ASSERTION_TYPES_END.STRING,
                 image: EXPRESS_ASSERTION_TYPES_END.STRING,

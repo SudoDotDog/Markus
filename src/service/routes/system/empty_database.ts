@@ -7,7 +7,7 @@
 import { Request, RequestHandler, Response } from "express";
 import * as Direct from "../../../direct/import";
 import { error, ERROR_CODE } from "../../../util/error/error";
-import { ExpressNextFunction, IExpressRoute, ROUTE_MODE } from '../../interface';
+import { ExpressNextFunction, EXPRESS_SPECIAL_MARK, IExpressRoute, ROUTE_MODE } from '../../interface';
 
 export default class RouteRiskyEmptyDatabase implements IExpressRoute {
     public readonly name: string = 'MR@Internal:Route^Risky_Empty_Database';
@@ -20,6 +20,8 @@ export default class RouteRiskyEmptyDatabase implements IExpressRoute {
         this.handle,
     ];
     public readonly after: boolean = true;
+
+    public readonly specialMark: EXPRESS_SPECIAL_MARK[] = [EXPRESS_SPECIAL_MARK.DEBUG, EXPRESS_SPECIAL_MARK.RISKY];
 
     public available() {
         if (global.MarkusConfig.isDebug) {

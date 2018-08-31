@@ -4,6 +4,7 @@
  * @fileoverview Table Card
  */
 
+import { EXPRESS_SPECIAL_MARK } from '../../../service/interface';
 import { IDocTableElement, IDocTemplateRenderer } from '../../interface';
 import StyleBuilder from '../style';
 
@@ -11,11 +12,13 @@ export default class DocTableCardTemplateRenderer implements IDocTemplateRendere
     private _icon: string;
     private _title: string;
     private _content: IDocTableElement[];
+    private _marks: EXPRESS_SPECIAL_MARK[];
 
-    public constructor(icon: string, title: string, content: IDocTableElement[]) {
+    public constructor(icon: string, title: string, content: IDocTableElement[], marks: EXPRESS_SPECIAL_MARK[]) {
         this._icon = icon;
         this._title = title;
         this._content = content;
+        this._marks = marks;
     }
 
     public build() {
@@ -35,9 +38,14 @@ export default class DocTableCardTemplateRenderer implements IDocTemplateRendere
 
         return (`
         <div style="${outerStyle.build()}">
-            <div>
-                <img src="${this._icon}" width="100px" height="100px" border="1px solid black">
-                <span style="${textStyle.build()}">${this._title}</span>
+            <div style="display:flex;align-items:flex-end">
+                <div style="width:100px">
+                    <img src="${this._icon}" width="100px" height="100px">
+                </div>
+                <div style="flex:1">
+                    <div style="${textStyle.build()}">${this._title}</div>
+                    <div style="${textStyle.build()}">${this._title}</div>
+                </div>
             </div>
             <table style="${tableStyle.build()}">
                 <tbody>

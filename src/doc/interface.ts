@@ -4,8 +4,6 @@
  * @fileoverview Doc Interface
  */
 
-import { IDocInformation, ROUTE_MODE } from "../service/interface";
-
 export interface IDocStyle {
     name: string;
     value: string;

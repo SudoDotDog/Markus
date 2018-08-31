@@ -80,7 +80,8 @@ export const DocIndexHandler: RequestHandler = (req: Request, res: Response): vo
 
         return new DocTableCardTemplateRenderer('/a/' + route.name + '/?text=@E',
             route.doc ? processor.from(route.doc.name) : route.name,
-            template);
+            template,
+            route.specialMark || []);
     });
 
     const outer: IDocTemplateRenderer = new DocOuterParentTemplateRenderer(cards);

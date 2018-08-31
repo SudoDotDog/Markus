@@ -11,7 +11,7 @@ import * as Direct from "../../../direct/import";
 import { concatSuffix } from "../../../util/data/path";
 import { error, ERROR_CODE } from "../../../util/error/error";
 import { IFileManager } from "../../../util/manager/file/import";
-import { ExpressAssertionJSONType, ExpressNextFunction, EXPRESS_POST_SUBMIT_FORMAT, IExpressRoute, ROUTE_MODE, EXPRESS_ASSERTION_TYPES_END } from '../../interface';
+import { ExpressAssertionJSONType, ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, EXPRESS_POST_SUBMIT_FORMAT, IDocInformation, IExpressRoute, ROUTE_MODE } from '../../interface';
 
 export enum SERVICE_ROUTE_UPLOAD_BUFFER_MODE {
     AVATAR = 'AVATAR',
@@ -33,11 +33,23 @@ export default class RouteUploadAvatarByBuffer implements IExpressRoute {
     public readonly postType: EXPRESS_POST_SUBMIT_FORMAT = EXPRESS_POST_SUBMIT_FORMAT.FORM_DATA;
     public readonly assertBody: ExpressAssertionJSONType;
 
+    public readonly doc: IDocInformation | null;
+
     public constructor(docMode: SERVICE_ROUTE_UPLOAD_BUFFER_MODE, route: string, suffix: string, multerEngine?: RequestHandler, uploadEngine?: RequestHandler) {
         this.path = route;
         this.name = concatSuffix(this.name, suffix);
         this.assertBody = {};
+        this.doc = null;
         if (docMode === SERVICE_ROUTE_UPLOAD_BUFFER_MODE.AVATAR_DOC) {
+            // Documents
+            this.doc = {
+                name: {
+                    EN: 'Upload avatar by buffer',
+                },
+                description: {
+                    EN: 'Replace target name\'s avatar by uploaded image',
+                }
+            }
             this.assertBody = {
                 avatar: EXPRESS_ASSERTION_TYPES_END.STRING,
                 image: EXPRESS_ASSERTION_TYPES_END.FILE,
@@ -45,6 +57,15 @@ export default class RouteUploadAvatarByBuffer implements IExpressRoute {
         }
 
         if (docMode === SERVICE_ROUTE_UPLOAD_BUFFER_MODE.IMAGE_DOC) {
+            // Documents
+            this.doc = {
+                name: {
+                    EN: 'Upload image by buffer',
+                },
+                description: {
+                    EN: 'Add image to server, return id of uploaded image',
+                }
+            }
             this.assertBody = {
                 tags: EXPRESS_ASSERTION_TYPES_END.STRING,
                 image: EXPRESS_ASSERTION_TYPES_END.FILE,
