@@ -36,24 +36,38 @@ export default class DocTableCardTemplateRenderer implements IDocTemplateRendere
             .add('font-size', '26px')
             .add('font-weight', 'bold');
 
+
         return (`
-        <div style="${outerStyle.build()}">
-            <div style="display:flex;align-items:flex-end">
-                <div style="width:100px">
-                    <img src="${this._icon}" width="100px" height="100px">
+            <div style="${outerStyle.build()}">
+                <div style="display:flex;align-items:flex-end">
+                    <div style="width:100px">
+                        <img src="${this._icon}" width="100px" height="100px">
+                    </div>
+                    <div style="flex:1;padding:5px">
+                        ${this.getBadge(this._marks)}
+                        <div style="${textStyle.build()}">${this._title}</div>
+                    </div>
                 </div>
-                <div style="flex:1">
-                    <div style="${textStyle.build()}">${this._title}</div>
-                    <div style="${textStyle.build()}">${this._title}</div>
-                </div>
+                <table style="${tableStyle.build()}">
+                    <tbody>
+                        ${this._content.map(this.getRow).join('')}
+                    </tbody>
+                </table>
             </div>
-            <table style="${tableStyle.build()}">
-                <tbody>
-                    ${this._content.map(this.getRow).join('')}
-                </tbody>
-            </table>
-        </div>
-    `)
+        `);
+    }
+
+    protected getBadge(marks: EXPRESS_SPECIAL_MARK[]): string {
+        const badgeStyle = new StyleBuilder()
+            .add('font-size', '18px')
+            .add('color', 'red')
+            .add('font-weight', 'bold');
+
+        if (marks.length <= 0) {
+            return '';
+        } else {
+            return `<div style="${badgeStyle.build()}">${this._marks.join(', ')}</div>`;
+        }
     }
 
     protected getRow(row: IDocTableElement) {

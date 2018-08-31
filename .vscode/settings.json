@@ -10,6 +10,7 @@
         "WMXPY",
         "bson",
         "chaetodon",
+        "cleanall",
         "codecov",
         "dbpath",
         "dependences",

@@ -8,10 +8,10 @@ import { IDocTemplateRenderer } from '../interface';
 import StyleBuilder from './style';
 
 export default class DocOuterParentTemplateRenderer implements IDocTemplateRenderer {
-    private _childs: IDocTemplateRenderer[];
+    private _children: IDocTemplateRenderer[];
 
-    public constructor(childs?: IDocTemplateRenderer[]) {
-        this._childs = childs || [];
+    public constructor(children?: IDocTemplateRenderer[]) {
+        this._children = children || [];
     }
 
     public build() {
@@ -27,7 +27,7 @@ export default class DocOuterParentTemplateRenderer implements IDocTemplateRende
                 <div style="${outerStyle.build()}">
                     <h1>Markus Documentation</h1>
                     <div>
-                        ${this._childs.map((renderer: IDocTemplateRenderer) => renderer.build()).join('')}
+                        ${this._children.map((renderer: IDocTemplateRenderer) => renderer.build()).join('')}
                     </div>
                 </div>
             </body>
