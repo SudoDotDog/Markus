@@ -5,8 +5,6 @@
  */
 
 import { Express, RequestHandler } from "express";
-import { IConfig } from "../interface";
-import { String } from "aws-sdk/clients/appsync";
 
 export interface IExpressBuilder {
     app: Express;
