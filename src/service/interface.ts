@@ -24,27 +24,48 @@ export enum ROUTE_MODE {
     ALL = 'ALL',
 }
 
+export enum EXPRESS_POST_SUBMIT_FORMAT {
+    FORM_DATA = 'FORM_DATA',
+    JSON = 'JSON',
+}
+
 export type ExpressNextFunction = () => void;
 
 interface IPrivateExpressAssertionTypeUNION {
     name: string;
-    type: EXPRESS_ASSERTION_TYPES.ARRAY | EXPRESS_ASSERTION_TYPES.OBJECT;
+    type: EXPRESS_ASSERTION_TYPES_UNION.ARRAY | EXPRESS_ASSERTION_TYPES_UNION.OBJECT;
     child: ExpressAssertionType;
+    optional?: boolean;
 }
 
-interface IPrivateExpressAssertionTypeEND {
-    name: string;
-    type: EXPRESS_ASSERTION_TYPES.STRING | EXPRESS_ASSERTION_TYPES.BOOLEAN | EXPRESS_ASSERTION_TYPES.NUMBER;
+interface IPrivateExpressAssertionTypeNamedEND {
+    name?: string;
+    type: EXPRESS_ASSERTION_TYPES_END.STRING | EXPRESS_ASSERTION_TYPES_END.BOOLEAN | EXPRESS_ASSERTION_TYPES_END.NUMBER | EXPRESS_ASSERTION_TYPES_END.FILE;
+    optional?: boolean;
 }
 
-export type ExpressAssertionType = IPrivateExpressAssertionTypeUNION | IPrivateExpressAssertionTypeEND;
+type ExpressAssertionType = IPrivateExpressAssertionTypeUNION | IPrivateExpressAssertionTypeNamedEND;
+export type ExpressAssertionJSONType = {
+    [key: string]: EXPRESS_ASSERTION_TYPES_END | {
+        type: EXPRESS_ASSERTION_TYPES_UNION;
+        child: ExpressAssertionJSONType;
+        optional?: boolean;
+    } | {
+        type: EXPRESS_ASSERTION_TYPES_END;
+        optional?: boolean;
+    };
+}
 
-export enum EXPRESS_ASSERTION_TYPES {
+export enum EXPRESS_ASSERTION_TYPES_UNION {
+    ARRAY = 'ARRAY',
+    OBJECT = 'OBJECT',
+}
+
+export enum EXPRESS_ASSERTION_TYPES_END {
     STRING = 'STRING',
     NUMBER = 'NUMBER',
     BOOLEAN = 'BOOLEAN',
-    ARRAY = 'ARRAY',
-    OBJECT = 'OBJECT',
+    FILE = 'FILE',
 }
 
 export interface IExpressHeader {
@@ -64,8 +85,10 @@ export interface IExpressRoute {
 
     readonly ignoreInDoc?: boolean;
 
-    readonly assertBody?: ExpressAssertionType[];
-    readonly assertQuery?: ExpressAssertionType[];
+    readonly postType?: EXPRESS_POST_SUBMIT_FORMAT;
+    readonly assertBody?: ExpressAssertionJSONType;
+    readonly assertQuery?: ExpressAssertionJSONType;
+    readonly assertResponse?: ExpressAssertionJSONType;
 
     readonly doc?: IDocInformation;
 

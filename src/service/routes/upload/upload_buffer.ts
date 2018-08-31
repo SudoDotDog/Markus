@@ -11,12 +11,13 @@ import * as Direct from "../../../direct/import";
 import { concatSuffix } from "../../../util/data/path";
 import { error, ERROR_CODE } from "../../../util/error/error";
 import { IFileManager } from "../../../util/manager/file/import";
-import { ExpressNextFunction, IExpressRoute, ROUTE_MODE } from '../../interface';
+import { ExpressAssertionJSONType, ExpressNextFunction, EXPRESS_POST_SUBMIT_FORMAT, IExpressRoute, ROUTE_MODE, EXPRESS_ASSERTION_TYPES_END } from '../../interface';
 
 export enum SERVICE_ROUTE_UPLOAD_BUFFER_MODE {
     AVATAR = 'AVATAR',
     IMAGE = 'IMAGE',
-    DOC = 'DOC',
+    AVATAR_DOC = 'AVATAR_DOC',
+    IMAGE_DOC = 'IMAGE_DOC',
 }
 
 export default class RouteUploadAvatarByBuffer implements IExpressRoute {
@@ -29,10 +30,28 @@ export default class RouteUploadAvatarByBuffer implements IExpressRoute {
     public readonly stack: RequestHandler[];
     public readonly after: boolean = true;
 
+    public readonly postType: EXPRESS_POST_SUBMIT_FORMAT = EXPRESS_POST_SUBMIT_FORMAT.FORM_DATA;
+    public readonly assertBody: ExpressAssertionJSONType;
+
     public constructor(docMode: SERVICE_ROUTE_UPLOAD_BUFFER_MODE, route: string, suffix: string, multerEngine?: RequestHandler, uploadEngine?: RequestHandler) {
         this.path = route;
         this.name = concatSuffix(this.name, suffix);
-        if (docMode !== SERVICE_ROUTE_UPLOAD_BUFFER_MODE.DOC) {
+        this.assertBody = {};
+        if (docMode === SERVICE_ROUTE_UPLOAD_BUFFER_MODE.AVATAR_DOC) {
+            this.assertBody = {
+                avatar: EXPRESS_ASSERTION_TYPES_END.STRING,
+                image: EXPRESS_ASSERTION_TYPES_END.FILE,
+            }
+        }
+
+        if (docMode === SERVICE_ROUTE_UPLOAD_BUFFER_MODE.IMAGE_DOC) {
+            this.assertBody = {
+                tags: EXPRESS_ASSERTION_TYPES_END.STRING,
+                image: EXPRESS_ASSERTION_TYPES_END.FILE,
+            }
+        }
+
+        if (docMode !== SERVICE_ROUTE_UPLOAD_BUFFER_MODE.IMAGE_DOC && docMode !== SERVICE_ROUTE_UPLOAD_BUFFER_MODE.AVATAR_DOC) {
             if (!multerEngine || !uploadEngine || !suffix) {
                 throw error(ERROR_CODE.INTERNAL_DOC_CONSTRUCTOR_NOT_FULFILLED);
             }
@@ -64,6 +83,7 @@ export default class RouteUploadAvatarByBuffer implements IExpressRoute {
     protected async avatarHandler(req: Request, res: Response, next: ExpressNextFunction): Promise<void> {
         try {
             const avatar: string = req.body.avatar;
+            const file: Express.Multer.File = req.file;
             const manager: IFileManager = req.manager;
 
             if (!req.valid) {
@@ -71,20 +91,17 @@ export default class RouteUploadAvatarByBuffer implements IExpressRoute {
                 throw error(ERROR_CODE.PERMISSION_VALID_FAILED);
             }
 
-            const base64Image: string = req.body.image;
-            const mime: string = manager.mime();
             const hash: string = await manager.hash();
-            const originalName: string = req.body.original || 'N/A';
-
             const callback: IAvatarCallback = await Direct.Avatar.createOrUpdateAvatar({
                 avatar,
-                encoding: 'base64',
-                mime,
-                original: originalName,
+                encoding: file.encoding,
+                mime: file.mimetype,
+                original: file.originalname,
                 hash,
                 manager,
-                size: base64Image.length,
+                size: file.size,
             });
+
             res.agent.add('avatar', callback.avatar);
         } catch (err) {
             res.agent.failed(400, err);
