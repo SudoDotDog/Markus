@@ -14,6 +14,7 @@ install:
  - npm install codecov nyc -g
 
 before_script:
+ - make conf
  - sleep 1
 
 script:
