@@ -92,6 +92,7 @@ app.post('/v/base64', ...prepares, uploadManager.generateBase64Engine(), ...perm
 
 // Handler(s) for Image List Get
 appBuilder.route(new Route.RouteCompressByTag());
+appBuilder.route(new Route.RouteRenameTag());
 app.post('/tag', ...prepares, Handler.GetImage.imageGetListByTagHandler);
 
 // Handler(s) for Tag List Get

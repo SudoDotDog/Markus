@@ -27,7 +27,6 @@ import { markusVersion } from '../../util/struct/agent';
 export const UploadBufferHandler = async (req: Request, res: Response): Promise<void> => {
     try {
         const file: Express.Multer.File = req.file;
-        console.log(file);
         const manager: IFileManager = req.manager;
         if (!req.valid) {
             manager.release();

@@ -24,6 +24,12 @@ export const TagSchema: Schema = new Schema({
     });
 
 export interface ITagModel extends ITag, Document {
+    rename: (newName: string) => ITagModel;
 }
+
+TagSchema.methods.rename = function (this: ITagModel, newName: string): ITagModel {
+    this.name = newName;
+    return this;
+};
 
 export const TagModel: Model<ITagModel> = model<ITagModel>("Tag", TagSchema);

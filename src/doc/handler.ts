@@ -31,6 +31,7 @@ export const getBuiltDocRoute = (): DocRouteBuilder => {
         new Route.RouteGetImage('/w/:id', 'white not found image', 'White'),
         new Route.RouteGetAvatar(),
         new Route.RouteGetImagesByTag(),
+        new Route.RouteRenameTag(),
         new Route.RouteTagList(),
         new Route.RouteRiskyGetList(),
         new Route.RouteUploadByBuffer(SERVICE_ROUTE_UPLOAD_BUFFER_MODE.AVATAR_DOC, '/v/buffer', 'Avatar'),

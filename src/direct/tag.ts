@@ -8,6 +8,7 @@ import { ObjectID } from "bson";
 import * as Controller from '../database/controller/import';
 import { ITagUserFriendly } from "../database/interface/tag";
 import { ITagModel } from "../database/model/tag";
+import { error, ERROR_CODE } from "../util/error/error";
 
 export const getTagStringsNamesMapByTagIds = async (ids: ObjectID[]): Promise<Map<string, string>> => {
     const nameMap: Map<string, string> = new Map<string, string>();
@@ -49,4 +50,19 @@ export const getAllActiveTagUserFriendlyList = async (): Promise<ITagUserFriendl
         });
     }
     return result;
+};
+
+export const renameTagToNewNameById = async (tagId: ObjectID, newName: string): Promise<ITagModel> => {
+    const tag: ITagModel = await Controller.Tag.modifyTagName(tagId, newName);
+    return tag;
+};
+
+export const renameTagToNewNameByTagCurrentName = async (tagName: string, newName: string): Promise<ITagModel> => {
+    const tag: ITagModel | null = await Controller.Tag.rummageTag(tagName);
+    if (tag) {
+        const newTag: ITagModel = await Controller.Tag.modifyTagName(tag._id, newName);
+        return newTag;
+    } else {
+        throw error(ERROR_CODE.TAG_NOT_FOUND);
+    }
 };

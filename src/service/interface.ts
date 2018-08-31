@@ -26,7 +26,7 @@ export enum ROUTE_MODE {
 
 export enum EXPRESS_POST_SUBMIT_FORMAT {
     FORM_DATA = 'FORM_DATA',
-    JSON = 'JSON',
+    X_WWW_FORM_URLENCODED = 'X_WWW_FORM_URLENCODED',
 }
 
 export type ExpressNextFunction = () => void;

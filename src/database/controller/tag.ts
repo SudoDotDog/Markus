@@ -117,6 +117,22 @@ export const getTagsCount = async (): Promise<number> => {
     return count;
 };
 
+export const modifyTagName = async (id: ObjectID, newName: string): Promise<ITagModel> => {
+    const tag: ITagModel | null = await TagModel.findOne({ _id: id });
+    const targetTag: ITagModel | null = await TagModel.findOne({ name: newName });
+    if (targetTag) {
+        throw error(ERROR_CODE.TAG_NAME_ALREADY_EXIST);
+    }
+
+    if (tag) {
+        tag.rename(newName);
+        await tag.save();
+        return tag;
+    } else {
+        throw error(ERROR_CODE.TAG_NOT_FOUND);
+    }
+};
+
 export const Risky_PermanentlyRemoveTag = async (tagId: ObjectID): Promise<void> => {
     await TagModel.deleteMany({
         _id: tagId,

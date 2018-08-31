@@ -27,6 +27,7 @@ export enum ERROR_CODE {
 
     NO_IMAGE_UNDER_TARGET_TAG = 210,
     TAG_NOT_FOUND = 211,
+    TAG_NAME_ALREADY_EXIST = 212,
 
     IMAGE_NOT_FOUND = 220,
 
@@ -92,6 +93,7 @@ export const errorList: {
     209: 'Image have both duplicated tags',
     210: 'No image under target tag name',
     211: 'Tag not found',
+    212: 'Tag name already exist',
     220: 'Image not found',
     230: 'File not found',
     240: 'Avatar not found',
