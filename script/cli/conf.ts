@@ -1,9 +1,9 @@
 console.log(JSON.stringify({
     crossOrigin: "*",
     host: "mongodb://localhost:27017",
-    database: "markus-test-2",
-    imagePath: "/Users/mwang/Desktop/image",
-    tempPath: "/Users/mwang/Desktop/temp",
+    database: "markus",
+    imagePath: "/home/Markus/Image",
+    tempPath: "/home/Markus/Temp",
     imagePFolder: 5,
     isDebug: true,
     maxThread: 4,
@@ -17,6 +17,6 @@ console.log(JSON.stringify({
         bucket: "",
         accessKeyId: "",
         secretAccessKey: "",
-        getPath: ""
-    }
+        getPath: "",
+    },
 }, null, 2));
