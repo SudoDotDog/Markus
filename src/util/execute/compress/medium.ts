@@ -34,7 +34,14 @@ export class CompressMedium {
         if (!Fs.existsSync(path)) {
             throw error(ERROR_CODE.INTERNAL_COMPRESS_TARGET_FILE_NOT_FOUND);
         }
-        this._archiver.append(Fs.createReadStream(path), { name });
+        const stat: Fs.Stats = Fs.statSync(path);
+        this._archiver.append(
+            Fs.createReadStream(path),
+            {
+                name,
+                date: new Date(stat.ctime),
+            },
+        );
     }
 
     public addBuffer(buffer: Buffer, name: string) {
