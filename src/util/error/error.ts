@@ -172,7 +172,7 @@ export const secureError = (err: Error): Error => {
             return error(ERROR_CODE.UNKNOWN_ERROR_CODE);
         }
     }
-}
+};
 
 export const handlerError = (res: Response, err: Error) => {
     if ((err as any).code) {

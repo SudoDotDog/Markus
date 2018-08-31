@@ -24,6 +24,7 @@ declare global {
     }
 
     namespace NodeJS {
+        // tslint:disable-next-line
         interface Global {
             MarkusConfig: IConfig;
         }

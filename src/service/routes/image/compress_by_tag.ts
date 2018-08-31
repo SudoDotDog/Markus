@@ -42,6 +42,7 @@ export default class RouteCompressByTag implements IExpressRoute {
         return;
     }
 
+    // tslint:disable-next-line
     public readonly doc: IDocInformation = {
         name: {
             EN: 'Get compressed images by tag',
@@ -49,6 +50,6 @@ export default class RouteCompressByTag implements IExpressRoute {
         },
         description: {
             EN: 'Get compressed images by tag',
-        }
-    }
+        },
+    };
 }

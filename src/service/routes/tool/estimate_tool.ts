@@ -42,7 +42,7 @@ export default class RouteEstimateTool implements IExpressRoute {
             if (!name || !args) {
                 throw error(ERROR_CODE.REQUEST_PATTERN_NOT_MATCHED);
             }
-    
+
             const tool: IMarkusTool = findToolAndMatchFromToolbox(this._tools, name);
             const result: IMarkusToolEstimate = await tool.estimate(...args);
             res.agent.add('type', result.type);

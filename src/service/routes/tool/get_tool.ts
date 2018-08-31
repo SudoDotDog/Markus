@@ -26,7 +26,7 @@ export default class RouteGetTool implements IExpressRoute {
     private _tools: IMarkusTool[];
 
     public constructor(installedTool?: IMarkusTool[]) {
-        this._tools = installedTool? installedTool : installToolbox(MarkusExtensionConfig);
+        this._tools = installedTool ? installedTool : installToolbox(MarkusExtensionConfig);
         this.handle = this.handle.bind(this);
     }
 

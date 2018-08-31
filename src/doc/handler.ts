@@ -8,6 +8,7 @@ import { Request, RequestHandler, Response } from "express";
 import { MarkusExtensionConfig } from "../markus";
 import { installToolbox } from "../script/handlers/tool/install";
 import { IExpressRoute } from "../service/interface";
+import LanguageTextProcessor from '../service/language';
 import * as Route from '../service/routes/import';
 import { SERVICE_ROUTE_UPLOAD_BASE64_MODE } from "../service/routes/upload/upload_base64";
 import { SERVICE_ROUTE_UPLOAD_BUFFER_MODE } from "../service/routes/upload/upload_buffer";
@@ -16,7 +17,6 @@ import DocRouteBuilder from './builder';
 import { IDocTemplateRenderer } from "./interface";
 import DocTableCardTemplateRenderer from './template/components/tableCard';
 import DocOuterParentTemplateRenderer from "./template/parent";
-import LanguageTextProcessor from '../service/language';
 
 export const getBuiltDocRoute = (): DocRouteBuilder => {
     const docBuilder: DocRouteBuilder = new DocRouteBuilder();

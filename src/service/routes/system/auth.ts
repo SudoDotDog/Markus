@@ -5,10 +5,10 @@
  */
 
 import { Request, RequestHandler, Response } from "express";
-import { markusVersion } from "../../../util/struct/agent";
-import { ExpressNextFunction, IExpressRoute, ROUTE_MODE } from '../../interface';
 import { assert } from "../../../util/error/assert";
 import { ERROR_CODE } from "../../../util/error/error";
+import { markusVersion } from "../../../util/struct/agent";
+import { ExpressNextFunction, IExpressRoute, ROUTE_MODE } from '../../interface';
 
 export default class RouteAuth implements IExpressRoute {
     public readonly name: string = 'MR@Internal:Route^Auth';
