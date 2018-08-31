@@ -11,7 +11,8 @@ import * as Direct from "../../../direct/import";
 import { concatSuffix } from "../../../util/data/path";
 import { error, ERROR_CODE } from "../../../util/error/error";
 import { IFileManager } from "../../../util/manager/file/import";
-import { ExpressAssertionJSONType, ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, EXPRESS_POST_SUBMIT_FORMAT, IDocInformation, IExpressRoute, ROUTE_MODE } from '../../interface';
+// tslint:disable-next-line
+import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, EXPRESS_POST_SUBMIT_FORMAT, IDocInformation, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE } from '../../interface';
 
 export enum SERVICE_ROUTE_UPLOAD_BUFFER_MODE {
     AVATAR = 'AVATAR',
@@ -31,7 +32,7 @@ export default class RouteUploadAvatarByBuffer implements IExpressRoute {
     public readonly after: boolean = true;
 
     public readonly postType: EXPRESS_POST_SUBMIT_FORMAT = EXPRESS_POST_SUBMIT_FORMAT.FORM_DATA;
-    public readonly assertBody: ExpressAssertionJSONType;
+    public readonly assertBody: IExpressAssertionJSONType;
 
     public readonly doc: IDocInformation | null;
 
@@ -48,12 +49,12 @@ export default class RouteUploadAvatarByBuffer implements IExpressRoute {
                 },
                 description: {
                     EN: 'Replace target name\'s avatar by uploaded image',
-                }
-            }
+                },
+            };
             this.assertBody = {
                 avatar: EXPRESS_ASSERTION_TYPES_END.STRING,
                 image: EXPRESS_ASSERTION_TYPES_END.FILE,
-            }
+            };
         }
 
         if (docMode === SERVICE_ROUTE_UPLOAD_BUFFER_MODE.IMAGE_DOC) {
@@ -64,12 +65,12 @@ export default class RouteUploadAvatarByBuffer implements IExpressRoute {
                 },
                 description: {
                     EN: 'Add image to server, return id of uploaded image',
-                }
-            }
+                },
+            };
             this.assertBody = {
                 tags: EXPRESS_ASSERTION_TYPES_END.STRING,
                 image: EXPRESS_ASSERTION_TYPES_END.FILE,
-            }
+            };
         }
 
         if (docMode !== SERVICE_ROUTE_UPLOAD_BUFFER_MODE.IMAGE_DOC && docMode !== SERVICE_ROUTE_UPLOAD_BUFFER_MODE.AVATAR_DOC) {

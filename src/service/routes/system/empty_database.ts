@@ -7,6 +7,7 @@
 import { Request, RequestHandler, Response } from "express";
 import * as Direct from "../../../direct/import";
 import { error, ERROR_CODE } from "../../../util/error/error";
+// tslint:disable-next-line
 import { ExpressNextFunction, EXPRESS_SPECIAL_MARK, IExpressRoute, ROUTE_MODE } from '../../interface';
 
 export default class RouteRiskyEmptyDatabase implements IExpressRoute {

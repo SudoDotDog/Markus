@@ -45,10 +45,10 @@ interface IPrivateExpressAssertionTypeNamedEND {
 }
 
 type ExpressAssertionType = IPrivateExpressAssertionTypeUNION | IPrivateExpressAssertionTypeNamedEND;
-export type ExpressAssertionJSONType = {
+export interface IExpressAssertionJSONType {
     [key: string]: EXPRESS_ASSERTION_TYPES_END | {
         type: EXPRESS_ASSERTION_TYPES_UNION;
-        child: ExpressAssertionJSONType;
+        child: IExpressAssertionJSONType;
         optional?: boolean;
     } | {
         type: EXPRESS_ASSERTION_TYPES_END;
@@ -94,9 +94,9 @@ export interface IExpressRoute {
     readonly ignoreInDoc?: boolean;
 
     readonly postType?: EXPRESS_POST_SUBMIT_FORMAT;
-    readonly assertBody?: ExpressAssertionJSONType;
-    readonly assertQuery?: ExpressAssertionJSONType;
-    readonly assertResponse?: ExpressAssertionJSONType;
+    readonly assertBody?: IExpressAssertionJSONType;
+    readonly assertQuery?: IExpressAssertionJSONType;
+    readonly assertResponse?: IExpressAssertionJSONType;
     readonly specialMark?: EXPRESS_SPECIAL_MARK[];
 
     readonly doc?: IDocInformation | null;
