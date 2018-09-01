@@ -114,3 +114,9 @@ export const Risky_UpdateAllImageWithOldTagToANewTag = async (oldTag: ObjectID, 
 
     return;
 };
+
+export const setImageTagsByImageModelAndTagIds = async (image: IImageModel, newTags: ObjectID[]): Promise<void> => {
+    image.tags = newTags;
+    await image.save();
+    return;
+};

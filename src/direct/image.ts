@@ -145,3 +145,14 @@ export const getImagesCallbacksByTag = async (tagString: string, includeInactive
         return buildImageCallback(image, currentFile);
     });
 };
+
+export const changeImageTagToNewTagsByTagName = async (imageId: ObjectID, newTags: string[]): Promise<void> => {
+    const image: IImageModel = await Controller.Image.getImageById(imageId);
+    const tags: ObjectID[] = [];
+    for (let i of newTags) {
+        const tag = await getTagWithTagManager.rummage(i);
+        tags.push(tag._id);
+    }
+    await Controller.Image.setImageTagsByImageModelAndTagIds(image, tags);
+    return;
+};
