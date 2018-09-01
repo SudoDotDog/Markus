@@ -86,6 +86,7 @@ export interface IExpressRoute {
     readonly path: string;
     readonly mode: ROUTE_MODE;
 
+    readonly veryBefore?: RequestHandler[];
     readonly prepare: boolean;
     readonly authorization: boolean;
     readonly stack: RequestHandler[];

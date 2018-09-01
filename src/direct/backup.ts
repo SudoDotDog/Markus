@@ -34,7 +34,7 @@ export const compressImagesByTag = async (tag: string): Promise<ICompressZipResu
             original = fixConflictName(original);
         }
         originalList.push(original);
-        medium.addFile(fileBuilder(file.folder, file.filename), original);
+        medium.addFile(fileBuilder(file.folder, file.filename), original, file.ctime);
     }
     const result: ICompressZipResult = await medium.finalize(files.length * 150);
     return result;
@@ -52,7 +52,7 @@ export const compressImageFromLocalStorageByTag = async (tag: string): Promise<I
             original = fixConflictName(original);
         }
         originalList.push(original);
-        medium.addFile(fileBuilder(file.folder, file.filename), original);
+        medium.addFile(fileBuilder(file.folder, file.filename), original, file.ctime);
     }
     const result: ICompressZipResult = await medium.finalize(files.length * 150);
     return result;
@@ -70,7 +70,7 @@ export const compressImageFromAmazonS3ByTag = async (tag: string): Promise<IComp
             original = fixConflictName(original);
         }
         originalList.push(original);
-        medium.addFile(fileBuilder(file.folder, file.filename), original);
+        medium.addFile(fileBuilder(file.folder, file.filename), original, file.ctime);
     }
     const result: ICompressZipResult = await medium.finalize(files.length * 150);
     return result;

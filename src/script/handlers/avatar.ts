@@ -91,7 +91,7 @@ export const avatarBase64Handler = async (req: Request, res: Response): Promise<
         const base64Image: string = req.body.image;
         const mime: string = manager.mime();
         const hash: string = await manager.hash();
-        const originalName: string = req.body.original || 'N/A';
+        const originalName: string = req.body.original || 'Not-Provided';
 
         const callback: IAvatarCallback = await Direct.Avatar.createOrUpdateAvatar({
             avatar,

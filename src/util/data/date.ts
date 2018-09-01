@@ -41,3 +41,15 @@ export const appropriateDateStringWithTime = (date: Date) => {
 
     return `${year}-${month}-${day} ${hour}:${minute}:${seconds}(UTC${areaStr})`;
 };
+
+export const availableAnythingToDate = (num: any): Date | undefined => {
+    if (num) {
+        const parsed = parseInt(num, 10);
+        if (parsed) {
+            return new Date(parsed);
+        }
+        return void 0;
+    } else {
+        return void 0;
+    }
+};

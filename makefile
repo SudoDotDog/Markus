@@ -54,6 +54,7 @@ dev:
 	@$(tsc) --p $(dev)
 
 build: clean install ubuild
+	@echo '[INFO] To Start Run: "./dist/script/service/markus.js"'
 
 ubuild:
 	@echo "[INFO] Building for production"
@@ -72,6 +73,7 @@ tests:
 
 cleanall: clean
 ifeq ($(OS), Windows_NT)
+	@echo "[INFO] Skipping"
 else
 	@echo "[INFO] Cleaning dependence files"
 	@rm -rf node_modules
@@ -79,6 +81,7 @@ endif
 
 clean:
 ifeq ($(OS), Windows_NT)
+	@echo "[INFO] Skipping"
 else
 	@echo "[INFO] Cleaning dist files"
 	@rm -rf dist
@@ -88,6 +91,6 @@ else
 endif
 
 install:
-	@echo "[INFO] Install Dependences"
+	@echo "[INFO] Installing Dependences"
 	@npm install
 	@npm install --only=dev

@@ -63,7 +63,7 @@ export interface IConfigTemplate {
 
 export type Partial<T> = {
     [P in keyof T]?: T[P];
-}
+};
 
 export interface IMarkusExtensionConfig {
     middleware: { // keep

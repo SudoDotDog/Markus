@@ -8,11 +8,13 @@ import { Request, RequestHandler, Response } from "express";
 import { IAvatarCallback } from "../../../database/interface/avatar";
 import { IImageCallback } from "../../../database/interface/image";
 import * as Direct from "../../../direct/import";
+import { availableAnythingToDate } from "../../../util/data/date";
 import { concatSuffix } from "../../../util/data/path";
+import { assert } from "../../../util/error/assert";
 import { error, ERROR_CODE } from "../../../util/error/error";
 import { IFileManager } from "../../../util/manager/file/import";
 // tslint:disable-next-line
-import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, EXPRESS_POST_SUBMIT_FORMAT, IDocInformation, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE } from '../../interface';
+import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, EXPRESS_POST_SUBMIT_FORMAT, IDocInformation, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE, EXPRESS_SPECIAL_MARK } from '../../interface';
 
 export enum SERVICE_ROUTE_UPLOAD_BASE64_MODE {
     AVATAR = 'AVATAR',
@@ -33,7 +35,7 @@ export default class RouteUploadAvatarByBase64 implements IExpressRoute {
 
     public readonly postType: EXPRESS_POST_SUBMIT_FORMAT = EXPRESS_POST_SUBMIT_FORMAT.X_WWW_FORM_URLENCODED;
     public readonly assertBody: IExpressAssertionJSONType;
-
+    public readonly specialMark: EXPRESS_SPECIAL_MARK[] = [EXPRESS_SPECIAL_MARK.DEPRECATED];
     public readonly doc: IDocInformation | null;
 
     public constructor(docMode: SERVICE_ROUTE_UPLOAD_BASE64_MODE, route: string, suffix: string, uploadEngine?: RequestHandler) {
@@ -58,6 +60,10 @@ export default class RouteUploadAvatarByBase64 implements IExpressRoute {
                     type: EXPRESS_ASSERTION_TYPES_END.STRING,
                     optional: true,
                 },
+                ctime: {
+                    type: EXPRESS_ASSERTION_TYPES_END.NUMBER,
+                    optional: true,
+                },
             };
         }
 
@@ -76,6 +82,10 @@ export default class RouteUploadAvatarByBase64 implements IExpressRoute {
                 image: EXPRESS_ASSERTION_TYPES_END.STRING,
                 original: {
                     type: EXPRESS_ASSERTION_TYPES_END.STRING,
+                    optional: true,
+                },
+                ctime: {
+                    type: EXPRESS_ASSERTION_TYPES_END.NUMBER,
                     optional: true,
                 },
             };
@@ -113,6 +123,7 @@ export default class RouteUploadAvatarByBase64 implements IExpressRoute {
         try {
             const avatar: string = req.body.avatar;
             const manager: IFileManager = req.manager;
+            const ctime: Date | undefined = availableAnythingToDate(req.body.ctime);
 
             if (!req.valid) {
                 manager.release();
@@ -122,9 +133,10 @@ export default class RouteUploadAvatarByBase64 implements IExpressRoute {
             const base64Image: string = req.body.image;
             const mime: string = manager.mime();
             const hash: string = await manager.hash();
-            const originalName: string = req.body.original || 'N/A';
+            const originalName: string = req.body.original || 'Not-Provided';
 
             const callback: IAvatarCallback = await Direct.Avatar.createOrUpdateAvatar({
+                ctime,
                 avatar,
                 encoding: 'base64',
                 mime,
@@ -146,6 +158,7 @@ export default class RouteUploadAvatarByBase64 implements IExpressRoute {
     protected async imageHandler(req: Request, res: Response, next: ExpressNextFunction): Promise<void> {
         try {
             const manager: IFileManager = req.manager;
+            const ctime: Date | undefined = availableAnythingToDate(req.body.ctime);
 
             if (!req.valid) {
                 manager.release();
@@ -154,7 +167,8 @@ export default class RouteUploadAvatarByBase64 implements IExpressRoute {
 
             const base64Image: string = req.body.image;
             const preTags: string[] | string = req.body.tags;
-            const originalName: string = req.body.original || 'N/A';
+            assert(base64Image).to.be.exist(ERROR_CODE.REQUEST_PATTERN_NOT_MATCHED);
+            const originalName: string = req.body.original || 'Not-Provided';
             let tags: string[] = [];
             if (typeof preTags === 'string') {
                 tags = preTags.split(',');
@@ -170,6 +184,7 @@ export default class RouteUploadAvatarByBase64 implements IExpressRoute {
             const hash: string = await manager.hash();
 
             const image: IImageCallback = await Direct.Image.createImageByIImageCreationConfigWithTagCacheManager({
+                ctime,
                 encoding: 'base64',
                 mime,
                 original: originalName,

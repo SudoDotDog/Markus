@@ -30,16 +30,26 @@ export class CompressMedium {
         this._prepare();
     }
 
-    public addFile(path: string, name: string) {
+    public addFile(path: string, name: string, modelCtime?: Date) {
         if (!Fs.existsSync(path)) {
             throw error(ERROR_CODE.INTERNAL_COMPRESS_TARGET_FILE_NOT_FOUND);
         }
-        const stat: Fs.Stats = Fs.statSync(path);
+        let ctime = modelCtime;
+        if (!ctime) {
+            const stat: Fs.Stats = Fs.statSync(path);
+            ctime = new Date(stat.ctime);
+        }
+
+        // TODO This is for previous mistake, need to be replaced!
+        if (name === 'N/A') {
+            name = 'Not-Provided';
+        }
+
         this._archiver.append(
             Fs.createReadStream(path),
             {
                 name,
-                date: new Date(stat.ctime),
+                date: ctime,
             },
         );
     }

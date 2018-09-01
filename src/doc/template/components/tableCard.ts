@@ -43,7 +43,7 @@ export default class DocTableCardTemplateRenderer implements IDocTemplateRendere
                     <div style="width:100px">
                         <img src="${this._icon}" width="100px" height="100px">
                     </div>
-                    <div style="flex:1;padding:5px">
+                    <div style="flex:1;padding:8px">
                         ${this.getBadge(this._marks)}
                         <div style="${textStyle.build()}">${this._title}</div>
                     </div>

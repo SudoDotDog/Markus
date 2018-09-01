@@ -128,16 +128,23 @@ export default class ExpressBuilder implements IExpressBuilder {
         }
 
         const handlers: express.RequestHandler[] = [];
+
+        if (route.veryBefore) {
+            handlers.push(...route.veryBefore);
+        }
         if (route.prepare) {
             handlers.push(...MarkusExtensionConfig.middleware.prepares);
         }
         if (route.authorization) {
             handlers.push(...MarkusExtensionConfig.middleware.permissions);
         }
+
         handlers.push(...route.stack);
+
         if (route.after) {
             handlers.push(...MarkusExtensionConfig.middleware.after);
         }
+
         handlers.push(internalExpressBuilderFlushHandler);
 
         switch (route.mode) {

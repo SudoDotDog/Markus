@@ -14,6 +14,7 @@ import { initMarkusGlobalConfig, MarkusExtensionConfig } from "../../markus";
 import ExpressBuilder from "../../service/builder";
 import * as Extension from '../../service/extension/import';
 import * as Route from '../../service/routes/import';
+import { SERVICE_ROUTE_UPLOAD_BUFFER_MODE } from "../../service/routes/upload/upload_buffer";
 import UploadManager from '../../util/manager/upload';
 import { markusVersion } from "../../util/struct/agent";
 import * as Handler from '../handlers/import';
@@ -80,14 +81,26 @@ app.get('/w/:id', ...prepares, Handler.GetImage.imageGetBlankWhiteHandler, ...af
 app.get('/b/:id', ...prepares, Handler.GetImage.imageGetBlankBlackHandler, ...afters);
 
 // Handler(s) for Image Upload
-app.post('/m/buffer', ...prepares, uploadManager.generateMulterEngine('image'), uploadManager.generateBufferEngine(), ...permissions, Handler.Markus.UploadBufferHandler);
+appBuilder.route(new Route.RouteUploadByBuffer(
+    SERVICE_ROUTE_UPLOAD_BUFFER_MODE.IMAGE,
+    '/m/buffer',
+    'Image',
+    uploadManager.generateMulterEngine('image'),
+    uploadManager.generateBufferEngine(),
+));
 app.post('/m/base64', ...prepares, uploadManager.generateBase64Engine(), ...permissions, Handler.Markus.UploadBase64Handler);
 
 // Handler(s) for Avatar Get
 app.get('/a/:avatar', ...prepares, Handler.Avatar.avatarGetHandler);
 
 // Handler(s) for Avatar Set
-app.post('/v/buffer', ...prepares, uploadManager.generateMulterEngine('image'), uploadManager.generateBufferEngine(), ...permissions, Handler.Avatar.avatarBufferHandler);
+appBuilder.route(new Route.RouteUploadByBuffer(
+    SERVICE_ROUTE_UPLOAD_BUFFER_MODE.AVATAR,
+    '/v/buffer',
+    'Avatar',
+    uploadManager.generateMulterEngine('image'),
+    uploadManager.generateBufferEngine(),
+));
 app.post('/v/base64', ...prepares, uploadManager.generateBase64Engine(), ...permissions, Handler.Avatar.avatarBase64Handler);
 
 // Handler(s) for Image List Get

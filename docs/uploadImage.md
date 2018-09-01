@@ -64,7 +64,7 @@ $.ajax({
   - image: String, [Image base64 code, **start with base64**]
   - tags: string[], [Image tag list]
   - original: string? Optional [Upload file original name]
-    - If original name not given, Markus will use "N/A" instead
+    - If original name not given, Markus will use "Not-Provided" instead
 - Succeed Response: Object (JSON)
   - status: String, "SUCCEED"
   - data: Object (JSON),

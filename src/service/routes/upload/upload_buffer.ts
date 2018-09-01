@@ -8,6 +8,7 @@ import { Request, RequestHandler, Response } from "express";
 import { IAvatarCallback } from "../../../database/interface/avatar";
 import { IImageCallback } from "../../../database/interface/image";
 import * as Direct from "../../../direct/import";
+import { availableAnythingToDate } from "../../../util/data/date";
 import { concatSuffix } from "../../../util/data/path";
 import { error, ERROR_CODE } from "../../../util/error/error";
 import { IFileManager } from "../../../util/manager/file/import";
@@ -25,6 +26,8 @@ export default class RouteUploadAvatarByBuffer implements IExpressRoute {
     public readonly name: string = 'MR@Internal:Route^Upload-By-Buffer';
     public readonly path: string;
     public readonly mode: ROUTE_MODE = ROUTE_MODE.POST;
+
+    public readonly veryBefore: RequestHandler[];
 
     public readonly prepare: boolean = true;
     public readonly authorization: boolean = true;
@@ -54,6 +57,10 @@ export default class RouteUploadAvatarByBuffer implements IExpressRoute {
             this.assertBody = {
                 avatar: EXPRESS_ASSERTION_TYPES_END.STRING,
                 image: EXPRESS_ASSERTION_TYPES_END.FILE,
+                ctime: {
+                    type: EXPRESS_ASSERTION_TYPES_END.NUMBER,
+                    optional: true,
+                },
             };
         }
 
@@ -70,6 +77,10 @@ export default class RouteUploadAvatarByBuffer implements IExpressRoute {
             this.assertBody = {
                 tags: EXPRESS_ASSERTION_TYPES_END.STRING,
                 image: EXPRESS_ASSERTION_TYPES_END.FILE,
+                ctime: {
+                    type: EXPRESS_ASSERTION_TYPES_END.NUMBER,
+                    optional: true,
+                },
             };
         }
 
@@ -88,12 +99,16 @@ export default class RouteUploadAvatarByBuffer implements IExpressRoute {
                 default:
                     throw error(ERROR_CODE.INTERNAL_DOC_CONSTRUCTOR_NOT_FULFILLED);
             }
-            this.stack = [
+            this.veryBefore = [
                 multerEngine,
+            ];
+            this.stack = [
+
                 uploadEngine,
                 handler,
             ];
         } else {
+            this.veryBefore = [];
             this.stack = [];
         }
     }
@@ -107,6 +122,7 @@ export default class RouteUploadAvatarByBuffer implements IExpressRoute {
             const avatar: string = req.body.avatar;
             const file: Express.Multer.File = req.file;
             const manager: IFileManager = req.manager;
+            const ctime: Date | undefined = availableAnythingToDate(req.body.ctime);
 
             if (!req.valid) {
                 manager.release();
@@ -115,6 +131,7 @@ export default class RouteUploadAvatarByBuffer implements IExpressRoute {
 
             const hash: string = await manager.hash();
             const callback: IAvatarCallback = await Direct.Avatar.createOrUpdateAvatar({
+                ctime,
                 avatar,
                 encoding: file.encoding,
                 mime: file.mimetype,
@@ -137,6 +154,8 @@ export default class RouteUploadAvatarByBuffer implements IExpressRoute {
         try {
             const file: Express.Multer.File = req.file;
             const manager: IFileManager = req.manager;
+            const ctime: Date | undefined = availableAnythingToDate(req.body.ctime);
+
             if (!req.valid) {
                 manager.release();
                 throw error(ERROR_CODE.PERMISSION_VALID_FAILED);
@@ -153,6 +172,7 @@ export default class RouteUploadAvatarByBuffer implements IExpressRoute {
             const hash: string = await manager.hash();
 
             const image: IImageCallback = await Direct.Image.createImageByIImageCreationConfigWithTagCacheManager({
+                ctime,
                 encoding: file.encoding,
                 mime: file.mimetype,
                 hash,

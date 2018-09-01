@@ -15,6 +15,7 @@ export interface IFileConfig extends IFileProperty {
     folder: string;
     filename: string;
     hash: string;
+    ctime?: Date;
 }
 
 export interface IFile extends IFileConfig {

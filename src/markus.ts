@@ -6,8 +6,7 @@
 // tslint:disable-next-line
 /// <reference path="./declare/global.ts" />
 
-import * as Path from 'path';
-import { middleware, MODE, IMarkusExtensionConfig, IConfig } from './interface';
+import { IConfig, IMarkusExtensionConfig, middleware } from './interface';
 import * as Handler from './script/handlers/import';
 import * as InternalTools from './toolbox/import';
 import { IMarkusTool } from './toolbox/toolbox';
@@ -36,7 +35,7 @@ export const initMarkusGlobalConfig = () => {
     const config: IConfig = reader.read();
 
     global.MarkusConfig = config;
-}
+};
 
 export const MarkusExtensionConfig: IMarkusExtensionConfig = {
     middleware: {
@@ -45,4 +44,4 @@ export const MarkusExtensionConfig: IMarkusExtensionConfig = {
         after: AfterMiddleware,
     },
     tools: Tools,
-}
+};

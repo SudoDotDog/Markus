@@ -23,7 +23,7 @@ export const createOrUpdateAvatar = async (option: IAvatarCreationConfig): Promi
         size: option.size,
     };
 
-    const file: IFileModel = await Controller.File.createOrUpdateAFileByHashAndManager(hash, manager, property);
+    const file: IFileModel = await Controller.File.createOrUpdateAFileByHashAndManager(hash, manager, property, option.ctime);
 
     const avatar: IAvatarModel = await Controller.Avatar.createOrUpdateAvatarAndSave({
         avatar: option.avatar,

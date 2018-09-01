@@ -7,6 +7,7 @@ import { ObjectID } from "bson";
 import { IFileManager } from "../../util/manager/file/import";
 
 export interface IImageCreationConfig {
+    ctime?: Date;
     encoding: string;
     hash: string;
     mime: string;

@@ -27,10 +27,10 @@ describe('test data file util functions', (): void => {
         return;
     });
 
-    it('fix conflict name should give a correct name with N/A', async (): Promise<void> => {
-        const result: string[] = fixConflictName('N/A').split(/_|\./);
+    it('fix conflict name should give a correct name with Not-Provided', async (): Promise<void> => {
+        const result: string[] = fixConflictName('Not-Provided').split(/_|\./);
         expect(result).to.be.lengthOf(2);
-        expect(result[0]).to.be.equal('N/A');
+        expect(result[0]).to.be.equal('Not-Provided');
         expect(result[1]).to.be.lengthOf(7);
         return;
     });

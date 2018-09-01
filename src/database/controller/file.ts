@@ -10,7 +10,7 @@ import { IFileConfig, IFileProperty } from '../interface/file';
 import { FileModel, IFileModel } from "../model/file";
 
 export const getFilesByIds = async (ids: ObjectID[]): Promise<IFileModel[]> => {
-    const files: IFileModel[] = await FileModel.find({_id: ids});
+    const files: IFileModel[] = await FileModel.find({ _id: ids });
     return files;
 };
 
@@ -52,6 +52,7 @@ export const getActiveFileById = async (id: ObjectID): Promise<IFileModel> => {
 
 export const createFile = async (option: IFileConfig): Promise<IFileModel> => {
     const newFile: IFileModel = new FileModel({
+        ctime: option.ctime || void 0,
         direct: option.direct || false,
         encoding: option.encoding,
         hash: option.hash,
@@ -68,6 +69,7 @@ export const createFile = async (option: IFileConfig): Promise<IFileModel> => {
 
 export const createFileWithReference = async (option: IFileConfig): Promise<IFileModel> => {
     const newFile: IFileModel = new FileModel({
+        ctime: option.ctime || void 0,
         direct: option.direct || false,
         encoding: option.encoding,
         hash: option.hash,
@@ -83,7 +85,7 @@ export const createFileWithReference = async (option: IFileConfig): Promise<IFil
     return newFile;
 };
 
-export const createOrUpdateAFileByHashAndManager = async (hash: string, manager: IFileManager, property: IFileProperty): Promise<IFileModel> => {
+export const createOrUpdateAFileByHashAndManager = async (hash: string, manager: IFileManager, property: IFileProperty, ctime?: Date): Promise<IFileModel> => {
     const hashedFile: IFileModel | null = await FileModel.findOne({
         active: true,
         hash,
@@ -98,6 +100,7 @@ export const createOrUpdateAFileByHashAndManager = async (hash: string, manager:
     } else {
         const { folder, filename } = await manager.save();
         const newFile: IFileModel = await createFileWithReference({
+            ctime: ctime || void 0,
             encoding: property.encoding,
             hash,
             mime: property.mime,

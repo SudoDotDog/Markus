@@ -38,7 +38,7 @@ export const createImageByIImageCreationConfigWithTagCacheManager = async (optio
         mime: option.mime,
         original: option.original,
         size: option.size,
-    });
+    }, option.ctime);
     const tags: ObjectID[] = [];
     for (let i of option.tags) {
         const tag = await getTagWithTagManager.rummage(i);

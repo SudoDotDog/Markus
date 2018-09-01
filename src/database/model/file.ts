@@ -11,6 +11,10 @@ export const FileSchema: Schema = new Schema({
         type: Boolean,
         default: true,
     },
+    ctime: {
+        type: Date,
+        required: false,
+    },
     direct: {
         type: Boolean,
         default: false,

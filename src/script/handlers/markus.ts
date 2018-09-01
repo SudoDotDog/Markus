@@ -84,7 +84,7 @@ export const UploadBase64Handler = async (req: Request, res: Response): Promise<
 
         const base64Image: string = req.body.image;
         const preTags: string[] | string = req.body.tags;
-        const originalName: string = req.body.original || 'N/A';
+        const originalName: string = req.body.original || 'Not-Provided';
         let tags: string[] = [];
         if (typeof preTags === 'string') {
             tags = preTags.split(',');

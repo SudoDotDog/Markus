@@ -18,6 +18,7 @@ export interface IAvatar extends IAvatarConfig {
 }
 
 export interface IAvatarCreationConfig {
+    ctime?: Date;
     avatar: string;
     encoding: string;
     hash: string;
