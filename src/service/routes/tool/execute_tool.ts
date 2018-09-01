@@ -10,7 +10,8 @@ import { installToolbox } from "../../../script/handlers/tool/install";
 import { findToolAndMatchFromToolbox } from "../../../script/handlers/tool/util";
 import { IMarkusTool, IMarkusToolResult } from "../../../toolbox/toolbox";
 import { error, ERROR_CODE } from "../../../util/error/error";
-import { ExpressNextFunction, IExpressRoute, ROUTE_MODE } from '../../interface';
+// tslint:disable-next-line
+import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, EXPRESS_ASSERTION_TYPES_UNION, IDocInformation, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE } from '../../interface';
 
 export default class RouteExecuteTool implements IExpressRoute {
     public readonly name: string = 'MR@Internal:Route^Execute-Tool';
@@ -23,6 +24,22 @@ export default class RouteExecuteTool implements IExpressRoute {
         this.handle,
     ];
     public readonly after: boolean = true;
+
+    public readonly doc: IDocInformation = {
+        name: {
+            EN: 'Execute tool',
+        },
+        description: {
+            EN: 'Execute target tool with target arguments',
+        },
+    };
+    public readonly assertBody: IExpressAssertionJSONType = {
+        name: EXPRESS_ASSERTION_TYPES_END.TOOL_NAME,
+        args: {
+            type: EXPRESS_ASSERTION_TYPES_UNION.ARRAY,
+            child: EXPRESS_ASSERTION_TYPES_END.ANY,
+        },
+    };
 
     private _tools: IMarkusTool[];
 

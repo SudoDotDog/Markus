@@ -48,7 +48,7 @@ type ExpressAssertionType = IPrivateExpressAssertionTypeUNION | IPrivateExpressA
 export interface IExpressAssertionJSONType {
     [key: string]: EXPRESS_ASSERTION_TYPES_END | {
         type: EXPRESS_ASSERTION_TYPES_UNION;
-        child: IExpressAssertionJSONType;
+        child: IExpressAssertionJSONType | EXPRESS_ASSERTION_TYPES_END;
         optional?: boolean;
     } | {
         type: EXPRESS_ASSERTION_TYPES_END;
@@ -62,8 +62,10 @@ export enum EXPRESS_ASSERTION_TYPES_UNION {
 }
 
 export enum EXPRESS_ASSERTION_TYPES_END {
+    ANY = 'ANY',
     STRING = 'STRING',
-    OBJECTID = "OBJECTID",
+    OBJECT_ID = "OBJECT_ID",
+    TOOL_NAME = "TOOL_NAME",
     NUMBER = 'NUMBER',
     BOOLEAN = 'BOOLEAN',
     FILE = 'FILE',

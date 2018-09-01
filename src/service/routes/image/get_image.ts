@@ -26,7 +26,7 @@ export default class RouteGetImageByPath implements IExpressRoute {
 
     public readonly doc: IDocInformation;
     public readonly assertQuery: IExpressAssertionJSONType = {
-        id: EXPRESS_ASSERTION_TYPES_END.OBJECTID,
+        id: EXPRESS_ASSERTION_TYPES_END.OBJECT_ID,
     };
 
     private _emptyPath: string;

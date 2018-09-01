@@ -33,7 +33,7 @@ export default class RouteDeactivateImageById implements IExpressRoute {
         },
     };
     public readonly assertBody: IExpressAssertionJSONType = {
-        id: EXPRESS_ASSERTION_TYPES_END.OBJECTID,
+        id: EXPRESS_ASSERTION_TYPES_END.OBJECT_ID,
     };
 
     public available() {
