@@ -99,8 +99,10 @@ export interface IExpressRoute {
 
     readonly postType?: EXPRESS_POST_SUBMIT_FORMAT;
     readonly assertBody?: IExpressAssertionJSONType;
+    readonly assertParam?: IExpressAssertionJSONType;
     readonly assertQuery?: IExpressAssertionJSONType;
     readonly assertResponse?: IExpressAssertionJSONType;
+
     readonly specialMark?: EXPRESS_SPECIAL_MARK[];
 
     readonly doc?: IDocInformation | null;

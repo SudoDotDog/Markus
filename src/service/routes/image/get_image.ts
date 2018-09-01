@@ -38,10 +38,10 @@ export default class RouteGetImageByPath implements IExpressRoute {
 
         this.doc = {
             name: {
-                EN: 'Get image ' + suffix,
+                EN: 'Get image - ' + suffix.toLowerCase(),
             },
             description: {
-                EN: 'Get image from id, return ' + suffix + ' empty image if wanted image is not available',
+                EN: 'Get image from id, return ' + suffix.toLowerCase() + ' empty image if wanted image is not available',
             },
         };
     }

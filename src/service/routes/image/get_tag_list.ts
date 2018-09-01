@@ -7,7 +7,8 @@
 import { Request, RequestHandler, Response } from "express";
 import { ITagUserFriendly } from "../../../database/interface/tag";
 import * as Direct from "../../../direct/import";
-import { ExpressNextFunction, IExpressRoute, ROUTE_MODE } from '../../interface';
+// tslint:disable-next-line
+import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, IDocInformation, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE } from '../../interface';
 
 export default class RouteGetTagList implements IExpressRoute {
     public readonly name: string = 'MR@Internal:Route^Get-Tag-List';
@@ -20,6 +21,15 @@ export default class RouteGetTagList implements IExpressRoute {
         this.handler,
     ];
     public readonly after: boolean = true;
+
+    public readonly doc: IDocInformation = {
+        name: {
+            EN: 'Get all tags',
+        },
+        description: {
+            EN: 'Get all tags that active in the database',
+        },
+    };
 
     public available() {
         return true;
