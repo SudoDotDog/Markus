@@ -65,10 +65,18 @@ export const DocIndexHandler: RequestHandler = (req: Request, res: Response): vo
             name: 'authorization',
             value: route.authorization ? 'YES' : 'NO',
         }];
+
         if (route.postType) {
             template.push({
                 name: 'format',
                 value: route.postType,
+            });
+        }
+
+        if (route.assertParam) {
+            template.push({
+                name: 'parameter',
+                value: convertObjectToHTMLFriendlyJson(route.assertParam),
             });
         }
 
