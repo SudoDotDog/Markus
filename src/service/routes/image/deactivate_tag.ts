@@ -9,7 +9,8 @@ import { IImageModel } from "../../../database/model/image";
 import * as Direct from "../../../direct/import";
 import { assert } from "../../../util/error/assert";
 import { ERROR_CODE } from "../../../util/error/error";
-import { ExpressNextFunction, IExpressRoute, ROUTE_MODE } from '../../interface';
+// tslint:disable-next-line
+import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, IDocInformation, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE } from '../../interface';
 
 export default class RouteDeactivateImagesByTag implements IExpressRoute {
     public readonly name: string = 'MR@Internal:Route^Deactivate_Images_By_Tag';
@@ -22,6 +23,18 @@ export default class RouteDeactivateImagesByTag implements IExpressRoute {
         this.handler,
     ];
     public readonly after: boolean = true;
+
+    public readonly doc: IDocInformation = {
+        name: {
+            EN: 'Deactive image by tag',
+        },
+        description: {
+            EN: 'Deactive a set images that contain target tag, if any image of them have no reference, release storage',
+        },
+    };
+    public readonly assertBody: IExpressAssertionJSONType = {
+        tag: EXPRESS_ASSERTION_TYPES_END.STRING,
+    };
 
     public available() {
         return true;

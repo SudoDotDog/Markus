@@ -8,7 +8,8 @@ import { Request, RequestHandler, Response } from "express";
 import { assert } from "../../../util/error/assert";
 import { ERROR_CODE } from "../../../util/error/error";
 import { markusVersion } from "../../../util/struct/agent";
-import { ExpressNextFunction, IExpressRoute, ROUTE_MODE } from '../../interface';
+// tslint:disable-next-line
+import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, IDocInformation, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE } from '../../interface';
 
 export default class RouteAuth implements IExpressRoute {
     public readonly name: string = 'MR@Internal:Route^Auth';
@@ -21,6 +22,19 @@ export default class RouteAuth implements IExpressRoute {
         this.handle,
     ];
     public readonly after: boolean = true;
+
+    public readonly doc: IDocInformation = {
+        name: {
+            EN: 'Verify testing',
+        },
+        description: {
+            EN: 'Get server information with authorization',
+        },
+    };
+    public readonly assertResponse: IExpressAssertionJSONType = {
+        agent: EXPRESS_ASSERTION_TYPES_END.STRING,
+        version: EXPRESS_ASSERTION_TYPES_END.STRING,
+    };
 
     public available() {
         return true;

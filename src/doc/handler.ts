@@ -72,10 +72,24 @@ export const DocIndexHandler: RequestHandler = (req: Request, res: Response): vo
             });
         }
 
+        if (route.assertQuery) {
+            template.push({
+                name: 'query',
+                value: convertObjectToHTMLFriendlyJson(route.assertQuery),
+            });
+        }
+
         if (route.assertBody) {
             template.push({
-                name: 'Body',
+                name: 'body',
                 value: convertObjectToHTMLFriendlyJson(route.assertBody),
+            });
+        }
+
+        if (route.assertResponse) {
+            template.push({
+                name: 'response',
+                value: convertObjectToHTMLFriendlyJson(route.assertResponse),
             });
         }
 

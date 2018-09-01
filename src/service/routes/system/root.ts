@@ -6,7 +6,8 @@
 
 import { Request, RequestHandler, Response } from "express";
 import { markusVersion } from "../../../util/struct/agent";
-import { ExpressNextFunction, IExpressRoute, ROUTE_MODE } from '../../interface';
+// tslint:disable-next-line
+import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, IDocInformation, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE } from '../../interface';
 
 export default class RouteRoot implements IExpressRoute {
     public readonly name: string = 'MR@Internal:Route^Root';
@@ -19,6 +20,19 @@ export default class RouteRoot implements IExpressRoute {
         this.handle,
     ];
     public readonly after: boolean = true;
+
+    public readonly doc: IDocInformation = {
+        name: {
+            EN: 'Server information',
+        },
+        description: {
+            EN: 'Get server information',
+        },
+    };
+    public readonly assertResponse: IExpressAssertionJSONType = {
+        agent: EXPRESS_ASSERTION_TYPES_END.STRING,
+        version: EXPRESS_ASSERTION_TYPES_END.STRING,
+    };
 
     public available() {
         return true;
