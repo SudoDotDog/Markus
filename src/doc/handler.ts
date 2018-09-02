@@ -48,6 +48,10 @@ export const getBuiltDocRoute = (): DocRouteBuilder => {
 };
 
 export const verifyLanguage = (language: string | undefined): boolean => {
+    if (!language) {
+        return false;
+    }
+
     if (language.toUpperCase() === 'EN' ||
         language.toUpperCase() === 'ZH') {
         return true;
