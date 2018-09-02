@@ -13,6 +13,7 @@ export class ResponseAgent {
     private _file: string | null;
     private _redirect: string | null;
     private _count: number;
+    private _prettify: boolean;
     private _failed: {
         code: number;
         err: Error;
@@ -26,6 +27,7 @@ export class ResponseAgent {
         this._data = {};
         this._file = null;
         this._redirect = null;
+        this._prettify = false;
         this._failed = null;
         this._count = 0;
     }
@@ -37,6 +39,11 @@ export class ResponseAgent {
         }
         this._data[name] = value;
         this._count++;
+        return this;
+    }
+
+    public prettify(): ResponseAgent {
+        this._prettify = true;
         return this;
     }
 
@@ -89,15 +96,26 @@ export class ResponseAgent {
             //         finalCode = 400;
             //     }
             // }
-            this._response.status(this._failed.code).send({
-                status: RESPONSE.FAILED,
-                error: secureError(this._failed.err),
-            });
+            if (this._prettify) {
+                this._response.status(this._failed.code).send(JSON.stringify({
+                    status: RESPONSE.FAILED,
+                    error: secureError(this._failed.err),
+                }, null, 2));
+            } else {
+                this._response.status(this._failed.code).send({
+                    status: RESPONSE.FAILED,
+                    error: secureError(this._failed.err),
+                });
+            }
             return;
         }
 
         if (this._file) {
-            this._response.status(200).sendFile(this._file);
+            if (this._prettify) {
+                this._response.status(200).sendFile(JSON.stringify(this._file, null, 2));
+            } else {
+                this._response.status(200).sendFile(this._file);
+            }
         } else if (this._redirect) {
             this._response.redirect(this._redirect);
         } else {
