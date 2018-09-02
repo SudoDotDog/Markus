@@ -28,6 +28,7 @@ export interface IConfig {
     uploadLimit: number;
     portNumber: number;
     verbose: boolean;
+    authorization: string[];
     white404ImagePath: string;
     black404ImagePath: string;
     mode: MODE;
@@ -52,6 +53,7 @@ export interface IConfigTemplate {
     uploadLimit: number;
     portNumber: number;
     verbose: number;
+    authorization: number;
     white404ImagePath: number;
     black404ImagePath: number;
     mode: number;
