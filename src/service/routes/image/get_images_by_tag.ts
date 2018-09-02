@@ -11,7 +11,7 @@ import * as Direct from "../../../direct/import";
 import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, IDocInformation, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE } from '../../interface';
 
 export default class RouteGetImagesByTag implements IExpressRoute {
-    public readonly name: string = 'MR@Internal:Route^Get-Images-By-Tag';
+    public readonly name: string = 'MR@Internal-Route^Get-Images-By-Tag';
     public readonly path: string = '/tag';
     public readonly mode: ROUTE_MODE = ROUTE_MODE.POST;
 

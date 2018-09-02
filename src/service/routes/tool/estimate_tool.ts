@@ -14,7 +14,7 @@ import { error, ERROR_CODE } from "../../../util/error/error";
 import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, EXPRESS_ASSERTION_TYPES_UNION, IDocInformation, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE } from '../../interface';
 
 export default class RouteEstimateTool implements IExpressRoute {
-    public readonly name: string = 'MR@Internal:Route^Estimate-Tool';
+    public readonly name: string = 'MR@Internal-Route^Estimate-Tool';
     public readonly path: string = '/t/estimate';
     public readonly mode: ROUTE_MODE = ROUTE_MODE.POST;
 

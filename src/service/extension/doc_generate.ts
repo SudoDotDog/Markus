@@ -9,7 +9,7 @@ import { createDocIndex, verifyLanguage } from "../../doc/handler";
 import { IExpressExtension, IText } from '../interface';
 
 export default class ExtensionDocGenerate implements IExpressExtension {
-    public readonly name: string = 'ME@Internal:Extension^Doc-Generate';
+    public readonly name: string = 'ME@Internal-Extension^Doc-Generate';
     public readonly preMount: boolean = false;
 
     private _docs: {

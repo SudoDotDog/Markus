@@ -13,7 +13,7 @@ import { concatSuffix } from "../../../util/data/path";
 import { ExpressNextFunction, IExpressRoute, ROUTE_MODE, IDocInformation, IExpressAssertionJSONType, EXPRESS_ASSERTION_TYPES_END } from '../../interface';
 
 export default class RouteGetImageByPath implements IExpressRoute {
-    public readonly name: string = 'MR@Internal:Route^Get-Image-By-Path';
+    public readonly name: string = 'MR@Internal-Route^Get-Image-By-Path';
     public readonly path: string;
     public readonly mode: ROUTE_MODE = ROUTE_MODE.GET;
 

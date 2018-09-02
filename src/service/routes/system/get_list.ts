@@ -14,7 +14,7 @@ import UniqueArray from "../../../util/struct/uniqueArray";
 import { ExpressNextFunction, EXPRESS_SPECIAL_MARK, IExpressRoute, ROUTE_MODE } from '../../interface';
 
 export default class RouteRiskyGetList implements IExpressRoute {
-    public readonly name: string = 'MR@Internal:Route^Risky_Get_List';
+    public readonly name: string = 'MR@Internal-Route^Risky_Get_List';
     public readonly path: string = '/list';
     public readonly mode: ROUTE_MODE = ROUTE_MODE.POST;
 

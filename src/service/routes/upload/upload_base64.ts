@@ -24,7 +24,7 @@ export enum SERVICE_ROUTE_UPLOAD_BASE64_MODE {
 }
 
 export default class RouteUploadAvatarByBase64 implements IExpressRoute {
-    public readonly name: string = 'MR@Internal:Route^Upload-By-Base64';
+    public readonly name: string = 'MR@Internal-Route^Upload-By-Base64';
     public readonly path: string;
     public readonly mode: ROUTE_MODE = ROUTE_MODE.POST;
 

@@ -23,7 +23,7 @@ export enum SERVICE_ROUTE_UPLOAD_BUFFER_MODE {
 }
 
 export default class RouteUploadAvatarByBuffer implements IExpressRoute {
-    public readonly name: string = 'MR@Internal:Route^Upload-By-Buffer';
+    public readonly name: string = 'MR@Internal-Route^Upload-By-Buffer';
     public readonly path: string;
     public readonly mode: ROUTE_MODE = ROUTE_MODE.POST;
 

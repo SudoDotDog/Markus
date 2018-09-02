@@ -8,7 +8,7 @@ import { IConfig, MODE } from '../../interface';
 import * as toolbox from "../toolbox";
 
 export default class InternalToolMergeTag implements toolbox.IMarkusTool {
-    public readonly name: string = "MT@Internal:Tool^Merge-Tags";
+    public readonly name: string = "MT@Internal-Tool^Merge-Tags";
     public readonly description: string = "Merge tags to a different tag";
     public readonly require: toolbox.MARKUS_TOOL_REQUIRE_TYPE[] = [];
     public teapots: toolbox.IMarkusToolTeapot[] = [];

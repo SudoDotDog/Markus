@@ -10,7 +10,7 @@ import UniqueArray from "../../util/struct/uniqueArray";
 import * as toolbox from "../toolbox";
 
 export default class InternalToolTagDeduplicate implements toolbox.IMarkusTool {
-    public readonly name: string = "MT@Internal:Tool^Tag-Duplicate-Remover";
+    public readonly name: string = "MT@Internal-Tool^Tag-Duplicate-Remover";
     public readonly description: string = "Remove duplicate tags";
     public readonly require: toolbox.MARKUS_TOOL_REQUIRE_TYPE[] = [];
     public teapots: toolbox.IMarkusToolTeapot[] = [];
