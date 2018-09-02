@@ -18,7 +18,6 @@ export const rummageLongTermTempFileOrCreateWithLazyLoadContent = (name: string,
     mkPathDir(tempFilePath);
 
     const filePath: string = fileBuilder('temp', name + '.' + type);
-    console.log(filePath);
     if (Fs.existsSync(filePath)) {
         return filePath;
     } else {
