@@ -57,7 +57,6 @@ export default class RouteGetAvatarById implements IExpressRoute {
         try {
             const avatar: string = req.params.id;
             const text: string | undefined = req.query.text;
-            console.log(avatar, text);
             const callback: IFileModel | null = await Direct.Avatar.rummageFileByAvatar(avatar);
             if (callback) {
                 const filepath: string = fileBuilder(callback.folder, callback.filename);
