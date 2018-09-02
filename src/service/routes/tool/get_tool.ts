@@ -13,7 +13,7 @@ import { getInformationByIMarkusTools } from "../../../toolbox/util/parse";
 import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, EXPRESS_ASSERTION_TYPES_UNION, IDocInformation, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE } from '../../interface';
 
 export default class RouteGetTool implements IExpressRoute {
-    public readonly name: string = 'MR@Internal:Route^Get-Tool';
+    public readonly name: string = 'MR@Internal-Route^Get-Tool';
     public readonly path: string = '/t';
     public readonly mode: ROUTE_MODE = ROUTE_MODE.GET;
 

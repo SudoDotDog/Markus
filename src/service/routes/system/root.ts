@@ -10,7 +10,7 @@ import { markusVersion } from "../../../util/struct/agent";
 import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, IDocInformation, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE } from '../../interface';
 
 export default class RouteRoot implements IExpressRoute {
-    public readonly name: string = 'MR@Internal:Route^Root';
+    public readonly name: string = 'MR@Internal-Route^Root';
     public readonly path: string = '/';
     public readonly mode: ROUTE_MODE = ROUTE_MODE.GET;
 

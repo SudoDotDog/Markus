@@ -11,7 +11,7 @@ import { error, ERROR_CODE } from "../../../util/error/error";
 import { ExpressNextFunction, EXPRESS_SPECIAL_MARK, IExpressRoute, ROUTE_MODE } from '../../interface';
 
 export default class RouteRiskyEmptyDatabase implements IExpressRoute {
-    public readonly name: string = 'MR@Internal:Route^Risky_Empty_Database';
+    public readonly name: string = 'MR@Internal-Route^Risky_Empty_Database';
     public readonly path: string = '/empty';
     public readonly mode: ROUTE_MODE = ROUTE_MODE.POST;
 

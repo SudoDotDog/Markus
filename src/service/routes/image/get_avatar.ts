@@ -9,20 +9,18 @@ import { IFileModel } from "../../../database/model/file";
 import * as Direct from "../../../direct/import";
 import { Icon } from "../../../icon/icon";
 import { fileBuilder } from "../../../util/data/path";
-import { createTempFile } from "../../../util/image";
+import { createTempFile, rummageLongTermTempFileOrCreateWithLazyLoadContent } from "../../../util/image";
 // tslint:disable-next-line
 import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, IDocInformation, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE } from '../../interface';
 
 export default class RouteGetAvatarById implements IExpressRoute {
-    public readonly name: string = 'MR@Internal:Route^Get-Avatar-By-Id';
+    public readonly name: string = 'MR@Internal-Route^Get-Avatar-By-Id';
     public readonly path: string = '/a/:id';
     public readonly mode: ROUTE_MODE = ROUTE_MODE.GET;
 
     public readonly prepare: boolean = true;
     public readonly authorization: boolean = false;
-    public readonly stack: RequestHandler[] = [
-        this.handler,
-    ];
+    public readonly stack: RequestHandler[];
     public readonly after: boolean = true;
 
     public readonly doc: IDocInformation = {
@@ -43,6 +41,14 @@ export default class RouteGetAvatarById implements IExpressRoute {
         id: EXPRESS_ASSERTION_TYPES_END.OBJECT_ID,
     };
 
+    public constructor() {
+        this.handler = this.handler.bind(this);
+        this.getCreateAvatarFunction = this.getCreateAvatarFunction.bind(this);
+        this.stack = [
+            this.handler,
+        ];
+    }
+
     public available() {
         return true;
     }
@@ -51,22 +57,16 @@ export default class RouteGetAvatarById implements IExpressRoute {
         try {
             const avatar: string = req.params.id;
             const text: string | undefined = req.query.text;
+            console.log(avatar, text);
             const callback: IFileModel | null = await Direct.Avatar.rummageFileByAvatar(avatar);
             if (callback) {
                 const filepath: string = fileBuilder(callback.folder, callback.filename);
                 res.agent.smartFileSend(filepath);
             } else {
-                let tempFilePath: string;
-                if (text) {
-                    if (text === '@E') {
-                        tempFilePath = createTempFile(Icon(avatar, ''), 'svg');
-                    } else {
-                        tempFilePath = createTempFile(Icon(avatar, text), 'svg');
-                    }
-                } else {
-                    tempFilePath = createTempFile(Icon(avatar), 'svg');
-                }
-                res.agent.smartFileSend(tempFilePath);
+                const path = rummageLongTermTempFileOrCreateWithLazyLoadContent(
+                    'Avatar-' + avatar, 'svg',
+                    this.getCreateAvatarFunction(avatar, text));
+                res.agent.smartFileSend(path);
             }
         } catch (err) {
             res.agent.failed(400, err);
@@ -74,5 +74,19 @@ export default class RouteGetAvatarById implements IExpressRoute {
             next();
         }
         return;
+    }
+
+    protected getCreateAvatarFunction(avatar: string, text?: string): () => string {
+        return (): string => {
+            if (text) {
+                if (text === '@E') {
+                    return Icon(avatar, '');
+                } else {
+                    return Icon(avatar, text);
+                }
+            } else {
+                return Icon(avatar);
+            }
+        };
     }
 }

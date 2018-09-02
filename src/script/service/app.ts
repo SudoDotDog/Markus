@@ -91,7 +91,7 @@ appBuilder.route(new Route.RouteUploadByBuffer(
 app.post('/m/base64', ...prepares, uploadManager.generateBase64Engine(), ...permissions, Handler.Markus.UploadBase64Handler);
 
 // Handler(s) for Avatar Get
-app.get('/a/:avatar', ...prepares, Handler.Avatar.avatarGetHandler);
+appBuilder.route(new Route.RouteGetAvatar());
 
 // Handler(s) for Avatar Set
 appBuilder.route(new Route.RouteUploadByBuffer(

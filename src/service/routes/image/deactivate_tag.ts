@@ -13,7 +13,7 @@ import { ERROR_CODE } from "../../../util/error/error";
 import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, IDocInformation, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE } from '../../interface';
 
 export default class RouteDeactivateImagesByTag implements IExpressRoute {
-    public readonly name: string = 'MR@Internal:Route^Deactivate_Images_By_Tag';
+    public readonly name: string = 'MR@Internal-Route^Deactivate_Images_By_Tag';
     public readonly path: string = '/deactivate/tag';
     public readonly mode: ROUTE_MODE = ROUTE_MODE.POST;
 

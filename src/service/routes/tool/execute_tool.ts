@@ -14,7 +14,7 @@ import { error, ERROR_CODE } from "../../../util/error/error";
 import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, EXPRESS_ASSERTION_TYPES_UNION, IDocInformation, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE } from '../../interface';
 
 export default class RouteExecuteTool implements IExpressRoute {
-    public readonly name: string = 'MR@Internal:Route^Execute-Tool';
+    public readonly name: string = 'MR@Internal-Route^Execute-Tool';
     public readonly path: string = '/t/execute';
     public readonly mode: ROUTE_MODE = ROUTE_MODE.POST;
 

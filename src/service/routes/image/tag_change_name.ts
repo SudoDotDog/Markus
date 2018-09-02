@@ -12,7 +12,7 @@ import { ERROR_CODE } from "../../../util/error/error";
 import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, EXPRESS_POST_SUBMIT_FORMAT, IDocInformation, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE } from '../../interface';
 
 export default class RouteRenameTag implements IExpressRoute {
-    public readonly name: string = 'MR@Internal:Route^Rename-Tag';
+    public readonly name: string = 'MR@Internal-Route^Rename-Tag';
     public readonly path: string = '/tag/rename';
     public readonly mode: ROUTE_MODE = ROUTE_MODE.POST;
 
