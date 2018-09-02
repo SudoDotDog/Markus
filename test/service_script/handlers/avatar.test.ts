@@ -140,8 +140,8 @@ export const testScriptAvatarHandlers = (): void => {
             expect(result.status).to.be.equal(200);
             expect(typeof result.body).to.be.equal('string');
 
-            expect(FsSyncsCB.exist).to.be.lengthOf(2);
-            expect(FsSyncsCB.mkdir).to.be.lengthOf(2);
+            expect(FsSyncsCB.exist).to.be.lengthOf(1);
+            expect(FsSyncsCB.mkdir).to.be.lengthOf(1);
             expect(FsSyncsCB.write).to.be.lengthOf(1);
             return;
         }).timeout(3200);
@@ -163,8 +163,8 @@ export const testScriptAvatarHandlers = (): void => {
             expect(result.status).to.be.equal(200);
             expect(typeof result.body).to.be.equal('string');
 
-            expect(FsSyncsCB.exist).to.be.lengthOf(2);
-            expect(FsSyncsCB.mkdir).to.be.lengthOf(2);
+            expect(FsSyncsCB.exist).to.be.lengthOf(1);
+            expect(FsSyncsCB.mkdir).to.be.lengthOf(1);
             expect(FsSyncsCB.write).to.be.lengthOf(1);
             return;
         }).timeout(3200);
