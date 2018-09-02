@@ -19,6 +19,7 @@ export const getMarkusConfigTemplate = (): IConfigTemplate => {
         uploadLimit: 1,
         portNumber: 1,
         verbose: 1,
+        authorization: 1,
         white404ImagePath: 1,
         black404ImagePath: 1,
         mode: 1,

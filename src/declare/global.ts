@@ -14,6 +14,7 @@ declare global {
         interface Request {
             manager: IFileManager;
             log: Log;
+            authPosition?: number[];
             valid?: boolean;
         }
 
