@@ -10,15 +10,27 @@ import { IFileModel } from '../database/model/file';
 import { IImageModel } from '../database/model/image';
 import { ITagModel } from '../database/model/tag';
 import { mkPathDir } from './data/file';
-import { fileBuilder, pathBuilder, tempPath } from './data/path';
+import { fileBuilder, pathBuilder } from './data/path';
 import { getImageLoadPathBuilder, ImageLoadFunction } from './manager/load';
 
+export const rummageLongTermTempFileOrCreateWithLazyLoadContent = (name: string, type: string, content: () => string): string => {
+    const tempFilePath: string = pathBuilder('temp');
+    mkPathDir(tempFilePath);
+
+    const filePath: string = fileBuilder('temp', name + '.' + type);
+    if (Fs.existsSync(filePath)) {
+        return filePath;
+    } else {
+        Fs.writeFileSync(filePath, content());
+        return filePath;
+    }
+};
+
 export const createTempFile = (content: string, type: string): string => {
-    const tempFilePath: string = tempPath();
+    const tempFilePath: string = pathBuilder('temp');
     mkPathDir(tempFilePath);
 
     const filePath: string = fileBuilder('temp', unique(11) + '.' + type);
-    mkPathDir(pathBuilder('temp'));
 
     Fs.writeFileSync(filePath, content);
     return filePath;
