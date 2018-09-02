@@ -4,10 +4,9 @@
  * @fileoverview Doc handler
  */
 
-import { Request, RequestHandler, Response } from "express";
 import { MarkusExtensionConfig } from "../markus";
 import { installToolbox } from "../script/handlers/tool/install";
-import { IExpressRoute } from "../service/interface";
+import { IExpressRoute, IText } from "../service/interface";
 import LanguageTextProcessor from '../service/language';
 import * as Route from '../service/routes/import';
 import { SERVICE_ROUTE_UPLOAD_BASE64_MODE } from "../service/routes/upload/upload_base64";
@@ -48,8 +47,19 @@ export const getBuiltDocRoute = (): DocRouteBuilder => {
     return docBuilder;
 };
 
-export const DocIndexHandler: RequestHandler = (req: Request, res: Response): void => {
-    const language: string | undefined = req.query.language;
+export const verifyLanguage = (language: string | undefined): boolean => {
+    if (!language) {
+        return false;
+    }
+
+    if (language.toUpperCase() === 'EN' ||
+        language.toUpperCase() === 'ZH') {
+        return true;
+    }
+    return false;
+};
+
+export const createDocIndex = (language: keyof IText): string => {
     const processor: LanguageTextProcessor = new LanguageTextProcessor(language);
     const cards: IDocTemplateRenderer[] = getBuiltDocRoute().flush().map((route: IExpressRoute) => {
         const template: IDocTableElement[] = [{
@@ -108,7 +118,7 @@ export const DocIndexHandler: RequestHandler = (req: Request, res: Response): vo
     });
 
     const outer: IDocTemplateRenderer = new DocOuterParentTemplateRenderer(cards);
-    res.send(outer.build());
+    return outer.build();
 };
 
 export const convertObjectToHTMLFriendlyJson = (object: any) => {
