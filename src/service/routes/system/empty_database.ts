@@ -8,7 +8,7 @@ import { Request, RequestHandler, Response } from "express";
 import * as Direct from "../../../direct/import";
 import { error, ERROR_CODE } from "../../../util/error/error";
 // tslint:disable-next-line
-import { ExpressNextFunction, EXPRESS_SPECIAL_MARK, IExpressRoute, ROUTE_MODE } from '../../interface';
+import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, EXPRESS_SPECIAL_MARK, IDocInformation, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE } from '../../interface';
 
 export default class RouteRiskyEmptyDatabase implements IExpressRoute {
     public readonly name: string = 'MR@Internal-Route^Risky_Empty_Database';
@@ -22,6 +22,14 @@ export default class RouteRiskyEmptyDatabase implements IExpressRoute {
     ];
     public readonly after: boolean = true;
 
+    public readonly doc: IDocInformation = {
+        name: {
+            EN: 'Empty database',
+        },
+        description: {
+            EN: 'Discard entire database!',
+        },
+    };
     public readonly specialMark: EXPRESS_SPECIAL_MARK[] = [EXPRESS_SPECIAL_MARK.DEBUG, EXPRESS_SPECIAL_MARK.RISKY];
 
     public available() {

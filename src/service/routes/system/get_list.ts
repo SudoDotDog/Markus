@@ -11,7 +11,7 @@ import * as Direct from "../../../direct/import";
 import { error, ERROR_CODE } from "../../../util/error/error";
 import UniqueArray from "../../../util/struct/uniqueArray";
 // tslint:disable-next-line
-import { ExpressNextFunction, EXPRESS_SPECIAL_MARK, IExpressRoute, ROUTE_MODE } from '../../interface';
+import { ExpressNextFunction, EXPRESS_SPECIAL_MARK, IDocInformation, IExpressRoute, ROUTE_MODE } from '../../interface';
 
 export default class RouteRiskyGetList implements IExpressRoute {
     public readonly name: string = 'MR@Internal-Route^Risky_Get_List';
@@ -25,6 +25,14 @@ export default class RouteRiskyGetList implements IExpressRoute {
     ];
     public readonly after: boolean = true;
 
+    public readonly doc: IDocInformation = {
+        name: {
+            EN: 'Get all image',
+        },
+        description: {
+            EN: 'Fetch all image from database',
+        },
+    };
     public readonly specialMark: EXPRESS_SPECIAL_MARK[] = [EXPRESS_SPECIAL_MARK.DEBUG, EXPRESS_SPECIAL_MARK.RISKY];
 
     public available() {
