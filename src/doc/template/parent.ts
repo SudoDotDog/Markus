@@ -21,19 +21,19 @@ export default class DocOuterParentTemplateRenderer implements IDocTemplateRende
             .add('min-width', '960px');
 
         return (`
-        <html>
-            <head>
-                <title>Markus - Document</title>
-            </head>
-            <body>
-                <div style="${outerStyle.build()}">
-                    <h1>Markus Documentation</h1>
-                    <div>
-                        ${this._children.map((renderer: IDocTemplateRenderer) => renderer.build()).join('')}
+            <html>
+                <head>
+                    <title>Markus - Document</title>
+                </head>
+                <body>
+                    <div style="${outerStyle.build()}">
+                        <h1>Markus Documentation</h1>
+                        <div>
+                            ${this._children.map((renderer: IDocTemplateRenderer) => renderer.build()).join('')}
+                        </div>
                     </div>
-                </div>
-            </body>
-        </html>
-    `);
+                </body>
+            </html>
+        `);
     }
 }

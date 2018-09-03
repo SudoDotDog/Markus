@@ -66,7 +66,9 @@ export default class DocTableCardTemplateRenderer implements IDocTemplateRendere
         if (marks.length <= 0) {
             return '';
         } else {
-            return `<div style="${badgeStyle.build()}">${this._marks.join(', ')}</div>`;
+            return (`
+                <div style="${badgeStyle.build()}">${this._marks.join(', ')}</div>
+            `);
         }
     }
 
@@ -83,7 +85,7 @@ export default class DocTableCardTemplateRenderer implements IDocTemplateRendere
             .add('padding-left', '5px')
             .add('border', '1px solid black');
 
-        return `
+        return (`
             <tr style="${rightStyle.build()}">
                 <td style="${leftStyle.build()}">
                     ${row.name}
@@ -92,6 +94,6 @@ export default class DocTableCardTemplateRenderer implements IDocTemplateRendere
                     ${row.value}
                 </td>
             </tr>
-        `;
+        `);
     }
 }
