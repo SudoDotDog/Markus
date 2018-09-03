@@ -4,9 +4,9 @@ To create permission config, modify `markus.conf` file, add `authorization` as a
 
 ```json
 "authorization": [
-    'first-key',
-    'second-key',
-    'third-key'
+    "first-key",
+    "second-key",
+    "third-key"
 ]
 ```
 
