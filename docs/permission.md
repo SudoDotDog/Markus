@@ -10,7 +10,7 @@ To create permission config, modify `markus.conf` file, add `authorization` as a
 ]
 ```
 
-You can add as much keys as you want to it. Use any key of these could pass the auth middware that `authPosition` property is not defineded.
+You can add as much keys as you want to it. Use any key of these could pass the auth middleware that `authPosition` property is not defended.
 
 ```typescript
 class someRoute implements IExpressRoute {
@@ -18,5 +18,4 @@ class someRoute implements IExpressRoute {
 }
 ```
 
-If `authPosition` position is defineded, middleware will only pass if position is matched, for example with this route and config, this route will only accept request with `key: 'first-key'` or `key: 'third-key'`.
-
+If `authPosition` position is defined, middleware will only pass if position is matched, for example with this route and config, this route will only accept request with `key: 'first-key'` or `key: 'third-key'`.
