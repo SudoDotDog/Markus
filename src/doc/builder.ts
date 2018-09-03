@@ -19,6 +19,10 @@ export default class DocRouteBuilder {
         return this._routes.list;
     }
 
+    public get length(): number {
+        return this._routes.length;
+    }
+
     public route(route: IExpressRoute): DocRouteBuilder {
         const exist: boolean = this._routes.has((element: IExpressRoute) => {
             return (element.path === route.path)
