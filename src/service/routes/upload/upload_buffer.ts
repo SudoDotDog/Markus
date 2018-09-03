@@ -117,7 +117,7 @@ export default class RouteUploadAvatarByBuffer implements IExpressRoute {
         return true;
     }
 
-    protected async avatarHandler(req: Request, res: Response, next: ExpressNextFunction): Promise<void> {
+    public async avatarHandler(req: Request, res: Response, next: ExpressNextFunction): Promise<void> {
         try {
             const avatar: string = req.body.avatar;
             const file: Express.Multer.File = req.file;
@@ -150,7 +150,7 @@ export default class RouteUploadAvatarByBuffer implements IExpressRoute {
         return;
     }
 
-    protected async imageHandler(req: Request, res: Response, next: ExpressNextFunction): Promise<void> {
+    public async imageHandler(req: Request, res: Response, next: ExpressNextFunction): Promise<void> {
         try {
             const file: Express.Multer.File = req.file;
             const manager: IFileManager = req.manager;

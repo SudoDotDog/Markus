@@ -44,40 +44,6 @@ export const avatarGetHandler = async (req: Request, res: Response): Promise<voi
     return;
 };
 
-export const avatarBufferHandler = async (req: Request, res: Response): Promise<void> => {
-    try {
-        const avatar: string = req.body.avatar;
-        const file: Express.Multer.File = req.file;
-        const manager: IFileManager = req.manager;
-
-        if (!req.valid) {
-            manager.release();
-            throw error(ERROR_CODE.PERMISSION_VALID_FAILED);
-        }
-
-        const hash: string = await manager.hash();
-        const callback: IAvatarCallback = await Direct.Avatar.createOrUpdateAvatar({
-            avatar,
-            encoding: file.encoding,
-            mime: file.mimetype,
-            original: file.originalname,
-            hash,
-            manager,
-            size: file.size,
-        });
-
-        res.status(200).send({
-            status: RESPONSE.SUCCEED,
-            data: {
-                avatar: callback.avatar,
-            },
-        });
-    } catch (err) {
-        handlerError(res, err);
-    }
-    return;
-};
-
 export const avatarBase64Handler = async (req: Request, res: Response): Promise<void> => {
     try {
         const avatar: string = req.body.avatar;

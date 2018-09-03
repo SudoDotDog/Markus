@@ -6,6 +6,8 @@
 
 import { expect } from 'chai';
 import * as Handlers from '../../../src/script/handlers/import';
+import * as Route from '../../../src/service/routes/import';
+import { SERVICE_ROUTE_UPLOAD_BUFFER_MODE } from '../../../src/service/routes/upload/upload_buffer';
 import { IMockHandlerResult, MockHandler } from '../../mock/express';
 import MockManager from '../../mock/manager';
 import { IMockFsSyncsCB, monkFsSyncs } from '../../mock/mock';
@@ -14,7 +16,7 @@ export const testScriptAvatarHandlers = (): void => {
     describe('avatar handler test', (): void => {
 
         it('create a avatar with a buffer should work', async (): Promise<void> => {
-            const mock: MockHandler = new MockHandler();
+            const mock: MockHandler = new MockHandler(true);
             const manager: MockManager = new MockManager('folder', 'filename', 'hash-avatar-buffer', 'mime');
 
             mock.request('valid', true)
@@ -27,8 +29,13 @@ export const testScriptAvatarHandlers = (): void => {
                 .request('manager', manager)
                 .body('avatar', 'test');
 
-            const { request, response } = mock.flush();
-            await Handlers.Avatar.avatarBufferHandler(request, response);
+            const { request, response, nextFunction } = mock.flush();
+            const avatarBufferRoute = new Route.RouteUploadByBuffer(
+                SERVICE_ROUTE_UPLOAD_BUFFER_MODE.AVATAR_DOC,
+                '/v/buffer/',
+                'Avatar',
+            );
+            await avatarBufferRoute.avatarHandler(request, response, nextFunction);
 
             const result: IMockHandlerResult = mock.end();
             // tslint:disable-next-line
@@ -40,7 +47,7 @@ export const testScriptAvatarHandlers = (): void => {
         }).timeout(3200);
 
         it('create a avatar with a buffer should throw if valid is false', async (): Promise<void> => {
-            const mock: MockHandler = new MockHandler();
+            const mock: MockHandler = new MockHandler(true);
             const manager: MockManager = new MockManager('folder', 'filename', 'hash-avatar-buffer', 'mime');
 
             mock.request('valid', false)
@@ -53,8 +60,13 @@ export const testScriptAvatarHandlers = (): void => {
                 .request('manager', manager)
                 .body('avatar', 'test');
 
-            const { request, response } = mock.flush();
-            await Handlers.Avatar.avatarBufferHandler(request, response);
+            const { request, response, nextFunction } = mock.flush();
+            const avatarBufferRoute = new Route.RouteUploadByBuffer(
+                SERVICE_ROUTE_UPLOAD_BUFFER_MODE.AVATAR_DOC,
+                '/v/buffer/',
+                'Avatar',
+            );
+            await avatarBufferRoute.avatarHandler(request, response, nextFunction);
 
             const result: IMockHandlerResult = mock.end();
             // tslint:disable-next-line
