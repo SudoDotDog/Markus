@@ -80,10 +80,13 @@ else
 endif	
 
 clean:
-ifeq ($(OS), Windows_NT)
-	@echo "[INFO] Skipping"
-else
 	@echo "[INFO] Cleaning dist files"
+ifeq ($(OS), Windows_NT)
+	@rd /s /q .\dist
+	@rd /s /q .\dist_script
+	@rd /s /q .\.nyc_output
+	@rd /s /q .\coverage
+else
 	@rm -rf dist
 	@rm -rf dist_script
 	@rm -rf .nyc_output
