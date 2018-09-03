@@ -10,6 +10,7 @@
 import { NextFunction, Request, Response } from "express";
 import { middleware } from "../../interface";
 import { parseBasicAuthorization } from '../../util/data/auth';
+import { error, ERROR_CODE } from "../../util/error/error";
 
 /**
  * Middleware
@@ -28,7 +29,7 @@ export const validPermissionBodyMiddleware: middleware = async (req: Request, re
 
     const key: string | undefined = req.body.key;
     if (key) {
-        if (key === 'test') {
+        if (checkAuthFromConfig(key, req.authPosition)) {
             req.valid = true;
         } else {
             req.valid = false;
@@ -59,7 +60,7 @@ export const validPermissionBasicAuthMiddleware: middleware = async (req: Reques
     const auth: string | null = parseBasicAuthorization(authHeader);
 
     if (auth) {
-        if (auth === 'test') {
+        if (checkAuthFromConfig(auth, req.authPosition)) {
             req.valid = true;
         } else {
             req.valid = false;
@@ -88,7 +89,7 @@ export const validPermissionQueryMiddleware: middleware = async (req: Request, r
 
     const auth: string | undefined = req.query.authorization;
     if (auth) {
-        if (auth === 'test') {
+        if (checkAuthFromConfig(auth, req.authPosition)) {
             req.valid = true;
         } else {
             req.valid = false;
@@ -99,3 +100,24 @@ export const validPermissionQueryMiddleware: middleware = async (req: Request, r
     next();
     return;
 };
+
+const checkAuthFromConfig = (key: string, position?: number[]): boolean => {
+    const keys: string[] = global.MarkusConfig.authorization;
+    if (!(keys instanceof Array)) {
+        throw error(ERROR_CODE.PERMISSION_CONFIG_NOT_CORRECT);
+    }
+
+    if (position) {
+        if (!(position instanceof Array)) {
+            throw error(ERROR_CODE.PERMISSION_CONFIG_NOT_CORRECT);
+        }
+        for (let i of position) {
+            if (keys[i] === key) {
+                return true;
+            }
+        }
+        return false;
+    } else {
+        return keys.includes(key);
+    }
+}

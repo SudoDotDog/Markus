@@ -40,6 +40,7 @@ export enum ERROR_CODE {
 
     PERMISSION_VALID_FAILED = 300,
     IMAGE_NOT_UPLOADED = 301,
+    PERMISSION_CONFIG_NOT_CORRECT = 302,
 
     REQUEST_PATTERN_NOT_MATCHED = 401,
     FOUR_O_FOUR_NOT_FOUND = 404,
@@ -101,6 +102,7 @@ export const errorList: {
     251: 'Setting is not settled yet',
     300: 'Permission valid failed',
     301: 'Image not found in request',
+    302: 'Permission config not correct',
     401: 'Request pattern not matched',
     404: 'Request URL not found',
     467: 'Compress time out',

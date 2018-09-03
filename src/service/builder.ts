@@ -129,6 +129,10 @@ export default class ExpressBuilder implements IExpressBuilder {
 
         const handlers: express.RequestHandler[] = [];
 
+        if (route.authPosition) {
+            handlers.push(this.createAuthPositionHandler(route.authPosition));
+        }
+
         if (route.veryBefore) {
             handlers.push(...route.veryBefore);
         }
@@ -166,5 +170,12 @@ export default class ExpressBuilder implements IExpressBuilder {
             default:
                 throw error(ERROR_CODE.INTERNAL_EXPRESS_AGENT);
         }
+    }
+
+    protected createAuthPositionHandler(position: number[]): express.RequestHandler {
+        return (req: express.Request, res: express.Response, next: express.NextFunction) => {
+            req.authPosition = position;
+            next();
+        };
     }
 }
