@@ -9,7 +9,8 @@ import * as Direct from "../../../direct/import";
 import { MODE } from "../../../interface";
 import { handlerError } from "../../../util/error/error";
 import { ICompressZipResult } from "../../../util/execute/compress/compress";
-import { ExpressNextFunction, IDocInformation, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE, EXPRESS_ASSERTION_TYPES_END } from '../../interface';
+// tslint:disable-next-line
+import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, IDocInformation, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE } from '../../interface';
 import LodgeableExpressRoute from "../../lodgeable";
 
 export default class RouteCompressByTag extends LodgeableExpressRoute implements IExpressRoute {

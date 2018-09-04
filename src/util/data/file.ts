@@ -17,6 +17,19 @@ export const fixConflictName = (name: string) => {
     return basename + uniqueSmall() + extname;
 };
 
+export const fixExtName = (name: string) => {
+    const extname = Path.extname(name);
+    if (extname === '.') {
+        return name + 'jpeg';
+    }
+
+    if (extname === '') {
+        return name + '.jpeg';
+    }
+
+    return name;
+};
+
 export const releaseStorage = (path: string): Promise<void> => {
     return new Promise<void>((resolve: () => void, reject: (err: Error) => void) => {
         Fs.unlink(path, (err: Error | null): void => {

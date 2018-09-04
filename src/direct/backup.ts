@@ -7,7 +7,7 @@
 import * as Mix from '../database/mix/import';
 import { IFileModel } from '../database/model/file';
 import { appropriateCurrentDateName } from '../util/data/date';
-import { fixConflictName } from '../util/data/file';
+import { fixConflictName, fixExtName } from '../util/data/file';
 import { fileBuilder, tempPath } from '../util/data/path';
 import { ICompressZipResult, zipFolder } from '../util/execute/compress/compress';
 import { CompressMedium } from '../util/execute/compress/medium';
@@ -34,7 +34,11 @@ export const compressImagesByTag = async (tag: string): Promise<ICompressZipResu
             original = fixConflictName(original);
         }
         originalList.push(original);
-        medium.addFile(fileBuilder(file.folder, file.filename), original, file.ctime);
+        medium.addFile(
+            fileBuilder(file.folder, file.filename),
+            fixExtName(original),
+            file.ctime,
+        );
     }
     const result: ICompressZipResult = await medium.finalize(files.length * 150);
     return result;
@@ -52,7 +56,11 @@ export const compressImageFromLocalStorageByTag = async (tag: string): Promise<I
             original = fixConflictName(original);
         }
         originalList.push(original);
-        medium.addFile(fileBuilder(file.folder, file.filename), original, file.ctime);
+        medium.addFile(
+            fileBuilder(file.folder, file.filename),
+            fixExtName(original),
+            file.ctime,
+        );
     }
     const result: ICompressZipResult = await medium.finalize(files.length * 150);
     return result;
@@ -70,7 +78,11 @@ export const compressImageFromAmazonS3ByTag = async (tag: string): Promise<IComp
             original = fixConflictName(original);
         }
         originalList.push(original);
-        medium.addFile(fileBuilder(file.folder, file.filename), original, file.ctime);
+        medium.addFile(
+            fileBuilder(file.folder, file.filename),
+            fixExtName(original),
+            file.ctime,
+        );
     }
     const result: ICompressZipResult = await medium.finalize(files.length * 150);
     return result;
