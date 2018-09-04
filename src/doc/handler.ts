@@ -121,7 +121,7 @@ export const createDocIndex = (language: keyof IText): string => {
     return outer.build();
 };
 
-export const convertObjectToHTMLFriendlyJson = (object: any) => {
+export const convertObjectToHTMLFriendlyJson = (object: any): string => {
     return JSON.stringify(object, null, 3)
         .replace(/\n/g, '<br>')
         .replace(/ /g, '&nbsp;')

@@ -21,7 +21,7 @@ export default class DocTableCardTemplateRenderer implements IDocTemplateRendere
         this._marks = marks;
     }
 
-    public build() {
+    public build(): string {
         const outerStyle = new StyleBuilder()
             .add('width', 'auto')
             .add('margin-top', '30px')
@@ -72,7 +72,7 @@ export default class DocTableCardTemplateRenderer implements IDocTemplateRendere
         }
     }
 
-    protected getRow(row: IDocTableElement) {
+    protected getRow(row: IDocTableElement): string {
         const leftStyle = new StyleBuilder()
             .add('border', '1px solid black')
             .add('width', '25%')

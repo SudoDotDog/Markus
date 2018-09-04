@@ -18,7 +18,7 @@ export default class DocCardTemplateRenderer implements IDocTemplateRenderer {
         this._content = content;
     }
 
-    public build() {
+    public build(): string {
         const outerStyle = new StyleBuilder()
             .add('width', 'auto')
             .add('margin-top', '30px')

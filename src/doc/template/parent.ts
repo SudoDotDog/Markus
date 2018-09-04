@@ -14,7 +14,7 @@ export default class DocOuterParentTemplateRenderer implements IDocTemplateRende
         this._children = children || [];
     }
 
-    public build() {
+    public build(): string {
         const outerStyle = new StyleBuilder()
             .add('margin', 'auto')
             .add('width', '70%')
