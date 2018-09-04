@@ -9,8 +9,9 @@ import { IImageUserFriendlyCallback } from "../../../database/interface/image";
 import * as Direct from "../../../direct/import";
 // tslint:disable-next-line
 import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, IDocInformation, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE } from '../../interface';
+import LodgeableExpressRoute from "../../lodgeable";
 
-export default class RouteGetImagesByTag implements IExpressRoute {
+export default class RouteGetImagesByTag extends LodgeableExpressRoute implements IExpressRoute {
     public readonly name: string = 'MR@Internal-Route^Get-Images-By-Tag';
     public readonly path: string = '/tag';
     public readonly mode: ROUTE_MODE = ROUTE_MODE.POST;

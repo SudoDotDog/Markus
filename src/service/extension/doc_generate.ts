@@ -6,17 +6,20 @@
 
 import { Express, Request, Response } from "express";
 import { createDocIndex, verifyLanguage } from "../../doc/handler";
+import Log from "../../log/log";
 import { IExpressExtension, IText } from '../interface';
 
 export default class ExtensionDocGenerate implements IExpressExtension {
     public readonly name: string = 'ME@Internal-Extension^Doc-Generate';
     public readonly preMount: boolean = false;
 
+    private _log: Log;
     private _docs: {
         [key: string]: string;
     };
 
-    public constructor() {
+    public constructor(log: Log) {
+        this._log = log;
         this._docs = {};
         this.handler = this.handler.bind(this);
         this.rummageDoc = this.rummageDoc.bind(this);
@@ -35,6 +38,7 @@ export default class ExtensionDocGenerate implements IExpressExtension {
     }
 
     private handler(req: Request, res: Response): void {
+        this._log.verbose('doc attempted');
         let language: string | undefined = req.query.language;
         if (!verifyLanguage(language)) {
             language = 'EN';

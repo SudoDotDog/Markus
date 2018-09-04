@@ -22,7 +22,7 @@ import { ResponseAgent } from "../handlers/util/agent";
 
 initMarkusGlobalConfig();
 
-const log: Log = new Log(global.MarkusConfig.isDebug ? LOG_MODE.DEBUG : LOG_MODE.WARNING);
+const log: Log = new Log(global.MarkusConfig.isDebug ? LOG_MODE.VERBOSE : LOG_MODE.WARNING);
 mongoose.connect(
     global.MarkusConfig.host + '/' + global.MarkusConfig.database,
     { useNewUrlParser: true },
@@ -40,9 +40,9 @@ const db: mongoose.Connection = mongoose.connection;
 db.on('error', console.log.bind(console, 'connection error:'));
 
 const app: express.Express = express();
-const appBuilder: ExpressBuilder = new ExpressBuilder(app);
+const appBuilder: ExpressBuilder = new ExpressBuilder(app, log);
 
-appBuilder.use(new Extension.ExtensionDocGenerate());
+appBuilder.use(new Extension.ExtensionDocGenerate(log));
 
 app.use(bodyParser.json({
     limit: global.MarkusConfig.uploadLimit + 'mb',

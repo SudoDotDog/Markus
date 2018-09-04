@@ -8,9 +8,10 @@ import { Request, RequestHandler, Response } from "express";
 import * as Direct from "../../../direct/import";
 import { error, ERROR_CODE } from "../../../util/error/error";
 // tslint:disable-next-line
-import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, EXPRESS_SPECIAL_MARK, IDocInformation, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE } from '../../interface';
+import { ExpressNextFunction, EXPRESS_SPECIAL_MARK, IDocInformation, IExpressRoute, ROUTE_MODE } from '../../interface';
+import LodgeableExpressRoute from "../../lodgeable";
 
-export default class RouteRiskyEmptyDatabase implements IExpressRoute {
+export default class RouteRiskyEmptyDatabase extends LodgeableExpressRoute implements IExpressRoute {
     public readonly name: string = 'MR@Internal-Route^Risky_Empty_Database';
     public readonly path: string = '/empty';
     public readonly mode: ROUTE_MODE = ROUTE_MODE.POST;

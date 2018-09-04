@@ -9,11 +9,12 @@ import { IFileModel } from "../../../database/model/file";
 import * as Direct from "../../../direct/import";
 import { Icon } from "../../../icon/icon";
 import { fileBuilder } from "../../../util/data/path";
-import { createTempFile, rummageLongTermTempFileOrCreateWithLazyLoadContent } from "../../../util/image";
+import { rummageLongTermTempFileOrCreateWithLazyLoadContent } from "../../../util/image";
 // tslint:disable-next-line
 import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, IDocInformation, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE } from '../../interface';
+import LodgeableExpressRoute from "../../lodgeable";
 
-export default class RouteGetAvatarById implements IExpressRoute {
+export default class RouteGetAvatarById extends LodgeableExpressRoute implements IExpressRoute {
     public readonly name: string = 'MR@Internal-Route^Get-Avatar-By-Id';
     public readonly path: string = '/a/:id';
     public readonly mode: ROUTE_MODE = ROUTE_MODE.GET;
@@ -42,6 +43,7 @@ export default class RouteGetAvatarById implements IExpressRoute {
     };
 
     public constructor() {
+        super();
         this.handler = this.handler.bind(this);
         this.getCreateAvatarFunction = this.getCreateAvatarFunction.bind(this);
         this.stack = [

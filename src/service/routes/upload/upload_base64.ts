@@ -14,7 +14,8 @@ import { assert } from "../../../util/error/assert";
 import { error, ERROR_CODE } from "../../../util/error/error";
 import { IFileManager } from "../../../util/manager/file/import";
 // tslint:disable-next-line
-import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, EXPRESS_POST_SUBMIT_FORMAT, IDocInformation, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE, EXPRESS_SPECIAL_MARK } from '../../interface';
+import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, EXPRESS_POST_SUBMIT_FORMAT, EXPRESS_SPECIAL_MARK, IDocInformation, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE } from '../../interface';
+import LodgeableExpressRoute from "../../lodgeable";
 
 export enum SERVICE_ROUTE_UPLOAD_BASE64_MODE {
     AVATAR = 'AVATAR',
@@ -23,7 +24,7 @@ export enum SERVICE_ROUTE_UPLOAD_BASE64_MODE {
     IMAGE_DOC = 'IMAGE_DOC',
 }
 
-export default class RouteUploadAvatarByBase64 implements IExpressRoute {
+export default class RouteUploadAvatarByBase64 extends LodgeableExpressRoute implements IExpressRoute {
     public readonly name: string = 'MR@Internal-Route^Upload-By-Base64';
     public readonly path: string;
     public readonly mode: ROUTE_MODE = ROUTE_MODE.POST;
@@ -39,6 +40,7 @@ export default class RouteUploadAvatarByBase64 implements IExpressRoute {
     public readonly doc: IDocInformation | null;
 
     public constructor(docMode: SERVICE_ROUTE_UPLOAD_BASE64_MODE, route: string, suffix: string, uploadEngine?: RequestHandler) {
+        super();
         this.path = route;
         this.name = concatSuffix(this.name, suffix);
         this.assertBody = {};

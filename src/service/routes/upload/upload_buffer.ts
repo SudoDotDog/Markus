@@ -14,6 +14,7 @@ import { error, ERROR_CODE } from "../../../util/error/error";
 import { IFileManager } from "../../../util/manager/file/import";
 // tslint:disable-next-line
 import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, EXPRESS_POST_SUBMIT_FORMAT, IDocInformation, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE } from '../../interface';
+import LodgeableExpressRoute from "../../lodgeable";
 
 export enum SERVICE_ROUTE_UPLOAD_BUFFER_MODE {
     AVATAR = 'AVATAR',
@@ -22,7 +23,7 @@ export enum SERVICE_ROUTE_UPLOAD_BUFFER_MODE {
     IMAGE_DOC = 'IMAGE_DOC',
 }
 
-export default class RouteUploadAvatarByBuffer implements IExpressRoute {
+export default class RouteUploadAvatarByBuffer extends LodgeableExpressRoute implements IExpressRoute {
     public readonly name: string = 'MR@Internal-Route^Upload-By-Buffer';
     public readonly path: string;
     public readonly mode: ROUTE_MODE = ROUTE_MODE.POST;
@@ -40,6 +41,7 @@ export default class RouteUploadAvatarByBuffer implements IExpressRoute {
     public readonly doc: IDocInformation | null;
 
     public constructor(docMode: SERVICE_ROUTE_UPLOAD_BUFFER_MODE, route: string, suffix: string, multerEngine?: RequestHandler, uploadEngine?: RequestHandler) {
+        super();
         this.path = route;
         this.name = concatSuffix(this.name, suffix);
         this.assertBody = {};

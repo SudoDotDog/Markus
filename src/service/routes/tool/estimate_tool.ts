@@ -12,8 +12,9 @@ import { IMarkusTool, IMarkusToolEstimate } from "../../../toolbox/toolbox";
 import { error, ERROR_CODE } from "../../../util/error/error";
 // tslint:disable-next-line
 import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, EXPRESS_ASSERTION_TYPES_UNION, IDocInformation, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE } from '../../interface';
+import LodgeableExpressRoute from "../../lodgeable";
 
-export default class RouteEstimateTool implements IExpressRoute {
+export default class RouteEstimateTool extends LodgeableExpressRoute implements IExpressRoute {
     public readonly name: string = 'MR@Internal-Route^Estimate-Tool';
     public readonly path: string = '/t/estimate';
     public readonly mode: ROUTE_MODE = ROUTE_MODE.POST;
@@ -44,6 +45,7 @@ export default class RouteEstimateTool implements IExpressRoute {
     private _tools: IMarkusTool[];
 
     public constructor(installedTool?: IMarkusTool[]) {
+        super();
         this._tools = installedTool ? installedTool : installToolbox(MarkusExtensionConfig);
         this.handle = this.handle.bind(this);
     }

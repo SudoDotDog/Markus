@@ -10,9 +10,10 @@ import { IImageCallback } from "../../../database/interface/image";
 import * as Direct from "../../../direct/import";
 import { concatSuffix } from "../../../util/data/path";
 // tslint:disable-next-line
-import { ExpressNextFunction, IExpressRoute, ROUTE_MODE, IDocInformation, IExpressAssertionJSONType, EXPRESS_ASSERTION_TYPES_END } from '../../interface';
+import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, IDocInformation, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE } from '../../interface';
+import LodgeableExpressRoute from "../../lodgeable";
 
-export default class RouteGetImageByPath implements IExpressRoute {
+export default class RouteGetImageByPath extends LodgeableExpressRoute implements IExpressRoute {
     public readonly name: string = 'MR@Internal-Route^Get-Image-By-Path';
     public readonly path: string;
     public readonly mode: ROUTE_MODE = ROUTE_MODE.GET;
@@ -32,6 +33,7 @@ export default class RouteGetImageByPath implements IExpressRoute {
     private _emptyPath: string;
 
     public constructor(route: string, emptyPicturePath: string, suffix: string) {
+        super();
         this._emptyPath = emptyPicturePath;
         this.path = route;
         this.name = concatSuffix(this.name, suffix);

@@ -12,8 +12,9 @@ import { error, ERROR_CODE } from "../../../util/error/error";
 import UniqueArray from "../../../util/struct/uniqueArray";
 // tslint:disable-next-line
 import { ExpressNextFunction, EXPRESS_SPECIAL_MARK, IDocInformation, IExpressRoute, ROUTE_MODE } from '../../interface';
+import LodgeableExpressRoute from "../../lodgeable";
 
-export default class RouteRiskyGetList implements IExpressRoute {
+export default class RouteRiskyGetList extends LodgeableExpressRoute implements IExpressRoute {
     public readonly name: string = 'MR@Internal-Route^Risky_Get_List';
     public readonly path: string = '/list';
     public readonly mode: ROUTE_MODE = ROUTE_MODE.POST;

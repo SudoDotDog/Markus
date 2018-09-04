@@ -10,5 +10,6 @@ export enum LOG_MODE {
     WARNING = "WARNING",
     INFO = "INFO",
     DEBUG = "DEBUG",
+    VERBOSE = "VERBOSE",
     ALL = "ALL",
 }

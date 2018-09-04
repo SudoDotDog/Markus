@@ -38,6 +38,7 @@ export default class Log {
             LOG_MODE.WARNING,
             LOG_MODE.INFO,
             LOG_MODE.DEBUG,
+            LOG_MODE.VERBOSE,
         ])) {
             this._func(`[CRIT] ${appropriateDateStringWithTime(new Date())} ${str}`);
         }
@@ -50,6 +51,7 @@ export default class Log {
             LOG_MODE.WARNING,
             LOG_MODE.INFO,
             LOG_MODE.DEBUG,
+            LOG_MODE.VERBOSE,
         ])) {
             this._func(`[ERRO] ${appropriateDateStringWithTime(new Date())} ${str}`);
         }
@@ -61,6 +63,7 @@ export default class Log {
             LOG_MODE.WARNING,
             LOG_MODE.INFO,
             LOG_MODE.DEBUG,
+            LOG_MODE.VERBOSE,
         ])) {
             this._func(`[WARN] ${appropriateDateStringWithTime(new Date())} ${str}`);
         }
@@ -71,6 +74,7 @@ export default class Log {
         if (this._expect([
             LOG_MODE.INFO,
             LOG_MODE.DEBUG,
+            LOG_MODE.VERBOSE,
         ])) {
             this._func(`[INFO] ${appropriateDateStringWithTime(new Date())} ${str}`);
         }
@@ -80,8 +84,18 @@ export default class Log {
     public debug(str: string): Log {
         if (this._expect([
             LOG_MODE.DEBUG,
+            LOG_MODE.VERBOSE,
         ])) {
             this._func(`[DBUG] ${appropriateDateStringWithTime(new Date())} ${str}`);
+        }
+        return this;
+    }
+
+    public verbose(str: string): Log {
+        if (this._expect([
+            LOG_MODE.VERBOSE,
+        ])) {
+            this._func(`[VERB] ${appropriateDateStringWithTime(new Date())} ${str}`);
         }
         return this;
     }

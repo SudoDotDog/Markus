@@ -5,6 +5,7 @@
  */
 
 import { Express, RequestHandler } from "express";
+import Log from '../log/log';
 
 export interface IExpressBuilder {
     app: Express;
@@ -109,6 +110,7 @@ export interface IExpressRoute {
     readonly doc?: IDocInformation | null;
 
     available: () => boolean;
+    setLog: (log: Log) => void;
 }
 
 export interface IExpressExtension {

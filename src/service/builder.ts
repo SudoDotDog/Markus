@@ -9,6 +9,8 @@ import { MarkusExtensionConfig } from "../markus";
 import { error, ERROR_CODE, handlerError } from "../util/error/error";
 import Fork from '../util/struct/fork';
 import { IExpressBuilder, IExpressExtension, IExpressHeader, IExpressRoute, ROUTE_MODE } from "./interface";
+import Log from "../log/log";
+import { LOG_MODE } from "../log/interface";
 
 export const internalExpressBuilderFlushHandler: express.RequestHandler = (req: express.Request, res: express.Response): void => {
     try {
@@ -27,9 +29,10 @@ export default class ExpressBuilder implements IExpressBuilder {
     private _routes: Fork<IExpressRoute>;
     private _extensions: Fork<IExpressExtension>;
     private _app: express.Express;
+    private _log: Log;
     private _headers: IExpressHeader[];
 
-    public constructor(app?: express.Express) {
+    public constructor(app?: express.Express, log?: Log) {
         this._routes = new Fork<IExpressRoute>();
         this._extensions = new Fork<IExpressExtension>();
         this._headers = [];
@@ -38,6 +41,11 @@ export default class ExpressBuilder implements IExpressBuilder {
             this._app = app;
         } else {
             this._app = express();
+        }
+        if (log) {
+            this._log = log;
+        } else {
+            this._log = new Log(LOG_MODE.INFO);
         }
 
         this._routeMount = this._routeMount.bind(this);
@@ -124,8 +132,10 @@ export default class ExpressBuilder implements IExpressBuilder {
 
     protected _routeMount(route: IExpressRoute) {
         if (!route.available()) {
+            this._log.debug(`${route.name} is not available, skipping`);
             return;
         }
+        this._log.verbose(`${route.name} is mounted`);
 
         const handlers: express.RequestHandler[] = [];
 
