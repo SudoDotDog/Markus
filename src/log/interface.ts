@@ -5,6 +5,7 @@
  */
 
 export enum LOG_MODE {
+    CRITICAL = "CRITICAL",
     ERROR = "ERROR",
     WARNING = "WARNING",
     INFO = "INFO",

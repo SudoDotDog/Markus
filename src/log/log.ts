@@ -31,6 +31,19 @@ export default class Log {
         return this;
     }
 
+    public critical(str: string): Log {
+        if (this._expect([
+            LOG_MODE.CRITICAL,
+            LOG_MODE.ERROR,
+            LOG_MODE.WARNING,
+            LOG_MODE.INFO,
+            LOG_MODE.DEBUG,
+        ])) {
+            this._func(`[CRIT] ${appropriateDateStringWithTime(new Date())} ${str}`);
+        }
+        return this;
+    }
+
     public error(str: string): Log {
         if (this._expect([
             LOG_MODE.ERROR,
@@ -38,7 +51,7 @@ export default class Log {
             LOG_MODE.INFO,
             LOG_MODE.DEBUG,
         ])) {
-            this._func(`[ERR!] ${appropriateDateStringWithTime(new Date())} ${str}`);
+            this._func(`[ERRO] ${appropriateDateStringWithTime(new Date())} ${str}`);
         }
         return this;
     }
