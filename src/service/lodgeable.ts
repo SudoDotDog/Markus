@@ -17,7 +17,7 @@ export default abstract class LodgeableExpressRoute implements IExpressRoute {
     public abstract readonly stack: RequestHandler[];
     public abstract readonly after: boolean;
 
-    private _log: Log | undefined;
+    protected _log: Log | undefined;
     public constructor() {
         this._log = undefined;
     }

@@ -5,10 +5,12 @@
  */
 
 import { Response } from "express";
+import Log from "../../../log/log";
 import { error, ERROR_CODE, secureError } from "../../../util/error/error";
 import { RESPONSE } from "../../../util/interface";
 
 export class ResponseAgent {
+    private _log: Log;
     private _response: Response;
     private _file: string | null;
     private _redirect: string | null;
@@ -22,7 +24,8 @@ export class ResponseAgent {
         [key: string]: any;
     };
 
-    public constructor(res: Response) {
+    public constructor(res: Response, log: Log) {
+        this._log = log;
         this._response = res;
         this._data = {};
         this._file = null;
@@ -99,12 +102,12 @@ export class ResponseAgent {
             if (this._prettify) {
                 this._response.status(this._failed.code).send(JSON.stringify({
                     status: RESPONSE.FAILED,
-                    error: secureError(this._failed.err),
+                    error: secureError(this._failed.err, this._log),
                 }, null, 2));
             } else {
                 this._response.status(this._failed.code).send({
                     status: RESPONSE.FAILED,
-                    error: secureError(this._failed.err),
+                    error: secureError(this._failed.err, this._log),
                 });
             }
             return;

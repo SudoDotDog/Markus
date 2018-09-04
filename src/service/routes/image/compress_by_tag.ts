@@ -20,9 +20,7 @@ export default class RouteCompressByTag extends LodgeableExpressRoute implements
 
     public readonly prepare: boolean = true;
     public readonly authorization: boolean = false;
-    public readonly stack: RequestHandler[] = [
-        this.handler,
-    ];
+    public readonly stack: RequestHandler[];
     public readonly after: boolean = true;
 
     public readonly doc: IDocInformation = {
@@ -37,6 +35,13 @@ export default class RouteCompressByTag extends LodgeableExpressRoute implements
         tagId: EXPRESS_ASSERTION_TYPES_END.OBJECT_ID,
     };
 
+    public constructor() {
+        super();
+        this.handler = this.handler.bind(this);
+
+        this.stack = [this.handler];
+    }
+
     public available() {
         if (global.MarkusConfig.mode === MODE.FILE_SYSTEM) {
             return true;
@@ -47,11 +52,12 @@ export default class RouteCompressByTag extends LodgeableExpressRoute implements
     protected async handler(req: Request, res: Response, next: ExpressNextFunction): Promise<void> {
         try {
             const tag: string = req.params.tagId;
-            const callback: ICompressZipResult = await Direct.Backup.compressImagesByTag(tag);
+            const callback: ICompressZipResult = await Direct.Backup.compressImagesByTag(tag, this._log);
             res.agent.addFile(callback.path);
-            next();
         } catch (err) {
-            handlerError(res, err);
+            res.agent.failed(400, err);
+        } finally {
+            next();
         }
         return;
     }

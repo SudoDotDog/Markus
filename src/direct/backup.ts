@@ -6,6 +6,7 @@
 
 import * as Mix from '../database/mix/import';
 import { IFileModel } from '../database/model/file';
+import Log from '../log/log';
 import { appropriateCurrentDateName } from '../util/data/date';
 import { fixConflictName, fixExtName } from '../util/data/file';
 import { fileBuilder, tempPath } from '../util/data/path';
@@ -23,11 +24,15 @@ export const restoreBackupInstance = async (from: string): Promise<string> => {
     return result;
 };
 
-export const compressImagesByTag = async (tag: string): Promise<ICompressZipResult> => {
+export const compressImagesByTag = async (tag: string, log?: Log): Promise<ICompressZipResult> => {
     const tempLocation: string = tempPath();
     const medium: CompressMedium = new CompressMedium(tempLocation, appropriateCurrentDateName('Markus-Tag-' + tag));
     const files: IFileModel[] = await Mix.Tag.getAllFilesByTag(tag);
     const originalList: string[] = [];
+    if (log) {
+        log.info(`compress for ${files.length} files, tag: ${tag}`);
+    }
+
     for (let file of files) {
         let original: string = file.original;
         if (originalList.includes(file.original)) {

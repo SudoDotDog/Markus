@@ -60,7 +60,7 @@ app.all('*', (req: Request, res: Response, next: NextFunction) => {
     }
     res.header("X-Powered-By", 'Markus');
     res.header("X-Markus-Version", clientVersion);
-    res.agent = new ResponseAgent(res);
+    res.agent = new ResponseAgent(res, log);
     next();
 });
 
@@ -104,7 +104,7 @@ appBuilder.route(new Route.RouteUploadByBuffer(
 app.post('/v/base64', ...prepares, uploadManager.generateBase64Engine(), ...permissions, Handler.Avatar.avatarBase64Handler);
 
 // Handler(s) for Image List Get
-appBuilder.route(new Route.RouteCompressByTag());
+appBuilder.route(new Route.RouteCompressByTag().setLog(log));
 appBuilder.route(new Route.RouteRenameTag());
 app.post('/tag', ...prepares, Handler.GetImage.imageGetListByTagHandler);
 

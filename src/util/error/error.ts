@@ -8,6 +8,7 @@
 /// <reference path="../../declare/global.ts" />
 
 import { Response } from "express";
+import Log from "../../log/log";
 import { RESPONSE } from "../interface";
 
 export enum ERROR_CODE {
@@ -166,7 +167,11 @@ export const compareError = (base: Error, target: Error): boolean => {
     );
 };
 
-export const secureError = (err: Error): Error => {
+export const secureError = (err: Error, log?: Log): Error => {
+    if (log) {
+        log.error(`securing ${err.message}`);
+    }
+
     if (global.MarkusConfig.isDebug) {
         return err;
     } else {
@@ -178,7 +183,11 @@ export const secureError = (err: Error): Error => {
     }
 };
 
-export const handlerError = (res: Response, err: Error) => {
+export const handlerError = (res: Response, err: Error, log?: Log) => {
+    if (log) {
+        log.error(`handling ${err.message}`);
+    }
+
     if ((err as any).code) {
         const errorCode: number = (err as any).code;
         if (errorCode >= 900) {

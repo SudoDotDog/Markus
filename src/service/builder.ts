@@ -5,12 +5,12 @@
  */
 
 import * as express from "express";
+import { LOG_MODE } from "../log/interface";
+import Log from "../log/log";
 import { MarkusExtensionConfig } from "../markus";
 import { error, ERROR_CODE, handlerError } from "../util/error/error";
 import Fork from '../util/struct/fork';
 import { IExpressBuilder, IExpressExtension, IExpressHeader, IExpressRoute, ROUTE_MODE } from "./interface";
-import Log from "../log/log";
-import { LOG_MODE } from "../log/interface";
 
 export const internalExpressBuilderFlushHandler: express.RequestHandler = (req: express.Request, res: express.Response): void => {
     try {
@@ -20,7 +20,7 @@ export const internalExpressBuilderFlushHandler: express.RequestHandler = (req: 
             throw error(ERROR_CODE.INTERNAL_ERROR);
         }
     } catch (err) {
-        handlerError(res, err);
+        handlerError(res, err, req.log);
     }
     return;
 };
