@@ -9,7 +9,7 @@ import * as Direct from "../../../direct/import";
 import { MODE } from "../../../interface";
 import { handlerError } from "../../../util/error/error";
 import { ICompressZipResult } from "../../../util/execute/compress/compress";
-import { ExpressNextFunction, IDocInformation, IExpressRoute, ROUTE_MODE } from '../../interface';
+import { ExpressNextFunction, IDocInformation, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE, EXPRESS_ASSERTION_TYPES_END } from '../../interface';
 import LodgeableExpressRoute from "../../lodgeable";
 
 export default class RouteCompressByTag extends LodgeableExpressRoute implements IExpressRoute {
@@ -31,6 +31,9 @@ export default class RouteCompressByTag extends LodgeableExpressRoute implements
         description: {
             EN: 'Get compressed images by tag',
         },
+    };
+    public readonly assertQuery: IExpressAssertionJSONType = {
+        tagId: EXPRESS_ASSERTION_TYPES_END.OBJECT_ID,
     };
 
     public available() {
