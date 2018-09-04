@@ -7,6 +7,8 @@
 import { Request, RequestHandler, Response } from "express";
 import { ITagUserFriendly } from "../../../database/interface/tag";
 import * as Direct from "../../../direct/import";
+import { assert } from "../../../util/error/assert";
+import { ERROR_CODE } from "../../../util/error/error";
 // tslint:disable-next-line
 import { ExpressNextFunction, IDocInformation, IExpressRoute, ROUTE_MODE } from '../../interface';
 import LodgeableExpressRoute from "../../lodgeable";
@@ -34,6 +36,7 @@ export default class RouteGetTagList extends LodgeableExpressRoute implements IE
     
     protected async handler(req: Request, res: Response, next: ExpressNextFunction): Promise<void> {
         try {
+            assert(req.valid).to.be.true(ERROR_CODE.PERMISSION_VALID_FAILED);
             const tags: ITagUserFriendly[] = await Direct.Tag.getAllActiveTagUserFriendlyList();
             res.agent.add('list', tags);
         } catch (err) {

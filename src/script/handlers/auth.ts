@@ -55,7 +55,7 @@ export const validPermissionBasicAuthMiddleware: middleware = async (req: Reques
         next();
         return;
     }
-
+    
     const authHeader: string | undefined = req.header('authorization');
     const auth: string | null = parseBasicAuthorization(authHeader);
 
