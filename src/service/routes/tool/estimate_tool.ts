@@ -50,10 +50,6 @@ export default class RouteEstimateTool extends LodgeableExpressRoute implements 
         this.handle = this.handle.bind(this);
     }
 
-    public available() {
-        return true;
-    }
-
     protected async handle(req: Request, res: Response, next: ExpressNextFunction): Promise<void> {
         try {
             const name: string | undefined = req.body.name;

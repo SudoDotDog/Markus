@@ -37,10 +37,6 @@ export default class RouteDeactivateImagesByTag extends LodgeableExpressRoute im
         tag: EXPRESS_ASSERTION_TYPES_END.STRING,
     };
 
-    public available() {
-        return true;
-    }
-
     protected async handler(req: Request, res: Response, next: ExpressNextFunction): Promise<void> {
         try {
             assert(req.valid).to.be.true(ERROR_CODE.PERMISSION_VALID_FAILED);

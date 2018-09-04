@@ -27,19 +27,15 @@ export default class RouteDeactivateImageById extends LodgeableExpressRoute impl
 
     public readonly doc: IDocInformation = {
         name: {
-            EN: 'Deactive image by id',
+            EN: 'Deactivate image by id',
         },
         description: {
-            EN: 'Deactive target image by id, if target image have no reference, release storage',
+            EN: 'Deactivate target image by id, if target image have no reference, release storage',
         },
     };
     public readonly assertBody: IExpressAssertionJSONType = {
         id: EXPRESS_ASSERTION_TYPES_END.OBJECT_ID,
     };
-
-    public available() {
-        return true;
-    }
 
     protected async handler(req: Request, res: Response, next: ExpressNextFunction): Promise<void> {
         try {

@@ -51,10 +51,6 @@ export default class RouteGetAvatarById extends LodgeableExpressRoute implements
         ];
     }
 
-    public available() {
-        return true;
-    }
-
     protected async handler(req: Request, res: Response, next: ExpressNextFunction): Promise<void> {
         try {
             const avatar: string = req.params.id;

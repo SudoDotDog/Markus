@@ -35,10 +35,6 @@ export default class RouteGetImagesByTag extends LodgeableExpressRoute implement
         tag: EXPRESS_ASSERTION_TYPES_END.STRING,
     };
 
-    public available() {
-        return true;
-    }
-
     protected async handler(req: Request, res: Response, next: ExpressNextFunction): Promise<void> {
         try {
             const tag: string = req.body.tag;

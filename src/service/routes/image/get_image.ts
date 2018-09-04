@@ -48,10 +48,6 @@ export default class RouteGetImageByPath extends LodgeableExpressRoute implement
         };
     }
 
-    public available() {
-        return true;
-    }
-
     protected async handler(req: Request, res: Response, next: ExpressNextFunction): Promise<void> {
         try {
             const id: ObjectID = new ObjectId(req.params.id);

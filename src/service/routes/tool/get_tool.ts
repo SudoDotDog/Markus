@@ -20,9 +20,7 @@ export default class RouteGetTool extends LodgeableExpressRoute implements IExpr
 
     public readonly prepare: boolean = true;
     public readonly authorization: boolean = true;
-    public readonly stack: RequestHandler[] = [
-        this.handle,
-    ];
+    public readonly stack: RequestHandler[];
     public readonly after: boolean = true;
 
     public readonly doc: IDocInformation = {
@@ -57,10 +55,9 @@ export default class RouteGetTool extends LodgeableExpressRoute implements IExpr
         super();
         this._tools = installedTool ? installedTool : installToolbox(MarkusExtensionConfig);
         this.handle = this.handle.bind(this);
-    }
-
-    public available() {
-        return true;
+        this.stack = [
+            this.handle,
+        ];
     }
 
     protected async handle(req: Request, res: Response, next: ExpressNextFunction): Promise<void> {

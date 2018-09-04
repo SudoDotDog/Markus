@@ -5,15 +5,30 @@
  */
 
 import Log from "../log/log";
+import { IExpressRoute, ROUTE_MODE } from "./interface";
+import { RequestHandler } from "express";
 
-export default class LodgeableExpressRoute {
+export default abstract class LodgeableExpressRoute implements IExpressRoute {
+    public abstract readonly name: string;
+    public abstract readonly path: string;
+    public abstract readonly mode: ROUTE_MODE;
+    public abstract readonly prepare: boolean;
+    public abstract readonly authorization: boolean;
+    public abstract readonly stack: RequestHandler[];
+    public abstract readonly after: boolean;
+
     private _log: Log | undefined;
     public constructor() {
         this._log = undefined;
     }
 
-    public setLog(log: Log): void {
+    public available(): boolean {
+        return true;
+    }
+
+    public setLog(log: Log): IExpressRoute {
         this._log = log;
+        return this;
     }
 
     protected verbose(str: string) {

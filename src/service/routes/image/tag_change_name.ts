@@ -38,10 +38,6 @@ export default class RouteRenameTag extends LodgeableExpressRoute implements IEx
         },
     };
 
-    public available() {
-        return true;
-    }
-
     protected async handler(req: Request, res: Response, next: ExpressNextFunction): Promise<void> {
         try {
             const tagName: string = req.body.tag;

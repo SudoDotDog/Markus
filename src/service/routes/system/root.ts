@@ -17,9 +17,7 @@ export default class RouteRoot extends LodgeableExpressRoute implements IExpress
 
     public readonly prepare: boolean = true;
     public readonly authorization: boolean = false;
-    public readonly stack: RequestHandler[] = [
-        this.handle,
-    ];
+    public readonly stack: RequestHandler[];
     public readonly after: boolean = true;
 
     public readonly doc: IDocInformation = {
@@ -38,14 +36,12 @@ export default class RouteRoot extends LodgeableExpressRoute implements IExpress
     public constructor() {
         super();
         this.handle = this.handle.bind(this);
-    }
-
-    public available() {
-        return true;
+        this.stack = [
+            this.handle,
+        ];
     }
 
     protected async handle(req: Request, res: Response, next: ExpressNextFunction): Promise<void> {
-        console.log(this);
         try {
             const version: string = await markusVersion();
             this.verbose('root attempted');

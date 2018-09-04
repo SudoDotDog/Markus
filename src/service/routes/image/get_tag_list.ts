@@ -31,11 +31,7 @@ export default class RouteGetTagList extends LodgeableExpressRoute implements IE
             EN: 'Get all tags that active in the database',
         },
     };
-
-    public available() {
-        return true;
-    }
-
+    
     protected async handler(req: Request, res: Response, next: ExpressNextFunction): Promise<void> {
         try {
             const tags: ITagUserFriendly[] = await Direct.Tag.getAllActiveTagUserFriendlyList();

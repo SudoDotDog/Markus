@@ -23,10 +23,6 @@ export default class RouteFourOFour extends LodgeableExpressRoute implements IEx
     ];
     public readonly after: boolean = true;
 
-    public available() {
-        return true;
-    }
-
     protected async handle(req: Request, res: Response, next: ExpressNextFunction): Promise<void> {
         res.agent.failed(404, error(ERROR_CODE.FOUR_O_FOUR_NOT_FOUND));
         next();

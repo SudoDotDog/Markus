@@ -73,7 +73,7 @@ const afters: middleware[] = [
 ];
 
 // Handler(s) for user agent
-appBuilder.route(new Route.RouteRoot());
+appBuilder.route(new Route.RouteRoot().setLog(log));
 appBuilder.route(new Route.RouteAuth());
 
 // Handler(s) for Image Get
@@ -120,7 +120,7 @@ app.post('/list', ...prepares, Handler.Debug.OutputImageIdList);
 app.post('/empty', ...prepares, Handler.Debug.emptyDatabaseHandler);
 
 // Handler(s) for tools
-app.get('/tool', ...prepares, Handler.Tool.markusToolboxListHandler);
+appBuilder.route(new Route.RouteGetTool());
 appBuilder.route(new Route.RouteEstimateTool());
 app.post('/execute', ...prepares, ...permissions, Handler.Tool.markusToolboxExecuteHandler);
 

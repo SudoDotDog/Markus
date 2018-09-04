@@ -115,10 +115,6 @@ export default class RouteUploadAvatarByBuffer extends LodgeableExpressRoute imp
         }
     }
 
-    public available() {
-        return true;
-    }
-
     public async avatarHandler(req: Request, res: Response, next: ExpressNextFunction): Promise<void> {
         try {
             const avatar: string = req.body.avatar;

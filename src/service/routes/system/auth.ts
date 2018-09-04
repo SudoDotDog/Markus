@@ -37,10 +37,6 @@ export default class RouteAuth extends LodgeableExpressRoute implements IExpress
         version: EXPRESS_ASSERTION_TYPES_END.STRING,
     };
 
-    public available() {
-        return true;
-    }
-
     protected async handle(req: Request, res: Response, next: ExpressNextFunction): Promise<void> {
         try {
             assert(req.valid).to.be.true(ERROR_CODE.PERMISSION_VALID_FAILED);

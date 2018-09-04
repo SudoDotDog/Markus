@@ -33,7 +33,7 @@ export default class RouteRiskyEmptyDatabase extends LodgeableExpressRoute imple
     };
     public readonly specialMark: EXPRESS_SPECIAL_MARK[] = [EXPRESS_SPECIAL_MARK.DEBUG, EXPRESS_SPECIAL_MARK.RISKY];
 
-    public available() {
+    public available(): boolean {
         if (global.MarkusConfig.isDebug) {
             return true;
         }
