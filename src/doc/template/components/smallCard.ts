@@ -25,7 +25,7 @@ export default class DocSmallCardTemplateRenderer implements IDocTemplateRendere
         const outerStyle = new StyleBuilder()
             .add('margin-top', '15px')
             .add('margin-bottom', '15px')
-            .add('padding', '5px')
+            .add('padding', '5px');
         const textStyle = new StyleBuilder()
             .add('font-size', '20px')
             .add('font-weight', 'bold');

@@ -4,10 +4,10 @@
  * @fileoverview Parent
  */
 
-import { IDocTemplateRenderer } from '../interface';
-import StyleBuilder from './style';
 import * as Fs from 'fs';
 import * as Path from 'path';
+import { IDocTemplateRenderer } from '../interface';
+import StyleBuilder from './style';
 
 export default class DocOuterParentTemplateRenderer implements IDocTemplateRenderer {
     private _children: IDocTemplateRenderer[];
@@ -58,7 +58,7 @@ export default class DocOuterParentTemplateRenderer implements IDocTemplateRende
                     ::-webkit-scrollbar-track{background-color:#AAAAAA}
                 </style>
                 <script>
-                    ${Fs.readFileSync(Path.resolve('assets', 'tableCardRough.js'))}
+                    ${Fs.readFileSync(Path.resolve('dist_script', 'addon', 'tableCardRough.js'))}
                 </script>
             </html>
         `));

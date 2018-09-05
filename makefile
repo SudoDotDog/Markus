@@ -53,7 +53,7 @@ dev:
 	@echo "[INFO] Building for development"
 	@$(tsc) --p $(dev)
 
-build: clean install ubuild
+build: clean install ubuild buildScript
 	@echo '[INFO] To Start Run: "./dist/script/service/markus.js"'
 
 ubuild:
@@ -80,13 +80,14 @@ else
 endif	
 
 clean:
-	@echo "[INFO] Cleaning dist files"
 ifeq ($(OS), Windows_NT)
-	@rd /s /q .\dist
-	@rd /s /q .\dist_script
-	@rd /s /q .\.nyc_output
-	@rd /s /q .\coverage
+	@echo "[INFO] Skipping"
+	# @rd /s /q .\dist
+	# @rd /s /q .\dist_script
+	# @rd /s /q .\.nyc_output
+	# @rd /s /q .\coverage
 else
+	@echo "[INFO] Cleaning dist files"
 	@rm -rf dist
 	@rm -rf dist_script
 	@rm -rf .nyc_output
