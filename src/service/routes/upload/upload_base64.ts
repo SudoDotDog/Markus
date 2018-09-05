@@ -52,7 +52,7 @@ export default class RouteUploadAvatarByBase64 extends LodgeableExpressRoute imp
                     EN: 'Upload avatar by base64',
                 },
                 description: {
-                    EN: 'Replace target name\'s avatar by uploaded image',
+                    EN: 'Replace target avatar by uploaded image',
                 },
             };
             this.assertBody = {

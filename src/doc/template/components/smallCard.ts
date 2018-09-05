@@ -1,7 +1,7 @@
 /**
  * @author WMXPY
  * @description Doc Template
- * @fileoverview Table Card
+ * @fileoverview Small Card
  */
 
 import { EXPRESS_SPECIAL_MARK } from '../../../service/interface';
@@ -31,7 +31,12 @@ export default class DocSmallCardTemplateRenderer implements IDocTemplateRendere
             .add('font-weight', 'bold');
 
         return (`
-            <div style="${outerStyle.build()}" class="card">
+            <div style="${outerStyle.build()}" class="card" onClick="getCard(
+                ${JSON.stringify(this._icon).replace(/\"/g, "'")},
+                ${JSON.stringify(this._title).replace(/\"/g, "'")},
+                ${JSON.stringify(this._content).replace(/\"/g, "'")},
+                ${JSON.stringify(this._marks).replace(/\"/g, "'")}
+            )">
                 <div style="display:flex;align-items:flex-end">
                     <div style="width:80px">
                         <img src="${this._icon}" width="80px" height="80px">

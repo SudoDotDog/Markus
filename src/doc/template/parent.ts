@@ -6,6 +6,8 @@
 
 import { IDocTemplateRenderer } from '../interface';
 import StyleBuilder from './style';
+import * as Fs from 'fs';
+import * as Path from 'path';
 
 export default class DocOuterParentTemplateRenderer implements IDocTemplateRenderer {
     private _children: IDocTemplateRenderer[];
@@ -18,7 +20,7 @@ export default class DocOuterParentTemplateRenderer implements IDocTemplateRende
         const leftStyle = new StyleBuilder()
             .add('width', '30%')
             .add('background-color', '#f5f5f5')
-            .add('overflow', 'auto')
+            .add('overflow-y', 'scroll')
             .add('padding', '15px')
             .add('min-width', '200px');
         const outerStyle = new StyleBuilder()
@@ -42,12 +44,7 @@ export default class DocOuterParentTemplateRenderer implements IDocTemplateRende
                                 ${this._children.map((renderer: IDocTemplateRenderer) => renderer.build()).join('')}
                             </div>
                         </div>
-                        <div style="${rightStyle.build()}">
-                            <code>
-                                for(let i = 0;i<100;i++){
-                                    123
-                                }
-                            </code>
+                        <div style="${rightStyle.build()}" id="content">
                         </div>
                     </div>
                 </body>
@@ -59,6 +56,9 @@ export default class DocOuterParentTemplateRenderer implements IDocTemplateRende
                     ::-webkit-scrollbar-thumb{background-color:#001F3F}
                     ::-webkit-scrollbar-track{background-color:#AAAAAA}
                 </style>
+                <script>
+                    ${Fs.readFileSync(Path.resolve('assets', 'tableCardRough.js'))}
+                </script>
             </html>
         `));
     }

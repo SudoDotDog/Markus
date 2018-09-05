@@ -53,7 +53,7 @@ export default class RouteUploadAvatarByBuffer extends LodgeableExpressRoute imp
                     EN: 'Upload avatar by buffer',
                 },
                 description: {
-                    EN: 'Replace target name\'s avatar by uploaded image',
+                    EN: 'Replace target avatar by uploaded image',
                 },
             };
             this.assertBody = {
