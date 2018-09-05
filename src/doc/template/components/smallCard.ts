@@ -8,7 +8,7 @@ import { EXPRESS_SPECIAL_MARK } from '../../../service/interface';
 import { IDocTableElement, IDocTemplateRenderer } from '../../interface';
 import StyleBuilder from '../style';
 
-export default class DocTableCardTemplateRenderer implements IDocTemplateRenderer {
+export default class DocSmallCardTemplateRenderer implements IDocTemplateRenderer {
     private _icon: string;
     private _title: string;
     private _content: IDocTableElement[];
@@ -23,43 +23,31 @@ export default class DocTableCardTemplateRenderer implements IDocTemplateRendere
 
     public build(): string {
         const outerStyle = new StyleBuilder()
-            .add('width', 'auto')
-            .add('margin-top', '30px')
-            .add('margin-bottom', '30px')
-            .add('padding', '15px')
-            .add('border', '1px solid black');
-        const tableStyle = new StyleBuilder()
-            .add('border', '1px solid black')
-            .add('width', '100%')
-            .add('border-collapse', 'collapse');
+            .add('margin-top', '15px')
+            .add('margin-bottom', '15px')
+            .add('padding', '5px')
         const textStyle = new StyleBuilder()
-            .add('font-size', '26px')
+            .add('font-size', '20px')
             .add('font-weight', 'bold');
 
-
         return (`
-            <div style="${outerStyle.build()}">
+            <div style="${outerStyle.build()}" class="card">
                 <div style="display:flex;align-items:flex-end">
-                    <div style="width:100px">
-                        <img src="${this._icon}" width="100px" height="100px">
+                    <div style="width:80px">
+                        <img src="${this._icon}" width="80px" height="80px">
                     </div>
-                    <div style="flex:1;padding:8px">
+                    <div style="flex:1;padding:6px">
                         ${this.getBadge(this._marks)}
                         <div style="${textStyle.build()}">${this._title}</div>
                     </div>
                 </div>
-                <table style="${tableStyle.build()}">
-                    <tbody>
-                        ${this._content.map(this.getRow).join('')}
-                    </tbody>
-                </table>
             </div>
         `);
     }
 
     protected getBadge(marks: EXPRESS_SPECIAL_MARK[]): string {
         const badgeStyle = new StyleBuilder()
-            .add('font-size', '18px')
+            .add('font-size', '15px')
             .add('color', 'red')
             .add('font-weight', 'bold');
 
@@ -70,30 +58,5 @@ export default class DocTableCardTemplateRenderer implements IDocTemplateRendere
                 <div style="${badgeStyle.build()}">${this._marks.join(', ')}</div>
             `);
         }
-    }
-
-    protected getRow(row: IDocTableElement): string {
-        const leftStyle = new StyleBuilder()
-            .add('border', '1px solid black')
-            .add('width', '25%')
-            .add('padding', '3px')
-            .add('padding-right', '5px')
-            .add('font-weight', 'bold')
-            .add('text-align', 'right');
-        const rightStyle = new StyleBuilder()
-            .add('padding', '3px')
-            .add('padding-left', '5px')
-            .add('border', '1px solid black');
-
-        return (`
-            <tr style="${rightStyle.build()}">
-                <td style="${leftStyle.build()}">
-                    ${row.name}
-                </td>
-                <td style="${rightStyle.build()}">
-                    ${row.value}
-                </td>
-            </tr>
-        `);
     }
 }

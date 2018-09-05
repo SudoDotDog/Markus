@@ -15,6 +15,7 @@ import { IMarkusTool } from "../toolbox/toolbox";
 import DocRouteBuilder from './builder';
 import { IDocTableElement, IDocTemplateRenderer } from "./interface";
 import DocTableCardTemplateRenderer from './template/components/tableCard';
+import DocSmallCardTemplateRenderer from './template/components/smallCard';
 import DocOuterParentTemplateRenderer from "./template/parent";
 
 export const getBuiltDocRoute = (): DocRouteBuilder => {
@@ -111,7 +112,7 @@ export const createDocIndex = (language: keyof IText): string => {
             });
         }
 
-        return new DocTableCardTemplateRenderer('/a/' + route.name + '/?text=@E',
+        return new DocSmallCardTemplateRenderer('/a/' + route.name + '/?text=@E',
             route.doc ? processor.from(route.doc.name) : route.name,
             template,
             route.specialMark || []);
