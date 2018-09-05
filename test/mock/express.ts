@@ -5,6 +5,8 @@
  */
 
 import { Response } from "express";
+import { LOG_MODE } from "../../src/log/interface";
+import Log from "../../src/log/log";
 import { ResponseAgent } from "../../src/script/handlers/util/agent";
 import { error, ERROR_CODE } from "../../src/util/error/error";
 
@@ -54,6 +56,7 @@ export class MockHandler {
     private _agent: ResponseAgent;
     private _request: IMockHandlerRequest;
     private _response: IMockHandlerResponse;
+    private _logs: string[];
 
     private _result: IMockHandlerResult;
     private _useAgent: boolean;
@@ -72,7 +75,11 @@ export class MockHandler {
             sendFile: this.sendResultBody.bind(this),
             status: this.setStatus.bind(this),
         };
-        this._agent = new ResponseAgent(this._response as Response);
+        this._logs = [];
+        this.addLog = this.addLog.bind(this);
+        const log = new Log(LOG_MODE.ERROR);
+        log.func(this.addLog);
+        this._agent = new ResponseAgent(this._response as Response, log);
         if (this._useAgent) {
             this._response.agent = this._agent;
         }
@@ -130,6 +137,10 @@ export class MockHandler {
 
     public end(): IMockHandlerResult {
         return this._result;
+    }
+
+    protected addLog(str: string): void {
+        this._logs.push(str);
     }
 
     protected nextFunction(): boolean {
