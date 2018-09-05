@@ -45,6 +45,7 @@ export default class DocOuterParentTemplateRenderer implements IDocTemplateRende
                             </div>
                         </div>
                         <div style="${rightStyle.build()}" id="content">
+                            Select an api to see details
                         </div>
                     </div>
                 </body>
