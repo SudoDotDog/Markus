@@ -15,25 +15,40 @@ export default class DocOuterParentTemplateRenderer implements IDocTemplateRende
     }
 
     public build(): string {
+        const leftStyle = new StyleBuilder()
+            .add('flex', '1')
+            .add('min-width', '300px');
         const outerStyle = new StyleBuilder()
-            .add('margin', 'auto')
-            .add('width', '70%')
-            .add('min-width', '960px');
-
-        return (`
+            .add('display', 'flex');
+        const rightStyle = new StyleBuilder()
+            .add('flex', '1');
+        return (this.trim(`
             <html>
                 <head>
                     <title>Markus - Document</title>
                 </head>
                 <body>
-                    <div style="${outerStyle.build()}">
-                        <h1>Markus Documentation</h1>
-                        <div>
-                            ${this._children.map((renderer: IDocTemplateRenderer) => renderer.build()).join('')}
+                    <div style=${outerStyle.build()}>
+                        <div style="${leftStyle.build()}">
+                            <h1>Markus Documentation</h1>
+                            <div>
+                                ${this._children.map((renderer: IDocTemplateRenderer) => renderer.build()).join('')}
+                            </div>
+                        </div>
+                        <div style="${rightStyle.build()}">
+                            <code>
+                                for(let i = 0;i<100;i++){
+                                    123
+                                }
+                            </code>
                         </div>
                     </div>
                 </body>
             </html>
-        `);
+        `));
     }
+
+    protected trim(target: string){
+        return target.replace(/ +\</g, '<');
+    }  
 }
