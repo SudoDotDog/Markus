@@ -5,16 +5,28 @@
  */
 
 import { expect } from 'chai';
+import { LOG_MODE } from '../../../../src/log/interface';
+import Log from '../../../../src/log/log';
 import { ResponseAgent } from '../../../../src/script/handlers/util/agent';
 import { error, ERROR_CODE } from '../../../../src/util/error/error';
 import { IMockHandlerResult, MockHandler } from '../../../mock/express';
 
 describe('test agent of handler', (): void => {
+    let log: Log;
+    let logs: string[];
+
+    beforeEach(()=>{
+        log = new Log(LOG_MODE.ALL);
+        logs = [];
+        log.func((str: string)=>{
+            logs.push(str);
+        });
+    });
 
     it('agent should send 200 status response as normal', (): void => {
         const mock: MockHandler = new MockHandler();
         const { response } = mock.flush();
-        const agent: ResponseAgent = new ResponseAgent(response);
+        const agent: ResponseAgent = new ResponseAgent(response, log);
 
         agent.add('test', 'test');
         agent.send();
@@ -31,7 +43,7 @@ describe('test agent of handler', (): void => {
     it('agent should throw when try to add text and file', (): void => {
         const mock: MockHandler = new MockHandler();
         const { response } = mock.flush();
-        const agent: ResponseAgent = new ResponseAgent(response);
+        const agent: ResponseAgent = new ResponseAgent(response, log);
 
         const exec: () => void = () => {
             agent.add('text', 'text');
@@ -45,7 +57,7 @@ describe('test agent of handler', (): void => {
     it('agent should send file with added file', (): void => {
         const mock: MockHandler = new MockHandler();
         const { response } = mock.flush();
-        const agent: ResponseAgent = new ResponseAgent(response);
+        const agent: ResponseAgent = new ResponseAgent(response, log);
 
         agent.addFile('test');
         agent.send();
@@ -61,7 +73,7 @@ describe('test agent of handler', (): void => {
     it('agent should throw when try to add file and text', (): void => {
         const mock: MockHandler = new MockHandler();
         const { response } = mock.flush();
-        const agent: ResponseAgent = new ResponseAgent(response);
+        const agent: ResponseAgent = new ResponseAgent(response, log);
 
         const exec: () => void = () => {
             agent.addFile('test');
