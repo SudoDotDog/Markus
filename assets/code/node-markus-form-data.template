@@ -12,10 +12,6 @@ const r = request.post(${domain}, option, (error, response, body) => {
 });
 
 const form = r.form();
-const extName = path.extname(original);
 form.append('key', key);
-form.append('image', buffer, {
-    filename: original,
-    contentType: 'image/' + extName.substring(1, extName.length),
-});
+${append}
 form.append('tags', tags.join(','));

@@ -34,7 +34,7 @@ export default class RouteDeactivateImageById extends LodgeableExpressRoute impl
         },
     };
     public readonly assertBody: IExpressAssertionJSONType = {
-        id: EXPRESS_ASSERTION_TYPES_END.OBJECT_ID,
+        id: {type: EXPRESS_ASSERTION_TYPES_END.OBJECT_ID},
     };
 
     protected async handler(req: Request, res: Response, next: ExpressNextFunction): Promise<void> {

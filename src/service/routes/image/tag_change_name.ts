@@ -26,8 +26,8 @@ export default class RouteRenameTag extends LodgeableExpressRoute implements IEx
 
     public readonly postType: EXPRESS_POST_SUBMIT_FORMAT = EXPRESS_POST_SUBMIT_FORMAT.X_WWW_FORM_URLENCODED;
     public readonly assertBody: IExpressAssertionJSONType = {
-        tag: EXPRESS_ASSERTION_TYPES_END.STRING,
-        name: EXPRESS_ASSERTION_TYPES_END.STRING,
+        tag: { type: EXPRESS_ASSERTION_TYPES_END.STRING },
+        name: { type: EXPRESS_ASSERTION_TYPES_END.STRING },
     };
     public readonly doc: IDocInformation = {
         name: {

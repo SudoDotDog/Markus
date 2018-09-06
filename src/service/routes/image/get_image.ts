@@ -27,7 +27,7 @@ export default class RouteGetImageByPath extends LodgeableExpressRoute implement
 
     public readonly doc: IDocInformation;
     public readonly assertQuery: IExpressAssertionJSONType = {
-        id: EXPRESS_ASSERTION_TYPES_END.OBJECT_ID,
+        id: { type: EXPRESS_ASSERTION_TYPES_END.OBJECT_ID },
     };
 
     private _emptyPath: string;

@@ -34,7 +34,7 @@ export default class RouteDeactivateImagesByTag extends LodgeableExpressRoute im
         },
     };
     public readonly assertBody: IExpressAssertionJSONType = {
-        tag: EXPRESS_ASSERTION_TYPES_END.STRING,
+        tag: { type: EXPRESS_ASSERTION_TYPES_END.STRING },
     };
 
     protected async handler(req: Request, res: Response, next: ExpressNextFunction): Promise<void> {

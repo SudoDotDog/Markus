@@ -56,8 +56,8 @@ export default class RouteUploadAvatarByBase64 extends LodgeableExpressRoute imp
                 },
             };
             this.assertBody = {
-                avatar: EXPRESS_ASSERTION_TYPES_END.STRING,
-                image: EXPRESS_ASSERTION_TYPES_END.STRING,
+                avatar: { type: EXPRESS_ASSERTION_TYPES_END.STRING },
+                image: { type: EXPRESS_ASSERTION_TYPES_END.STRING },
                 original: {
                     type: EXPRESS_ASSERTION_TYPES_END.STRING,
                     optional: true,
@@ -80,8 +80,8 @@ export default class RouteUploadAvatarByBase64 extends LodgeableExpressRoute imp
                 },
             };
             this.assertBody = {
-                tags: EXPRESS_ASSERTION_TYPES_END.STRING,
-                image: EXPRESS_ASSERTION_TYPES_END.STRING,
+                tags: { type: EXPRESS_ASSERTION_TYPES_END.STRING },
+                image: { type: EXPRESS_ASSERTION_TYPES_END.STRING },
                 original: {
                     type: EXPRESS_ASSERTION_TYPES_END.STRING,
                     optional: true,

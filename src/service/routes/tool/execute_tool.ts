@@ -35,7 +35,7 @@ export default class RouteExecuteTool extends LodgeableExpressRoute implements I
         },
     };
     public readonly assertBody: IExpressAssertionJSONType = {
-        name: EXPRESS_ASSERTION_TYPES_END.TOOL_NAME,
+        name: { type: EXPRESS_ASSERTION_TYPES_END.TOOL_NAME },
         args: {
             type: EXPRESS_ASSERTION_TYPES_UNION.ARRAY,
             child: EXPRESS_ASSERTION_TYPES_END.ANY,

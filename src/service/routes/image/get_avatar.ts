@@ -39,7 +39,7 @@ export default class RouteGetAvatarById extends LodgeableExpressRoute implements
         },
     };
     public readonly assertQuery: IExpressAssertionJSONType = {
-        id: EXPRESS_ASSERTION_TYPES_END.OBJECT_ID,
+        id: { type: EXPRESS_ASSERTION_TYPES_END.OBJECT_ID },
     };
 
     public constructor() {

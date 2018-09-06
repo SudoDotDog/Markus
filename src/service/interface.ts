@@ -47,7 +47,7 @@ interface IPrivateExpressAssertionTypeNamedEND {
 
 type ExpressAssertionType = IPrivateExpressAssertionTypeUNION | IPrivateExpressAssertionTypeNamedEND;
 export interface IExpressAssertionJSONType {
-    [key: string]: EXPRESS_ASSERTION_TYPES_END | {
+    [key: string]: {
         type: EXPRESS_ASSERTION_TYPES_UNION;
         child: IExpressAssertionJSONType | EXPRESS_ASSERTION_TYPES_END;
         optional?: boolean;

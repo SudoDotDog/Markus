@@ -68,6 +68,7 @@ export default class DocTableCardTemplateRenderer implements IDocTemplateRendere
 
     protected getExampleCode(): string {
         let exampleCode: string = '';
+        console.log(this._route.exampleCode);
         if (this._route.exampleCode) {
             for (let code of this._route.exampleCode) {
                 let current: string;
@@ -79,7 +80,7 @@ export default class DocTableCardTemplateRenderer implements IDocTemplateRendere
                         current = '';
                         break;
                     case EXPRESS_EXAMPLE_CODE.NODEJS_FORM_DATA:
-                        current = '';
+                        current = this.getNodeCode();
                         break;
                     default:
                         current = '';
@@ -93,7 +94,7 @@ export default class DocTableCardTemplateRenderer implements IDocTemplateRendere
     protected getNodeCode(): string {
         return this.getRow({
             name: 'NodeJS',
-            value: `<pre class="prettyprint"><code class="lang-js">${nodeMarkusFormData(this._url + this._route.path)}</code></pre>`,
+            value: `<pre class="prettyprint"><code class="lang-js">${nodeMarkusFormData(this._url + this._route.path, this._route)}</code></pre>`,
         });
     }
 

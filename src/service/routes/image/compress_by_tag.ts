@@ -32,7 +32,7 @@ export default class RouteCompressByTag extends LodgeableExpressRoute implements
         },
     };
     public readonly assertQuery: IExpressAssertionJSONType = {
-        tagId: EXPRESS_ASSERTION_TYPES_END.OBJECT_ID,
+        tagId: { type: EXPRESS_ASSERTION_TYPES_END.OBJECT_ID },
     };
 
     public constructor() {

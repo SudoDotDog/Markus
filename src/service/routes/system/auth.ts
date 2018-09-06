@@ -33,8 +33,8 @@ export default class RouteAuth extends LodgeableExpressRoute implements IExpress
         },
     };
     public readonly assertResponse: IExpressAssertionJSONType = {
-        agent: EXPRESS_ASSERTION_TYPES_END.STRING,
-        version: EXPRESS_ASSERTION_TYPES_END.STRING,
+        agent: { type: EXPRESS_ASSERTION_TYPES_END.STRING },
+        version: { type: EXPRESS_ASSERTION_TYPES_END.STRING },
     };
 
     protected async handle(req: Request, res: Response, next: ExpressNextFunction): Promise<void> {

@@ -29,8 +29,8 @@ export default class RouteRoot extends LodgeableExpressRoute implements IExpress
         },
     };
     public readonly assertResponse: IExpressAssertionJSONType = {
-        agent: EXPRESS_ASSERTION_TYPES_END.STRING,
-        version: EXPRESS_ASSERTION_TYPES_END.STRING,
+        agent: { type: EXPRESS_ASSERTION_TYPES_END.STRING },
+        version: { type: EXPRESS_ASSERTION_TYPES_END.STRING },
     };
 
     public constructor() {
