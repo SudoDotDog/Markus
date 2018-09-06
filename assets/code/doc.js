@@ -1,13 +1,11 @@
-const getDoc = () => {
-    fetch('/doc/test', {
-        method: 'POST',
-        mode: 'cors',
-        body: data,
+const getDoc = (name) => {
+    fetch('/doc/' + name, {
+        method: 'GET',
     }).then(function (response) {
-        return response.json();
+        return response.text();
     }).then(function (data) {
         if (data) {
-            console.log(data);
+            document.getElementById('content').innerHTML = data;
         }
     }).catch(function (err) {
         console.log(err);

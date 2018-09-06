@@ -12,14 +12,12 @@ export default class DocSmallCardTemplateRenderer implements IDocTemplateRendere
     private _icon: string;
     private _name: string;
     private _title: string;
-    private _content: IDocTableElement[];
     private _marks: EXPRESS_SPECIAL_MARK[];
 
-    public constructor(name: string, title: string, content: IDocTableElement[], marks: EXPRESS_SPECIAL_MARK[]) {
+    public constructor(name: string, title: string, marks: EXPRESS_SPECIAL_MARK[]) {
         this._icon = '/a/' + name + '/?text=@E';
         this._name = name;
         this._title = title;
-        this._content = content;
         this._marks = marks;
     }
 

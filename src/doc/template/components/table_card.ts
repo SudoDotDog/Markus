@@ -15,8 +15,8 @@ export default class DocTableCardTemplateRenderer implements IDocTemplateRendere
     private _content: IDocTableElement[];
     private _marks: EXPRESS_SPECIAL_MARK[];
 
-    public constructor(icon: string, title: string, content: IDocTableElement[], marks: EXPRESS_SPECIAL_MARK[]) {
-        this._icon = icon;
+    public constructor(name: string, title: string, content: IDocTableElement[], marks: EXPRESS_SPECIAL_MARK[]) {
+        this._icon = '/a/' + name + '/?text=@E';
         this._title = title;
         this._content = content;
         this._marks = marks;

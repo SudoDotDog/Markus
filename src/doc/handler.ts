@@ -12,9 +12,11 @@ import * as Route from '../service/routes/import';
 import { SERVICE_ROUTE_UPLOAD_BASE64_MODE } from "../service/routes/upload/upload_base64";
 import { SERVICE_ROUTE_UPLOAD_BUFFER_MODE } from "../service/routes/upload/upload_buffer";
 import { IMarkusTool } from "../toolbox/toolbox";
+import { error, ERROR_CODE } from "../util/error/error";
 import DocRouteBuilder from './builder';
 import { IDocTemplateRenderer } from "./interface";
 import DocSmallCardTemplateRenderer from './template/components/small_card';
+import DocTableCardTemplateRenderer from './template/components/table_card';
 import DocOuterParentTemplateRenderer from "./template/parent";
 import { convertRouteToTemplate } from "./util/covert";
 
@@ -60,14 +62,35 @@ export const verifyLanguage = (language: string | undefined): boolean => {
     return false;
 };
 
+export const createSubDocIndex = (name: string, language: keyof IText): string => {
+    const processor: LanguageTextProcessor = new LanguageTextProcessor(language);
+    const routes: IExpressRoute[] = getBuiltDocRoute().flush();
+    let route: IExpressRoute | null = null;
+    for (let i of routes) {
+        if (i.name === name) {
+            route = i;
+        }
+    }
+    if (!route) {
+        throw error(ERROR_CODE.REQUEST_PATTERN_NOT_MATCHED);
+    }
+    const template = convertRouteToTemplate(route, processor);
+    const card: IDocTemplateRenderer = new DocTableCardTemplateRenderer(
+        route.name,
+        route.doc ? processor.from(route.doc.name) : route.name,
+        template,
+        route.specialMark || [],
+    );
+
+    return card.build();
+};
+
 export const createDocIndex = (language: keyof IText): string => {
     const processor: LanguageTextProcessor = new LanguageTextProcessor(language);
     const cards: IDocTemplateRenderer[] = getBuiltDocRoute().flush().map((route: IExpressRoute) => {
-        const template = convertRouteToTemplate(route, processor);
         return new DocSmallCardTemplateRenderer(
             route.name,
             route.doc ? processor.from(route.doc.name) : route.name,
-            template,
             route.specialMark || [],
         );
     });
