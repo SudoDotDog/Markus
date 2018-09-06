@@ -61,6 +61,10 @@ export const convertRouteToTemplate = (route: IExpressRoute, processor: Language
     return template;
 };
 
+export const convertAssertDocToUserFriendlyJsonString = (doc: any): string => {
+    
+};
+
 export const convertObjectToHTMLFriendlyJson = (object: any): string => {
     return JSON.stringify(object, null, 3)
         .replace(/\n/g, '<br>')
