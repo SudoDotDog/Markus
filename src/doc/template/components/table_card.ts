@@ -4,7 +4,7 @@
  * @fileoverview Table Card
  */
 
-import { EXPRESS_SPECIAL_MARK, IExpressRoute, IText } from '../../../service/interface';
+import { EXPRESS_SPECIAL_MARK, IExpressRoute, IText, EXPRESS_EXAMPLE_CODE } from '../../../service/interface';
 import LanguageTextProcessor from '../../../service/language';
 import { IDocTableElement, IDocTemplateRenderer } from '../../interface';
 import { nodeMarkusFormData } from '../../util/code';
@@ -13,17 +13,22 @@ import StyleBuilder from '../style';
 
 export default class DocTableCardTemplateRenderer implements IDocTemplateRenderer {
     private _icon: string;
+    private _url: string;
     private _title: string;
+    private _route: IExpressRoute;
     private _content: IDocTableElement[];
     private _marks: EXPRESS_SPECIAL_MARK[];
 
     public constructor(route: IExpressRoute, language: keyof IText, url: string) {
         const processor: LanguageTextProcessor = new LanguageTextProcessor(language);
+        this._route = route;
+        this._url = url;
         this._icon = '/a/' + route.name + '/?text=@E';
         this._title = route.doc ? processor.from(route.doc.name) : route.name;
         this._content = convertRouteToTemplate(route, processor);
-        this._marks = route.specialMark || [],
+        this._marks = route.specialMark || [];
 
+        this.getExampleCode = this.getExampleCode.bind(this);
         this.getNodeCode = this.getNodeCode.bind(this);
     }
 
@@ -54,17 +59,41 @@ export default class DocTableCardTemplateRenderer implements IDocTemplateRendere
                 <table style="${tableStyle.build()}">
                     <tbody>
                         ${this._content.map(this.getRow).join('')}
-                        ${this.getNodeCode()}
+                        ${this.getExampleCode()}
                     </tbody>
                 </table>
             </div>
         `);
     }
 
+    protected getExampleCode(): string {
+        let exampleCode: string = '';
+        if (this._route.exampleCode) {
+            for (let code of this._route.exampleCode) {
+                let current: string;
+                switch (code) {
+                    case EXPRESS_EXAMPLE_CODE.FETCH_FORM_DATA:
+                        current = '';
+                        break;
+                    case EXPRESS_EXAMPLE_CODE.HTML:
+                        current = '';
+                        break;
+                    case EXPRESS_EXAMPLE_CODE.NODEJS_FORM_DATA:
+                        current = '';
+                        break;
+                    default:
+                        current = '';
+                }
+                exampleCode += current;
+            }
+        }
+        return exampleCode;
+    }
+
     protected getNodeCode(): string {
         return this.getRow({
             name: 'NodeJS',
-            value: `<pre class="prettyprint"><code class="lang-js">${nodeMarkusFormData()}</code></pre>`,
+            value: `<pre class="prettyprint"><code class="lang-js">${nodeMarkusFormData(this._url + this._route.path)}</code></pre>`,
         });
     }
 

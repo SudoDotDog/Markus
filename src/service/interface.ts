@@ -85,6 +85,12 @@ export interface IExpressHeader {
     value: string;
 }
 
+export enum EXPRESS_EXAMPLE_CODE {
+    NODEJS_FORM_DATA = "NODEJS_FORM_DATA",
+    FETCH_FORM_DATA = "FETCH_FORM_DATA",
+    HTML = "HTML",
+}
+
 export interface IExpressRoute {
     readonly name: string;
     readonly path: string;
@@ -98,15 +104,13 @@ export interface IExpressRoute {
     readonly after: boolean;
 
     readonly ignoreInDoc?: boolean;
-
     readonly postType?: EXPRESS_POST_SUBMIT_FORMAT;
     readonly assertBody?: IExpressAssertionJSONType;
     readonly assertParam?: IExpressAssertionJSONType;
     readonly assertQuery?: IExpressAssertionJSONType;
     readonly assertResponse?: IExpressAssertionJSONType;
-
+    readonly exampleCode?: EXPRESS_EXAMPLE_CODE[];
     readonly specialMark?: EXPRESS_SPECIAL_MARK[];
-
     readonly doc?: IDocInformation | null;
 
     available: () => boolean;

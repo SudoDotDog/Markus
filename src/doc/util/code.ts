@@ -7,9 +7,9 @@
 import * as Fs from "fs";
 import * as Path from 'path';
 
-export const nodeMarkusFormData = (): string => {
+export const nodeMarkusFormData = (domain: string): string => {
     const data: string = readAndReplaceTemplateFromAssets('node-markus-form-data', {
-        domain: 'aaa',
+        domain,
     });
     return data;
 };
