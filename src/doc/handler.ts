@@ -64,10 +64,12 @@ export const createDocIndex = (language: keyof IText): string => {
     const processor: LanguageTextProcessor = new LanguageTextProcessor(language);
     const cards: IDocTemplateRenderer[] = getBuiltDocRoute().flush().map((route: IExpressRoute) => {
         const template = convertRouteToTemplate(route, processor);
-        return new DocSmallCardTemplateRenderer('/a/' + route.name + '/?text=@E',
+        return new DocSmallCardTemplateRenderer(
+            route.name,
             route.doc ? processor.from(route.doc.name) : route.name,
             template,
-            route.specialMark || []);
+            route.specialMark || [],
+        );
     });
 
     const outer: IDocTemplateRenderer = new DocOuterParentTemplateRenderer(cards);

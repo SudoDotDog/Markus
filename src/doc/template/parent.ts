@@ -58,7 +58,7 @@ export default class DocOuterParentTemplateRenderer implements IDocTemplateRende
                     ::-webkit-scrollbar-track{background-color:#AAAAAA}
                 </style>
                 <script>
-                    ${Fs.readFileSync(Path.resolve('dist_script', 'addon', 'tableCardRough.js'))}
+                    ${Fs.readFileSync(Path.resolve('assert', 'code', 'doc.js'))}
                 </script>
             </html>
         `));

@@ -53,7 +53,7 @@ dev:
 	@echo "[INFO] Building for development"
 	@$(tsc) --p $(dev)
 
-build: clean install ubuild buildScript
+build: clean install ubuild
 	@echo '[INFO] To Start Run: "./dist/script/service/markus.js"'
 
 ubuild:

@@ -6,6 +6,7 @@
 
 import { EXPRESS_SPECIAL_MARK } from '../../../service/interface';
 import { IDocTableElement, IDocTemplateRenderer } from '../../interface';
+import { nodeMarkusFormData } from '../../util/code';
 import StyleBuilder from '../style';
 
 export default class DocTableCardTemplateRenderer implements IDocTemplateRenderer {
@@ -51,6 +52,11 @@ export default class DocTableCardTemplateRenderer implements IDocTemplateRendere
                         ${this._content.map(this.getRow).join('')}
                     </tbody>
                 </table>
+                <div>
+                    <code>
+                        ${nodeMarkusFormData()}
+                    </code>
+                </div>
             </div>
         `);
     }

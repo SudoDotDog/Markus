@@ -6,6 +6,7 @@
 
 import { IExpressRoute } from "../../service/interface";
 import LanguageTextProcessor from "../../service/language";
+import { IDocTableElement } from "../interface";
 
 export const convertRouteToTemplate = (route: IExpressRoute, processor: LanguageTextProcessor) => {
     const template: IDocTableElement[] = [{

@@ -10,12 +10,14 @@ import StyleBuilder from '../style';
 
 export default class DocSmallCardTemplateRenderer implements IDocTemplateRenderer {
     private _icon: string;
+    private _name: string;
     private _title: string;
     private _content: IDocTableElement[];
     private _marks: EXPRESS_SPECIAL_MARK[];
 
-    public constructor(icon: string, title: string, content: IDocTableElement[], marks: EXPRESS_SPECIAL_MARK[]) {
-        this._icon = icon;
+    public constructor(name: string, title: string, content: IDocTableElement[], marks: EXPRESS_SPECIAL_MARK[]) {
+        this._icon = '/a/' + name + '/?text=@E';
+        this._name = name;
         this._title = title;
         this._content = content;
         this._marks = marks;
@@ -31,12 +33,9 @@ export default class DocSmallCardTemplateRenderer implements IDocTemplateRendere
             .add('font-weight', 'bold');
 
         return (`
-            <div style="${outerStyle.build()}" class="card" onClick="getCard(
-                ${JSON.stringify(this._icon).replace(/\"/g, "'")},
-                ${JSON.stringify(this._title).replace(/\"/g, "'")},
-                ${JSON.stringify(this._content).replace(/\"/g, "'")},
-                ${JSON.stringify(this._marks).replace(/\"/g, "'")}
-            )">
+            <div style="${outerStyle.build()}" class="card" onClick="
+                getDoc(${JSON.stringify(this._name).replace(/\"/g, "'")})
+            ">
                 <div style="display:flex;align-items:flex-end">
                     <div style="width:80px">
                         <img src="${this._icon}" width="80px" height="80px">
