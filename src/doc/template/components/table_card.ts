@@ -26,7 +26,7 @@ export default class DocTableCardTemplateRenderer implements IDocTemplateRendere
             .add('width', 'auto')
             .add('margin-top', '30px')
             .add('margin-bottom', '30px')
-            .add('padding', '15px')
+            .add('padding', '15px');
         const tableStyle = new StyleBuilder()
             .add('border', '1px solid black')
             .add('width', '100%')

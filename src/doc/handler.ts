@@ -13,10 +13,10 @@ import { SERVICE_ROUTE_UPLOAD_BASE64_MODE } from "../service/routes/upload/uploa
 import { SERVICE_ROUTE_UPLOAD_BUFFER_MODE } from "../service/routes/upload/upload_buffer";
 import { IMarkusTool } from "../toolbox/toolbox";
 import DocRouteBuilder from './builder';
-import { IDocTableElement, IDocTemplateRenderer } from "./interface";
-import DocTableCardTemplateRenderer from './template/components/tableCard';
-import DocSmallCardTemplateRenderer from './template/components/smallCard';
+import { IDocTemplateRenderer } from "./interface";
+import DocSmallCardTemplateRenderer from './template/components/small_card';
 import DocOuterParentTemplateRenderer from "./template/parent";
+import { convertRouteToTemplate } from "./util/covert";
 
 export const getBuiltDocRoute = (): DocRouteBuilder => {
     const docBuilder: DocRouteBuilder = new DocRouteBuilder();
@@ -63,55 +63,7 @@ export const verifyLanguage = (language: string | undefined): boolean => {
 export const createDocIndex = (language: keyof IText): string => {
     const processor: LanguageTextProcessor = new LanguageTextProcessor(language);
     const cards: IDocTemplateRenderer[] = getBuiltDocRoute().flush().map((route: IExpressRoute) => {
-        const template: IDocTableElement[] = [{
-            name: 'description',
-            value: route.doc ? processor.from(route.doc.description) : route.name,
-        }, {
-            name: 'path',
-            value: route.path,
-        }, {
-            name: 'mode',
-            value: route.mode,
-        }, {
-            name: 'authorization',
-            value: route.authorization ? 'YES' : 'NO',
-        }];
-
-        if (route.postType) {
-            template.push({
-                name: 'format',
-                value: route.postType,
-            });
-        }
-
-        if (route.assertParam) {
-            template.push({
-                name: 'parameter',
-                value: convertObjectToHTMLFriendlyJson(route.assertParam),
-            });
-        }
-
-        if (route.assertQuery) {
-            template.push({
-                name: 'query',
-                value: convertObjectToHTMLFriendlyJson(route.assertQuery),
-            });
-        }
-
-        if (route.assertBody) {
-            template.push({
-                name: 'body',
-                value: convertObjectToHTMLFriendlyJson(route.assertBody),
-            });
-        }
-
-        if (route.assertResponse) {
-            template.push({
-                name: 'response',
-                value: convertObjectToHTMLFriendlyJson(route.assertResponse),
-            });
-        }
-
+        const template = convertRouteToTemplate(route, processor);
         return new DocSmallCardTemplateRenderer('/a/' + route.name + '/?text=@E',
             route.doc ? processor.from(route.doc.name) : route.name,
             template,
@@ -119,14 +71,7 @@ export const createDocIndex = (language: keyof IText): string => {
     });
 
     const outer: IDocTemplateRenderer = new DocOuterParentTemplateRenderer(cards);
-    console.log(outer.build().length);
     return outer.build();
 };
 
-export const convertObjectToHTMLFriendlyJson = (object: any): string => {
-    return JSON.stringify(object, null, 3)
-        .replace(/\n/g, '<br>')
-        .replace(/ /g, '&nbsp;')
-        .replace(/&nbsp;&nbsp;&nbsp;"/g, '&nbsp;&nbsp;&nbsp;')
-        .replace(/":/g, ':');
-};
+

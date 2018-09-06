@@ -38,7 +38,7 @@ export default class ExtensionDocGenerate implements IExpressExtension {
     }
 
     private handler(req: Request, res: Response): void {
-        this._log.verbose('doc attempted');
+        this._log.verbose('Document attempted');
         let language: string | undefined = req.query.language;
         if (!verifyLanguage(language)) {
             language = 'EN';
@@ -51,6 +51,7 @@ export default class ExtensionDocGenerate implements IExpressExtension {
     private rummageDoc(language: keyof IText): string {
         const lang: string = language.toUpperCase();
         if (this._docs[lang]) {
+            this._log.info(`Document served from cache`);
             return this._docs[lang];
         }
         const doc: string = this.flushDoc(language);
@@ -59,6 +60,8 @@ export default class ExtensionDocGenerate implements IExpressExtension {
     }
 
     private flushDoc(language: keyof IText): string {
-        return createDocIndex(language);
+        const resString: string = createDocIndex(language);
+        this._log.info(`Document served from generation, length: ${resString.length}`);
+        return resString;
     }
 }
