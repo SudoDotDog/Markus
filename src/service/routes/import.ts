@@ -11,6 +11,7 @@ export { default as RouteGetAvatar } from './image/get_avatar';
 export { default as RouteGetImage } from './image/get_image';
 export { default as RouteGetImagesByTag } from './image/get_images_by_tag';
 export { default as RouteTagList } from './image/get_tag_list';
+export { default as RouteTagAdvancedList } from './image/get_advanced_tag_list';
 export { default as RouteRenameTag } from './image/tag_change_name';
 export { default as RouteAuth } from './system/auth';
 export { default as RouteRiskyEmptyDatabase } from './system/empty_database';

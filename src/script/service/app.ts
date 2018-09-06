@@ -110,6 +110,7 @@ app.post('/tag', ...prepares, Handler.GetImage.imageGetListByTagHandler);
 
 // Handler(s) for Tag List Get
 appBuilder.route(new Route.RouteTagList());
+appBuilder.route(new Route.RouteTagAdvancedList());
 
 // Handler(s) for Image status change
 app.post('/deactivate/id', ...prepares, ...permissions, Handler.Markus.DeactivateImageHandler, ...afters);

@@ -35,6 +35,7 @@ export const getBuiltDocRoute = (): DocRouteBuilder => {
         new Route.RouteGetImagesByTag(),
         new Route.RouteRenameTag(),
         new Route.RouteTagList(),
+        new Route.RouteTagAdvancedList(),
         new Route.RouteRiskyGetList(),
         new Route.RouteUploadByBuffer(SERVICE_ROUTE_UPLOAD_BUFFER_MODE.AVATAR_DOC, '/v/buffer', 'Avatar'),
         new Route.RouteUploadByBase64(SERVICE_ROUTE_UPLOAD_BASE64_MODE.AVATAR_DOC, '/v/base64', 'Avatar'),
