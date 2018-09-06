@@ -72,16 +72,18 @@ export const convertEndTypeRecursive = (current: ExpressAssertionType, layer: nu
         case EXPRESS_ASSERTION_TYPES_END.TOOL_NAME:
         case EXPRESS_ASSERTION_TYPES_END.ANY:
             if (current.optional) {
-                return current.type + '?';
+                return current.type + ' (optional)';
             } else {
                 return current.type;
             }
         case EXPRESS_ASSERTION_TYPES_UNION.ARRAY:
-            if (current.optional) {
-                return `[${convertEndTypeRecursive(current.child, layer)}]?`;
+            let temp: string = '';
+            if (current.split) {
+                temp = `[${convertEndTypeRecursive(current.child, layer)}].join('${current.split}')`;
             } else {
-                return `[${convertEndTypeRecursive(current.child, layer)}]`;
+                temp = `[${convertEndTypeRecursive(current.child, layer)}]`;
             }
+            return temp + ' (optional)'
         case EXPRESS_ASSERTION_TYPES_UNION.OBJECT:
             const converted = convertObjectToHTMLFriendlyJson(convertAssertDocToUserFriendlyObject(current.child, layer + 1), 3, layer + 1);
             return converted;

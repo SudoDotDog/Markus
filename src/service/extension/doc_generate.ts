@@ -48,7 +48,6 @@ export default class ExtensionDocGenerate implements IExpressExtension {
     }
 
     private handler(req: Request, res: Response): void {
-        this._log.verbose('Document attempted');
         let language: string | undefined = req.query.language;
         if (!verifyLanguage(language)) {
             language = 'EN';
@@ -59,7 +58,6 @@ export default class ExtensionDocGenerate implements IExpressExtension {
     }
 
     private subHandler(req: Request, res: Response): void {
-        this._log.verbose('Document attempted');
         const url: string = req.protocol + '://' + req.hostname;
         let language: string | undefined = req.query.language;
         const name: string = req.params.name;
