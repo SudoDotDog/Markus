@@ -60,13 +60,14 @@ export default class ExtensionDocGenerate implements IExpressExtension {
 
     private subHandler(req: Request, res: Response): void {
         this._log.verbose('Document attempted');
+        const url: string = req.protocol + '://' + req.hostname;
         let language: string | undefined = req.query.language;
         const name: string = req.params.name;
         if (!verifyLanguage(language)) {
             language = 'EN';
         }
 
-        const doc: string = this.rummageSubDoc(name, language as keyof IText);
+        const doc: string = this.rummageSubDoc(name, language as keyof IText, url);
         res.send(doc);
     }
 
@@ -81,7 +82,7 @@ export default class ExtensionDocGenerate implements IExpressExtension {
         return doc;
     }
 
-    private rummageSubDoc(name: string, language: keyof IText): string {
+    private rummageSubDoc(name: string, language: keyof IText, url: string): string {
         const lang: string = language.toUpperCase();
         if (this._subDocs[lang]) {
             if (this._subDocs[lang][name]) {
@@ -91,7 +92,7 @@ export default class ExtensionDocGenerate implements IExpressExtension {
         } else {
             this._subDocs[lang] = {};
         }
-        const doc: string = this.flushDubDoc(name, language);
+        const doc: string = this.flushDubDoc(name, language, url);
         this._subDocs[lang][name] = doc;
         return doc;
     }
@@ -102,8 +103,8 @@ export default class ExtensionDocGenerate implements IExpressExtension {
         return resString;
     }
 
-    private flushDubDoc(name: string, language: keyof IText): string {
-        const resString: string = createSubDocIndex(name, language);
+    private flushDubDoc(name: string, language: keyof IText, url: string): string {
+        const resString: string = createSubDocIndex(name, language, url);
         this._log.info(`Sub Document ${name} served from generation, length: ${resString.length}`);
         return resString;
     }

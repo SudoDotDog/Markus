@@ -25,6 +25,6 @@ describe('test convert data utils', (): void => {
 
     it('convert size should return normal data when with unlimited', (): void => {
         const result: string = convertBytesNumberToUserFriendlyFormat(Infinity);
-        expect(result).to.be.equal('1tb');
+        expect(result).to.be.equal('unknown');
     });
 });

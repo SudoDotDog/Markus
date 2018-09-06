@@ -18,7 +18,6 @@ import { IDocTemplateRenderer } from "./interface";
 import DocSmallCardTemplateRenderer from './template/components/small_card';
 import DocTableCardTemplateRenderer from './template/components/table_card';
 import DocOuterParentTemplateRenderer from "./template/parent";
-import { convertRouteToTemplate } from "./util/covert";
 
 export const getBuiltDocRoute = (): DocRouteBuilder => {
     const docBuilder: DocRouteBuilder = new DocRouteBuilder();
@@ -63,8 +62,8 @@ export const verifyLanguage = (language: string | undefined): boolean => {
     return false;
 };
 
-export const createSubDocIndex = (name: string, language: keyof IText): string => {
-    const processor: LanguageTextProcessor = new LanguageTextProcessor(language);
+export const createSubDocIndex = (name: string, language: keyof IText, url: string): string => {
+    
     const routes: IExpressRoute[] = getBuiltDocRoute().flush();
     let route: IExpressRoute | null = null;
     for (let i of routes) {
@@ -75,13 +74,7 @@ export const createSubDocIndex = (name: string, language: keyof IText): string =
     if (!route) {
         throw error(ERROR_CODE.REQUEST_PATTERN_NOT_MATCHED);
     }
-    const template = convertRouteToTemplate(route, processor);
-    const card: IDocTemplateRenderer = new DocTableCardTemplateRenderer(
-        route.name,
-        route.doc ? processor.from(route.doc.name) : route.name,
-        template,
-        route.specialMark || [],
-    );
+    const card: IDocTemplateRenderer = new DocTableCardTemplateRenderer(route, language, url);
 
     return card.build();
 };

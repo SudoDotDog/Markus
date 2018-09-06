@@ -4,9 +4,11 @@
  * @fileoverview Table Card
  */
 
-import { EXPRESS_SPECIAL_MARK } from '../../../service/interface';
+import { EXPRESS_SPECIAL_MARK, IExpressRoute, IText } from '../../../service/interface';
+import LanguageTextProcessor from '../../../service/language';
 import { IDocTableElement, IDocTemplateRenderer } from '../../interface';
 import { nodeMarkusFormData } from '../../util/code';
+import { convertRouteToTemplate } from '../../util/covert';
 import StyleBuilder from '../style';
 
 export default class DocTableCardTemplateRenderer implements IDocTemplateRenderer {
@@ -15,11 +17,12 @@ export default class DocTableCardTemplateRenderer implements IDocTemplateRendere
     private _content: IDocTableElement[];
     private _marks: EXPRESS_SPECIAL_MARK[];
 
-    public constructor(name: string, title: string, content: IDocTableElement[], marks: EXPRESS_SPECIAL_MARK[]) {
-        this._icon = '/a/' + name + '/?text=@E';
-        this._title = title;
-        this._content = content;
-        this._marks = marks;
+    public constructor(route: IExpressRoute, language: keyof IText, url: string) {
+        const processor: LanguageTextProcessor = new LanguageTextProcessor(language);
+        this._icon = '/a/' + route.name + '/?text=@E';
+        this._title = route.doc ? processor.from(route.doc.name) : route.name;
+        this._content = convertRouteToTemplate(route, processor);
+        this._marks = route.specialMark || [],
 
         this.getNodeCode = this.getNodeCode.bind(this);
     }
