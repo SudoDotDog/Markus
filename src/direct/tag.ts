@@ -6,9 +6,10 @@
 
 import { ObjectID } from "bson";
 import * as Controller from '../database/controller/import';
-import * as Mix from '../database/mix/import';
 import { ITagUserFriendly, ITagUserFriendlyAdvanced } from "../database/interface/tag";
+import * as Mix from '../database/mix/import';
 import { ITagModel } from "../database/model/tag";
+import { convertBytesNumberToUserFriendlyFormat } from '../util/convert/data';
 import { error, ERROR_CODE } from "../util/error/error";
 
 export const getTagStringsNamesMapByTagIds = async (ids: ObjectID[]): Promise<Map<string, string>> => {
@@ -58,12 +59,12 @@ export const getAllAdvancedTagUserFriendlyList = async (): Promise<ITagUserFrien
     const result: ITagUserFriendlyAdvanced[] = [];
     for (let tag of tags) {
         const count: number = await Controller.Image.getImageCountByTagId(tag._id);
-        const size: number  = await Mix.Tag.getTagSizeByTagId(tag._id);
+        const size: number = await Mix.Tag.getTagSizeByTagId(tag._id);
         result.push({
             name: tag.name,
             createdAt: tag.createdAt,
             updatedAt: tag.updatedAt,
-            size,
+            size: convertBytesNumberToUserFriendlyFormat(size),
             count,
         });
     }

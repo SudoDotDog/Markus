@@ -27,6 +27,7 @@ export default class DocSmallCardTemplateRenderer implements IDocTemplateRendere
         const outerStyle = new StyleBuilder()
             .add('margin-top', '15px')
             .add('margin-bottom', '15px')
+            .add('overflow', 'hidden')
             .add('padding', '5px');
         const textStyle = new StyleBuilder()
             .add('font-size', '20px')
@@ -41,10 +42,10 @@ export default class DocSmallCardTemplateRenderer implements IDocTemplateRendere
                 getDoc(${JSON.stringify(this._name).replace(/\"/g, "'")})
             ">
                 <div style="display:flex;align-items:flex-end">
-                    <div style="width:80px">
+                    <div style="width:80px" class="card-icon">
                         <img src="${this._icon}" width="80px" height="80px">
                     </div>
-                    <div style="flex:1;padding:6px">
+                    <div style="flex:1;padding:6px" class="card-content">
                         ${this.getBadge(this._marks)}
                         <div style="${textStyle.build()}">${this._title}</div>
                         <div style="${subTextStyle.build()}">${this._path}</div>

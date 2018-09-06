@@ -20,6 +20,6 @@ export interface ITagUserFriendly {
 }
 
 export interface ITagUserFriendlyAdvanced extends ITagUserFriendly {
-    size: number;
+    size: string;
     updatedAt: Date;
 }
