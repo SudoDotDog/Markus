@@ -4,7 +4,7 @@
  * @fileoverview Converter
  */
 
-import { IExpressRoute } from "../../service/interface";
+import { IExpressAssertionJSONType, IExpressRoute } from "../../service/interface";
 import LanguageTextProcessor from "../../service/language";
 import { IDocTableElement } from "../interface";
 
@@ -61,11 +61,11 @@ export const convertRouteToTemplate = (route: IExpressRoute, processor: Language
     return template;
 };
 
-export const convertAssertDocToUserFriendlyJsonString = (doc: any): string => {
-    
+export const convertAssertDocToUserFriendlyJsonString = (doc: IExpressAssertionJSONType): string => {
+    return '';
 };
 
-export const convertObjectToHTMLFriendlyJson = (object: any): string => {
+export const convertObjectToHTMLFriendlyJson = (object: IExpressAssertionJSONType): string => {
     return JSON.stringify(object, null, 3)
         .replace(/\n/g, '<br>')
         .replace(/ /g, '&nbsp;')

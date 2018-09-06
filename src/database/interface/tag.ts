@@ -18,3 +18,8 @@ export interface ITagUserFriendly {
     count: number;
     createdAt: Date;
 }
+
+export interface ITagUserFriendlyAdvanced extends ITagUserFriendly {
+    size: number;
+    updatedAt: Date;
+}

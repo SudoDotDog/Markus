@@ -47,5 +47,13 @@ export const testTagDirect = (): void => {
             expect(tags.length).to.be.gte(1);
             return;
         }).timeout(4200);
+
+        it('get all tag user friendly advanced result should return correct list', async (): Promise<void> => {
+            const tags: ITagUserFriendly[] = await Direct.Tag.getAllAdvancedTagUserFriendlyList();
+            // tslint:disable-next-line
+            expect(tags).to.be.not.null;
+            expect(tags.length).to.be.gte(1);
+            return;
+        }).timeout(4200);
     });
 };

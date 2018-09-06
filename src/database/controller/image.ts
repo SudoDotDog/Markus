@@ -74,6 +74,14 @@ export const getAllActiveAndInactiveImagesByTag = async (tag: ObjectID): Promise
     return results;
 };
 
+export const getAllActiveAndInactiveImagesByTagIgnoreNothing = async (tag: ObjectID): Promise<IImageModel[]> => {
+    const results: IImageModel[] = await ImageModel.find({
+        tags: tag,
+    });
+
+    return results;
+};
+
 export const getImageCountByTagId = async (tagId: ObjectID): Promise<number> => {
     const count: number = await ImageModel.countDocuments({
         tags: tagId,

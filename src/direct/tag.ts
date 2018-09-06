@@ -6,7 +6,8 @@
 
 import { ObjectID } from "bson";
 import * as Controller from '../database/controller/import';
-import { ITagUserFriendly } from "../database/interface/tag";
+import * as Mix from '../database/mix/import';
+import { ITagUserFriendly, ITagUserFriendlyAdvanced } from "../database/interface/tag";
 import { ITagModel } from "../database/model/tag";
 import { error, ERROR_CODE } from "../util/error/error";
 
@@ -46,6 +47,23 @@ export const getAllActiveTagUserFriendlyList = async (): Promise<ITagUserFriendl
         result.push({
             name: tag.name,
             createdAt: tag.createdAt,
+            count,
+        });
+    }
+    return result;
+};
+
+export const getAllAdvancedTagUserFriendlyList = async (): Promise<ITagUserFriendlyAdvanced[]> => {
+    const tags: ITagModel[] = await Controller.Tag.getAllActiveTags();
+    const result: ITagUserFriendlyAdvanced[] = [];
+    for (let tag of tags) {
+        const count: number = await Controller.Image.getImageCountByTagId(tag._id);
+        const size: number  = await Mix.Tag.getTagSizeByTagId(tag._id);
+        result.push({
+            name: tag.name,
+            createdAt: tag.createdAt,
+            updatedAt: tag.updatedAt,
+            size,
             count,
         });
     }
