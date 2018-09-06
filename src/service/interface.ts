@@ -33,9 +33,13 @@ export enum EXPRESS_POST_SUBMIT_FORMAT {
 export type ExpressNextFunction = () => void;
 
 export type ExpressAssertionType = {
-    type: EXPRESS_ASSERTION_TYPES_UNION;
-    child: IExpressAssertionJSONType | ExpressAssertionType;
+    type: EXPRESS_ASSERTION_TYPES_UNION.ARRAY;
+    child: ExpressAssertionType;
     split?: string;
+    optional?: boolean;
+} | {
+    type: EXPRESS_ASSERTION_TYPES_UNION.OBJECT;
+    child: IExpressAssertionJSONType;
     optional?: boolean;
 } | {
     type: EXPRESS_ASSERTION_TYPES_END;

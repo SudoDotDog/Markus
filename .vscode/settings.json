@@ -35,6 +35,7 @@
         "readonly",
         "scrollbar",
         "splited",
+        "stringify",
         "struct",
         "submodule",
         "tshook",

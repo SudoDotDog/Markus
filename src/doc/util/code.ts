@@ -17,7 +17,7 @@ export const nodeMarkusFormData = (domain: string, route: IExpressRoute): string
         switch (current.type) {
             case EXPRESS_ASSERTION_TYPES_END.BUFFER:
                 append.push(
-                    `const original = ${EXPRESS_ASSERTION_TYPES_END.STRING}`,
+                    `const original = ${EXPRESS_ASSERTION_TYPES_END.STRING};`,
                     `const extName = path.extname(original);`,
                     `form.append('${key}': ${current.type}, {`,
                     `    filename: original,`,

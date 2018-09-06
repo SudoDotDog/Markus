@@ -17,7 +17,7 @@ export enum DOC_TABLE_ELEMENT_IMPORTANT_LEVEL {
 
 export interface IDocTableElement {
     name: string;
-    value: string;
+    value: any;
     important?: DOC_TABLE_ELEMENT_IMPORTANT_LEVEL;
 }
 

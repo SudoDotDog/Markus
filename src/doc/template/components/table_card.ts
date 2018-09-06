@@ -8,7 +8,7 @@ import { EXPRESS_SPECIAL_MARK, IExpressRoute, IText, EXPRESS_EXAMPLE_CODE } from
 import LanguageTextProcessor from '../../../service/language';
 import { IDocTableElement, IDocTemplateRenderer } from '../../interface';
 import { nodeMarkusFormData } from '../../util/code';
-import { convertRouteToTemplate } from '../../util/covert';
+import { convertRouteToTemplate, convertObjectToHTMLFriendlyJson } from '../../util/covert';
 import StyleBuilder from '../style';
 
 export default class DocTableCardTemplateRenderer implements IDocTemplateRenderer {
@@ -124,14 +124,19 @@ export default class DocTableCardTemplateRenderer implements IDocTemplateRendere
             .add('padding', '3px')
             .add('padding-left', '5px')
             .add('border', '1px solid black');
-
+        let content: string;
+        if (typeof row.value === 'string') {
+            content = row.value;
+        } else {
+            content = convertObjectToHTMLFriendlyJson(row.value, 3);
+        }
         return (`
             <tr style="${rightStyle.build()}">
                 <td style="${leftStyle.build()}">
                     ${row.name}
                 </td>
                 <td style="${rightStyle.build()}">
-                    ${row.value}
+                    ${content}
                 </td>
             </tr>
         `);
