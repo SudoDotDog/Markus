@@ -162,7 +162,7 @@ export default class RouteUploadAvatarByBuffer extends LodgeableExpressRoute imp
             const preTags: string[] | string = req.body.tags;
             let tags: string[] = [];
             if (typeof preTags === 'string') {
-                tags = preTags.split(',');
+                tags = preTags.split(';');
             } else {
                 tags = preTags;
             }

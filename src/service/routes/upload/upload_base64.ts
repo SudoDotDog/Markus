@@ -169,7 +169,7 @@ export default class RouteUploadAvatarByBase64 extends LodgeableExpressRoute imp
             const originalName: string = req.body.original || 'Not-Provided';
             let tags: string[] = [];
             if (typeof preTags === 'string') {
-                tags = preTags.split(',');
+                tags = preTags.split(';');
             } else {
                 tags = preTags;
             }

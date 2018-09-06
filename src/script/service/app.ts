@@ -109,7 +109,7 @@ appBuilder.route(new Route.RouteRenameTag());
 app.post('/tag', ...prepares, Handler.GetImage.imageGetListByTagHandler);
 
 // Handler(s) for Tag List Get
-app.post('/tag/list', ...prepares, ...permissions, Handler.GetImage.allTagUserFriendlyListHandler, ...afters);
+appBuilder.route(new Route.RouteTagList());
 
 // Handler(s) for Image status change
 app.post('/deactivate/id', ...prepares, ...permissions, Handler.Markus.DeactivateImageHandler, ...afters);

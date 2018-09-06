@@ -36,7 +36,7 @@ export const UploadBufferHandler = async (req: Request, res: Response): Promise<
         const preTags: string[] | string = req.body.tags;
         let tags: string[] = [];
         if (typeof preTags === 'string') {
-            tags = preTags.split(',');
+            tags = preTags.split(';');
         } else {
             tags = preTags;
         }
@@ -87,7 +87,7 @@ export const UploadBase64Handler = async (req: Request, res: Response): Promise<
         const originalName: string = req.body.original || 'Not-Provided';
         let tags: string[] = [];
         if (typeof preTags === 'string') {
-            tags = preTags.split(',');
+            tags = preTags.split(';');
         } else {
             tags = preTags;
         }
