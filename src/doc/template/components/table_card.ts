@@ -20,6 +20,8 @@ export default class DocTableCardTemplateRenderer implements IDocTemplateRendere
         this._title = title;
         this._content = content;
         this._marks = marks;
+
+        this.getNodeCode = this.getNodeCode.bind(this);
     }
 
     public build(): string {
@@ -35,7 +37,6 @@ export default class DocTableCardTemplateRenderer implements IDocTemplateRendere
         const textStyle = new StyleBuilder()
             .add('font-size', '26px')
             .add('font-weight', 'bold');
-
         return (`
             <div style="${outerStyle.build()}">
                 <div style="display:flex;align-items:flex-end">
@@ -50,15 +51,18 @@ export default class DocTableCardTemplateRenderer implements IDocTemplateRendere
                 <table style="${tableStyle.build()}">
                     <tbody>
                         ${this._content.map(this.getRow).join('')}
+                        ${this.getNodeCode()}
                     </tbody>
                 </table>
-                <div>
-                    <code>
-                        ${nodeMarkusFormData()}
-                    </code>
-                </div>
             </div>
         `);
+    }
+
+    protected getNodeCode(): string {
+        return this.getRow({
+            name: 'NodeJS',
+            value: `<pre class="prettyprint"><code class="lang-js">${nodeMarkusFormData()}</code></pre>`,
+        });
     }
 
     protected getBadge(marks: EXPRESS_SPECIAL_MARK[]): string {
@@ -79,7 +83,7 @@ export default class DocTableCardTemplateRenderer implements IDocTemplateRendere
     protected getRow(row: IDocTableElement): string {
         const leftStyle = new StyleBuilder()
             .add('border', '1px solid black')
-            .add('width', '25%')
+            .add('width', '20%')
             .add('padding', '3px')
             .add('padding-right', '5px')
             .add('font-weight', 'bold')

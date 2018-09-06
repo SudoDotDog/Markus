@@ -11,13 +11,15 @@ import StyleBuilder from '../style';
 export default class DocSmallCardTemplateRenderer implements IDocTemplateRenderer {
     private _icon: string;
     private _name: string;
+    private _path: string;
     private _title: string;
     private _marks: EXPRESS_SPECIAL_MARK[];
 
-    public constructor(name: string, title: string, marks: EXPRESS_SPECIAL_MARK[]) {
+    public constructor(name: string, title: string, path: string, marks: EXPRESS_SPECIAL_MARK[]) {
         this._icon = '/a/' + name + '/?text=@E';
         this._name = name;
         this._title = title;
+        this._path = path;
         this._marks = marks;
     }
 
@@ -28,6 +30,10 @@ export default class DocSmallCardTemplateRenderer implements IDocTemplateRendere
             .add('padding', '5px');
         const textStyle = new StyleBuilder()
             .add('font-size', '20px')
+            .add('font-weight', 'bold');
+        const subTextStyle = new StyleBuilder()
+            .add('font-size', '18px')
+            .add('color', 'darkgray')
             .add('font-weight', 'bold');
 
         return (`
@@ -41,6 +47,7 @@ export default class DocSmallCardTemplateRenderer implements IDocTemplateRendere
                     <div style="flex:1;padding:6px">
                         ${this.getBadge(this._marks)}
                         <div style="${textStyle.build()}">${this._title}</div>
+                        <div style="${subTextStyle.build()}">${this._path}</div>
                     </div>
                 </div>
             </div>

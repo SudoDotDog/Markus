@@ -16,6 +16,7 @@
         "cleanall",
         "codecov",
         "cors",
+        "darkgray",
         "dbpath",
         "dependences",
         "extname",

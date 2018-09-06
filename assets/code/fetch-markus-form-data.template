@@ -4,7 +4,7 @@ data.append('image', image);
 data.append('key', key);
 data.append('tag', JSON.stringify(tags));
 
-fetch(${|domain|}, {
+fetch(${domain}, {
     method: 'POST',
     mode: 'cors',
     body: data,

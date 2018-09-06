@@ -56,7 +56,9 @@ export default class DocOuterParentTemplateRenderer implements IDocTemplateRende
                     ::-webkit-scrollbar{width:0.5em;height:0.5em}
                     ::-webkit-scrollbar-thumb{background-color:#001F3F}
                     ::-webkit-scrollbar-track{background-color:#AAAAAA}
+                    pre.prettyprint{border:0}
                 </style>
+                <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
                 <script>
                     ${Fs.readFileSync(Path.resolve('assets', 'code', 'doc.js'))}
                 </script>

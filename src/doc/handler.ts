@@ -91,6 +91,7 @@ export const createDocIndex = (language: keyof IText): string => {
         return new DocSmallCardTemplateRenderer(
             route.name,
             route.doc ? processor.from(route.doc.name) : route.name,
+            route.path,
             route.specialMark || [],
         );
     });

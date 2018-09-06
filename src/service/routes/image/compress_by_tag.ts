@@ -25,10 +25,10 @@ export default class RouteCompressByTag extends LodgeableExpressRoute implements
 
     public readonly doc: IDocInformation = {
         name: {
-            EN: 'Get compressed images by tag',
+            EN: 'Get compressed images',
         },
         description: {
-            EN: 'Get compressed images by tag',
+            EN: 'Get compressed images',
         },
     };
     public readonly assertQuery: IExpressAssertionJSONType = {
