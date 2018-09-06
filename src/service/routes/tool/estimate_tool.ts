@@ -38,7 +38,7 @@ export default class RouteEstimateTool extends LodgeableExpressRoute implements 
         name: { type: EXPRESS_ASSERTION_TYPES_END.TOOL_NAME },
         args: {
             type: EXPRESS_ASSERTION_TYPES_UNION.ARRAY,
-            child: EXPRESS_ASSERTION_TYPES_END.ANY,
+            child: { type: EXPRESS_ASSERTION_TYPES_END.ANY },
         },
     };
 

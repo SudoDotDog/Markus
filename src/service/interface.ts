@@ -32,29 +32,20 @@ export enum EXPRESS_POST_SUBMIT_FORMAT {
 
 export type ExpressNextFunction = () => void;
 
-interface IPrivateExpressAssertionTypeUNION {
-    name: string;
-    type: EXPRESS_ASSERTION_TYPES_UNION.ARRAY | EXPRESS_ASSERTION_TYPES_UNION.OBJECT;
-    child: ExpressAssertionType;
+export type ExpressAssertionType = {
+    type: EXPRESS_ASSERTION_TYPES_UNION;
+    child: IExpressAssertionJSONType | ExpressAssertionType;
+    split?: string;
     optional?: boolean;
-}
-
-interface IPrivateExpressAssertionTypeNamedEND {
-    name?: string;
-    type: EXPRESS_ASSERTION_TYPES_END.STRING | EXPRESS_ASSERTION_TYPES_END.BOOLEAN | EXPRESS_ASSERTION_TYPES_END.NUMBER | EXPRESS_ASSERTION_TYPES_END.FILE;
+} | {
+    type: EXPRESS_ASSERTION_TYPES_END;
     optional?: boolean;
-}
-
-type ExpressAssertionType = IPrivateExpressAssertionTypeUNION | IPrivateExpressAssertionTypeNamedEND;
+}| {
+    type: EXPRESS_ASSERTION_TYPES_END;
+    optional?: boolean;
+};
 export interface IExpressAssertionJSONType {
-    [key: string]: {
-        type: EXPRESS_ASSERTION_TYPES_UNION;
-        child: IExpressAssertionJSONType | EXPRESS_ASSERTION_TYPES_END;
-        optional?: boolean;
-    } | {
-        type: EXPRESS_ASSERTION_TYPES_END;
-        optional?: boolean;
-    };
+    [key: string]: ExpressAssertionType;
 }
 
 export enum EXPRESS_ASSERTION_TYPES_UNION {

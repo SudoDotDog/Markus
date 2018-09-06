@@ -13,7 +13,7 @@ import { concatSuffix } from "../../../util/data/path";
 import { error, ERROR_CODE } from "../../../util/error/error";
 import { IFileManager } from "../../../util/manager/file/import";
 // tslint:disable-next-line
-import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, EXPRESS_POST_SUBMIT_FORMAT, IDocInformation, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE, EXPRESS_EXAMPLE_CODE } from '../../interface';
+import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, EXPRESS_POST_SUBMIT_FORMAT, IDocInformation, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE, EXPRESS_EXAMPLE_CODE, EXPRESS_ASSERTION_TYPES_UNION } from '../../interface';
 import LodgeableExpressRoute from "../../lodgeable";
 
 export enum SERVICE_ROUTE_UPLOAD_BUFFER_MODE {
@@ -78,8 +78,12 @@ export default class RouteUploadAvatarByBuffer extends LodgeableExpressRoute imp
                 },
             };
             this.assertBody = {
-                tags: { type: EXPRESS_ASSERTION_TYPES_END.STRING },
                 image: { type: EXPRESS_ASSERTION_TYPES_END.FILE },
+                tags: {
+                    type: EXPRESS_ASSERTION_TYPES_UNION.ARRAY,
+                    child: { type: EXPRESS_ASSERTION_TYPES_END.STRING },
+                    split: ';',
+                },
                 ctime: {
                     type: EXPRESS_ASSERTION_TYPES_END.NUMBER,
                     optional: true,

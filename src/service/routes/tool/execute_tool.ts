@@ -38,7 +38,7 @@ export default class RouteExecuteTool extends LodgeableExpressRoute implements I
         name: { type: EXPRESS_ASSERTION_TYPES_END.TOOL_NAME },
         args: {
             type: EXPRESS_ASSERTION_TYPES_UNION.ARRAY,
-            child: EXPRESS_ASSERTION_TYPES_END.ANY,
+            child: { type: EXPRESS_ASSERTION_TYPES_END.ANY },
         },
     };
 

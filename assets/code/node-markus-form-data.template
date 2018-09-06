@@ -12,6 +12,4 @@ const r = request.post(${domain}, option, (error, response, body) => {
 });
 
 const form = r.form();
-form.append('key', key);
 ${append}
-form.append('tags', tags.join(','));
