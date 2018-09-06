@@ -59,7 +59,7 @@ export default class RouteUploadAvatarByBuffer extends LodgeableExpressRoute imp
             };
             this.assertBody = {
                 avatar: { type: EXPRESS_ASSERTION_TYPES_END.STRING },
-                image: { type: EXPRESS_ASSERTION_TYPES_END.FILE },
+                image: { type: EXPRESS_ASSERTION_TYPES_END.BUFFER },
                 ctime: {
                     type: EXPRESS_ASSERTION_TYPES_END.NUMBER,
                     optional: true,
@@ -78,7 +78,7 @@ export default class RouteUploadAvatarByBuffer extends LodgeableExpressRoute imp
                 },
             };
             this.assertBody = {
-                image: { type: EXPRESS_ASSERTION_TYPES_END.FILE },
+                image: { type: EXPRESS_ASSERTION_TYPES_END.BUFFER },
                 tags: {
                     type: EXPRESS_ASSERTION_TYPES_UNION.ARRAY,
                     child: { type: EXPRESS_ASSERTION_TYPES_END.STRING },

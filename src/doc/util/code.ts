@@ -15,20 +15,19 @@ export const nodeMarkusFormData = (domain: string, route: IExpressRoute): string
     }
     const parseType = (key: string, current: ExpressAssertionType): void => {
         switch (current.type) {
-            case EXPRESS_ASSERTION_TYPES_END.FILE:
+            case EXPRESS_ASSERTION_TYPES_END.BUFFER:
                 append.push(
+                    `const original = ${EXPRESS_ASSERTION_TYPES_END.STRING}`,
                     `const extName = path.extname(original);`,
-                    `form.append('${key}': buffer, {`,
+                    `form.append('${key}': ${current.type}, {`,
                     `    filename: original,`,
                     `    contentType: 'image/' + extName.substring(1, extName.length),`,
                     `});`,
                 );
                 break;
             case EXPRESS_ASSERTION_TYPES_END.STRING:
-                append.push(`form.append('${key}': string);`);
-                break;
             case EXPRESS_ASSERTION_TYPES_END.NUMBER:
-                append.push(`form.append('${key}': number);`);
+                append.push(`form.append('${key}': ${current.type});`);
                 break;
             case EXPRESS_ASSERTION_TYPES_UNION.ARRAY:
                 if(current.split){

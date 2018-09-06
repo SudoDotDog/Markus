@@ -68,7 +68,6 @@ export default class DocTableCardTemplateRenderer implements IDocTemplateRendere
 
     protected getExampleCode(): string {
         let exampleCode: string = '';
-        console.log(this._route.exampleCode);
         if (this._route.exampleCode) {
             for (let code of this._route.exampleCode) {
                 let current: string;
