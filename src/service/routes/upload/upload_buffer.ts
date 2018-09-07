@@ -37,7 +37,10 @@ export default class RouteUploadAvatarByBuffer extends LodgeableExpressRoute imp
 
     public readonly postType: EXPRESS_POST_SUBMIT_FORMAT = EXPRESS_POST_SUBMIT_FORMAT.FORM_DATA;
     public readonly assertBody: IExpressAssertionJSONType;
-    public readonly exampleCode: EXPRESS_EXAMPLE_CODE[] = [EXPRESS_EXAMPLE_CODE.NODEJS_FORM_DATA];
+    public readonly exampleCode: EXPRESS_EXAMPLE_CODE[] = [
+        EXPRESS_EXAMPLE_CODE.NODEJS_FORM_DATA,
+        EXPRESS_EXAMPLE_CODE.FETCH_FORM_DATA,
+    ];
 
     public readonly doc: IDocInformation | null;
 
@@ -59,7 +62,7 @@ export default class RouteUploadAvatarByBuffer extends LodgeableExpressRoute imp
             };
             this.assertBody = {
                 avatar: { type: EXPRESS_ASSERTION_TYPES_END.STRING },
-                image: { type: EXPRESS_ASSERTION_TYPES_END.BUFFER },
+                image: { type: EXPRESS_ASSERTION_TYPES_END.FILE },
                 ctime: {
                     type: EXPRESS_ASSERTION_TYPES_END.NUMBER,
                     optional: true,
@@ -78,7 +81,7 @@ export default class RouteUploadAvatarByBuffer extends LodgeableExpressRoute imp
                 },
             };
             this.assertBody = {
-                image: { type: EXPRESS_ASSERTION_TYPES_END.BUFFER },
+                image: { type: EXPRESS_ASSERTION_TYPES_END.FILE },
                 tags: {
                     type: EXPRESS_ASSERTION_TYPES_UNION.ARRAY,
                     child: { type: EXPRESS_ASSERTION_TYPES_END.STRING },

@@ -8,52 +8,61 @@ import { IExpressAssertionJSONType, IExpressRoute, EXPRESS_ASSERTION_TYPES_END, 
 import LanguageTextProcessor from "../../service/language";
 import { IDocTableElement } from "../interface";
 
-export const convertRouteToTemplate = (route: IExpressRoute, processor: LanguageTextProcessor) => {
+export const convertRouteToTemplate = (route: IExpressRoute, processor: LanguageTextProcessor, domain?: string) => {
     const template: IDocTableElement[] = [{
-        name: 'description',
-        value: route.doc ? processor.from(route.doc.description) : route.name,
-    }, {
-        name: 'path',
+        name: 'Route',
         value: route.path,
     }, {
-        name: 'mode',
+        name: 'Mode',
         value: route.mode,
     }, {
-        name: 'authorization',
+        name: 'Authorization',
         value: route.authorization ? 'YES' : 'NO',
     }];
 
+    if (domain) {
+        template.unshift({
+            name: 'Path',
+            value: domain,
+        });
+    }
+
+    template.unshift({
+        name: 'Description',
+        value: route.doc ? processor.from(route.doc.description) : route.name,
+    });
+
     if (route.postType) {
         template.push({
-            name: 'format',
+            name: 'Post format',
             value: route.postType,
         });
     }
 
     if (route.assertParam) {
         template.push({
-            name: 'parameter',
+            name: 'Parameter',
             value: convertAssertDocToUserFriendlyObject(route.assertParam),
         });
     }
 
     if (route.assertQuery) {
         template.push({
-            name: 'query',
+            name: 'Query',
             value: convertAssertDocToUserFriendlyObject(route.assertQuery),
         });
     }
 
     if (route.assertBody) {
         template.push({
-            name: 'body',
+            name: 'Body',
             value: convertAssertDocToUserFriendlyObject(route.assertBody),
         });
     }
 
     if (route.assertResponse) {
         template.push({
-            name: 'response',
+            name: 'Response',
             value: convertAssertDocToUserFriendlyObject(route.assertResponse),
         });
     }

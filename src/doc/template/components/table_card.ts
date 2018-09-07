@@ -7,7 +7,7 @@
 import { EXPRESS_SPECIAL_MARK, IExpressRoute, IText, EXPRESS_EXAMPLE_CODE } from '../../../service/interface';
 import LanguageTextProcessor from '../../../service/language';
 import { IDocTableElement, IDocTemplateRenderer } from '../../interface';
-import { nodeMarkusFormData } from '../../util/code';
+import { nodeMarkusFormData, fetchMarkusFormData } from '../../util/code';
 import { convertRouteToTemplate, convertObjectToHTMLFriendlyJson } from '../../util/covert';
 import StyleBuilder from '../style';
 
@@ -25,11 +25,12 @@ export default class DocTableCardTemplateRenderer implements IDocTemplateRendere
         this._url = url;
         this._icon = '/a/' + route.name + '/?text=@E';
         this._title = route.doc ? processor.from(route.doc.name) : route.name;
-        this._content = convertRouteToTemplate(route, processor);
+        this._content = convertRouteToTemplate(route, processor, this._url + this._route.path);
         this._marks = route.specialMark || [];
 
         this.getExampleCode = this.getExampleCode.bind(this);
         this.getNodeCode = this.getNodeCode.bind(this);
+        this.getFetchCode = this.getFetchCode.bind(this);
     }
 
     public build(): string {
@@ -73,7 +74,7 @@ export default class DocTableCardTemplateRenderer implements IDocTemplateRendere
                 let current: string;
                 switch (code) {
                     case EXPRESS_EXAMPLE_CODE.FETCH_FORM_DATA:
-                        current = '';
+                        current = this.getFetchCode();
                         break;
                     case EXPRESS_EXAMPLE_CODE.HTML:
                         current = '';
@@ -92,8 +93,15 @@ export default class DocTableCardTemplateRenderer implements IDocTemplateRendere
 
     protected getNodeCode(): string {
         return this.getRow({
-            name: 'NodeJS',
+            name: 'NodeJS<br>Request',
             value: `<pre class="prettyprint"><code class="lang-js">${nodeMarkusFormData(this._url + this._route.path, this._route)}</code></pre>`,
+        });
+    }
+
+    protected getFetchCode(): string {
+        return this.getRow({
+            name: 'Browser<br>Fetch API',
+            value: `<pre class="prettyprint"><code class="lang-js">${fetchMarkusFormData(this._url + this._route.path, this._route)}</code></pre>`,
         });
     }
 

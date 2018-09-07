@@ -1,13 +1,11 @@
-const data = new FormData();
+const form = new FormData();
 
-data.append('image', image);
-data.append('key', key);
-data.append('tag', JSON.stringify(tags));
+${append}
 
-fetch(${domain}, {
+fetch('${domain}', {
     method: 'POST',
     mode: 'cors',
-    body: data,
+    body: form,
 }).then(function (response) {
     return response.json();
 }).then(function (data) {

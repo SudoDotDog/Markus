@@ -10,16 +10,17 @@ import { ExpressAssertionType, EXPRESS_ASSERTION_TYPES_END, EXPRESS_ASSERTION_TY
 
 export const nodeMarkusFormData = (domain: string, route: IExpressRoute): string => {
     const append: string[] = [];
-    if(route.authorization){
+    if (route.authorization) {
         append.push(`form.append('key', AUTH KEY);`);
     }
-    const parseType = (key: string, current: ExpressAssertionType): void => {
+    const parseType = (key: string, current: ExpressAssertionType): string[] => {
+        const temp: string[] = [];
         switch (current.type) {
-            case EXPRESS_ASSERTION_TYPES_END.BUFFER:
-                append.push(
+            case EXPRESS_ASSERTION_TYPES_END.FILE:
+                temp.push(
                     `const original = ${EXPRESS_ASSERTION_TYPES_END.STRING};`,
                     `const extName = path.extname(original);`,
-                    `form.append('${key}': ${current.type}, {`,
+                    `form.append('${key}', BUFFER, {`,
                     `    filename: original,`,
                     `    contentType: 'image/' + extName.substring(1, extName.length),`,
                     `});`,
@@ -27,21 +28,29 @@ export const nodeMarkusFormData = (domain: string, route: IExpressRoute): string
                 break;
             case EXPRESS_ASSERTION_TYPES_END.STRING:
             case EXPRESS_ASSERTION_TYPES_END.NUMBER:
-                append.push(`form.append('${key}', ${current.type});`);
+                temp.push(`form.append('${key}', ${current.type});`);
                 break;
             case EXPRESS_ASSERTION_TYPES_UNION.ARRAY:
-                if(current.split){
-                    append.push(`form.append('${key}', [${current.child.type}].join('${current.split}'));`);
-                }else{
-                    append.push(`form.append('${key}', [${current.child.type}]);`);
+                if (current.split) {
+                    temp.push(`form.append('${key}', [${current.child.type}].join('${current.split}'));`);
+                } else {
+                    temp.push(`form.append('${key}', [${current.child.type}]);`);
                 }
         }
+        if (current.optional) {
+            if (temp.length === 1) {
+                temp[0] += ' // Optional';
+            } else {
+                temp.unshift('// Optional');
+            }
+        }
+        return temp;
     }
 
     if (route.assertBody) {
         for (let i of Object.keys(route.assertBody)) {
             const current = route.assertBody[i]
-            parseType(i, current);
+            append.push(...parseType(i, current));
         }
     }
     const data: string = readAndReplaceTemplateFromAssets('node-markus-form-data', {
@@ -55,8 +64,49 @@ export const nodeMarkusURLUrlencoded = () => {
     return null;
 };
 
-export const fetchMarkusFormData = () => {
-    return null;
+export const fetchMarkusFormData = (domain: string, route: IExpressRoute): string => {
+    const append: string[] = [];
+    if (route.authorization) {
+        append.push(`form.append('key', AUTH KEY);`);
+    }
+    const parseType = (key: string, current: ExpressAssertionType): string[] => {
+        const temp: string[] = [];
+        switch (current.type) {
+            case EXPRESS_ASSERTION_TYPES_END.FILE:
+                temp.push(`form.append('${key}', ${current.type});`);
+                break;
+            case EXPRESS_ASSERTION_TYPES_END.STRING:
+            case EXPRESS_ASSERTION_TYPES_END.NUMBER:
+                temp.push(`form.append('${key}', ${current.type});`);
+                break;
+            case EXPRESS_ASSERTION_TYPES_UNION.ARRAY:
+                if (current.split) {
+                    temp.push(`form.append('${key}', [${current.child.type}].join('${current.split}'));`);
+                } else {
+                    temp.push(`form.append('${key}', [${current.child.type}]);`);
+                }
+        }
+        if (current.optional) {
+            if (temp.length === 1) {
+                temp[0] += ' // Optional';
+            } else {
+                temp.unshift('// Optional');
+            }
+        }
+        return temp;
+    }
+
+    if (route.assertBody) {
+        for (let i of Object.keys(route.assertBody)) {
+            const current = route.assertBody[i]
+            append.push(...parseType(i, current));
+        }
+    }
+    const data: string = readAndReplaceTemplateFromAssets('fetch-markus-form-data', {
+        domain,
+        append: append.join('\n'),
+    });
+    return data;
 };
 
 export const fetchMarkusURLUrlencoded = () => {
