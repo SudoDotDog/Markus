@@ -5,7 +5,7 @@
  */
 
 import { EXPRESS_SPECIAL_MARK } from '../../../service/interface';
-import { IDocTableElement, IDocTemplateRenderer } from '../../interface';
+import { IDocTemplateRenderer } from '../../interface';
 import StyleBuilder from '../style';
 
 export default class DocSmallCardTemplateRenderer implements IDocTemplateRenderer {

@@ -6,11 +6,12 @@
 
 import * as Fs from "fs";
 import * as Path from 'path';
+// tslint:disable-next-line
 import { ExpressAssertionType, EXPRESS_ASSERTION_TYPES_END, EXPRESS_ASSERTION_TYPES_UNION, IExpressRoute } from "../../service/interface";
 
 export const nodeMarkusFormData = (domain: string, route: IExpressRoute): string => {
     const append: string[] = [];
-    if(route.authorization){
+    if (route.authorization) {
         append.push(`form.append('key': authorization);`);
     }
     const parseType = (key: string, current: ExpressAssertionType): void => {
@@ -30,17 +31,17 @@ export const nodeMarkusFormData = (domain: string, route: IExpressRoute): string
                 append.push(`form.append('${key}': ${current.type});`);
                 break;
             case EXPRESS_ASSERTION_TYPES_UNION.ARRAY:
-                if(current.split){
+                if (current.split) {
                     append.push(`form.append('${key}': [${current.child.type}].join('${current.split}'));`);
-                }else{
+                } else {
                     append.push(`form.append('${key}': [${current.child.type}]);`);
                 }
         }
-    }
+    };
 
     if (route.assertBody) {
         for (let i of Object.keys(route.assertBody)) {
-            const current = route.assertBody[i]
+            const current = route.assertBody[i];
             parseType(i, current);
         }
     }
@@ -82,4 +83,4 @@ export const oneOfUnion = (type: string): boolean => {
     }
 
     return false;
-}
+};

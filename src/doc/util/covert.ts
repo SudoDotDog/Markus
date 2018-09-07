@@ -4,7 +4,8 @@
  * @fileoverview Converter
  */
 
-import { IExpressAssertionJSONType, IExpressRoute, EXPRESS_ASSERTION_TYPES_END, EXPRESS_ASSERTION_TYPES_UNION, ExpressAssertionType } from "../../service/interface";
+// tslint:disable-next-line
+import { ExpressAssertionType, EXPRESS_ASSERTION_TYPES_END, EXPRESS_ASSERTION_TYPES_UNION, IExpressAssertionJSONType, IExpressRoute } from "../../service/interface";
 import LanguageTextProcessor from "../../service/language";
 import { IDocTableElement } from "../interface";
 
@@ -83,14 +84,14 @@ export const convertEndTypeRecursive = (current: ExpressAssertionType, layer: nu
             } else {
                 temp = `[${convertEndTypeRecursive(current.child, layer)}]`;
             }
-            return temp + ' (optional)'
+            return temp + ' (optional)';
         case EXPRESS_ASSERTION_TYPES_UNION.OBJECT:
             const converted = convertObjectToHTMLFriendlyJson(convertAssertDocToUserFriendlyObject(current.child, layer + 1), 3, layer + 1);
             return converted;
         default:
     }
     return 'unknown';
-}
+};
 
 export const convertAssertDocToUserFriendlyObject = (doc: IExpressAssertionJSONType, layer: number = 0): {
     [key: string]: string;
@@ -111,11 +112,15 @@ export const getSpace = (amount: number): string => {
         spaces += ' ';
     }
     return spaces;
-}
+};
 
-export const convertObjectToHTMLFriendlyJson = (object: {
-    [key: string]: string;
-}, padding: number, layer?: number): string => {
+export const convertObjectToHTMLFriendlyJson = (
+    object: {
+        [key: string]: string;
+    },
+    padding: number,
+    layer?: number,
+): string => {
     let result: string = JSON.stringify(object, null, padding + (layer ? layer * padding : 0));
     if (layer) {
         result = result
