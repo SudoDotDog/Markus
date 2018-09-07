@@ -4,13 +4,14 @@
  * @fileoverview Config Templates
  */
 
-import { IConfigTemplate, IConfig } from "../../interface";
+import { IConfig, IConfigTemplate } from "../../interface";
 
 export const getMarkusConfigTemplate = (): IConfigTemplate => {
     return {
         crossOrigin: 11,
         host: 1,
         database: 1,
+        documentation: 1,
         imagePath: 1,
         tempPath: 1,
         imagePFolder: 1,
@@ -27,7 +28,7 @@ export const getMarkusConfigTemplate = (): IConfigTemplate => {
         S3_accessKeyId: 11,
         S3_secretAccessKey: 11,
         S3_getPath: 11,
-    }
+    };
 };
 
 export const checkIsInTemplate = (element: string): boolean => {
@@ -38,11 +39,11 @@ export const checkIsInTemplate = (element: string): boolean => {
         }
     }
     return false;
-}
+};
 
 export const checkConfigTemplate = (conf: Partial<IConfig>): boolean => {
     const template: IConfigTemplate = getMarkusConfigTemplate();
-    for (let key in conf) {
+    for (let key of Object.keys(conf)) {
         (template as any)[key]++;
     }
     for (let key in template) {

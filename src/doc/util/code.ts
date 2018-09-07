@@ -6,6 +6,7 @@
 
 import * as Fs from "fs";
 import * as Path from 'path';
+// tslint:disable-next-line
 import { ExpressAssertionType, EXPRESS_ASSERTION_TYPES_END, EXPRESS_ASSERTION_TYPES_UNION, IExpressRoute } from "../../service/interface";
 
 export const nodeMarkusFormData = (domain: string, route: IExpressRoute): string => {
@@ -132,4 +133,4 @@ export const oneOfUnion = (type: string): boolean => {
     }
 
     return false;
-}
+};

@@ -22,7 +22,7 @@ import { ResponseAgent } from "../handlers/util/agent";
 
 initMarkusGlobalConfig();
 
-const log: Log = new Log(global.MarkusConfig.isDebug ? LOG_MODE.VERBOSE : LOG_MODE.WARNING);
+const log: Log = new Log(global.MarkusConfig.isDebug ? LOG_MODE.VERBOSE : LOG_MODE.INFO);
 mongoose.connect(
     global.MarkusConfig.host + '/' + global.MarkusConfig.database,
     { useNewUrlParser: true },

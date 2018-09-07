@@ -33,7 +33,7 @@ export default class RouteGetTagAdvancedList extends LodgeableExpressRoute imple
             EN: 'Get all tags with more information than regular [Get all tags] that active in the database',
         },
     };
-    
+
     protected async handler(req: Request, res: Response, next: ExpressNextFunction): Promise<void> {
         try {
             assert(req.valid).to.be.true(ERROR_CODE.PERMISSION_VALID_FAILED);

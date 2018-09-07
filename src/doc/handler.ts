@@ -63,7 +63,6 @@ export const verifyLanguage = (language: string | undefined): boolean => {
 };
 
 export const createSubDocIndex = (name: string, language: keyof IText, url: string): string => {
-    
     const routes: IExpressRoute[] = getBuiltDocRoute().flush();
     let route: IExpressRoute | null = null;
     for (let i of routes) {

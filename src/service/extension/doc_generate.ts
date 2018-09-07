@@ -36,7 +36,7 @@ export default class ExtensionDocGenerate implements IExpressExtension {
     }
 
     public available() {
-        if (global.MarkusConfig.isDebug) {
+        if (global.MarkusConfig.documentation) {
             return true;
         }
         return false;

@@ -33,7 +33,7 @@ export default class RouteGetTagList extends LodgeableExpressRoute implements IE
             EN: 'Get all tags that active in the database',
         },
     };
-    
+
     protected async handler(req: Request, res: Response, next: ExpressNextFunction): Promise<void> {
         try {
             assert(req.valid).to.be.true(ERROR_CODE.PERMISSION_VALID_FAILED);

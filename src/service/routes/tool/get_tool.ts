@@ -47,7 +47,7 @@ export default class RouteGetTool extends LodgeableExpressRoute implements IExpr
                         type: EXPRESS_ASSERTION_TYPES_UNION.ARRAY,
                         child: { type: EXPRESS_ASSERTION_TYPES_END.STRING },
                     },
-                }
+                },
             },
         },
     };

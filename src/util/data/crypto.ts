@@ -29,7 +29,7 @@ export const hashImage = (imagePath: string): Promise<string> => {
             const md5: string = fsHash.digest('hex');
             resolve(md5);
         });
-        
+
         /* istanbul ignore next */
         stream.on('close', (err: Error) => {
             reject(err);
