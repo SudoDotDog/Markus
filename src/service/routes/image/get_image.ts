@@ -10,7 +10,7 @@ import { IImageCallback } from "../../../database/interface/image";
 import * as Direct from "../../../direct/import";
 import { concatSuffix } from "../../../util/data/path";
 // tslint:disable-next-line
-import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, IDocInformation, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE } from '../../interface';
+import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, IDocInformation, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE, EXPRESS_EXAMPLE_CODE } from '../../interface';
 import LodgeableExpressRoute from "../../lodgeable";
 
 export default class RouteGetImageByPath extends LodgeableExpressRoute implements IExpressRoute {
@@ -29,6 +29,7 @@ export default class RouteGetImageByPath extends LodgeableExpressRoute implement
     public readonly assertQuery: IExpressAssertionJSONType = {
         id: { type: EXPRESS_ASSERTION_TYPES_END.OBJECT_ID },
     };
+    public readonly exampleCode: EXPRESS_EXAMPLE_CODE[] = [EXPRESS_EXAMPLE_CODE.HTML];
 
     private _emptyPath: string;
 

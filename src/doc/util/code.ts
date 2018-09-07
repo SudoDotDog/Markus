@@ -9,6 +9,13 @@ import * as Path from 'path';
 // tslint:disable-next-line
 import { ExpressAssertionType, EXPRESS_ASSERTION_TYPES_END, EXPRESS_ASSERTION_TYPES_UNION, IExpressRoute } from "../../service/interface";
 
+export const htmlMarkusImage = (domain: string, route: IExpressRoute): string => {
+    const data: string = readAndReplaceTemplateFromAssets('html-get-image-from-url', {
+        path: domain,
+    });
+    return data;
+};
+
 export const nodeMarkusFormData = (domain: string, route: IExpressRoute): string => {
     const append: string[] = [];
     if (route.authorization) {

@@ -85,6 +85,8 @@ export enum EXPRESS_EXAMPLE_CODE {
     NODEJS_FORM_DATA = "NODEJS_FORM_DATA",
     FETCH_FORM_DATA = "FETCH_FORM_DATA",
     HTML = "HTML",
+    ANDROID = "ANDROID",
+    IOS_SWIFT = "IOS_SWIFT",
 }
 
 export interface IExpressRoute {

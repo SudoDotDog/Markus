@@ -47,7 +47,7 @@ make tests
 
 ### Config
 
-[Config your markus.conf](https://github.com/sudo-dog/Markus/wiki/Admin-Testing-API)
+[Config your markus.conf](https://github.com/sudo-dog/Markus/wiki/Config)
 
 ### APIS
 
