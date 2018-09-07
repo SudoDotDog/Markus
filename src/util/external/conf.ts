@@ -4,12 +4,11 @@
  * @fileoverview Config read and updating
  */
 
-import { IBkcOptions, ICallable } from 'bkc/dist/types/callable';
 import * as Fs from 'fs';
 import * as Path from 'path';
 import { IConfig, IConfigTemplate } from '../../interface';
 import { error, ERROR_CODE } from '../error/error';
-import { getMarkusConfigTemplate, checkIsInTemplate, checkConfigTemplate } from './template';
+import { checkConfigTemplate, getMarkusConfigTemplate } from './template';
 
 export default class MarkusConfigReader {
     private _template: IConfigTemplate;

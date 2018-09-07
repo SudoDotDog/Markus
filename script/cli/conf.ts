@@ -16,6 +16,7 @@ const getTemplate = (): string => {
         crossOrigin: "*",
         host: "mongodb://localhost:27017",
         database: "markus",
+        documentation: true,
         imagePath: "/home/Markus/Image",
         tempPath: "/home/Markus/Temp",
         imagePFolder: 5,

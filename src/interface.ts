@@ -20,6 +20,7 @@ export interface IConfig {
     crossOrigin?: string;
     host: string;
     database: string;
+    documentation: boolean;
     imagePath: string;
     tempPath: string;
     imagePFolder: number;
@@ -45,6 +46,7 @@ export interface IConfigTemplate {
     crossOrigin: number;
     host: number;
     database: number;
+    documentation: number;
     imagePath: number;
     tempPath: number;
     imagePFolder: number;
