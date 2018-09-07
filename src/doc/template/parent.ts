@@ -63,8 +63,8 @@ export default class DocOuterParentTemplateRenderer implements IDocTemplateRende
                     ::-webkit-scrollbar-track{background-color:#AAAAAA}
                     pre.prettyprint{border:0}
                     .left{width:20%;min-width:300px}
-                    .small-title{display:none}
-                    .title{display:block}
+                    .small-title{display:none;color:#001F3F}
+                    .title{display:block;color:#001F3F}
                     @media only screen and (max-width: 768px){
                         .card-content{display:none}.card{width:80px}.left{width:90px;min-width:90px}
                         .title{display:none}.small-title{display:block}
