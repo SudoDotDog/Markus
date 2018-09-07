@@ -5,7 +5,6 @@ const getDoc = (name) => {
     }).then(function (response) {
         return response.text();
     }).then(function (data) {
-        console.log(data);
         if (data) {
             document.getElementById('content').innerHTML = data;
         }

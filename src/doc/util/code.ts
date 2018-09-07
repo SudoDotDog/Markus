@@ -11,7 +11,7 @@ import { ExpressAssertionType, EXPRESS_ASSERTION_TYPES_END, EXPRESS_ASSERTION_TY
 export const nodeMarkusFormData = (domain: string, route: IExpressRoute): string => {
     const append: string[] = [];
     if(route.authorization){
-        append.push(`form.append('key': authorization);`);
+        append.push(`form.append('key', AUTH KEY);`);
     }
     const parseType = (key: string, current: ExpressAssertionType): void => {
         switch (current.type) {
@@ -27,13 +27,13 @@ export const nodeMarkusFormData = (domain: string, route: IExpressRoute): string
                 break;
             case EXPRESS_ASSERTION_TYPES_END.STRING:
             case EXPRESS_ASSERTION_TYPES_END.NUMBER:
-                append.push(`form.append('${key}': ${current.type});`);
+                append.push(`form.append('${key}', ${current.type});`);
                 break;
             case EXPRESS_ASSERTION_TYPES_UNION.ARRAY:
                 if(current.split){
-                    append.push(`form.append('${key}': [${current.child.type}].join('${current.split}'));`);
+                    append.push(`form.append('${key}', [${current.child.type}].join('${current.split}'));`);
                 }else{
-                    append.push(`form.append('${key}': [${current.child.type}]);`);
+                    append.push(`form.append('${key}', [${current.child.type}]);`);
                 }
         }
     }
