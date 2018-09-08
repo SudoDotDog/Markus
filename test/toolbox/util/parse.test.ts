@@ -11,7 +11,7 @@ import { MockMarkusTool } from '../../mock/tool';
 describe('test toolbox result parse utils', (): void => {
 
     it('get information from IMT should work correctly', (): void => {
-        const testTool: MockMarkusTool = new MockMarkusTool('test', 'test', []);
+        const testTool: MockMarkusTool = new MockMarkusTool('test', 'test', {});
         const result: IMarkusToolboxInfo[] = getInformationByIMarkusTools([testTool]);
         expect(result).to.be.lengthOf(1);
     });

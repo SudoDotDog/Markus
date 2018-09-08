@@ -12,7 +12,7 @@ import { appropriateCurrentDateName } from '../../util/data/date';
 import { tempPath } from "../../util/data/path";
 import * as compress from '../../util/execute/compress/compress';
 // tslint:disable-next-line
-import { IMarkusTool, IMarkusToolResult, MARKUS_TOOL_RESPONSE_TYPE } from "../interface";
+import { IMarkusTool, IMarkusToolResult, MARKUS_TOOL_RESPONSE_TYPE, IMarkusToolArgs } from "../interface";
 
 export default class InternalToolTagDeduplicate implements IMarkusTool {
     public readonly name: string = "MT@Internal-Tool^Full-Backup";
@@ -27,9 +27,7 @@ export default class InternalToolTagDeduplicate implements IMarkusTool {
         return false;
     }
 
-    public verify(args: {
-        database: string;
-    }): boolean {
+    public verify(args: IMarkusToolArgs): boolean {
         if (!args.database) {
             return false;
         }
@@ -40,9 +38,7 @@ export default class InternalToolTagDeduplicate implements IMarkusTool {
         return 0;
     }
 
-    public async execute(args: {
-        database: string;
-    }): Promise<IMarkusToolResult[]> {
+    public async execute(args: IMarkusToolArgs): Promise<IMarkusToolResult[]> {
         const tempLocation: string = tempPath();
         const instanceLogResult: string = await Direct.Backup.createBackupInstance(tempLocation, args.database);
         const instancePath: string = Path.join(tempLocation, args.database);

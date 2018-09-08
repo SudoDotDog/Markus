@@ -8,10 +8,9 @@ import { expect } from 'chai';
 import * as Controller from '../../../src/database/controller/import';
 import { IImageModel } from '../../../src/database/model/image';
 import { ITagModel } from '../../../src/database/model/tag';
-import * as Direct from '../../../src/direct/import';
 import { MODE } from '../../../src/interface';
 import { InternalFullBackup } from '../../../src/toolbox/import';
-import { IMarkusTool, IMarkusToolEstimate, IMarkusToolResult, MARKUS_TOOL_ESTIMATE_TYPE } from '../../../src/toolbox/interface';
+import { IMarkusTool, IMarkusToolResult } from '../../../src/toolbox/interface';
 import { rmRFFolderSync } from '../../../src/util/data/file';
 import { mockConfig } from '../../mock/mock';
 
@@ -66,12 +65,12 @@ export const testFullBackupInternalTool = (): void => {
 
         it('verify full backup tool should give a boolean', (): void => {
             const tool: IMarkusTool = new InternalFullBackup();
-            (tool as any).controller(Controller);
-            (tool as any).direct(Direct);
-            const verifyTrue: boolean = tool.verify('markus-unit-test');
+            const verifyTrue: boolean = tool.verify({
+                database: 'markus-unit-test',
+            });
             // tslint:disable-next-line
             expect(verifyTrue).to.be.true;
-            const verifyFalse: boolean = tool.verify();
+            const verifyFalse: boolean = tool.verify({});
             // tslint:disable-next-line
             expect(verifyFalse).to.be.false;
             return;
@@ -79,16 +78,17 @@ export const testFullBackupInternalTool = (): void => {
 
         it('estimate full backup tool should give a time', async (): Promise<void> => {
             const tool: IMarkusTool = new InternalFullBackup();
-            (tool as any).controller(Controller);
-            (tool as any).direct(Direct);
-            const verify: boolean = tool.verify('markus-unit-test');
+            const verify: boolean = tool.verify({
+                database: 'markus-unit-test',
+            });
             // tslint:disable-next-line
             expect(verify).to.be.true;
 
-            const estimate: IMarkusToolEstimate = await tool.estimate('markus-unit-test');
+            const estimate: number = await tool.estimate({
+                database: 'markus-unit-test',
+            });
             // tslint:disable-next-line
-            expect(estimate.type).to.be.equal(MARKUS_TOOL_ESTIMATE_TYPE.TIME);
-            expect(estimate.time).to.be.gte(0);
+            expect(estimate).to.be.gte(0);
             return;
         }).timeout(3200);
 
@@ -100,13 +100,15 @@ export const testFullBackupInternalTool = (): void => {
             });
 
             const tool: IMarkusTool = new InternalFullBackup();
-            (tool as any).controller(Controller);
-            (tool as any).direct(Direct);
-            const verify: boolean = tool.verify('markus-unit-test');
+            const verify: boolean = tool.verify({
+                database: 'markus-unit-test',
+            });
             // tslint:disable-next-line
             expect(verify).to.be.true;
 
-            const result: IMarkusToolResult[] = await tool.execute('markus-unit-test');
+            const result: IMarkusToolResult[] = await tool.execute({
+                database: 'markus-unit-test',
+            });
             restoreConfig();
             expect(result).to.be.lengthOf(5);
             // tslint:disable-next-line
@@ -122,9 +124,7 @@ export const testFullBackupInternalTool = (): void => {
             });
 
             const tool: IMarkusTool = new InternalFullBackup();
-            (tool as any).controller(Controller);
-            (tool as any).direct(Direct);
-            const result: boolean = tool.available(global.MarkusConfig);
+            const result: boolean = tool.available();
             // tslint:disable-next-line
             expect(result).to.be.false;
 
@@ -138,9 +138,7 @@ export const testFullBackupInternalTool = (): void => {
             });
 
             const tool: IMarkusTool = new InternalFullBackup();
-            (tool as any).controller(Controller);
-            (tool as any).direct(Direct);
-            const result: boolean = tool.available(global.MarkusConfig);
+            const result: boolean = tool.available();
             // tslint:disable-next-line
             expect(result).to.be.true;
 

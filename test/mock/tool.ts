@@ -4,48 +4,31 @@
  * @fileoverview Mock Markus Tool
  */
 
-import { IConfig } from "../../src/interface";
-import * as MarkusTool from "../../src/toolbox/interface";
+import { IExpressAssertionJSONType } from "../../src/service/interface";
+import { IMarkusTool, IMarkusToolResult } from "../../src/toolbox/interface";
 
-export class MockMarkusTool implements MarkusTool.IMarkusTool {
+export class MockMarkusTool implements IMarkusTool {
     public readonly name: string;
     public readonly nickname: string;
     public readonly description: string;
-    public readonly require: MarkusTool.MARKUS_TOOL_REQUIRE_TYPE[];
-    public teapots: MarkusTool.IMarkusToolTeapot[];
+    public readonly require: IExpressAssertionJSONType;
 
     public shouldVerify: boolean = false;
-
-    private _controller: MarkusTool.MarkusController;
-    private _direct: MarkusTool.MarkusDirect;
 
     public constructor(
         name: string,
         description: string = 'mock markus tool',
-        require: MarkusTool.MARKUS_TOOL_REQUIRE_TYPE[] = [],
-        teapots: MarkusTool.IMarkusToolTeapot[] = [],
+        require: IExpressAssertionJSONType = {},
     ) {
         this.name = name;
         this.nickname = name;
         this.description = description;
         this.require = require;
-        this.teapots = teapots;
 
         this.shouldVerify = true;
-
-        this._controller = null as any;
-        this._direct = null as any;
     }
 
-    public controller(controller: MarkusTool.MarkusController) {
-        this._controller = controller;
-    }
-
-    public direct(direct: MarkusTool.MarkusDirect) {
-        this._direct = direct;
-    }
-
-    public available(config: IConfig) {
+    public available() {
         return true;
     }
 
@@ -53,14 +36,11 @@ export class MockMarkusTool implements MarkusTool.IMarkusTool {
         return this.shouldVerify;
     }
 
-    public async estimate(): Promise<MarkusTool.IMarkusToolEstimate> {
-        return {
-            time: 0,
-            type: MarkusTool.MARKUS_TOOL_ESTIMATE_TYPE.IMMEDIATE,
-        };
+    public async estimate(): Promise<number> {
+        return 0;
     }
 
-    public async execute(): Promise<MarkusTool.IMarkusToolResult[]> {
+    public async execute(): Promise<IMarkusToolResult[]> {
         return [];
     }
 }

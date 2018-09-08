@@ -8,9 +8,8 @@ import { expect } from 'chai';
 import * as Controller from '../../../src/database/controller/import';
 import { IImageModel } from '../../../src/database/model/image';
 import { ITagModel } from '../../../src/database/model/tag';
-import * as Direct from '../../../src/direct/import';
 import { InternalToolTagDeduplicate } from '../../../src/toolbox/import';
-import { IMarkusTool, IMarkusToolEstimate, MARKUS_TOOL_ESTIMATE_TYPE } from '../../../src/toolbox/interface';
+import { IMarkusTool } from '../../../src/toolbox/interface';
 
 export const testTagDeduplicateInternalTool = (): void => {
     describe('tag deduplicate internal tool', (): void => {
@@ -68,24 +67,18 @@ export const testTagDeduplicateInternalTool = (): void => {
 
         it('estimate tool should give a time', async (): Promise<void> => {
             const tool: IMarkusTool = new InternalToolTagDeduplicate();
-            (tool as any).controller(Controller);
-            (tool as any).direct(Direct);
-            const verify: boolean = tool.verify();
+            const verify: boolean = tool.verify({});
             // tslint:disable-next-line
             expect(verify).to.be.true;
 
-            const estimate: IMarkusToolEstimate = await tool.estimate();
-            // tslint:disable-next-line
-            expect(estimate.type).to.be.equal(MARKUS_TOOL_ESTIMATE_TYPE.TIME);
-            expect(estimate.time).to.be.gte(1);
+            const estimate: number = await tool.estimate({});
+            expect(estimate).to.be.gte(1);
             return;
         }).timeout(3200);
 
         it('test available', async (): Promise<void> => {
             const tool: IMarkusTool = new InternalToolTagDeduplicate();
-            (tool as any).controller(Controller);
-            (tool as any).direct(Direct);
-            const result: boolean = tool.available(global.MarkusConfig);
+            const result: boolean = tool.available();
             // tslint:disable-next-line
             expect(result).to.be.true;
             return;
@@ -93,13 +86,11 @@ export const testTagDeduplicateInternalTool = (): void => {
 
         it('execute tool should remove duplicated tag', async (): Promise<void> => {
             const tool: IMarkusTool = new InternalToolTagDeduplicate();
-            (tool as any).controller(Controller);
-            (tool as any).direct(Direct);
-            const verify: boolean = tool.verify();
+            const verify: boolean = tool.verify({});
             // tslint:disable-next-line
             expect(verify).to.be.true;
 
-            await tool.execute();
+            await tool.execute({});
 
             const newImage = await Controller.Image.getImageById(testImage._id);
             const new2Image = await Controller.Image.getImageById(testDupImage._id);
