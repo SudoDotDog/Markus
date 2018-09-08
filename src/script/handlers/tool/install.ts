@@ -7,7 +7,7 @@
 import * as Controller from '../../../database/controller/import';
 import * as Direct from '../../../direct/import';
 import { IMarkusExtensionConfig } from '../../../interface';
-import { IMarkusTool } from "../../../toolbox/toolbox";
+import { IMarkusTool } from "../../../toolbox/interface";
 
 export const installToolbox = (MarkusExtensionConfig: IMarkusExtensionConfig): IMarkusTool[] => {
     const tools: IMarkusTool[] = MarkusExtensionConfig.tools;

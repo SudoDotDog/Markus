@@ -4,7 +4,7 @@
  */
 
 import { expect } from 'chai';
-import { IMarkusToolboxInfo } from '../../../src/toolbox/toolbox';
+import { IMarkusToolboxInfo } from '../../../src/toolbox/interface';
 import { getInformationByIMarkusTools } from '../../../src/toolbox/util/parse';
 import { MockMarkusTool } from '../../mock/tool';
 

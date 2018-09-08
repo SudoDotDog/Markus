@@ -7,7 +7,7 @@
 /// <reference path="./declare/global.ts" />
 
 import { NextFunction, Request, Response } from "express";
-import { IMarkusTool } from "./toolbox/toolbox";
+import { IMarkusTool } from "./toolbox/interface";
 
 export type middleware = (req: Request, res: Response, next: NextFunction) => Promise<void>;
 

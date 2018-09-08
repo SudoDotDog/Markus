@@ -10,7 +10,7 @@ import { IImageModel } from '../../../src/database/model/image';
 import { ITagModel } from '../../../src/database/model/tag';
 import * as Direct from '../../../src/direct/import';
 import { InternalToolTagDeduplicate } from '../../../src/toolbox/import';
-import { IMarkusTool, IMarkusToolEstimate, MARKUS_TOOL_ESTIMATE_TYPE } from '../../../src/toolbox/toolbox';
+import { IMarkusTool, IMarkusToolEstimate, MARKUS_TOOL_ESTIMATE_TYPE } from '../../../src/toolbox/interface';
 
 export const testTagDeduplicateInternalTool = (): void => {
     describe('tag deduplicate internal tool', (): void => {

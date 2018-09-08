@@ -4,7 +4,7 @@
  * @fileoverview Tool Util
  */
 
-import { IMarkusTool } from "../../../toolbox/toolbox";
+import { IMarkusTool } from "../../../toolbox/interface";
 import { error, ERROR_CODE } from "../../../util/error/error";
 
 export const findToolFromToolbox = (tools: IMarkusTool[], name: string): IMarkusTool => {

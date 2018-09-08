@@ -5,10 +5,11 @@
  */
 
 import { IConfig } from "../../src/interface";
-import * as MarkusTool from "../../src/toolbox/toolbox";
+import * as MarkusTool from "../../src/toolbox/interface";
 
 export class MockMarkusTool implements MarkusTool.IMarkusTool {
     public readonly name: string;
+    public readonly nickname: string;
     public readonly description: string;
     public readonly require: MarkusTool.MARKUS_TOOL_REQUIRE_TYPE[];
     public teapots: MarkusTool.IMarkusToolTeapot[];
@@ -25,6 +26,7 @@ export class MockMarkusTool implements MarkusTool.IMarkusTool {
         teapots: MarkusTool.IMarkusToolTeapot[] = [],
     ) {
         this.name = name;
+        this.nickname = name;
         this.description = description;
         this.require = require;
         this.teapots = teapots;

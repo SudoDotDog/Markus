@@ -4,7 +4,7 @@
  * @fileoverview Parse Util
  */
 
-import { IMarkusTool, IMarkusToolboxInfo } from "../toolbox";
+import { IMarkusTool, IMarkusToolboxInfo } from "../interface";
 
 export const getInformationByIMarkusTools = (tools: IMarkusTool[]): IMarkusToolboxInfo[] => {
     return tools.map((tool: IMarkusTool): IMarkusToolboxInfo => {

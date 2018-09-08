@@ -5,27 +5,29 @@
  */
 
 import { IConfig, MODE } from '../../interface';
-import * as toolbox from "../toolbox";
+// tslint:disable-next-line
+import { IMarkusTool, IMarkusToolEstimate, IMarkusToolResult, IMarkusToolTeapot, MarkusController, MarkusDirect, MARKUS_TOOL_ESTIMATE_TYPE, MARKUS_TOOL_REQUIRE_TYPE } from "../interface";
 
-export default class InternalToolMergeTag implements toolbox.IMarkusTool {
+export default class InternalToolMergeTag implements IMarkusTool {
     public readonly name: string = "MT@Internal-Tool^Merge-Tags";
+    public readonly nickname: string = 'Marge-Tags';
     public readonly description: string = "Merge tags to a different tag";
-    public readonly require: toolbox.MARKUS_TOOL_REQUIRE_TYPE[] = [];
-    public teapots: toolbox.IMarkusToolTeapot[] = [];
+    public readonly require: MARKUS_TOOL_REQUIRE_TYPE[] = [];
+    public teapots: IMarkusToolTeapot[] = [];
 
-    private _controller: toolbox.MarkusController;
-    private _direct: toolbox.MarkusDirect;
+    private _controller: MarkusController;
+    private _direct: MarkusDirect;
 
     public constructor() {
         this._controller = null as any;
         this._direct = null as any;
     }
 
-    public controller(controller: toolbox.MarkusController): void {
+    public controller(controller: MarkusController): void {
         this._controller = controller;
     }
 
-    public direct(direct: toolbox.MarkusDirect): void {
+    public direct(direct: MarkusDirect): void {
         this._direct = direct;
     }
 
@@ -43,14 +45,14 @@ export default class InternalToolMergeTag implements toolbox.IMarkusTool {
         return true;
     }
 
-    public async estimate(database: string): Promise<toolbox.IMarkusToolEstimate> {
+    public async estimate(database: string): Promise<IMarkusToolEstimate> {
         return {
             time: 0,
-            type: toolbox.MARKUS_TOOL_ESTIMATE_TYPE.TIME,
+            type: MARKUS_TOOL_ESTIMATE_TYPE.TIME,
         };
     }
 
-    public async execute(database: string): Promise<toolbox.IMarkusToolResult[]> {
+    public async execute(database: string): Promise<IMarkusToolResult[]> {
         return [];
     }
 }

@@ -7,7 +7,7 @@ import { expect } from 'chai';
 import * as Controller from '../../../src/database/controller/import';
 import * as Direct from '../../../src/direct/import';
 import { InternalEnvironmentInformation } from '../../../src/toolbox/import';
-import { IMarkusTool, IMarkusToolEstimate, IMarkusToolResult, MARKUS_TOOL_ESTIMATE_TYPE } from '../../../src/toolbox/toolbox';
+import { IMarkusTool, IMarkusToolEstimate, IMarkusToolResult, MARKUS_TOOL_ESTIMATE_TYPE } from '../../../src/toolbox/interface';
 
 describe('test environment information internal tool', (): void => {
 

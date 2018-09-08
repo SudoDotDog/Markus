@@ -5,7 +5,7 @@
 
 import { expect } from 'chai';
 import { findToolAndMatchFromToolbox, findToolFromToolbox } from '../../../../src/script/handlers/tool/util';
-import { IMarkusTool } from '../../../../src/toolbox/toolbox';
+import { IMarkusTool } from '../../../../src/toolbox/interface';
 import { error, ERROR_CODE } from '../../../../src/util/error/error';
 import { MockMarkusTool } from '../../../mock/tool';
 

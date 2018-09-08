@@ -44,8 +44,9 @@ export interface IMarkusToolTeapot {
 export interface IMarkusTool {
     readonly description: string;
     readonly name: string;
+    readonly nickname: string;
     readonly require: MARKUS_TOOL_REQUIRE_TYPE[];
-    teapots: IMarkusToolTeapot[];
+    readonly teapots: IMarkusToolTeapot[];
 
     available: (config: IConfig) => boolean;
 

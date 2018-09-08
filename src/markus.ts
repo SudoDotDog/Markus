@@ -9,7 +9,7 @@
 import { IConfig, IMarkusExtensionConfig, middleware } from './interface';
 import * as Handler from './script/handlers/import';
 import * as InternalTools from './toolbox/import';
-import { IMarkusTool } from './toolbox/toolbox';
+import { IMarkusTool } from './toolbox/interface';
 import MarkusConfigReader from './util/external/conf';
 
 const Tools: IMarkusTool[] = [

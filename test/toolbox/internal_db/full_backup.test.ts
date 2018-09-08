@@ -11,7 +11,7 @@ import { ITagModel } from '../../../src/database/model/tag';
 import * as Direct from '../../../src/direct/import';
 import { MODE } from '../../../src/interface';
 import { InternalFullBackup } from '../../../src/toolbox/import';
-import { IMarkusTool, IMarkusToolEstimate, IMarkusToolResult, MARKUS_TOOL_ESTIMATE_TYPE } from '../../../src/toolbox/toolbox';
+import { IMarkusTool, IMarkusToolEstimate, IMarkusToolResult, MARKUS_TOOL_ESTIMATE_TYPE } from '../../../src/toolbox/interface';
 import { rmRFFolderSync } from '../../../src/util/data/file';
 import { mockConfig } from '../../mock/mock';
 

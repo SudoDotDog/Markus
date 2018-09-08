@@ -7,7 +7,7 @@
 import { Request, RequestHandler, Response } from "express";
 import { MarkusExtensionConfig } from "../../../markus";
 import { installToolbox } from "../../../script/handlers/tool/install";
-import { IMarkusTool, IMarkusToolboxInfo } from "../../../toolbox/toolbox";
+import { IMarkusTool, IMarkusToolboxInfo } from "../../../toolbox/interface";
 import { getInformationByIMarkusTools } from "../../../toolbox/util/parse";
 // tslint:disable-next-line
 import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, EXPRESS_ASSERTION_TYPES_UNION, IDocInformation, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE } from '../../interface';

@@ -11,7 +11,7 @@ import LanguageTextProcessor from '../service/language';
 import * as Route from '../service/routes/import';
 import { SERVICE_ROUTE_UPLOAD_BASE64_MODE } from "../service/routes/upload/upload_base64";
 import { SERVICE_ROUTE_UPLOAD_BUFFER_MODE } from "../service/routes/upload/upload_buffer";
-import { IMarkusTool } from "../toolbox/toolbox";
+import { IMarkusTool } from "../toolbox/interface";
 import { error, ERROR_CODE } from "../util/error/error";
 import DocRouteBuilder from './builder';
 import { IDocTemplateRenderer } from "./interface";
