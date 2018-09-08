@@ -15,6 +15,7 @@ import ExpressBuilder from "../../service/builder";
 import * as Extension from '../../service/extension/import';
 import * as Route from '../../service/routes/import';
 import { SERVICE_ROUTE_UPLOAD_BUFFER_MODE } from "../../service/routes/upload/upload_buffer";
+import ExtensionToolBoxExtension from '../../toolbox/extension';
 import UploadManager from '../../util/manager/upload';
 import { markusVersion } from "../../util/struct/agent";
 import * as Handler from '../handlers/import';
@@ -42,8 +43,6 @@ db.on('error', console.log.bind(console, 'connection error:'));
 const app: express.Express = express();
 const appBuilder: ExpressBuilder = new ExpressBuilder(app, log);
 
-appBuilder.use(new Extension.ExtensionDocGenerate(log));
-
 app.use(bodyParser.json({
     limit: global.MarkusConfig.uploadLimit + 'mb',
 }));
@@ -63,6 +62,9 @@ app.all('*', (req: Request, res: Response, next: NextFunction) => {
     res.agent = new ResponseAgent(res, log);
     next();
 });
+
+appBuilder.use(new Extension.ExtensionDocGenerate(log));
+appBuilder.use(new ExtensionToolBoxExtension(log));
 
 const uploadManager: UploadManager = new UploadManager();
 const prepares: middleware[] = MarkusExtensionConfig.middleware.prepares;

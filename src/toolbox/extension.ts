@@ -8,6 +8,7 @@ import { Express, Request, RequestHandler, Response } from "express";
 import Log from "../log/log";
 import { MarkusExtensionConfig } from "../markus";
 import { ExpressNextFunction, IExpressExtension } from '../service/interface';
+import { assert } from "../util/error/assert";
 import { error, ERROR_CODE, handlerError } from "../util/error/error";
 import { IMarkusTool, IMarkusToolArgs, IMarkusToolboxInfo, IMarkusToolResult } from "./interface";
 import { findToolAndMatchFromToolbox } from "./util/find";
@@ -26,7 +27,7 @@ export const toolboxExtensionFlushHandler: RequestHandler = (req: Request, res: 
     return;
 };
 
-export default class ExtensionTool implements IExpressExtension {
+export default class ExtensionToolboxExtension implements IExpressExtension {
     public readonly name: string = 'ME@Internal-Extension^Tools';
     public readonly preMount: boolean = false;
 
@@ -54,13 +55,14 @@ export default class ExtensionTool implements IExpressExtension {
 
     protected async handleEstimate(req: Request, res: Response, next: ExpressNextFunction): Promise<void> {
         try {
-            const name: string | undefined = req.body.name;
+            assert(req.valid).to.be.true(ERROR_CODE.PERMISSION_VALID_FAILED);
+            const name: string = req.params.nickname;
             const args: IMarkusToolArgs = req.body.args;
-            if (!name || !args) {
-                throw error(ERROR_CODE.REQUEST_PATTERN_NOT_MATCHED);
-            }
+            assert(name).to.be.exist(ERROR_CODE.REQUEST_PATTERN_NOT_MATCHED);
+            assert(args).to.be.exist(ERROR_CODE.REQUEST_PATTERN_NOT_MATCHED);
+            this._log.info(`Tool estimating ${name}`);
 
-            const tool: IMarkusTool = findToolAndMatchFromToolbox(this._tools, name, args);
+            const tool: IMarkusTool = findToolAndMatchFromToolbox(this._tools, name, args); // fixme
             const result: number = await tool.estimate(args);
             res.agent.add('time', result);
         } catch (err) {
@@ -73,13 +75,14 @@ export default class ExtensionTool implements IExpressExtension {
 
     protected async handleExecute(req: Request, res: Response, next: ExpressNextFunction): Promise<void> {
         try {
-            const name: string | undefined = req.body.name;
+            assert(req.valid).to.be.true(ERROR_CODE.PERMISSION_VALID_FAILED);
+            const name: string = req.params.nickname;
             const args: IMarkusToolArgs = req.body.args;
-            if (!name || !args) {
-                throw error(ERROR_CODE.REQUEST_PATTERN_NOT_MATCHED);
-            }
+            assert(name).to.be.exist(ERROR_CODE.REQUEST_PATTERN_NOT_MATCHED);
+            assert(args).to.be.exist(ERROR_CODE.REQUEST_PATTERN_NOT_MATCHED);
+            this._log.info(`Tool executing ${name}`);
 
-            const tool: IMarkusTool = findToolAndMatchFromToolbox(this._tools, name, args);
+            const tool: IMarkusTool = findToolAndMatchFromToolbox(this._tools, name, args); // fixme
             const result: IMarkusToolResult[] = await tool.execute(args);
             res.agent.add('result', result);
         } catch (err) {
@@ -92,6 +95,7 @@ export default class ExtensionTool implements IExpressExtension {
 
     protected async handleGet(req: Request, res: Response, next: ExpressNextFunction): Promise<void> {
         try {
+            assert(req.valid).to.be.true(ERROR_CODE.PERMISSION_VALID_FAILED);
             const info: IMarkusToolboxInfo[] = getInformationByIMarkusTools(this._tools);
             res.agent.add('tools', info);
         } catch (err) {

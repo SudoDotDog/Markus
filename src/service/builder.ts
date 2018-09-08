@@ -119,8 +119,9 @@ export default class ExpressBuilder implements IExpressBuilder {
         extension.install(this._app);
     }
 
-    protected _extensionMount(extension: IExpressExtension) {
+    protected _extensionMount(extension: IExpressExtension): void {
         if (!extension.available()) {
+            this._log.debug(`Extension: ${extension.name} is not available, skipping`);
             return;
         }
         if (extension.preMount) {
@@ -128,14 +129,15 @@ export default class ExpressBuilder implements IExpressBuilder {
         }
 
         extension.install(this._app);
+        this._log.verbose(`Extension: ${extension.name} is mounted`);
+        return;
     }
 
-    protected _routeMount(route: IExpressRoute) {
+    protected _routeMount(route: IExpressRoute): void {
         if (!route.available()) {
-            this._log.debug(`${route.name} is not available, skipping`);
+            this._log.debug(`Route: ${route.name} is not available, skipping`);
             return;
         }
-        this._log.verbose(`${route.name} is mounted`);
 
         const handlers: express.RequestHandler[] = [];
 
@@ -180,12 +182,15 @@ export default class ExpressBuilder implements IExpressBuilder {
             default:
                 throw error(ERROR_CODE.INTERNAL_EXPRESS_AGENT);
         }
+        this._log.verbose(`Route: ${route.name} is mounted`);
+        return;
     }
 
     protected createAuthPositionHandler(position: number[]): express.RequestHandler {
         return (req: express.Request, res: express.Response, next: express.NextFunction) => {
             req.authPosition = position;
             next();
+            return;
         };
     }
 }
