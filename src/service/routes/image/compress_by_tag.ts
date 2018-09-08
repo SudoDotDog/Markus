@@ -11,7 +11,7 @@ import { handlerError } from "../../../util/error/error";
 import { ICompressZipResult } from "../../../util/execute/compress/compress";
 // tslint:disable-next-line
 import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, IDocInformation, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE } from '../../interface';
-import LodgeableExpressRoute from "../../lodgeable";
+import LodgeableExpressRoute from "../lodgeable";
 
 export default class RouteCompressByTag extends LodgeableExpressRoute implements IExpressRoute {
     public readonly name: string = 'MR@Internal-Route^Compress-By-Tag';

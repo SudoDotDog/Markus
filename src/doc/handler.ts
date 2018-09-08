@@ -4,14 +4,11 @@
  * @fileoverview Doc handler
  */
 
-import { MarkusExtensionConfig } from "../markus";
-import { installToolbox } from "../script/handlers/tool/install";
 import { IExpressRoute, IText } from "../service/interface";
 import LanguageTextProcessor from '../service/language';
 import * as Route from '../service/routes/import';
 import { SERVICE_ROUTE_UPLOAD_BASE64_MODE } from "../service/routes/upload/upload_base64";
 import { SERVICE_ROUTE_UPLOAD_BUFFER_MODE } from "../service/routes/upload/upload_buffer";
-import { IMarkusTool } from "../toolbox/interface";
 import { error, ERROR_CODE } from "../util/error/error";
 import DocRouteBuilder from './builder';
 import { IDocTemplateRenderer } from "./interface";
@@ -21,7 +18,6 @@ import DocOuterParentTemplateRenderer from "./template/parent";
 
 export const getBuiltDocRoute = (): DocRouteBuilder => {
     const docBuilder: DocRouteBuilder = new DocRouteBuilder();
-    const tools: IMarkusTool[] = installToolbox(MarkusExtensionConfig);
 
     docBuilder.routes([
         new Route.RouteRoot(),
@@ -43,9 +39,6 @@ export const getBuiltDocRoute = (): DocRouteBuilder => {
         new Route.RouteDeactivateImageById(),
         new Route.RouteDeactivateImagesByTag(),
         new Route.RouteRiskyEmptyDatabase(),
-        new Route.RouteGetTool(tools),
-        new Route.RouteEstimateTool(tools),
-        new Route.RouteExecuteTool(tools),
     ]);
     return docBuilder;
 };

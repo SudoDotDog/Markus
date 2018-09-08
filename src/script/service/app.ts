@@ -120,11 +120,6 @@ app.post('/deactivate/tag', ...prepares, ...permissions, Handler.Markus.Deactiva
 app.post('/list', ...prepares, Handler.Debug.OutputImageIdList);
 app.post('/empty', ...prepares, Handler.Debug.emptyDatabaseHandler);
 
-// Handler(s) for tools
-appBuilder.route(new Route.RouteGetTool());
-appBuilder.route(new Route.RouteEstimateTool());
-app.post('/execute', ...prepares, ...permissions, Handler.Tool.markusToolboxExecuteHandler);
-
 // Handler(s) for 404
 appBuilder.route(new Route.RouteFourOFour());
 

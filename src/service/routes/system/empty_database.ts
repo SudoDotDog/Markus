@@ -9,7 +9,7 @@ import * as Direct from "../../../direct/import";
 import { error, ERROR_CODE } from "../../../util/error/error";
 // tslint:disable-next-line
 import { ExpressNextFunction, EXPRESS_SPECIAL_MARK, IDocInformation, IExpressRoute, ROUTE_MODE } from '../../interface';
-import LodgeableExpressRoute from "../../lodgeable";
+import LodgeableExpressRoute from "../lodgeable";
 
 export default class RouteRiskyEmptyDatabase extends LodgeableExpressRoute implements IExpressRoute {
     public readonly name: string = 'MR@Internal-Route^Risky_Empty_Database';

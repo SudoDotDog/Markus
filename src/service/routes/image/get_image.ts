@@ -11,7 +11,7 @@ import * as Direct from "../../../direct/import";
 import { concatSuffix } from "../../../util/data/path";
 // tslint:disable-next-line
 import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, IDocInformation, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE, EXPRESS_EXAMPLE_CODE } from '../../interface';
-import LodgeableExpressRoute from "../../lodgeable";
+import LodgeableExpressRoute from "../lodgeable";
 
 export default class RouteGetImageByPath extends LodgeableExpressRoute implements IExpressRoute {
     public readonly name: string = 'MR@Internal-Route^Get-Image-By-Path';

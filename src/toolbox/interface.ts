@@ -50,9 +50,6 @@ export interface IMarkusTool {
 
     available: (config: IConfig) => boolean;
 
-    controller?: (controller: MarkusController) => void;
-    direct?: (direct: MarkusDirect) => void;
-
     estimate: (...args: any[]) => Promise<IMarkusToolEstimate>;
     execute: (...args: any[]) => Promise<IMarkusToolResult[]>;
     verify: (...args: any[]) => boolean;

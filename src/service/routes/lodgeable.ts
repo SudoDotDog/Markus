@@ -5,8 +5,8 @@
  */
 
 import { RequestHandler } from "express";
-import Log from "../log/log";
-import { IExpressRoute, ROUTE_MODE } from "./interface";
+import Log from "../../log/log";
+import { IExpressRoute, ROUTE_MODE } from "../interface";
 
 export default abstract class LodgeableExpressRoute implements IExpressRoute {
     public abstract readonly name: string;

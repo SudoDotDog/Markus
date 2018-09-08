@@ -7,7 +7,7 @@
 import { Request, RequestHandler, Response } from "express";
 import { error, ERROR_CODE } from "../../../util/error/error";
 import { ExpressNextFunction, IExpressRoute, ROUTE_MODE } from '../../interface';
-import LodgeableExpressRoute from "../../lodgeable";
+import LodgeableExpressRoute from "../lodgeable";
 
 export default class RouteFourOFour extends LodgeableExpressRoute implements IExpressRoute {
     public readonly name: string = 'MR@Internal-Route^Four-O-Four';

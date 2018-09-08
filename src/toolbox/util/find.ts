@@ -1,11 +1,11 @@
 /**
  * @author WMXPY
- * @description Handler Util
- * @fileoverview Tool Util
+ * @description Tools Util
+ * @fileoverview Find
  */
 
-import { IMarkusTool } from "../../../toolbox/interface";
-import { error, ERROR_CODE } from "../../../util/error/error";
+import { error, ERROR_CODE } from "../../util/error/error";
+import { IMarkusTool } from "../interface";
 
 export const findToolFromToolbox = (tools: IMarkusTool[], name: string): IMarkusTool => {
     for (let tool of tools) {

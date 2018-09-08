@@ -11,7 +11,7 @@ import { assert } from "../../../util/error/assert";
 import { ERROR_CODE } from "../../../util/error/error";
 // tslint:disable-next-line
 import { ExpressNextFunction, IDocInformation, IExpressRoute, ROUTE_MODE } from '../../interface';
-import LodgeableExpressRoute from "../../lodgeable";
+import LodgeableExpressRoute from "../lodgeable";
 
 export default class RouteGetTagList extends LodgeableExpressRoute implements IExpressRoute {
     public readonly name: string = 'MR@Internal-Route^Get-Tag-List';

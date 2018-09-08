@@ -15,7 +15,7 @@ import { error, ERROR_CODE } from "../../../util/error/error";
 import { IFileManager } from "../../../util/manager/file/import";
 // tslint:disable-next-line
 import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, EXPRESS_POST_SUBMIT_FORMAT, EXPRESS_SPECIAL_MARK, IDocInformation, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE } from '../../interface';
-import LodgeableExpressRoute from "../../lodgeable";
+import LodgeableExpressRoute from "../lodgeable";
 
 export enum SERVICE_ROUTE_UPLOAD_BASE64_MODE {
     AVATAR = 'AVATAR',

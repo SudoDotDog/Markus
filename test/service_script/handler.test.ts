@@ -13,7 +13,6 @@ import { testScriptAvatarHandlers } from './handlers/avatar.test';
 import { testScriptDebugHandlers } from './handlers/debug.test';
 import { testScriptImageHandlers } from './handlers/image.test';
 import { testScriptMarkusHandlers } from './handlers/markus.test';
-import { testScriptToolHandlers } from './handlers/tool/tool.test';
 
 describe('test handlers', function (this: Mocha.Suite): void {
     let db: mongoose.Connection;
@@ -41,7 +40,6 @@ describe('test handlers', function (this: Mocha.Suite): void {
     testScriptAvatarHandlers();
     testScriptMarkusHandlers();
     testScriptImageHandlers();
-    testScriptToolHandlers();
 
     describe('before handler tests', (): void => {
         it('before debug handler test', async (): Promise<void> => {
