@@ -9,7 +9,7 @@ import { IMarkusTool, IMarkusToolArgs } from "../interface";
 
 export const findToolFromToolbox = (tools: IMarkusTool[], name: string): IMarkusTool => {
     for (let tool of tools) {
-        if (tool.name === name) {
+        if (tool.name === name || tool.nickname === name) {
             if (tool.available()) {
                 return tool;
             }

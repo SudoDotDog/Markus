@@ -62,7 +62,7 @@ export default class ExtensionToolboxExtension implements IExpressExtension {
             assert(args).to.be.exist(ERROR_CODE.REQUEST_PATTERN_NOT_MATCHED);
             this._log.info(`Tool estimating ${name}`);
 
-            const tool: IMarkusTool = findToolAndMatchFromToolbox(this._tools, name, args); // fixme
+            const tool: IMarkusTool = findToolAndMatchFromToolbox(this._tools, name, args);
             const result: number = await tool.estimate(args);
             res.agent.add('time', result);
         } catch (err) {
@@ -82,7 +82,7 @@ export default class ExtensionToolboxExtension implements IExpressExtension {
             assert(args).to.be.exist(ERROR_CODE.REQUEST_PATTERN_NOT_MATCHED);
             this._log.info(`Tool executing ${name}`);
 
-            const tool: IMarkusTool = findToolAndMatchFromToolbox(this._tools, name, args); // fixme
+            const tool: IMarkusTool = findToolAndMatchFromToolbox(this._tools, name, args);
             const result: IMarkusToolResult[] = await tool.execute(args);
             res.agent.add('result', result);
         } catch (err) {
