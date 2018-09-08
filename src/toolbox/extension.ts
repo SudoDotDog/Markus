@@ -9,7 +9,7 @@ import Log from "../log/log";
 import { MarkusExtensionConfig } from "../markus";
 import { ExpressNextFunction, IExpressExtension } from '../service/interface';
 import { error, ERROR_CODE } from "../util/error/error";
-import { IMarkusTool, IMarkusToolboxInfo, IMarkusToolEstimate, IMarkusToolResult } from "./interface";
+import { IMarkusTool, IMarkusToolArgs, IMarkusToolboxInfo, IMarkusToolResult } from "./interface";
 import { findToolAndMatchFromToolbox } from "./util/find";
 import { getInformationByIMarkusTools } from "./util/parse";
 
@@ -36,16 +36,14 @@ export default class ExtensionTool implements IExpressExtension {
     protected async handleEstimate(req: Request, res: Response, next: ExpressNextFunction): Promise<void> {
         try {
             const name: string | undefined = req.body.name;
-            const args: any[] = req.body.args;
+            const args: IMarkusToolArgs = req.body.args;
             if (!name || !args) {
                 throw error(ERROR_CODE.REQUEST_PATTERN_NOT_MATCHED);
             }
 
-            const tool: IMarkusTool = findToolAndMatchFromToolbox(this._tools, name);
-            const result: IMarkusToolEstimate = await tool.estimate(...args);
-            res.agent.add('type', result.type);
-            res.agent.add('time', result.time);
-            res.agent.add('teapots', tool.teapots);
+            const tool: IMarkusTool = findToolAndMatchFromToolbox(this._tools, name, args);
+            const result: number = await tool.estimate(args);
+            res.agent.add('time', result);
         } catch (err) {
             res.agent.failed(400, err);
         } finally {
@@ -57,15 +55,14 @@ export default class ExtensionTool implements IExpressExtension {
     protected async handleExecute(req: Request, res: Response, next: ExpressNextFunction): Promise<void> {
         try {
             const name: string | undefined = req.body.name;
-            const args: any[] = req.body.args;
+            const args: IMarkusToolArgs = req.body.args;
             if (!name || !args) {
                 throw error(ERROR_CODE.REQUEST_PATTERN_NOT_MATCHED);
             }
 
-            const tool: IMarkusTool = findToolAndMatchFromToolbox(this._tools, name);
-            const result: IMarkusToolResult[] = await tool.execute(...args);
+            const tool: IMarkusTool = findToolAndMatchFromToolbox(this._tools, name, args);
+            const result: IMarkusToolResult[] = await tool.execute(args);
             res.agent.add('result', result);
-            res.agent.add('teapots', tool.teapots);
         } catch (err) {
             res.agent.failed(400, err);
         } finally {

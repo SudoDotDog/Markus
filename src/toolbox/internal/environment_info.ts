@@ -5,33 +5,16 @@
  */
 
 import * as OS from 'os';
-import { IConfig } from '../../interface';
-import * as toolbox from "../interface";
+import { IExpressAssertionJSONType } from '../../service/interface';
+import { IMarkusTool, IMarkusToolResult, MARKUS_TOOL_RESPONSE_TYPE } from "../interface";
 
-export default class InternalToolTagDeduplicate implements toolbox.IMarkusTool {
+export default class InternalToolTagDeduplicate implements IMarkusTool {
     public readonly name: string = "MT@Internal-Tool^Environment-Information";
     public readonly nickname: string = 'Environment-Information';
     public readonly description: string = "Return Environment Information";
-    public readonly require: toolbox.MARKUS_TOOL_REQUIRE_TYPE[] = [];
-    public teapots: toolbox.IMarkusToolTeapot[] = [];
+    public readonly require: IExpressAssertionJSONType = {};
 
-    private _controller: toolbox.MarkusController;
-    private _direct: toolbox.MarkusDirect;
-
-    public constructor() {
-        this._controller = null as any;
-        this._direct = null as any;
-    }
-
-    public controller(controller: toolbox.MarkusController): void {
-        this._controller = controller;
-    }
-
-    public direct(direct: toolbox.MarkusDirect): void {
-        this._direct = direct;
-    }
-
-    public available(config: IConfig): boolean {
+    public available(): boolean {
         return true;
     }
 
@@ -39,17 +22,14 @@ export default class InternalToolTagDeduplicate implements toolbox.IMarkusTool {
         return true;
     }
 
-    public async estimate(): Promise<toolbox.IMarkusToolEstimate> {
-        return {
-            time: 0,
-            type: toolbox.MARKUS_TOOL_ESTIMATE_TYPE.IMMEDIATE,
-        };
+    public async estimate(): Promise<number> {
+        return 0;
     }
 
-    public async execute(): Promise<toolbox.IMarkusToolResult[]> {
+    public async execute(): Promise<IMarkusToolResult[]> {
         const cpus: number = OS.cpus.length;
         return [{
-            type: toolbox.MARKUS_TOOL_RESPONSE_TYPE.STRING,
+            type: MARKUS_TOOL_RESPONSE_TYPE.STRING,
             name: 'CPUS',
             value: cpus,
         }];

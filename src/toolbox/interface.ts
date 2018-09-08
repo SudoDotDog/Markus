@@ -6,20 +6,11 @@
 
 import * as Controller from '../database/controller/import';
 import * as Direct from '../direct/import';
-import { IConfig } from '../interface';
-
-export enum MARKUS_TOOL_REQUIRE_TYPE {
-    STRING = "STRING",
-}
+import { IExpressAssertionJSONType } from '../service/interface';
 
 export enum MARKUS_TOOL_RESPONSE_TYPE {
     STRING = "STRING",
     LINK = "LINK",
-}
-
-export enum MARKUS_TOOL_ESTIMATE_TYPE {
-    IMMEDIATE = "IMMEDIATELY",
-    TIME = "TIME",
 }
 
 export type MarkusController = typeof Controller;
@@ -31,33 +22,25 @@ export interface IMarkusToolResult {
     value: any;
 }
 
-export interface IMarkusToolEstimate {
-    type: MARKUS_TOOL_ESTIMATE_TYPE;
-    time: number;
-}
-
-export interface IMarkusToolTeapot {
-    name: string;
-    value: any;
+export interface IMarkusToolArgs {
+    [key: string]: any;
 }
 
 export interface IMarkusTool {
     readonly description: string;
     readonly name: string;
     readonly nickname: string;
-    readonly require: MARKUS_TOOL_REQUIRE_TYPE[];
-    readonly teapots: IMarkusToolTeapot[];
+    readonly require: IExpressAssertionJSONType;
 
-    available: (config: IConfig) => boolean;
+    available: () => boolean;
 
-    estimate: (...args: any[]) => Promise<IMarkusToolEstimate>;
-    execute: (...args: any[]) => Promise<IMarkusToolResult[]>;
-    verify: (...args: any[]) => boolean;
+    estimate: (args: IMarkusToolArgs) => Promise<number>;
+    execute: (args: IMarkusToolArgs) => Promise<IMarkusToolResult[]>;
+    verify: (args: IMarkusToolArgs) => boolean;
 }
 
 export interface IMarkusToolboxInfo {
     name: string;
     description: string;
-    require: MARKUS_TOOL_REQUIRE_TYPE[];
-    teapots: IMarkusToolTeapot[];
+    require: IExpressAssertionJSONType;
 }

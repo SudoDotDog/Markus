@@ -4,35 +4,19 @@
  * @fileoverview Tag Deduplicate
  */
 
+import * as Controller from '../../database/controller/import';
 import { ITagModel } from "../../database/model/tag";
-import { IConfig } from "../../interface";
+import { IExpressAssertionJSONType } from "../../service/interface";
 import UniqueArray from "../../util/struct/uniqueArray";
-import * as toolbox from "../interface";
+import { IMarkusTool, IMarkusToolResult } from "../interface";
 
-export default class InternalToolTagDeduplicate implements toolbox.IMarkusTool {
+export default class InternalToolTagDeduplicate implements IMarkusTool {
     public readonly name: string = "MT@Internal-Tool^Tag-Duplicate-Remover";
     public readonly nickname: string = 'Tag-Duplicate-Remover';
     public readonly description: string = "Remove duplicate tags";
-    public readonly require: toolbox.MARKUS_TOOL_REQUIRE_TYPE[] = [];
-    public teapots: toolbox.IMarkusToolTeapot[] = [];
+    public readonly require: IExpressAssertionJSONType = {};
 
-    private _controller: toolbox.MarkusController;
-    private _direct: toolbox.MarkusDirect;
-
-    public constructor() {
-        this._controller = null as any;
-        this._direct = null as any;
-    }
-
-    public controller(controller: toolbox.MarkusController): void {
-        this._controller = controller;
-    }
-
-    public direct(direct: toolbox.MarkusDirect): void {
-        this._direct = direct;
-    }
-
-    public available(config: IConfig): boolean {
+    public available(): boolean {
         return true;
     }
 
@@ -40,25 +24,22 @@ export default class InternalToolTagDeduplicate implements toolbox.IMarkusTool {
         return true;
     }
 
-    public async estimate(): Promise<toolbox.IMarkusToolEstimate> {
-        const count: number = await this._controller.Tag.getTagsCount();
+    public async estimate(): Promise<number> {
+        const count: number = await Controller.Tag.getTagsCount();
         const time = Math.round(count / 2);
-        return {
-            time,
-            type: toolbox.MARKUS_TOOL_ESTIMATE_TYPE.TIME,
-        };
+        return time;
     }
 
-    public async execute(): Promise<toolbox.IMarkusToolResult[]> {
-        const tags: ITagModel[] = await this._controller.Tag.getAllTags();
+    public async execute(): Promise<IMarkusToolResult[]> {
+        const tags: ITagModel[] = await Controller.Tag.getAllTags();
         const tagArr: UniqueArray<ITagModel> = new UniqueArray<ITagModel>();
 
         for (let tag of tags) {
             const value: ITagModel | null = this.isIncluded(tag, tagArr);
             if (value) {
                 const { latest, removing } = this.determineRemoving(tag, value);
-                await this._controller.Image.Risky_UpdateAllImageWithOldTagToANewTag(removing._id, latest._id);
-                await this._controller.Tag.Risky_PermanentlyRemoveTag(removing._id);
+                await Controller.Image.Risky_UpdateAllImageWithOldTagToANewTag(removing._id, latest._id);
+                await Controller.Tag.Risky_PermanentlyRemoveTag(removing._id);
             } else {
                 tagArr.push(tag);
             }
