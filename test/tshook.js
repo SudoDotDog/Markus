@@ -1,4 +1,5 @@
-require("ts-node").register({
+const tsnode = require("ts-node")
+tsnode.register({
     compilerOptions: {
         sourceMap: true,
         strict: true,
