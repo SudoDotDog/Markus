@@ -4,14 +4,27 @@
  * @fileoverview Tools
  */
 
-import { Express, Request, Response } from "express";
+import { Express, Request, RequestHandler, Response } from "express";
 import Log from "../log/log";
 import { MarkusExtensionConfig } from "../markus";
 import { ExpressNextFunction, IExpressExtension } from '../service/interface';
-import { error, ERROR_CODE } from "../util/error/error";
+import { error, ERROR_CODE, handlerError } from "../util/error/error";
 import { IMarkusTool, IMarkusToolArgs, IMarkusToolboxInfo, IMarkusToolResult } from "./interface";
 import { findToolAndMatchFromToolbox } from "./util/find";
 import { getInformationByIMarkusTools } from "./util/parse";
+
+export const toolboxExtensionFlushHandler: RequestHandler = (req: Request, res: Response): void => {
+    try {
+        if (res.agent) {
+            res.agent.send();
+        } else {
+            throw error(ERROR_CODE.INTERNAL_ERROR);
+        }
+    } catch (err) {
+        handlerError(res, err, req.log);
+    }
+    return;
+};
 
 export default class ExtensionTool implements IExpressExtension {
     public readonly name: string = 'ME@Internal-Extension^Tools';
@@ -23,6 +36,10 @@ export default class ExtensionTool implements IExpressExtension {
     public constructor(log: Log) {
         this._log = log;
         this._tools = MarkusExtensionConfig.tools;
+
+        this.handleGet = this.handleGet.bind(this);
+        this.handleEstimate = this.handleEstimate.bind(this);
+        this.handleExecute = this.handleExecute.bind(this);
     }
 
     public available() {
@@ -30,7 +47,9 @@ export default class ExtensionTool implements IExpressExtension {
     }
 
     public install(app: Express) {
-        console.log(app);
+        app.post('/t', ...this.buildRoute(this.handleGet));
+        app.post('/t/:nickname/estimate', ...this.buildRoute(this.handleEstimate));
+        app.post('/t/:nickname/execute', ...this.buildRoute(this.handleExecute));
     }
 
     protected async handleEstimate(req: Request, res: Response, next: ExpressNextFunction): Promise<void> {
@@ -81,6 +100,16 @@ export default class ExtensionTool implements IExpressExtension {
             next();
         }
         return;
+    }
+
+    protected buildRoute(handler: RequestHandler): RequestHandler[] {
+        return [
+            ...MarkusExtensionConfig.middleware.prepares,
+            ...MarkusExtensionConfig.middleware.permissions,
+            handler,
+            ...MarkusExtensionConfig.middleware.after,
+            toolboxExtensionFlushHandler,
+        ];
     }
 }
 
