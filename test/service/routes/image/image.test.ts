@@ -10,7 +10,7 @@ import { testCompressByTagRoute } from './compress_by_tag.test';
 import { testDeactivateById } from './deactivate_id.test';
 
 export const testImageRoutes = (): void => {
-    describe.only('image routes test', (): void => {
+    describe('image routes test', (): void => {
 
         it('double check connection is working', async (): Promise<void> => {
             expect(mongoose.connection.readyState).to.be.equal(1);

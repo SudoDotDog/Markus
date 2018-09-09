@@ -115,7 +115,7 @@ appBuilder.route(new Route.RouteTagList());
 appBuilder.route(new Route.RouteTagAdvancedList());
 
 // Handler(s) for Image status change
-app.post('/deactivate/id', ...prepares, ...permissions, Handler.Markus.DeactivateImageHandler, ...afters);
+appBuilder.route(new Route.RouteDeactivateImageById());
 app.post('/deactivate/tag', ...prepares, ...permissions, Handler.Markus.DeactivateTagHandler, ...afters);
 
 // Handler(s) for debug

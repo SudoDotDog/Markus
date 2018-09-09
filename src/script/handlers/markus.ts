@@ -122,19 +122,6 @@ export const UploadBase64Handler = async (req: Request, res: Response): Promise<
     return;
 };
 
-export const DeactivateImageHandler = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-        assert(req.valid).to.be.true(ERROR_CODE.PERMISSION_VALID_FAILED);
-        const imageId: string = req.body.id;
-        const image: IImageModel = await Direct.Image.deactivateImageById(imageId);
-        res.agent.add('id', image._id.toString());
-        next();
-    } catch (err) {
-        handlerError(res, err);
-    }
-    return;
-};
-
 export const DeactivateTagHandler = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
         assert(req.valid).to.be.true(ERROR_CODE.PERMISSION_VALID_FAILED);

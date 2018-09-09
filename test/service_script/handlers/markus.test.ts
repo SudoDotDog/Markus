@@ -160,36 +160,6 @@ export const testScriptMarkusHandlers = (): void => {
             return;
         }).timeout(3200);
 
-        it('test deactivate image handler', async (): Promise<void> => {
-            const mock: MockHandler = new MockHandler(true);
-            mock.request('valid', true)
-                .body('id', tempImageId.toString());
-            const { request, response, nextFunction } = mock.flush();
-            await Handlers.Markus.DeactivateImageHandler(request, response, nextFunction);
-
-            const result: IMockHandlerResult = mock.end();
-            // tslint:disable-next-line
-            expect(result).to.be.not.null;
-            expect(result.status).to.be.equal(200);
-            expect(result.body).to.be.keys(['status', 'data']);
-            expect(result.body.data).to.be.keys(['id']);
-            return;
-        }).timeout(3200);
-
-        it('deactivate image should return 400 when is not valid', async (): Promise<void> => {
-            const mock: MockHandler = new MockHandler(true);
-            mock.request('valid', false)
-                .body('id', tempImageId.toString());
-            const { request, response, nextFunction } = mock.flush();
-            await Handlers.Markus.DeactivateImageHandler(request, response, nextFunction);
-
-            const result: IMockHandlerResult = mock.end();
-            // tslint:disable-next-line
-            expect(result).to.be.not.null;
-            expect(result.status).to.be.equal(400);
-            return;
-        }).timeout(3200);
-
         it('test markus handler', async (): Promise<void> => {
             const mock: MockHandler = new MockHandler(true);
 
