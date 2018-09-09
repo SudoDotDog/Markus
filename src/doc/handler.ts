@@ -85,5 +85,3 @@ export const createDocIndex = (language: keyof IText): string => {
     const outer: IDocTemplateRenderer = new DocOuterParentTemplateRenderer(cards);
     return outer.build();
 };
-
-

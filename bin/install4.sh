@@ -64,10 +64,9 @@ installMarkus()
 
     # Cloning Markus
     git clone https://github.com/sudo-dog/Markus.git markus
-    cd markus
 
     # Install dependences
-    git checkout tags/3.5.7
+    cd markus
     make install
 
     # Build

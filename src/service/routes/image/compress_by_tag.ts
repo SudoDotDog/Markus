@@ -7,7 +7,6 @@
 import { Request, RequestHandler, Response } from "express";
 import * as Direct from "../../../direct/import";
 import { MODE } from "../../../interface";
-import { handlerError } from "../../../util/error/error";
 import { ICompressZipResult } from "../../../util/execute/compress/compress";
 // tslint:disable-next-line
 import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, IDocInformation, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE } from '../../interface';

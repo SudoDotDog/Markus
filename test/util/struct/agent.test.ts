@@ -11,7 +11,9 @@ describe('test agent structure and functions', (): void => {
 
     it('version should return correct version number', async (): Promise<void> => {
         const version: string = await markusVersion();
-        expect(version).to.be.lengthOf(5);
+        expect(version.length).to.be.oneOf([
+            5, 12, 13,
+        ]);
         return;
     });
 });
