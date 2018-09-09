@@ -5,6 +5,7 @@
 
 import { expect } from 'chai';
 import * as mongoose from 'mongoose';
+import { initMarkusGlobalConfig } from '../../../src/markus';
 import { testImageRoutes } from './image/image.test';
 
 describe('test handlers', function (this: Mocha.Suite): void {
@@ -23,6 +24,8 @@ describe('test handlers', function (this: Mocha.Suite): void {
         });
         db.once('open', next);
     });
+
+    before(initMarkusGlobalConfig);
 
     it('verify connection is working', (): void => {
         expect(mongoose.connection.readyState).to.be.equal(1);

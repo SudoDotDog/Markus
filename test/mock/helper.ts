@@ -1,12 +1,12 @@
 /**
  * @author WMXPY
- * @fileoverview Mock Create
+ * @fileoverview Mock Helper
  */
 
-import { AvatarModel, IAvatarModel } from "../../src/database/model/avatar";
 import { FileModel } from "../../src/database/model/file";
+import { IImageModel, ImageModel } from "../../src/database/model/image";
 
-export const createRandomAvatarWithFile = async (avatar: string): Promise<IAvatarModel> => {
+export const createRandomImage = async (): Promise<IImageModel> => {
     const newFile = new FileModel({
         direct: false,
         encoding: 'test',
@@ -20,11 +20,11 @@ export const createRandomAvatarWithFile = async (avatar: string): Promise<IAvata
 
     await newFile.save();
 
-    const newAvatar = new AvatarModel({
-        avatar,
+    const newImage = new ImageModel({
+        tags: [],
         file: newFile._id,
     });
 
-    await newAvatar.save();
-    return newAvatar;
+    await newImage.save();
+    return newImage;
 };

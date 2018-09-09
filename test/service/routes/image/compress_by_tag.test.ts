@@ -1,7 +1,7 @@
 /**
  * @author WMXPY
- * @description Script Handlers
- * @fileoverview Avatar Handlers Test
+ * @description Route tests
+ * @fileoverview Compress by tag route test
  */
 
 import { expect } from 'chai';

@@ -34,10 +34,10 @@ export default class RouteDeactivateImageById extends LodgeableExpressRoute impl
         },
     };
     public readonly assertBody: IExpressAssertionJSONType = {
-        id: {type: EXPRESS_ASSERTION_TYPES_END.OBJECT_ID},
+        id: { type: EXPRESS_ASSERTION_TYPES_END.OBJECT_ID },
     };
 
-    protected async handler(req: Request, res: Response, next: ExpressNextFunction): Promise<void> {
+    public async handler(req: Request, res: Response, next: ExpressNextFunction): Promise<void> {
         try {
             assert(req.valid).to.be.true(ERROR_CODE.PERMISSION_VALID_FAILED);
             const imageId: string = req.body.id;
