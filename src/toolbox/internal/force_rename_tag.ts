@@ -49,8 +49,9 @@ export default class InternalToolForceRenameTag implements IMarkusTool {
 
         let renamed: boolean = false;
         if(original !== args.name){
-            renamed = true;
             tag.name = args.name;
+            await Controller.Tag.saveTag(tag);
+            renamed = true;
         }
 
         return [{
