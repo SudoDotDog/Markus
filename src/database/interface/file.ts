@@ -11,7 +11,6 @@ export interface IFileProperty {
 }
 
 export interface IFileConfig extends IFileProperty {
-    direct?: boolean;
     folder: string;
     filename: string;
     hash: string;
