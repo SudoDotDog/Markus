@@ -12,11 +12,11 @@ import { appropriateCurrentDateName } from '../../util/data/date';
 import { tempPath } from "../../util/data/path";
 import * as compress from '../../util/execute/compress/compress';
 // tslint:disable-next-line
-import { IMarkusTool, IMarkusToolResult, MARKUS_TOOL_RESPONSE_TYPE, IMarkusToolArgs } from "../interface";
+import { IMarkusTool, IMarkusToolArgs, IMarkusToolResult, MARKUS_TOOL_RESPONSE_TYPE } from "../interface";
 
-export default class InternalToolFullBackup implements IMarkusTool {
-    public readonly name: string = "MT@Internal-Tool^Full-Backup";
-    public readonly nickname: string = 'Full-Backup';
+export default class InternalToolDatabaseBackup implements IMarkusTool {
+    public readonly name: string = "MT@Internal-Tool^Database-Backup";
+    public readonly nickname: string = 'Database-Backup';
     public readonly description: string = "Backup entire system and return download link";
     public readonly require: IExpressAssertionJSONType = {};
 
@@ -44,7 +44,6 @@ export default class InternalToolFullBackup implements IMarkusTool {
         const instancePath: string = Path.join(tempLocation, args.database);
 
         const databaseZipResult: compress.ICompressZipResult = await compress.zipFolder(instancePath, tempLocation, appropriateCurrentDateName(args.database + '-Database'));
-        const picturesZipResult: compress.ICompressZipResult = await compress.zipFolder(global.MarkusConfig.imagePath, tempLocation, appropriateCurrentDateName(args.database + '-Pictures'));
         return [{
             type: MARKUS_TOOL_RESPONSE_TYPE.STRING,
             name: 'Logs',
@@ -54,17 +53,9 @@ export default class InternalToolFullBackup implements IMarkusTool {
             name: 'Database_size',
             value: databaseZipResult.bytes,
         }, {
-            type: MARKUS_TOOL_RESPONSE_TYPE.STRING,
-            name: 'Pictures_size',
-            value: picturesZipResult.bytes,
-        }, {
             type: MARKUS_TOOL_RESPONSE_TYPE.LINK,
             name: 'Database',
             value: Path.resolve(databaseZipResult.path),
-        }, {
-            type: MARKUS_TOOL_RESPONSE_TYPE.LINK,
-            name: 'Pictures',
-            value: Path.resolve(picturesZipResult.path),
         }];
     }
 }
