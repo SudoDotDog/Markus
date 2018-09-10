@@ -139,3 +139,8 @@ export const Risky_PermanentlyRemoveTag = async (tagId: ObjectID): Promise<void>
     });
     return;
 };
+
+export const saveTag = async (tag: ITagModel): Promise<void> => {
+    await tag.save();
+    return;
+};
