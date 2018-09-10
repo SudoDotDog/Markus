@@ -1,7 +1,7 @@
 /**
  * @author WMXPY
  * @description Toolbox
- * @fileoverview Environment Info
+ * @fileoverview Full backup
  */
 
 import * as Path from 'path';

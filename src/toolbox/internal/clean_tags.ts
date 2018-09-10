@@ -1,7 +1,7 @@
 /**
  * @author WMXPY
  * @description Toolbox
- * @fileoverview Merge Tags
+ * @fileoverview Clean Tags
  */
 
 import * as OS from 'os';
