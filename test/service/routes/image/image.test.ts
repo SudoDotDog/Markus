@@ -8,6 +8,7 @@ import { expect } from 'chai';
 import * as mongoose from 'mongoose';
 import { testCompressByTagRoute } from './compress_by_tag.test';
 import { testDeactivateById } from './deactivate_id.test';
+import { testSearchTag } from './search_tag.test';
 
 export const testImageRoutes = (): void => {
     describe('image routes test', (): void => {
@@ -19,5 +20,6 @@ export const testImageRoutes = (): void => {
 
         testCompressByTagRoute();
         testDeactivateById();
+        testSearchTag();
     });
 };

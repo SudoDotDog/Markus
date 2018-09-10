@@ -82,6 +82,17 @@ export const getTagByName = async (name: string): Promise<ITagModel> => {
     }
 };
 
+export const globalSearchTagByNameCut = async (cut: string): Promise<ITagModel[]> => {
+    const tags: ITagModel[] = await TagModel.find({
+        name: {
+            $regex: cut,
+        },
+        active: true,
+    })
+
+    return tags;
+};
+
 export const getTagById = async (id: ObjectID): Promise<ITagModel> => {
     const tag: ITagModel | null = await TagModel.findOne({ _id: id });
     if (tag) {
