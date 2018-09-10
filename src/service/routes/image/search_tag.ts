@@ -37,8 +37,9 @@ export default class RouteSearchTag extends LodgeableExpressRoute implements IEx
         },
     };
 
-    protected async handler(req: Request, res: Response, next: ExpressNextFunction): Promise<void> {
+    public async handler(req: Request, res: Response, next: ExpressNextFunction): Promise<void> {
         try {
+            assert(req.valid).to.be.true(ERROR_CODE.PERMISSION_VALID_FAILED);
             const cut: string = req.body.cut;
             assert(cut).to.be.exist(ERROR_CODE.REQUEST_PATTERN_NOT_MATCHED);
             const tags: string[] = await Direct.Tag.tagSearch(cut);

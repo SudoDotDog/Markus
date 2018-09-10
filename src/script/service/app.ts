@@ -111,6 +111,7 @@ appBuilder.route(new Route.RouteRenameTag());
 app.post('/tag', ...prepares, Handler.GetImage.imageGetListByTagHandler);
 
 // Handler(s) for Tag List Get
+appBuilder.route(new Route.RouteSearchTag());
 appBuilder.route(new Route.RouteTagList());
 appBuilder.route(new Route.RouteTagAdvancedList());
 
