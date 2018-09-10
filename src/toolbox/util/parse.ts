@@ -11,7 +11,6 @@ export const getInformationByIMarkusTools = (tools: IMarkusTool[]): IMarkusToolb
     return tools.map((tool: IMarkusTool): IMarkusToolboxInfo => {
         return {
             name: tool.name,
-            nickname: tool.nickname,
             description: tool.description,
             require: tool.require,
         };

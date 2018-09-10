@@ -43,7 +43,6 @@ export interface IMarkusTool {
 
 export interface IMarkusToolboxInfo {
     name: string;
-    nickname: string;
     description: string;
     require: IExpressAssertionJSONType;
 }
