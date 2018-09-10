@@ -18,6 +18,7 @@ const Tools: IMarkusTool[] = [
     new InternalTools.InternalDatabaseBackup(),
     new InternalTools.InternalMergeTags(),
     new InternalTools.InternalRemoveSubstringFromTags(),
+    new InternalTools.InternalForceRenameTag(),
 ];
 
 const PreparesMiddleware: middleware[] = [];
