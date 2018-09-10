@@ -62,6 +62,7 @@ export const getAllAdvancedTagUserFriendlyList = async (): Promise<ITagUserFrien
         const size: number = await Mix.Tag.getTagSizeByTagId(tag._id);
         result.push({
             name: tag.name,
+            id: tag._id.toString(),
             createdAt: tag.createdAt,
             updatedAt: tag.updatedAt,
             size: convertBytesNumberToUserFriendlyFormat(size),

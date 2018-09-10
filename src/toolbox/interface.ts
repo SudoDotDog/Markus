@@ -10,6 +10,8 @@ import { IExpressAssertionJSONType } from '../service/interface';
 
 export enum MARKUS_TOOL_RESPONSE_TYPE {
     STRING = "STRING",
+    BOOLEAN = "BOOLEAN",
+    NUMBER = "NUMBER",
     LINK = "LINK",
 }
 
