@@ -15,7 +15,8 @@ import MarkusConfigReader from './util/external/conf';
 const Tools: IMarkusTool[] = [
     new InternalTools.InternalToolTagDeduplicate(),
     new InternalTools.InternalEnvironmentInformation(),
-    new InternalTools.InternalFullBackup(),
+    new InternalTools.InternalDatabaseBackup(),
+    new InternalTools.InternalMergeTags(),
 ];
 
 const PreparesMiddleware: middleware[] = [];
