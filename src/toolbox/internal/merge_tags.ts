@@ -1,7 +1,7 @@
 /**
  * @author WMXPY
  * @description Toolbox
- * @fileoverview Environment Info
+ * @fileoverview Merge Tags
  */
 
 import * as OS from 'os';
