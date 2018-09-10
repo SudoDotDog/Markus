@@ -86,3 +86,8 @@ export const renameTagToNewNameByTagCurrentName = async (tagName: string, newNam
         throw error(ERROR_CODE.TAG_NOT_FOUND);
     }
 };
+
+export const tagSearch = async (cut: string): Promise<string[]> => {
+    const tags: ITagModel[] = await Controller.Tag.globalSearchTagByNameCut(cut);
+    return tags.map((tag: ITagModel) => tag.name);
+};
