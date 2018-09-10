@@ -57,7 +57,10 @@ export default class ExtensionToolboxExtension implements IExpressExtension {
         try {
             assert(req.valid).to.be.true(ERROR_CODE.PERMISSION_VALID_FAILED);
             const name: string = req.params.nickname;
-            const args: IMarkusToolArgs = req.body.args;
+            let args: IMarkusToolArgs = req.body.args;
+            if (typeof args === 'string') {
+                args = JSON.parse(args);
+            }
             assert(name).to.be.exist(ERROR_CODE.REQUEST_PATTERN_NOT_MATCHED);
             assert(args).to.be.exist(ERROR_CODE.REQUEST_PATTERN_NOT_MATCHED);
             this._log.info(`Tool estimating ${name}`);
@@ -77,7 +80,10 @@ export default class ExtensionToolboxExtension implements IExpressExtension {
         try {
             assert(req.valid).to.be.true(ERROR_CODE.PERMISSION_VALID_FAILED);
             const name: string = req.params.nickname;
-            const args: IMarkusToolArgs = req.body.args;
+            let args: IMarkusToolArgs = req.body.args;
+            if (typeof args === 'string') {
+                args = JSON.parse(args);
+            }
             assert(name).to.be.exist(ERROR_CODE.REQUEST_PATTERN_NOT_MATCHED);
             assert(args).to.be.exist(ERROR_CODE.REQUEST_PATTERN_NOT_MATCHED);
             this._log.info(`Tool executing ${name}`);
