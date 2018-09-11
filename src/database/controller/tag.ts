@@ -83,9 +83,10 @@ export const getTagByName = async (name: string): Promise<ITagModel> => {
 };
 
 export const globalSearchTagByNameCut = async (cut: string): Promise<ITagModel[]> => {
+    const regexp: RegExp = new RegExp(cut);
     const tags: ITagModel[] = await TagModel.find({
         name: {
-            $regex: cut,
+            $regex: regexp,
         },
         active: true,
     })
