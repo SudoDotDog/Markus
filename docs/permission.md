@@ -1,5 +1,7 @@
 # Markus - Permission
 
+> Very outdated
+
 To create permission config, modify `markus.conf` file, add `authorization` as a `array` of `string` to the JSON structure.
 
 ```json

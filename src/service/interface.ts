@@ -5,6 +5,7 @@
  */
 
 import { Express, RequestHandler } from "express";
+import { MARKUS_AUTHORIZATION_ROLE } from "../declare/interface";
 import Log from '../log/log';
 
 export interface IExpressBuilder {
@@ -94,7 +95,7 @@ export interface IExpressRoute {
     readonly path: string;
     readonly mode: ROUTE_MODE;
 
-    readonly authRole?: number[];
+    readonly authRole?: MARKUS_AUTHORIZATION_ROLE[];
     readonly veryBefore?: RequestHandler[];
     readonly prepare: boolean;
     readonly authorization: boolean;
