@@ -7,6 +7,7 @@ import { IConfig } from "../interface";
 import Log from "../log/log";
 import { ResponseAgent } from "../script/handlers/util/agent";
 import { IFileManager } from "../util/manager/file/import";
+import { MARKUS_AUTHORIZATION_ROLE } from "./interface";
 
 declare global {
     namespace Express {
@@ -14,7 +15,7 @@ declare global {
         interface Request {
             manager: IFileManager;
             log: Log;
-            authPosition?: number[];
+            authRole?: MARKUS_AUTHORIZATION_ROLE[];
             valid?: boolean;
         }
 
