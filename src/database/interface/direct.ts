@@ -7,16 +7,16 @@ export interface IDirectConfig{
     folder: string;
     filename: string;
     name: string;
-    hash: string;
     ctime?: Date;
-    size: number;
 }
 
 export interface IDirect extends IDirectConfig {
     active: boolean;
     ctime: Date;
     createdAt: Date;
+    hash: string;
     reference: number;
     updatedAt: Date;
+    size: number;
     status: boolean;
 }
