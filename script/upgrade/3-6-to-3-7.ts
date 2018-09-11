@@ -1,7 +1,7 @@
 /**
  * @author WMXPY
- * @description Conf
- * @fileoverview 3.6 to 3.7 upgrade script
+ * @description Upgrade
+ * @fileoverview 3.6 to 3.7
  */
 
 import * as Fs from 'fs';
