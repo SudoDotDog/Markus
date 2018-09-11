@@ -8,7 +8,6 @@ import { IImageModel, ImageModel } from "../../src/database/model/image";
 
 export const createRandomImage = async (): Promise<IImageModel> => {
     const newFile = new FileModel({
-        direct: false,
         encoding: 'test',
         hash: 'test',
         mime: 'test',

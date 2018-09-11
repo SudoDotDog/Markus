@@ -48,7 +48,6 @@ describe('test data file util functions', (): void => {
     it('remove file will try to releaseStorage of target file', async (): Promise<void> => {
         const restoreUnlink: () => string[] = mockUnlinkSet();
         const file: IFileModel = new FileModel({
-            direct: false,
             encoding: 'test',
             hash: 'test',
             mime: 'test',
@@ -67,7 +66,6 @@ describe('test data file util functions', (): void => {
     it('touch decrement and save file will try to remove it and save it', async (): Promise<void> => {
         const restoreUnlink: () => string[] = mockUnlinkSet();
         const file: IFileModel = new FileModel({
-            direct: false,
             encoding: 'test',
             hash: 'test',
             mime: 'test',
@@ -78,7 +76,6 @@ describe('test data file util functions', (): void => {
         });
 
         const file2: IFileModel = new FileModel({
-            direct: false,
             encoding: 'test',
             hash: 'test',
             mime: 'test',

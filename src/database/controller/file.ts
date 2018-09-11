@@ -50,27 +50,9 @@ export const getActiveFileById = async (id: ObjectID): Promise<IFileModel> => {
     }
 };
 
-export const createDirectFile = async (option: IFileConfig): Promise<IFileModel> => {
-    const newFile: IFileModel = new FileModel({
-        ctime: option.ctime || new Date(),
-        direct: true,
-        encoding: option.encoding,
-        hash: option.hash,
-        mime: option.mime,
-        original: option.original,
-        folder: option.folder,
-        filename: option.filename,
-        size: option.size,
-    });
-
-    await newFile.save();
-    return newFile;
-};
-
 export const createFile = async (option: IFileConfig): Promise<IFileModel> => {
     const newFile: IFileModel = new FileModel({
         ctime: option.ctime || new Date(),
-        direct: false,
         encoding: option.encoding,
         hash: option.hash,
         mime: option.mime,
@@ -87,7 +69,6 @@ export const createFile = async (option: IFileConfig): Promise<IFileModel> => {
 export const createFileWithReference = async (option: IFileConfig): Promise<IFileModel> => {
     const newFile: IFileModel = new FileModel({
         ctime: option.ctime || new Date(),
-        direct: false,
         encoding: option.encoding,
         hash: option.hash,
         mime: option.mime,
