@@ -13,7 +13,6 @@ export const DirectSchema: Schema = new Schema({
     },
     ctime: {
         type: Date,
-        required: false,
     },
     hash: {
         type: String,
@@ -29,15 +28,15 @@ export const DirectSchema: Schema = new Schema({
     },
     name: {
         type: String,
-        default: 0,
+        required: true,
     },
     size: {
         type: Number,
-        required: true,
     },
     status: {
         type: Boolean,
         default: false,
+        required: true,
     },
 }, {
         timestamps: {
@@ -48,10 +47,18 @@ export const DirectSchema: Schema = new Schema({
 
 export interface IDirectModel extends IDirect, Document {
     deactivate: () => IDirectModel;
+    complete: () => IDirectModel;
 }
 
 DirectSchema.methods.deactivate = function (this: IDirectModel): IDirectModel {
     this.active = false;
+    return this;
+};
+
+DirectSchema.methods.complete = function (this: IDirectModel, hash: string, size: number): IDirectModel {
+    this.status = true;
+    this.hash = hash;
+    this.size = size;
     return this;
 };
 

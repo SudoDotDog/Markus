@@ -3,8 +3,10 @@
  * @fileoverview Direct Controller
  */
 
+import { ObjectID } from "bson";
+import { error, ERROR_CODE } from "../../util/error/error";
 import { IDirectConfig } from "../interface/direct";
-import { IDirectModel, DirectModel } from "../model/direct";
+import { DirectModel, IDirectModel } from "../model/direct";
 
 export const createDirect = async (option: IDirectConfig): Promise<IDirectModel> => {
     const newDirect: IDirectModel = new DirectModel({
@@ -17,4 +19,13 @@ export const createDirect = async (option: IDirectConfig): Promise<IDirectModel>
 
     await newDirect.save();
     return newDirect;
+};
+
+export const getDirectById = async (id: ObjectID): Promise<IDirectModel> => {
+    const direct: IDirectModel | null = await DirectModel.findOne({ _id: id });
+    if (!direct) {
+        throw error(ERROR_CODE.DIRECT_NOT_FOUND);
+    }
+
+    return direct;
 };
