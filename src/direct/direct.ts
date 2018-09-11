@@ -25,6 +25,7 @@ export const startDirectFileCreationProgress = async (name: string, ctime?: Date
     return direct;
 };
 
-export const finishDirectFileCreationProgress = async (id: ObjectID) => {
-    const direct: IDirectModel = await Controller.Direct.getDirectById(id);
+export const finishDirectFileCreationProgress = async (id: ObjectID, hash: string, size: number): Promise<IDirectModel> => {
+    const direct: IDirectModel = await Controller.Direct.completeDirectById(id, hash, size);
+    return direct;
 };

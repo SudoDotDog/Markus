@@ -47,7 +47,7 @@ export const DirectSchema: Schema = new Schema({
 
 export interface IDirectModel extends IDirect, Document {
     deactivate: () => IDirectModel;
-    complete: () => IDirectModel;
+    complete: (hash: string, size: number) => IDirectModel;
 }
 
 DirectSchema.methods.deactivate = function (this: IDirectModel): IDirectModel {

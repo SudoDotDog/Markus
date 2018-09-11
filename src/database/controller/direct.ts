@@ -29,3 +29,15 @@ export const getDirectById = async (id: ObjectID): Promise<IDirectModel> => {
 
     return direct;
 };
+
+export const completeDirectById = async (id: ObjectID, hash: string, size: number): Promise<IDirectModel> => {
+    const direct: IDirectModel | null = await DirectModel.findOne({ _id: id });
+    if (!direct) {
+        throw error(ERROR_CODE.DIRECT_NOT_FOUND);
+    }
+
+    direct.complete(hash, size);
+    await direct.save();
+
+    return direct;
+};
