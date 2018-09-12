@@ -4,7 +4,8 @@
  * @fileoverview Tools
  */
 
-import { Express, Request, RequestHandler, Response } from "express";
+import { Express, NextFunction, Request, RequestHandler, Response } from "express";
+import { MARKUS_AUTHORIZATION_ROLE } from "../declare/interface";
 import Log from "../log/log";
 import { MarkusExtensionConfig } from "../markus";
 import { ExpressNextFunction, IExpressExtension } from '../service/interface';
@@ -41,6 +42,8 @@ export default class ExtensionToolboxExtension implements IExpressExtension {
         this.handleGet = this.handleGet.bind(this);
         this.handleEstimate = this.handleEstimate.bind(this);
         this.handleExecute = this.handleExecute.bind(this);
+        this.buildRoute = this.buildRoute.bind(this);
+        this.createAuthRoleHandler = this.createAuthRoleHandler.bind(this);
     }
 
     public available() {
@@ -112,8 +115,18 @@ export default class ExtensionToolboxExtension implements IExpressExtension {
         return;
     }
 
+    protected createAuthRoleHandler(position: MARKUS_AUTHORIZATION_ROLE[]): RequestHandler {
+        return (req: Request, res: Response, next: NextFunction) => {
+            req.authRole = position;
+            next();
+            return;
+        };
+    }
+
     protected buildRoute(handler: RequestHandler): RequestHandler[] {
+        const authRoleHandler = this.createAuthRoleHandler([MARKUS_AUTHORIZATION_ROLE.MANAGE]);
         return [
+            authRoleHandler,
             ...MarkusExtensionConfig.middleware.prepares,
             ...MarkusExtensionConfig.middleware.permissions,
             handler,
@@ -122,24 +135,3 @@ export default class ExtensionToolboxExtension implements IExpressExtension {
         ];
     }
 }
-
-// public readonly assertResponse: IExpressAssertionJSONType = {
-//     tools: {
-//         type: EXPRESS_ASSERTION_TYPES_UNION.ARRAY,
-//         child: {
-//             type: EXPRESS_ASSERTION_TYPES_UNION.OBJECT,
-//             child: {
-//                 name: { type: EXPRESS_ASSERTION_TYPES_END.STRING },
-//                 description: { type: EXPRESS_ASSERTION_TYPES_END.STRING },
-//                 require: {
-//                     type: EXPRESS_ASSERTION_TYPES_UNION.ARRAY,
-//                     child: { type: EXPRESS_ASSERTION_TYPES_END.STRING },
-//                 },
-//                 teapots: {
-//                     type: EXPRESS_ASSERTION_TYPES_UNION.ARRAY,
-//                     child: { type: EXPRESS_ASSERTION_TYPES_END.STRING },
-//                 },
-//             },
-//         },
-//     },
-// };
