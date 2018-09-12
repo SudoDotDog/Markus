@@ -43,10 +43,13 @@ export default class DocOuterParentTemplateRenderer implements IDocTemplateRende
                 <body>
                     <div style=${outerStyle.build()}>
                         <div style="${leftStyle.build()}" class="left">
-                            <h1 class="title">Markus Documentation</h1>
+                            <h1 class="title">Markus</h1>
                             <h1 class="small-title">M</h1>
                             <div>
                                 ${this._children.map((renderer: IDocTemplateRenderer) => renderer.build()).join('')}
+                            </div>
+                            <div>
+                                <a href="github.com/sudo-dog/markus">${global.Markus.Environment.version}</a>
                             </div>
                         </div>
                         <div style="${rightStyle.build()}" id="content">
@@ -63,6 +66,7 @@ export default class DocOuterParentTemplateRenderer implements IDocTemplateRende
                     ::-webkit-scrollbar-track{background-color:#AAAAAA}
                     pre.prettyprint{border:0}
                     .left{width:20%;min-width:300px}
+                    .title,.small-title{text-align:center}
                     .small-title{display:none;color:#001F3F}
                     .title{display:block;color:#001F3F}
                     @media only screen and (max-width: 768px){

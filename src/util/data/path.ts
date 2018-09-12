@@ -8,14 +8,14 @@
 import * as Path from 'path';
 
 export const tempPath = (): string => {
-    return global.MarkusConfig.tempPath;
+    return global.Markus.Config.tempPath;
 };
 
 export const pathBuilder = (folder: string, imagePath?: string): string => {
     if (imagePath) {
         return Path.join(imagePath, folder);
     } else {
-        return Path.join(global.MarkusConfig.imagePath, folder);
+        return Path.join(global.Markus.Config.imagePath, folder);
     }
 };
 
@@ -23,7 +23,7 @@ export const fileBuilder = (folder: string, fileName: string, imagePath?: string
     if (imagePath) {
         return Path.join(imagePath, folder, fileName);
     } else {
-        return Path.join(global.MarkusConfig.imagePath, folder, fileName);
+        return Path.join(global.Markus.Config.imagePath, folder, fileName);
     }
 };
 

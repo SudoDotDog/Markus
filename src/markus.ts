@@ -30,14 +30,18 @@ const PermissionsMiddleware: middleware[] = [
 const AfterMiddleware: middleware[] = [];
 
 export const initMarkusGlobalConfig = () => {
-    if (global.MarkusConfig) {
+    if (global.Markus) {
         return;
     }
 
     const reader: MarkusConfigReader = new MarkusConfigReader();
     const config: IConfig = reader.read();
-
-    global.MarkusConfig = config;
+    global.Markus = {
+        Config: config,
+        Environment: {
+            version: undefined,
+        },
+    };
 };
 
 export const MarkusExtensionConfig: IMarkusExtensionConfig = {

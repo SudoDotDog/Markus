@@ -36,7 +36,7 @@ export default class RouteRiskyEmptyDatabase extends LodgeableExpressRoute imple
     public readonly specialMark: EXPRESS_SPECIAL_MARK[] = [EXPRESS_SPECIAL_MARK.DEBUG, EXPRESS_SPECIAL_MARK.RISKY];
 
     public available(): boolean {
-        if (global.MarkusConfig.isDebug) {
+        if (global.Markus.Config.isDebug) {
             return true;
         }
         return false;
@@ -44,7 +44,7 @@ export default class RouteRiskyEmptyDatabase extends LodgeableExpressRoute imple
 
     protected async handle(req: Request, res: Response, next: ExpressNextFunction): Promise<void> {
         try {
-            if (global.MarkusConfig.isDebug) {
+            if (global.Markus.Config.isDebug) {
                 await Direct.Clean.emptyDatabase();
             } else {
                 throw error(ERROR_CODE.DEBUG_ONLY_FUNCTION_CALLED_IN_PRODUCTION);

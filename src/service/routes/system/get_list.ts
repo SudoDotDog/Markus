@@ -39,7 +39,7 @@ export default class RouteRiskyGetList extends LodgeableExpressRoute implements 
     public readonly authRole: MARKUS_AUTHORIZATION_ROLE[] = [MARKUS_AUTHORIZATION_ROLE.MANAGE];
 
     public available() {
-        if (global.MarkusConfig.isDebug) {
+        if (global.Markus.Config.isDebug) {
             return true;
         }
         return false;
@@ -47,7 +47,7 @@ export default class RouteRiskyGetList extends LodgeableExpressRoute implements 
 
     protected async handle(req: Request, res: Response, next: ExpressNextFunction): Promise<void> {
         try {
-            if (global.MarkusConfig.isDebug) {
+            if (global.Markus.Config.isDebug) {
                 const images: IImageListResponse[] = await Controller.Image.getImageList();
                 const tagIds: UniqueArray<string> = new UniqueArray<string>();
 

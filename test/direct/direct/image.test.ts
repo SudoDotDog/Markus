@@ -38,7 +38,7 @@ export const testImageDirect = (): void => {
                 id: image.id,
                 mime: "test",
                 original: "test",
-                path: Path.join(global.MarkusConfig.imagePath, 'folder', 'filename'),
+                path: Path.join(global.Markus.Config.imagePath, 'folder', 'filename'),
                 size: 55,
                 tags: image.tags,
             });

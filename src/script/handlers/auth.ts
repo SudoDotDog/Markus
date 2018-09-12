@@ -106,7 +106,7 @@ const checkAuthFromConfig = (key: string, roles?: MARKUS_AUTHORIZATION_ROLE[]): 
     const keys: {
         manage: string[];
         host: string[];
-    } = global.MarkusConfig.authorization;
+    } = global.Markus.Config.authorization;
     if (!keys) {
         throw error(ERROR_CODE.PERMISSION_CONFIG_NOT_CORRECT);
     }

@@ -6,7 +6,7 @@
 import * as ChildProcess from 'child_process';
 import * as fs from 'fs';
 import { IConfig, IMarkusExtensionConfig } from '../../src/interface';
-import { MarkusExtensionConfig } from '../../src/markus';
+import { MarkusExtensionConfig, initMarkusGlobalConfig } from '../../src/markus';
 import { error, ERROR_CODE } from '../../src/util/error/error';
 
 export class MockExpress {
@@ -81,11 +81,15 @@ export const mockReadStream = (): () => IMockReadStreamResult => {
 export const mockConfig = (config: {
     [key in keyof IConfig]?: any;
 }): () => void => {
-    const configTemp = global.MarkusConfig;
+    if(!global.Markus){
+        initMarkusGlobalConfig();
+    }
+    
+    const configTemp = global.Markus.Config;
 
-    (global.MarkusConfig as any) = { ...configTemp, ...config };
+    (global.Markus.Config as any) = { ...configTemp, ...config };
     return () => {
-        (global.MarkusConfig as any) = configTemp;
+        (global.Markus.Config as any) = configTemp;
     };
 };
 

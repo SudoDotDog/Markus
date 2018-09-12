@@ -15,12 +15,12 @@ import { CompressMedium } from '../util/execute/compress/medium';
 import { databaseBackup, databaseRestore } from "../util/execute/disToleran";
 
 export const createBackupInstance = async (to: string, database?: string): Promise<string> => {
-    const result: string = await databaseBackup(global.MarkusConfig.host, database || global.MarkusConfig.database, to);
+    const result: string = await databaseBackup(global.Markus.Config.host, database || global.Markus.Config.database, to);
     return result;
 };
 
 export const restoreBackupInstance = async (from: string): Promise<string> => {
-    const result: string = await databaseRestore(global.MarkusConfig.host, global.MarkusConfig.database, from);
+    const result: string = await databaseRestore(global.Markus.Config.host, global.Markus.Config.database, from);
     return result;
 };
 
@@ -96,6 +96,6 @@ export const compressImageFromAmazonS3ByTag = async (tag: string): Promise<IComp
 /* istanbul ignore next */
 export const createImageBackupCompressedArchiveFile = async (): Promise<ICompressZipResult> => {
     const tempLocation: string = tempPath();
-    const result: ICompressZipResult = await zipFolder(global.MarkusConfig.imagePath, tempLocation, appropriateCurrentDateName('Markus-Image-Backup'));
+    const result: ICompressZipResult = await zipFolder(global.Markus.Config.imagePath, tempLocation, appropriateCurrentDateName('Markus-Image-Backup'));
     return result;
 };

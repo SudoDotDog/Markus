@@ -21,7 +21,7 @@ import UniqueArray from '../../util/struct/uniqueArray';
  */
 export const emptyDatabaseHandler = async (req: Request, res: Response): Promise<void> => {
     try {
-        if (global.MarkusConfig.isDebug) {
+        if (global.Markus.Config.isDebug) {
             await Direct.Clean.emptyDatabase();
             res.status(200).send({
                 status: RESPONSE.SUCCEED,
@@ -46,7 +46,7 @@ export const emptyDatabaseHandler = async (req: Request, res: Response): Promise
  */
 export const OutputImageIdList = async (req: Request, res: Response): Promise<void> => {
     try {
-        if (global.MarkusConfig.isDebug) {
+        if (global.Markus.Config.isDebug) {
             const images: IImageListResponse[] = await Controller.Image.getImageList();
             const tagIds: UniqueArray<string> = new UniqueArray<string>();
 

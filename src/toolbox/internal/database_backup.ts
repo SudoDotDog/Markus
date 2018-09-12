@@ -21,7 +21,7 @@ export default class InternalToolDatabaseBackup implements IMarkusTool {
     public readonly require: IExpressAssertionJSONType = {};
 
     public available(): boolean {
-        if (global.MarkusConfig.mode === MODE.FILE_SYSTEM) {
+        if (global.Markus.Config.mode === MODE.FILE_SYSTEM) {
             return true;
         }
         return false;

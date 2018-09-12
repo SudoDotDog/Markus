@@ -175,7 +175,7 @@ export const secureError = (err: Error, log?: Log): Error => {
         log.error(`securing ${err.message}`);
     }
 
-    if (global.MarkusConfig.isDebug) {
+    if (global.Markus.Config.isDebug) {
         return err;
     } else {
         if ((err as any).code) {

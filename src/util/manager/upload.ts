@@ -82,7 +82,7 @@ export default class UploadManager {
     } {
         const splited: string[] = mime.split('/');
         const type: string = splited.length >= 2 ? splited[1] : 'jpeg';
-        if (++this._count >= global.MarkusConfig.imagePFolder) {
+        if (++this._count >= global.Markus.Config.imagePFolder) {
             this._currentFolder = unique(9);
             this._count = 0;
         }
