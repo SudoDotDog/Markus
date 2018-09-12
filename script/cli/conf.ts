@@ -48,6 +48,6 @@ export const getTemplate = (): string => {
     }, null, 2);
 };
 
-if (process.argv[3] === 'external') {
+if (process.argv[2] === 'external') {
     writeToPath();
 }
