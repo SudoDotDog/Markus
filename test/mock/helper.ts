@@ -11,7 +11,7 @@ import { unique } from "../../src/util/image";
 export const createRandomImage = async (): Promise<IImageModel> => {
     const newFile = new FileModel({
         encoding: 'test',
-        hash: 'test'+ unique(),
+        hash: 'test' + unique(),
         mime: 'test',
         original: 'test',
         folder: 'test',

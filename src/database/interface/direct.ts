@@ -3,7 +3,7 @@
  * @fileoverview Direct Interface
  */
 
-export interface IDirectConfig{
+export interface IDirectConfig {
     folder: string;
     filename: string;
     name: string;
