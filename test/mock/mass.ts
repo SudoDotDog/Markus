@@ -8,7 +8,6 @@ import { FileModel } from "../../src/database/model/file";
 
 export const createRandomAvatarWithFile = async (avatar: string): Promise<IAvatarModel> => {
     const newFile = new FileModel({
-        direct: false,
         encoding: 'test',
         hash: 'test',
         mime: 'test',

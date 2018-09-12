@@ -11,3 +11,4 @@ import * as Image from './image';
 import * as Tag from './tag';
 
 export { Avatar, Backup, Clean, Image, Tag };
+

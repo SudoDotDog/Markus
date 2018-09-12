@@ -51,6 +51,13 @@ export const checkConfigTemplate = (conf: Partial<IConfig>): boolean => {
             return false;
         }
     }
+    if (!conf.authorization) {
+        return false;
+    } else {
+        if (!Array.isArray(conf.authorization.manage) || !Array.isArray(conf.authorization.host)) {
+            return false;
+        }
+    }
     return true;
 };
 

@@ -5,6 +5,7 @@
  */
 
 import { Request, RequestHandler, Response } from "express";
+import { MARKUS_AUTHORIZATION_ROLE } from "../../../declare/interface";
 import * as Direct from "../../../direct/import";
 import { error, ERROR_CODE } from "../../../util/error/error";
 // tslint:disable-next-line
@@ -22,6 +23,7 @@ export default class RouteRiskyEmptyDatabase extends LodgeableExpressRoute imple
         this.handle,
     ];
     public readonly after: boolean = true;
+    public readonly authRole: MARKUS_AUTHORIZATION_ROLE[] = [MARKUS_AUTHORIZATION_ROLE.MANAGE];
 
     public readonly doc: IDocInformation = {
         name: {

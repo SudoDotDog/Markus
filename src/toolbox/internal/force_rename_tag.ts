@@ -4,12 +4,12 @@
  * @fileoverview Force Rename Tag
  */
 
+import { ObjectId } from 'bson';
 import * as Controller from '../../database/controller/import';
 import { ITagModel } from '../../database/model/tag';
-import { IExpressAssertionJSONType, EXPRESS_ASSERTION_TYPES_END } from '../../service/interface';
-import { IMarkusTool, IMarkusToolResult, IMarkusToolArgs, MARKUS_TOOL_RESPONSE_TYPE } from "../interface";
+import { EXPRESS_ASSERTION_TYPES_END, IExpressAssertionJSONType } from '../../service/interface';
+import { IMarkusTool, IMarkusToolArgs, IMarkusToolResult, MARKUS_TOOL_RESPONSE_TYPE } from "../interface";
 import { matchMarkusToolPattern } from '../util/parse';
-import { ObjectId } from 'bson';
 
 export default class InternalToolForceRenameTag implements IMarkusTool {
     public readonly name: string = "MT@Internal-Tool^Force-Rename-Tag";
@@ -48,7 +48,7 @@ export default class InternalToolForceRenameTag implements IMarkusTool {
         const original: string = tag.name;
 
         let renamed: boolean = false;
-        if(original !== args.name){
+        if (original !== args.name) {
             tag.name = args.name;
             await Controller.Tag.saveTag(tag);
             renamed = true;

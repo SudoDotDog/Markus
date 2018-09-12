@@ -6,8 +6,8 @@
 
 import * as Controller from '../../database/controller/import';
 import { ITagModel } from '../../database/model/tag';
-import { IExpressAssertionJSONType, EXPRESS_ASSERTION_TYPES_END } from '../../service/interface';
-import { IMarkusTool, IMarkusToolResult, IMarkusToolArgs, MARKUS_TOOL_RESPONSE_TYPE } from "../interface";
+import { EXPRESS_ASSERTION_TYPES_END, IExpressAssertionJSONType } from '../../service/interface';
+import { IMarkusTool, IMarkusToolArgs, IMarkusToolResult, MARKUS_TOOL_RESPONSE_TYPE } from "../interface";
 
 export default class InternalToolRemoveSubstringFromTags implements IMarkusTool {
     public readonly name: string = "MT@Internal-Tool^Remove-Substring-From-Tags";

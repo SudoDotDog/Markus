@@ -89,7 +89,7 @@ export const globalSearchTagByNameCut = async (cut: string): Promise<ITagModel[]
             $regex: regexp,
         },
         active: true,
-    })
+    });
 
     return tags;
 };

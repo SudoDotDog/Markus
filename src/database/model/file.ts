@@ -15,10 +15,6 @@ export const FileSchema: Schema = new Schema({
         type: Date,
         required: false,
     },
-    direct: {
-        type: Boolean,
-        default: false,
-    },
     encoding: {
         type: String,
         required: true,

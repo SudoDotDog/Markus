@@ -20,7 +20,6 @@ export interface IFileConfig extends IFileProperty {
 export interface IFile extends IFileConfig {
     active: boolean;
     createdAt: Date;
-    direct: boolean;
     reference: number;
     updatedAt: Date;
 }

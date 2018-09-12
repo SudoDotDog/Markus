@@ -30,22 +30,6 @@ export const testFileController = (): void => {
             });
         });
 
-        it('create direct file should create file that direct', async (): Promise<void> => {
-            const file: IFileModel | null = await Controller.File.createDirectFile({
-                encoding: 'encoding',
-                mime: 'mime',
-                original: 'origin',
-                size: 500,
-                folder: 'test',
-                filename: 'test',
-                hash: 'hash-direct',
-            });
-            // tslint:disable-next-line
-            expect(file).to.be.not.null;
-            // tslint:disable-next-line
-            expect(file.direct).to.be.true;
-        }).timeout(3200);
-
         it('rummage same file should try to get same file or return null', async (): Promise<void> => {
             const file: IFileModel | null = await Controller.File.rummageSameFile('hash');
             // tslint:disable-next-line

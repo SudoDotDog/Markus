@@ -25,7 +25,12 @@ const getTemplate = (): string => {
         uploadLimit: 25,
         portNumber: 8080,
         verbose: false,
-        authorization: ['test'],
+        authorization: {
+            manage: [],
+            host: [
+                'test',
+            ],
+        },
         white404ImagePath: "assets/404image_white.png",
         black404ImagePath: "assets/404image_black.png",
         mode: "FILESYSTEM",
