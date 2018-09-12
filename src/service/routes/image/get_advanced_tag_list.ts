@@ -6,6 +6,7 @@
 
 import { Request, RequestHandler, Response } from "express";
 import { ITagUserFriendly } from "../../../database/interface/tag";
+import { MARKUS_AUTHORIZATION_ROLE } from "../../../declare/interface";
 import * as Direct from "../../../direct/import";
 import { assert } from "../../../util/error/assert";
 import { ERROR_CODE } from "../../../util/error/error";
@@ -33,6 +34,7 @@ export default class RouteGetTagAdvancedList extends LodgeableExpressRoute imple
             EN: 'Get all tags with more information than regular [Get all tags] that active in the database',
         },
     };
+    public readonly authRole: MARKUS_AUTHORIZATION_ROLE[] = [MARKUS_AUTHORIZATION_ROLE.MANAGE];
 
     protected async handler(req: Request, res: Response, next: ExpressNextFunction): Promise<void> {
         try {

@@ -41,7 +41,7 @@ describe('test log file agent class', (): void => {
 
     it('stream with warning and error', (next: () => void): void => {
         const restoreWriteableStream = mockWriteStream();
-        const restoreSync = monkFsSyncs(true);
+        const restoreSync = monkFsSyncs({ exist: true });
 
         const agent: Log = new Log(LOG_MODE.ALL);
         const fileAgent: FileLogAgent = new FileLogAgent('test');

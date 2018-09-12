@@ -23,17 +23,16 @@ import { ResponseAgent } from "../handlers/util/agent";
 
 initMarkusGlobalConfig();
 
-const log: Log = new Log(global.MarkusConfig.isDebug ? LOG_MODE.VERBOSE : LOG_MODE.INFO);
+const log: Log = new Log(global.Markus.Config.isDebug ? LOG_MODE.VERBOSE : LOG_MODE.INFO);
 mongoose.connect(
-    global.MarkusConfig.host + '/' + global.MarkusConfig.database,
+    global.Markus.Config.host + '/' + global.Markus.Config.database,
     { useNewUrlParser: true },
 );
-let clientVersion: string = '?';
 
 markusVersion().then((version: string) => {
-    clientVersion = version;
+    global.Markus.Environment.version = version;
 }).catch((err: Error) => {
-    clientVersion = 'X';
+    global.Markus.Environment.version = 'X';
     console.log(err);
 });
 
@@ -44,21 +43,21 @@ const app: express.Express = express();
 const appBuilder: ExpressBuilder = new ExpressBuilder(app, log);
 
 app.use(bodyParser.json({
-    limit: global.MarkusConfig.uploadLimit + 'mb',
+    limit: global.Markus.Config.uploadLimit + 'mb',
 }));
 app.use(bodyParser.urlencoded({
     extended: true,
-    limit: global.MarkusConfig.uploadLimit + 'mb',
+    limit: global.Markus.Config.uploadLimit + 'mb',
 }));
 
 app.all('*', (req: Request, res: Response, next: NextFunction) => {
     req.log = log;
 
-    if (global.MarkusConfig.crossOrigin) {
-        res.header("Access-Control-Allow-Origin", global.MarkusConfig.crossOrigin);
+    if (global.Markus.Config.crossOrigin) {
+        res.header("Access-Control-Allow-Origin", global.Markus.Config.crossOrigin);
     }
     res.header("X-Powered-By", 'Markus');
-    res.header("X-Markus-Version", clientVersion);
+    res.header("X-Markus-Version", global.Markus.Environment.version);
     res.agent = new ResponseAgent(res, log);
     next();
 });

@@ -43,7 +43,7 @@ generate: buildScript
 
 conf: buildScript
 	@echo "[INFO] Get template conf file"
-	@node ./dist_script/cli/conf.js
+	@node ./dist_script/cli/conf.js external
 
 run:
 	@echo "[INFO] Starting service"

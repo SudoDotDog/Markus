@@ -9,7 +9,7 @@ import app from './app';
 import { logWhenSoftwareStart } from './info';
 
 initMarkusGlobalConfig();
-logWhenSoftwareStart(global.MarkusConfig.verbose, global.MarkusConfig.isDebug);
+logWhenSoftwareStart(global.Markus.Config.verbose, global.Markus.Config.isDebug);
 
 const HttpServer: Http.Server = Http.createServer(app);
-HttpServer.listen(global.MarkusConfig.portNumber);
+HttpServer.listen(global.Markus.Config.portNumber);

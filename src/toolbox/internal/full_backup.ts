@@ -21,7 +21,7 @@ export default class InternalToolFullBackup implements IMarkusTool {
     public readonly require: IExpressAssertionJSONType = {};
 
     public available(): boolean {
-        if (global.MarkusConfig.mode === MODE.FILE_SYSTEM) {
+        if (global.Markus.Config.mode === MODE.FILE_SYSTEM) {
             return true;
         }
         return false;
@@ -44,7 +44,7 @@ export default class InternalToolFullBackup implements IMarkusTool {
         const instancePath: string = Path.join(tempLocation, args.database);
 
         const databaseZipResult: compress.ICompressZipResult = await compress.zipFolder(instancePath, tempLocation, appropriateCurrentDateName(args.database + '-Database'));
-        const picturesZipResult: compress.ICompressZipResult = await compress.zipFolder(global.MarkusConfig.imagePath, tempLocation, appropriateCurrentDateName(args.database + '-Pictures'));
+        const picturesZipResult: compress.ICompressZipResult = await compress.zipFolder(global.Markus.Config.imagePath, tempLocation, appropriateCurrentDateName(args.database + '-Pictures'));
         return [{
             type: MARKUS_TOOL_RESPONSE_TYPE.STRING,
             name: 'Logs',

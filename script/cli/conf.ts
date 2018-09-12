@@ -7,11 +7,16 @@
 import * as Fs from 'fs';
 import * as Path from 'path';
 
-const writeToPath = () => {
-    Fs.writeFileSync(Path.join(__dirname, '..', '..', 'markus.conf'), getTemplate(), 'UTF8');
+export const writeToPath = () => {
+    const path: string = Path.join(__dirname, '..', '..', 'markus.conf');
+    if (Fs.existsSync(path)) {
+        console.log(`[ERRO] Markus conf file already exist`);
+        process.exit();
+    }
+    Fs.writeFileSync(path, getTemplate(), 'UTF8');
 };
 
-const getTemplate = (): string => {
+export const getTemplate = (): string => {
     return JSON.stringify({
         crossOrigin: "*",
         host: "mongodb://localhost:27017",
@@ -43,4 +48,6 @@ const getTemplate = (): string => {
     }, null, 2);
 };
 
-writeToPath();
+if (process.argv[2] === 'external') {
+    writeToPath();
+}

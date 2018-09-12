@@ -4,21 +4,22 @@
  */
 
 import { chaetodon } from './chaetodon/chaetodon';
+import { IIconConfig } from './interface';
 import Buffer from './sparidae/buffer';
 import Color from './sparidae/color';
 import Generator from './sparidae/generator';
 import Parser from './sparidae/parser';
 import Point, { IPoint } from './sparidae/point';
 
-export const Icon = (str: string, display?: string) => {
+export const Icon = (str: string, options: IIconConfig = {}) => {
     const generator: Generator = new Generator(str);
     const point: Point = new Point();
     const parser: Parser = new Parser(str);
     let buffer: Buffer;
-    if (display) {
-        buffer = new Buffer(display);
-    } else if (display === '') {
-        buffer = new Buffer(display);
+    if (options.display) {
+        buffer = new Buffer(options.display);
+    } else if (options.display === '') {
+        buffer = new Buffer(options.display);
     } else {
         buffer = new Buffer(parser.getTwoDigitResult());
     }
@@ -35,6 +36,13 @@ export const Icon = (str: string, display?: string) => {
         point.getPoint(generator.splice(15, 21)),
         point.getPoint(generator.splice(23, 28)),
     ];
+
+    if (options.circle) {
+        buffer.setCircle(options.circle);
+    }
+    if (options.thin) {
+        buffer.setThin(options.thin);
+    }
 
     points.push(
         point.getMediumPoint(points[0], points[3], generator.splice(18, 21)),
@@ -56,8 +64,18 @@ export const Icon = (str: string, display?: string) => {
         .rect(points[6], points[7], points[8], loop())
         .rect(points[9], points[10], points[11], loop())
         .rect(points[12], points[13], points[14], loop())
-        .rect(points[15], points[16], points[17], loop())
-        .text(point.getEndPoint(), point.getFontSize());
+        .rect(points[15], points[16], points[17], loop());
+    
+    let fontSize: number = point.getFontSize();
+    if(options.larger){
+        fontSize = point.getLargerFontSize();
+    }
+
+    if (options.center) {
+        buffer.centeredText(point.getCenterPoint(), fontSize);
+    } else {
+        buffer.text(point.getEndPoint(), fontSize);
+    }
 
     return buffer.flush();
 };

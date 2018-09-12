@@ -67,7 +67,7 @@ export const imageGetBlankWhiteHandler = async (req: Request, res: Response, nex
         const callback: IImageCallback = await Direct.Image.getImageCallbackById(id);
         res.agent.smartFileSend(callback.path);
     } catch (err) {
-        res.agent.smartFileSend(global.MarkusConfig.white404ImagePath);
+        res.agent.smartFileSend(global.Markus.Config.white404ImagePath);
     } finally {
         next();
     }
@@ -88,7 +88,7 @@ export const imageGetBlankBlackHandler = async (req: Request, res: Response, nex
         const callback: IImageCallback = await Direct.Image.getImageCallbackById(id);
         res.agent.smartFileSend(callback.path);
     } catch (err) {
-        res.agent.smartFileSend(global.MarkusConfig.white404ImagePath);
+        res.agent.smartFileSend(global.Markus.Config.white404ImagePath);
     } finally {
         next();
     }

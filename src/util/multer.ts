@@ -13,14 +13,14 @@ import { unique } from './image';
 
 export const Upload = (): Multer.Instance => {
     let count: number = 0;
-    let currentPath: string = Path.join(global.MarkusConfig.imagePath, unique(9));
+    let currentPath: string = Path.join(global.Markus.Config.imagePath, unique(9));
     mkPathDir(currentPath);
 
     const storage: Multer.StorageEngine = Multer.diskStorage({
         destination: (req: any, file: Express.Multer.File, callback: (error: Error | null, destination: string) => void) => {
-            if (count++ >= global.MarkusConfig.imagePFolder) {
+            if (count++ >= global.Markus.Config.imagePFolder) {
                 count = 0;
-                currentPath = Path.join(global.MarkusConfig.imagePath, unique(9));
+                currentPath = Path.join(global.Markus.Config.imagePath, unique(9));
                 mkPathDir(currentPath);
             }
             callback(null, currentPath);
@@ -38,13 +38,13 @@ export const Upload = (): Multer.Instance => {
 
 export const UploadWithBase64 = (): ((base64: string) => Promise<string>) => {
     let count: number = 0;
-    let currentPath: string = Path.join(global.MarkusConfig.imagePath, unique(9));
+    let currentPath: string = Path.join(global.Markus.Config.imagePath, unique(9));
     mkPathDir(currentPath);
 
     return (base64: string): Promise<string> => {
-        if (count++ >= global.MarkusConfig.imagePFolder) {
+        if (count++ >= global.Markus.Config.imagePFolder) {
             count = 0;
-            currentPath = Path.join(global.MarkusConfig.imagePath, unique(9));
+            currentPath = Path.join(global.Markus.Config.imagePath, unique(9));
             mkPathDir(currentPath);
         }
         return new Promise<string>((resolve: (value: string) => void, reject: (error: Error) => void) => {

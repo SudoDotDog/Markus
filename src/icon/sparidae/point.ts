@@ -98,8 +98,19 @@ export default class Point {
         };
     }
 
+    public getCenterPoint(): IPoint {
+        return {
+            x: Math.floor(EDGE.LENGTH / 2),
+            y: Math.floor(EDGE.LENGTH / 2),
+        }
+    }
+
     public getFontSize(): number {
         return Math.floor(EDGE.LENGTH / 2.4);
+    }
+
+    public getLargerFontSize(): number {
+        return Math.floor(EDGE.LENGTH / 1.8);
     }
 
     public checkQueue(edge: number): boolean {

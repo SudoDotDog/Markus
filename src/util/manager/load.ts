@@ -10,7 +10,7 @@ import { s3ExternalFilePathBuilder } from "../external/s3";
 export type ImageLoadFunction = (folder: string, filename: string) => string;
 
 export const getImageLoadPathBuilder = (): ImageLoadFunction => {
-    if (global.MarkusConfig.mode === MODE.AMAZON_S3) {
+    if (global.Markus.Config.mode === MODE.AMAZON_S3) {
         return getImageFromAmazonS3LoadPathBuilder;
     }
     return fileBuilder;

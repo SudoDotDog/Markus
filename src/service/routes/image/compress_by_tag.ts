@@ -42,7 +42,7 @@ export default class RouteCompressByTag extends LodgeableExpressRoute implements
     }
 
     public available() {
-        if (global.MarkusConfig.mode === MODE.FILE_SYSTEM) {
+        if (global.Markus.Config.mode === MODE.FILE_SYSTEM) {
             return true;
         }
         return false;

@@ -8,6 +8,7 @@ import { Request, RequestHandler, Response } from "express";
 import { IFileModel } from "../../../database/model/file";
 import * as Direct from "../../../direct/import";
 import { Icon } from "../../../icon/icon";
+import { IIconConfig } from "../../../icon/interface";
 import { fileBuilder } from "../../../util/data/path";
 import { rummageLongTermTempFileOrCreateWithLazyLoadContent } from "../../../util/image";
 // tslint:disable-next-line
@@ -45,6 +46,7 @@ export default class RouteGetAvatarById extends LodgeableExpressRoute implements
     public constructor() {
         super();
         this.handler = this.handler.bind(this);
+        this.createAvatarHashFileName = this.createAvatarHashFileName.bind(this);
         this.getCreateAvatarFunction = this.getCreateAvatarFunction.bind(this);
         this.stack = [
             this.handler,
@@ -54,15 +56,17 @@ export default class RouteGetAvatarById extends LodgeableExpressRoute implements
     protected async handler(req: Request, res: Response, next: ExpressNextFunction): Promise<void> {
         try {
             const avatar: string = req.params.id;
-            const text: string | undefined = req.query.text;
+            const query: any = req.query;
+
             const callback: IFileModel | null = await Direct.Avatar.rummageFileByAvatar(avatar);
             if (callback) {
                 const filepath: string = fileBuilder(callback.folder, callback.filename);
                 res.agent.smartFileSend(filepath);
             } else {
+                const config = this.getIconConfigFromQuery(query);
                 const path = rummageLongTermTempFileOrCreateWithLazyLoadContent(
-                    'Avatar-' + avatar, 'svg',
-                    this.getCreateAvatarFunction(avatar, text));
+                    this.createAvatarHashFileName(avatar, config), 'svg',
+                    this.getCreateAvatarFunction(avatar, config));
                 res.agent.smartFileSend(path);
             }
         } catch (err) {
@@ -73,17 +77,33 @@ export default class RouteGetAvatarById extends LodgeableExpressRoute implements
         return;
     }
 
-    protected getCreateAvatarFunction(avatar: string, text?: string): () => string {
-        return (): string => {
-            if (text) {
-                if (text === '@E') {
-                    return Icon(avatar, '');
-                } else {
-                    return Icon(avatar, text);
-                }
-            } else {
-                return Icon(avatar);
+    protected getIconConfigFromQuery(query: any): IIconConfig {
+        const config: IIconConfig = {
+            display: query.text === '@E' ? '' : query.text,
+            center: query.center ? true : false,
+            circle: query.circle ? true : false,
+            thin: query.thin ? true : false,
+            larger: query.larger ? true : false,
+        };
+        return config;
+    }
+
+    protected createAvatarHashFileName(name: string, config: IIconConfig): string {
+        let result = 'Avatar-' + name;
+        const buffer: string[] = [];
+        for (let key of Object.keys(config)) {
+            const value: string = (config as any)[key as any];
+            if (!value) {
+                continue;
             }
+            buffer.push(`${key}-${value}`);
+        }
+        return result + buffer.join(';');
+    }
+
+    protected getCreateAvatarFunction(avatar: string, config: IIconConfig): () => string {
+        return (): string => {
+            return Icon(avatar, config);
         };
     }
 }
