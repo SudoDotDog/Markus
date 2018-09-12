@@ -58,10 +58,15 @@ export const Icon = (str: string, options: IIconConfig = {}) => {
         .rect(points[6], points[7], points[8], loop())
         .rect(points[9], points[10], points[11], loop())
         .rect(points[12], points[13], points[14], loop())
-        .rect(points[15], points[16], points[17], loop())
-        .text(point.getEndPoint(), point.getFontSize());
+        .rect(points[15], points[16], points[17], loop());
+
+    if (options.center) {
+        buffer.centeredText(point.getCenterPoint(), point.getFontSize());
+    } else {
+        buffer.text(point.getEndPoint(), point.getFontSize());
+    }
 
     return buffer.flush();
 };
 
-writeFileSync('./a.svg', Icon('test', {}));
+writeFileSync('./a.svg', Icon('test', { center: false }));

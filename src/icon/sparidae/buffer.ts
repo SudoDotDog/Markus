@@ -52,7 +52,7 @@ export default class Buffer {
         this.resultBuffer += "y=\"";
         this.resultBuffer += point.y + "\" ";
         this.resultBuffer += "style=\"font-weight:bold;font-size:";
-        this.resultBuffer += fontSize + ";text-anchor:middle\">";
+        this.resultBuffer += fontSize + ";text-anchor:middle;dominant-baseline:middle\">";
         this.resultBuffer += this._text;
         this.resultBuffer += "</text>";
         return this;
