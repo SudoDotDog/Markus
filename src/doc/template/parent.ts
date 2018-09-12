@@ -48,8 +48,8 @@ export default class DocOuterParentTemplateRenderer implements IDocTemplateRende
                             <div>
                                 ${this._children.map((renderer: IDocTemplateRenderer) => renderer.build()).join('')}
                             </div>
-                            <div>
-                                <a href="github.com/sudo-dog/markus">${global.Markus.Environment.version}</a>
+                            <div style="text-align:center">
+                                <a href="https://github.com/sudo-dog/markus">v${global.Markus.Environment.version}</a>
                             </div>
                         </div>
                         <div style="${rightStyle.build()}" id="content">
@@ -68,7 +68,7 @@ export default class DocOuterParentTemplateRenderer implements IDocTemplateRende
                     .left{width:20%;min-width:300px}
                     .title,.small-title{text-align:center}
                     .small-title{display:none;color:#001F3F}
-                    .title{display:block;color:#001F3F}
+                    .title{display:block;color:#001F3F;padding-top:30px}
                     @media only screen and (max-width: 768px){
                         .card-content{display:none}.card{width:80px}.left{width:90px;min-width:90px}
                         .title{display:none}.small-title{display:block}
