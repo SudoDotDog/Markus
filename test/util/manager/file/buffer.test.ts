@@ -72,7 +72,7 @@ describe('test base64 file manager', (): void => {
     });
 
     it('save second file should only check exist but not create', async (): Promise<void> => {
-        const restoreSyncs = monkFsSyncs(true);
+        const restoreSyncs = monkFsSyncs({ exist: true });
         const restoreWriteFile: () => Array<{
             content: string;
             path: string;

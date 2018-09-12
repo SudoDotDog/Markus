@@ -81,10 +81,10 @@ export const mockReadStream = (): () => IMockReadStreamResult => {
 export const mockConfig = (config: {
     [key in keyof IConfig]?: any;
 }): () => void => {
-    if(!global.Markus){
+    if (!global.Markus) {
         initMarkusGlobalConfig();
     }
-    
+
     const configTemp = global.Markus.Config;
 
     (global.Markus.Config as any) = { ...configTemp, ...config };
@@ -93,7 +93,7 @@ export const mockConfig = (config: {
     };
 };
 
-export const mockExtensionConfig  = (config: {
+export const mockExtensionConfig = (config: {
     [key in keyof IMarkusExtensionConfig]?: any;
 }): () => void => {
     const configTemp = MarkusExtensionConfig;
@@ -220,7 +220,10 @@ export interface IMockFsSyncsCB {
     exist: string[];
 }
 
-export const monkFsSyncs = (tue?: boolean): () => IMockFsSyncsCB => {
+export const monkFsSyncs = (options?: {
+    readResult?: string;
+    exist?: boolean;
+}): () => IMockFsSyncsCB => {
     const tempUnlinkSync: typeof fs.unlinkSync = fs.unlinkSync;
     const tempReadFileSync: typeof fs.readFileSync = fs.readFileSync;
     const tempWriteFileSync: typeof fs.writeFileSync = fs.writeFileSync;
@@ -239,6 +242,12 @@ export const monkFsSyncs = (tue?: boolean): () => IMockFsSyncsCB => {
 
     (fs as any).readFileSync = (filePath: string) => {
         readSet.push(filePath);
+        if (options) {
+            if (options.readResult) {
+                return options.readResult;
+            }
+        }
+        return 'test';
     };
 
     (fs as any).writeFileSync = (filePath: string) => {
@@ -251,7 +260,12 @@ export const monkFsSyncs = (tue?: boolean): () => IMockFsSyncsCB => {
 
     (fs as any).existsSync = (dirPath: string) => {
         existSet.push(dirPath);
-        return tue ? tue : false;
+        if (options) {
+            if (options.exist) {
+                return true;
+            }
+        }
+        return false;
     };
 
     return (): IMockFsSyncsCB => {
