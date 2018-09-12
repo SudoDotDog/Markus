@@ -30,7 +30,7 @@ export class CompressMedium {
         this._prepare();
     }
 
-    public addFile(path: string, name: string, modelCtime?: Date) {
+    public addFile(path: string, name: string, modelCtime?: Date): CompressMedium {
         if (!Fs.existsSync(path)) {
             throw error(ERROR_CODE.INTERNAL_COMPRESS_TARGET_FILE_NOT_FOUND);
         }
@@ -52,10 +52,12 @@ export class CompressMedium {
                 date: ctime,
             },
         );
+        return this;
     }
 
-    public addBuffer(buffer: Buffer, name: string) {
+    public addBuffer(buffer: Buffer, name: string): CompressMedium {
         this._archiver.append(buffer, { name });
+        return this;
     }
 
     public finalize(limit: number): Promise<ICompressZipResult> {
