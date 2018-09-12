@@ -9,16 +9,18 @@ import Color from './sparidae/color';
 import Generator from './sparidae/generator';
 import Parser from './sparidae/parser';
 import Point, { IPoint } from './sparidae/point';
+import { writeFileSync } from 'fs';
+import { IIconConfig } from './interface';
 
-export const Icon = (str: string, display?: string) => {
+export const Icon = (str: string, options: IIconConfig = {}) => {
     const generator: Generator = new Generator(str);
     const point: Point = new Point();
     const parser: Parser = new Parser(str);
     let buffer: Buffer;
-    if (display) {
-        buffer = new Buffer(display);
-    } else if (display === '') {
-        buffer = new Buffer(display);
+    if (options.display) {
+        buffer = new Buffer(options.display);
+    } else if (options.display === '') {
+        buffer = new Buffer(options.display);
     } else {
         buffer = new Buffer(parser.getTwoDigitResult());
     }
@@ -61,3 +63,5 @@ export const Icon = (str: string, display?: string) => {
 
     return buffer.flush();
 };
+
+writeFileSync('./a.svg', Icon('test', {}));

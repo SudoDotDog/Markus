@@ -77,9 +77,9 @@ export default class RouteGetAvatarById extends LodgeableExpressRoute implements
         return (): string => {
             if (text) {
                 if (text === '@E') {
-                    return Icon(avatar, '');
+                    return Icon(avatar, { display: '' });
                 } else {
-                    return Icon(avatar, text);
+                    return Icon(avatar, { display: text });
                 }
             } else {
                 return Icon(avatar);

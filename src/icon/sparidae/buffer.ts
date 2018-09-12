@@ -43,6 +43,21 @@ export default class Buffer {
         return this;
     }
 
+    public centeredText(point: IPoint, fontSize: number): Buffer {
+        if (!this._text) {
+            return this;
+        }
+        this.resultBuffer += "<text x=\"";
+        this.resultBuffer += point.x + "\" ";
+        this.resultBuffer += "y=\"";
+        this.resultBuffer += point.y + "\" ";
+        this.resultBuffer += "style=\"font-weight:bold;font-size:";
+        this.resultBuffer += fontSize + ";text-anchor:middle\">";
+        this.resultBuffer += this._text;
+        this.resultBuffer += "</text>";
+        return this;
+    }
+
     public setAspect(aspect: boolean): Buffer {
         this._isAspect = aspect;
         return this;
