@@ -16,7 +16,9 @@ const writeToPath = () => {
 const getTemplate = (config: string): string => {
     const conf = JSON.parse(config);
     conf.authorization = {
-        manage: [],
+        manage: [
+            'test-manage'
+        ],
         host: [
             'test',
         ],
