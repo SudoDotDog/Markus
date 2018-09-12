@@ -51,7 +51,7 @@ export const determineIsImageByExtName = (extName: string): boolean => {
     return false;
 };
 
-export const mergeArray: <T>(original: T[], target: T[]) => T[] = <T>(original: T[], target: T[]) => {
+export const mergeArray: <T>(original: T[], target: T[]) => T[] = <T>(original: T[], target: T[]): T[] => {
     const tempArray: T[] = [...original];
     for (let i of target) {
         if (!original.map((element) => element.toString()).includes(i.toString())) {
@@ -106,7 +106,7 @@ export const uniqueSmall = (): string => {
     return '_' + Math.random().toString(36).substring(2, 9);
 };
 
-export const unique = (len?: number) => {
+export const unique = (len?: number): string => {
     if (len) {
         if (len > 12 || len < 0) {
             return uniqueSmall();
