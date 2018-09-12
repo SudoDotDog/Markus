@@ -9,7 +9,7 @@ import { ExpressAssertionType, EXPRESS_ASSERTION_TYPES_END, EXPRESS_ASSERTION_TY
 import LanguageTextProcessor from "../../service/language";
 import { IDocTableElement } from "../interface";
 
-export const convertRouteToTemplate = (route: IExpressRoute, processor: LanguageTextProcessor, domain?: string) => {
+export const convertRouteToTemplate = (route: IExpressRoute, processor: LanguageTextProcessor, domain?: string): IDocTableElement[] => {
     const template: IDocTableElement[] = [{
         name: 'Route',
         value: route.path,
