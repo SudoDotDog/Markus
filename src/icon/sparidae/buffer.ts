@@ -12,16 +12,23 @@ export default class Buffer {
     private _text: string;
     private _isAspect: boolean;
     private _circle: boolean;
+    private _thin: boolean;
 
     public constructor(text: string) {
         this._isAspect = false;
         this._text = text;
         this._buffer = [];
         this._circle = false;
+        this._thin = false;
     }
 
     public setCircle(circle: boolean = true): Buffer {
         this._circle = circle;
+        return this;
+    }
+
+    public setThin(thin: boolean = true): Buffer {
+        this._thin = thin;
         return this;
     }
 
@@ -45,7 +52,11 @@ export default class Buffer {
         buffer += point.x + "\" ";
         buffer += "y=\"";
         buffer += point.y + "\" ";
-        buffer += "style=\"font-weight:bold;font-size:";
+        if(this._thin){
+            buffer += "style=\"font-size:";
+        }else{
+            buffer += "style=\"font-weight:bold;font-size:";
+        }
         buffer += fontSize + ";text-anchor:end\">";
         buffer += this._text;
         buffer += "</text>";
@@ -62,7 +73,11 @@ export default class Buffer {
         buffer += point.x + "\" ";
         buffer += "y=\"";
         buffer += point.y + "\" ";
-        buffer += "style=\"font-weight:bold;font-size:";
+        if(this._thin){
+            buffer += "style=\"font-size:";
+        }else{
+            buffer += "style=\"font-weight:bold;font-size:";
+        }
         buffer += fontSize + ";text-anchor:middle;dominant-baseline:middle\">";
         buffer += this._text;
         buffer += "</text>";

@@ -109,6 +109,10 @@ export default class Point {
         return Math.floor(EDGE.LENGTH / 2.4);
     }
 
+    public getLargerFontSize(): number {
+        return Math.floor(EDGE.LENGTH / 1.8);
+    }
+
     public checkQueue(edge: number): boolean {
         for (let i of this._queue) {
             if (i === edge) {

@@ -4,13 +4,12 @@
  */
 
 import { chaetodon } from './chaetodon/chaetodon';
+import { IIconConfig } from './interface';
 import Buffer from './sparidae/buffer';
 import Color from './sparidae/color';
 import Generator from './sparidae/generator';
 import Parser from './sparidae/parser';
 import Point, { IPoint } from './sparidae/point';
-import { writeFileSync } from 'fs';
-import { IIconConfig } from './interface';
 
 export const Icon = (str: string, options: IIconConfig = {}) => {
     const generator: Generator = new Generator(str);
@@ -41,6 +40,9 @@ export const Icon = (str: string, options: IIconConfig = {}) => {
     if (options.circle) {
         buffer.setCircle(options.circle);
     }
+    if (options.thin) {
+        buffer.setThin(options.thin);
+    }
 
     points.push(
         point.getMediumPoint(points[0], points[3], generator.splice(18, 21)),
@@ -63,11 +65,16 @@ export const Icon = (str: string, options: IIconConfig = {}) => {
         .rect(points[9], points[10], points[11], loop())
         .rect(points[12], points[13], points[14], loop())
         .rect(points[15], points[16], points[17], loop());
+    
+    let fontSize: number = point.getFontSize();
+    if(options.larger){
+        fontSize = point.getLargerFontSize();
+    }
 
     if (options.center) {
-        buffer.centeredText(point.getCenterPoint(), point.getFontSize());
+        buffer.centeredText(point.getCenterPoint(), fontSize);
     } else {
-        buffer.text(point.getEndPoint(), point.getFontSize());
+        buffer.text(point.getEndPoint(), fontSize);
     }
 
     return buffer.flush();
