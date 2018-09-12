@@ -7,6 +7,7 @@
 import { Request, RequestHandler, Response } from "express";
 import * as Controller from "../../../database/controller/import";
 import { IImageListResponse } from "../../../database/interface/image";
+import { MARKUS_AUTHORIZATION_ROLE } from "../../../declare/interface";
 import * as Direct from "../../../direct/import";
 import { error, ERROR_CODE } from "../../../util/error/error";
 import UniqueArray from "../../../util/struct/uniqueArray";
@@ -35,6 +36,7 @@ export default class RouteRiskyGetList extends LodgeableExpressRoute implements 
         },
     };
     public readonly specialMark: EXPRESS_SPECIAL_MARK[] = [EXPRESS_SPECIAL_MARK.DEBUG, EXPRESS_SPECIAL_MARK.RISKY];
+    public readonly authRole: MARKUS_AUTHORIZATION_ROLE[] = [MARKUS_AUTHORIZATION_ROLE.MANAGE];
 
     public available() {
         if (global.MarkusConfig.isDebug) {

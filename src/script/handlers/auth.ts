@@ -140,4 +140,4 @@ const checkAuthFromConfig = (key: string, roles?: MARKUS_AUTHORIZATION_ROLE[]): 
     } else {
         return keys.manage.includes(key) || keys.host.includes(key);
     }
-}
+};

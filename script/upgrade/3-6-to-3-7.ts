@@ -16,13 +16,11 @@ const writeToPath = () => {
 const getTemplate = (config: string): string => {
     const conf = JSON.parse(config);
     conf.authorization = {
-        manage: [
+        manage: [],
+        host: [
             'test',
         ],
-        host: [
-            'test'
-        ],
-    }
+    };
     return JSON.stringify(conf, null, 2);
 };
 

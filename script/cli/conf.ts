@@ -26,11 +26,9 @@ const getTemplate = (): string => {
         portNumber: 8080,
         verbose: false,
         authorization: {
-            manage: [
-                'test',
-            ],
+            manage: [],
             host: [
-                'test'
+                'test',
             ],
         },
         white404ImagePath: "assets/404image_white.png",
