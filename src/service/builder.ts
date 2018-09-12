@@ -5,6 +5,7 @@
  */
 
 import * as express from "express";
+import { MARKUS_AUTHORIZATION_ROLE } from "../declare/interface";
 import { LOG_MODE } from "../log/interface";
 import Log from "../log/log";
 import { MarkusExtensionConfig } from "../markus";
@@ -141,8 +142,8 @@ export default class ExpressBuilder implements IExpressBuilder {
 
         const handlers: express.RequestHandler[] = [];
 
-        if (route.authPosition) {
-            handlers.push(this.createAuthPositionHandler(route.authPosition));
+        if (route.authRole) {
+            handlers.push(this.createAuthRoleHandler(route.authRole));
         }
 
         if (route.veryBefore) {
@@ -186,9 +187,9 @@ export default class ExpressBuilder implements IExpressBuilder {
         return;
     }
 
-    protected createAuthPositionHandler(position: number[]): express.RequestHandler {
+    protected createAuthRoleHandler(position: MARKUS_AUTHORIZATION_ROLE[]): express.RequestHandler {
         return (req: express.Request, res: express.Response, next: express.NextFunction) => {
-            req.authPosition = position;
+            req.authRole = position;
             next();
             return;
         };
