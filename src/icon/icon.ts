@@ -38,6 +38,10 @@ export const Icon = (str: string, options: IIconConfig = {}) => {
         point.getPoint(generator.splice(23, 28)),
     ];
 
+    if (options.circle) {
+        buffer.setCircle(options.circle);
+    }
+
     points.push(
         point.getMediumPoint(points[0], points[3], generator.splice(18, 21)),
         point.getMediumPoint(points[1], points[4], generator.splice(21, 24)),
@@ -68,5 +72,3 @@ export const Icon = (str: string, options: IIconConfig = {}) => {
 
     return buffer.flush();
 };
-
-writeFileSync('./a.svg', Icon('test', { center: false }));

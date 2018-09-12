@@ -6,4 +6,5 @@
 export interface IIconConfig {
     display?: string;
     center?: boolean;
+    circle?: boolean;
 }
