@@ -33,21 +33,42 @@ export default class RouteGetAvatarById extends LodgeableExpressRoute implements
             EN: 'Get avatar from id, return default avatar if wanted avatar is not settled',
         },
     };
-    public readonly assertParam: IExpressAssertionJSONType = {
+    public readonly assertQuery: IExpressAssertionJSONType = {
         text: {
             type: EXPRESS_ASSERTION_TYPES_END.STRING,
             optional: true,
         },
+        center: {
+            type: EXPRESS_ASSERTION_TYPES_END.BOOLEAN,
+            optional: true,
+        },
+        round: {
+            type: EXPRESS_ASSERTION_TYPES_END.BOOLEAN,
+            optional: true,
+        },
+        thin: {
+            type: EXPRESS_ASSERTION_TYPES_END.BOOLEAN,
+            optional: true,
+        },
+        larger: {
+            type: EXPRESS_ASSERTION_TYPES_END.BOOLEAN,
+            optional: true,
+        },
     };
-    public readonly assertQuery: IExpressAssertionJSONType = {
-        id: { type: EXPRESS_ASSERTION_TYPES_END.OBJECT_ID },
+    public readonly assertParam: IExpressAssertionJSONType = {
+        id: {
+            type: EXPRESS_ASSERTION_TYPES_END.OBJECT_ID,
+        },
     };
 
     public constructor() {
         super();
         this.handler = this.handler.bind(this);
+
         this.createAvatarHashFileName = this.createAvatarHashFileName.bind(this);
         this.getCreateAvatarFunction = this.getCreateAvatarFunction.bind(this);
+        this.getIconConfigFromQuery = this.getIconConfigFromQuery.bind(this);
+
         this.stack = [
             this.handler,
         ];
@@ -65,8 +86,11 @@ export default class RouteGetAvatarById extends LodgeableExpressRoute implements
             } else {
                 const config = this.getIconConfigFromQuery(query);
                 const path = rummageLongTermTempFileOrCreateWithLazyLoadContent(
-                    this.createAvatarHashFileName(avatar, config), 'svg',
-                    this.getCreateAvatarFunction(avatar, config));
+                    this.createAvatarHashFileName(avatar, config),
+                    'svg',
+                    this.getCreateAvatarFunction(avatar, config),
+                );
+
                 res.agent.smartFileSend(path);
             }
         } catch (err) {
@@ -81,7 +105,7 @@ export default class RouteGetAvatarById extends LodgeableExpressRoute implements
         const config: IIconConfig = {
             display: query.text === '@E' ? '' : query.text,
             center: query.center ? true : false,
-            circle: query.circle ? true : false,
+            circle: query.round ? true : false,
             thin: query.thin ? true : false,
             larger: query.larger ? true : false,
         };
@@ -89,7 +113,7 @@ export default class RouteGetAvatarById extends LodgeableExpressRoute implements
     }
 
     protected createAvatarHashFileName(name: string, config: IIconConfig): string {
-        let result = 'Avatar-' + name;
+        let result: string = 'Avatar-' + name;
         const buffer: string[] = [];
         for (let key of Object.keys(config)) {
             const value: string = (config as any)[key as any];

@@ -54,11 +54,13 @@ dev:
 	@$(tsc) --p $(dev)
 
 build: clean install ubuild
-	@echo '[INFO] To Start Run: "./dist/script/service/markus.js"'
+	@echo '[INFO] To Start, Run: "./dist/script/service/markus.js"'
 
 ubuild:
 	@echo "[INFO] Building for production"
 	@$(tsc) --p $(build)
+
+script: buildScript
 
 buildScript:
 	@echo "[INFO] Building scripts"

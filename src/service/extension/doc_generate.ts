@@ -27,12 +27,14 @@ export default class ExtensionDocGenerate implements IExpressExtension {
         this._log = log;
         this._docs = {};
         this._subDocs = {};
-        this.handler = this.handler.bind(this);
-        this.subHandler = this.subHandler.bind(this);
+
         this.rummageDoc = this.rummageDoc.bind(this);
         this.rummageSubDoc = this.rummageSubDoc.bind(this);
         this.flushDoc = this.flushDoc.bind(this);
         this.flushDubDoc = this.flushDubDoc.bind(this);
+
+        this.handler = this.handler.bind(this);
+        this.subHandler = this.subHandler.bind(this);
     }
 
     public available() {
