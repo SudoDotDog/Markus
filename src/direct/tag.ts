@@ -9,6 +9,7 @@ import * as Controller from '../database/controller/import';
 import { ITagUserFriendly, ITagUserFriendlyAdvanced } from "../database/interface/tag";
 import * as Mix from '../database/mix/import';
 import { ITagModel } from "../database/model/tag";
+import { ISearchResult, MARKUS_RESOURCE_TYPE } from "../service/interface";
 import { convertBytesNumberToUserFriendlyFormat } from '../util/convert/data';
 import { error, ERROR_CODE } from "../util/error/error";
 
@@ -87,7 +88,13 @@ export const renameTagToNewNameByTagCurrentName = async (tagName: string, newNam
     }
 };
 
-export const tagSearch = async (cut: string): Promise<string[]> => {
+export const tagSearch = async (cut: string): Promise<ISearchResult[]> => {
     const tags: ITagModel[] = await Controller.Tag.globalSearchTagByNameCut(cut);
-    return tags.map((tag: ITagModel) => tag.name);
+    return tags.map((tag: ITagModel): ISearchResult => {
+        return {
+            type: MARKUS_RESOURCE_TYPE.TAG,
+            name: tag.name,
+            createdAt: tag.createdAt,
+        };
+    });
 };
