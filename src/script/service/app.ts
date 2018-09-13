@@ -119,11 +119,13 @@ appBuilder.route(new Route.RouteDeactivateImageById());
 app.post('/deactivate/tag', ...prepares, ...permissions, Handler.Markus.DeactivateTagHandler, ...afters);
 
 // Handler(s) for debug
-app.post('/list', ...prepares, Handler.Debug.OutputImageIdList);
-app.post('/empty', ...prepares, Handler.Debug.emptyDatabaseHandler);
+if (global.Markus.Config.isDebug) {
+    appBuilder.route(new Route.RouteRiskyEmptyDatabase());
+    appBuilder.route(new Route.RouteRiskyGetList());
+}
 
 // Handler(s) for 404
-appBuilder.route(new Route.RouteFourOFour());
+appBuilder.last(new Route.RouteFourOFour());
 
 const expressApp: express.Express = appBuilder.flush();
 export default expressApp;

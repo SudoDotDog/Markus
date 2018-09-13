@@ -29,6 +29,9 @@ export const internalExpressBuilderFlushHandler: express.RequestHandler = (req: 
 export default class ExpressBuilder implements IExpressBuilder {
     private _routes: Fork<IExpressRoute>;
     private _extensions: Fork<IExpressExtension>;
+
+    private _last: Fork<IExpressRoute>;
+
     private _app: express.Express;
     private _log: Log;
     private _headers: IExpressHeader[];
@@ -36,8 +39,10 @@ export default class ExpressBuilder implements IExpressBuilder {
     public constructor(app?: express.Express, log?: Log) {
         this._routes = new Fork<IExpressRoute>();
         this._extensions = new Fork<IExpressExtension>();
-        this._headers = [];
 
+        this._last = new Fork<IExpressRoute>();
+
+        this._headers = [];
         if (app) {
             this._app = app;
         } else {
@@ -78,6 +83,19 @@ export default class ExpressBuilder implements IExpressBuilder {
         return this;
     }
 
+    public last(route: IExpressRoute): IExpressBuilder {
+        const exist: boolean = this._routes.has((element: IExpressRoute) => {
+            return (element.path === route.path)
+                && (element.mode === route.mode);
+        });
+        if (exist) {
+            throw error(ERROR_CODE.INTERNAL_EXPRESS_BUILDER_ROUTE_CANT_BE_SAME);
+        }
+
+        this._last.add(route);
+        return this;
+    }
+
     public use(extension: IExpressExtension): IExpressBuilder {
         const exist: boolean = this._extensions.has((element: IExpressExtension) => {
             return element.name === extension.name;
@@ -106,6 +124,7 @@ export default class ExpressBuilder implements IExpressBuilder {
         this._extensions.list.forEach(this._extensionMount);
         this._routes.list.forEach(this._routeMount);
 
+        this._last.list.forEach(this._routeMount);
         return this._app;
     }
 
