@@ -39,6 +39,10 @@ export const testDocUtilConvert = () => {
                     value: "YES",
                 },
                 {
+                    name: "Authorization Role",
+                    value: "Everyone",
+                },
+                {
                     name: "Query",
                     value: {
                         tagId: "OBJECT_ID",
