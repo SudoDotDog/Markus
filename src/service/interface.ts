@@ -103,6 +103,7 @@ export interface IExpressRoute {
     readonly after: boolean;
 
     readonly ignoreInDoc?: boolean;
+    readonly testDrive?: boolean;
     readonly postType?: EXPRESS_POST_SUBMIT_FORMAT;
     readonly assertBody?: IExpressAssertionJSONType;
     readonly assertParam?: IExpressAssertionJSONType;

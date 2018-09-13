@@ -7,8 +7,9 @@
 import { EXPRESS_EXAMPLE_CODE, EXPRESS_SPECIAL_MARK, IExpressRoute, IText } from '../../../service/interface';
 import LanguageTextProcessor from '../../../service/language';
 import { IDocTableElement, IDocTemplateRenderer } from '../../interface';
-import { fetchMarkusFormData, nodeMarkusFormData, htmlMarkusImage } from '../../util/code';
+import { fetchMarkusFormData, htmlMarkusImage, nodeMarkusFormData } from '../../util/code';
 import { convertObjectToHTMLFriendlyJson, convertRouteToTemplate } from '../../util/covert';
+import { buildTestDriveTemplateByRoute } from '../../util/testdrive';
 import StyleBuilder from '../style';
 
 export default class DocTableCardTemplateRenderer implements IDocTemplateRenderer {
@@ -71,6 +72,12 @@ export default class DocTableCardTemplateRenderer implements IDocTemplateRendere
     }
 
     protected getTestDrive(): string {
+        if (this._route.testDrive) {
+            return this.getRow({
+                name: 'Test Drive',
+                value: buildTestDriveTemplateByRoute(this._route),
+            })
+        }
         return '';
     }
 

@@ -24,7 +24,7 @@ export const convertRouteToTemplate = (route: IExpressRoute, processor: Language
     if (route.authorization) {
         template.push({
             name: 'Authorization Role',
-            value: route.authRole ? route.authRole.join(',') : 'Everyone',
+            value: route.authRole ? route.authRole.join(',').toUpperCase() : 'Everyone',
         });
     }
 

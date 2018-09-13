@@ -43,8 +43,8 @@ export default class DocOuterParentTemplateRenderer implements IDocTemplateRende
                 <body>
                     <div style=${outerStyle.build()}>
                         <div style="${leftStyle.build()}" class="left">
-                            <h1 class="title">Markus</h1>
-                            <h1 class="small-title">M</h1>
+                            <div class="title">Markus</div>
+                            <div class="small-title">M</div>
                             <div>
                                 ${this._children.map((renderer: IDocTemplateRenderer) => renderer.build()).join('')}
                             </div>
@@ -57,29 +57,44 @@ export default class DocOuterParentTemplateRenderer implements IDocTemplateRende
                         </div>
                     </div>
                 </body>
-                <style>
-                    .card{box-shadow:0 1px 3px rgba(0,0,0,0.12),0 1px 2px rgba(0,0,0,0.24);background-color:white;cursor:pointer;transition:0.3s all}
-                    .card:hover{box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)}
-                    body{margin:0;padding:0}
-                    ::-webkit-scrollbar{width:0.5em;height:0.5em}
-                    ::-webkit-scrollbar-thumb{background-color:#001F3F}
-                    ::-webkit-scrollbar-track{background-color:#AAAAAA}
-                    pre.prettyprint{border:0}
-                    .left{width:20%;min-width:300px}
-                    .title,.small-title{text-align:center}
-                    .small-title{display:none;color:#001F3F}
-                    .title{display:block;color:#001F3F;padding-top:30px}
-                    @media only screen and (max-width: 768px){
-                        .card-content{display:none}.card{width:80px}.left{width:90px;min-width:90px}
-                        .title{display:none}.small-title{display:block}
-                    }
-                </style>
+                <style>${this.getGlobalStyles()}</style>
                 <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
                 <script>
                     ${Fs.readFileSync(Path.resolve('assets', 'code', 'doc.js'))}
                 </script>
             </html>
         `));
+    }
+
+    protected getGlobalStyles(): string {
+        return [
+            `body{margin:0;padding:0}`,
+            `.card{box-shadow:0 1px 3px rgba(0,0,0,0.12),0 1px 2px rgba(0,0,0,0.24);background-color:white;cursor:pointer;transition:0.3s all}`,
+            `.card:hover{box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)}`,
+            `::-webkit-scrollbar{width:0.5em;height:0.5em}`,
+            `::-webkit-scrollbar-thumb{background-color:#001F3F}`,
+            `::-webkit-scrollbar-track{background-color:#AAAAAA}`,
+            `pre.prettyprint{border:0}`,
+            `.left{width:20%;min-width:300px}`,
+            [
+                `.title{text-align:right;display:block;font-size:3em;`,
+                `color:white;background-color:#001F3F;padding-left:1em;padding-top:0.8em;`,
+                `width:4em;padding-right:0.3em;padding-bottom:0.1em;margin:auto;margin-top:30px;margin-bottom:45px;`,
+                `box-shadow:0 1px 3px rgba(0,0,0,0.12),0 1px 2px rgba(0,0,0,0.24)`,
+                `}`,
+            ].join(''),
+            [
+                `.small-title{display:none;color:#001F3F;text-align:center;`,
+                `text-shadow:0 2px 4px rgba(0,0,0,0.12),0 2px 4px rgba(0,0,0,0.24);`,
+                `font-size:3em;margin-top:15px;margin-bottom:25px;font-weight:bold;padding:5px}`,
+            ].join(''),
+            [
+                `@media only screen and (max-width: 768px){`,
+                `.card-content{display:none}.card{width:80px}.left{width:90px;min-width:90px}`,
+                `.title{display:none}.small-title{display:block}`,
+                `}`,
+            ].join(''),
+        ].join('');
     }
 
     protected trim(target: string) {
