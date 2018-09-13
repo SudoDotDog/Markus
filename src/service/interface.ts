@@ -133,3 +133,15 @@ export interface IDocInformation {
     name: IText;
     description: IText;
 }
+
+export enum MARKUS_RESOURCE_TYPE {
+    IMAGE = 'IMAGE',
+    TAG = 'TAG',
+}
+
+// SEARCHES
+export interface ISearchResult {
+    type: MARKUS_RESOURCE_TYPE;
+    name: string;
+    createdAt: Date;
+}

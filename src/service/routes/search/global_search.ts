@@ -9,7 +9,7 @@ import * as Direct from "../../../direct/import";
 import { assert } from '../../../util/error/assert';
 import { ERROR_CODE } from "../../../util/error/error";
 // tslint:disable-next-line
-import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, EXPRESS_POST_SUBMIT_FORMAT, IDocInformation, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE } from '../../interface';
+import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, EXPRESS_POST_SUBMIT_FORMAT, IDocInformation, IExpressAssertionJSONType, IExpressRoute, ISearchResult, ROUTE_MODE } from '../../interface';
 import LodgeableExpressRoute from "../lodgeable";
 
 export default class RouteSearchGlobal extends LodgeableExpressRoute implements IExpressRoute {
@@ -30,10 +30,10 @@ export default class RouteSearchGlobal extends LodgeableExpressRoute implements 
     };
     public readonly doc: IDocInformation = {
         name: {
-            EN: 'Search Tag',
+            EN: 'Global Search',
         },
         description: {
-            EN: 'Globally search tag by string piece, return array of tag name',
+            EN: 'Globally search everything by string piece, return all: tag, image which match the cut',
         },
     };
 
@@ -42,8 +42,8 @@ export default class RouteSearchGlobal extends LodgeableExpressRoute implements 
             assert(req.valid).to.be.true(ERROR_CODE.PERMISSION_VALID_FAILED);
             const cut: string = req.body.cut;
             assert(cut).to.be.exist(ERROR_CODE.REQUEST_PATTERN_NOT_MATCHED);
-            const tags: string[] = await Direct.Tag.tagSearch(cut);
-            res.agent.add('tags', tags);
+            const tags: ISearchResult[] = await Direct.Tag.tagSearch(cut);
+            res.agent.add('results', tags);
         } catch (err) {
             res.agent.failed(400, err);
         } finally {

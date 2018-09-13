@@ -29,7 +29,7 @@ export const getBuiltDocRoute = (): DocRouteBuilder => {
         new Route.RouteGetAvatar(),
         new Route.RouteGetImagesByTag(),
         new Route.RouteRenameTag(),
-        new Route.RouteSearchTag(),
+        new Route.RouteSearchGlobal(),
         new Route.RouteTagList(),
         new Route.RouteTagAdvancedList(),
         new Route.RouteRiskyGetList(),
