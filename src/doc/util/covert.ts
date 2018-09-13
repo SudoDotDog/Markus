@@ -21,6 +21,13 @@ export const convertRouteToTemplate = (route: IExpressRoute, processor: Language
         value: route.authorization ? 'YES' : 'NO',
     }];
 
+    if (route.authorization) {
+        template.push({
+            name: 'Authorization Role',
+            value: route.authRole ? route.authRole.join(',') : 'Everyone',
+        });
+    }
+
     if (domain) {
         template.unshift({
             name: 'Path',

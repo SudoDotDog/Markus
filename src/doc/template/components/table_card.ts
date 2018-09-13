@@ -29,6 +29,7 @@ export default class DocTableCardTemplateRenderer implements IDocTemplateRendere
         this._marks = route.specialMark || [];
 
         this.getExampleCode = this.getExampleCode.bind(this);
+        this.getTestDrive = this.getTestDrive.bind(this);
         this.getNodeCode = this.getNodeCode.bind(this);
         this.getFetchCode = this.getFetchCode.bind(this);
         this.getHTMLCode = this.getHTMLCode.bind(this);
@@ -62,10 +63,15 @@ export default class DocTableCardTemplateRenderer implements IDocTemplateRendere
                     <tbody>
                         ${this._content.map(this.getRow).join('')}
                         ${this.getExampleCode()}
+                        ${this.getTestDrive()}
                     </tbody>
                 </table>
             </div>
         `);
+    }
+
+    protected getTestDrive(): string {
+        return '';
     }
 
     protected getExampleCode(): string {
