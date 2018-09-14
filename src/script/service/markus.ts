@@ -3,6 +3,9 @@
  * @fileoverview Single thread service
  */
 
+// For alias
+require('module-alias/register');
+
 import * as Http from 'http';
 import { initMarkusGlobalConfig } from '../../markus';
 import app from './app';
