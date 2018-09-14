@@ -5,7 +5,6 @@
  */
 
 import { IExpressRoute, IText } from "../service/interface";
-import LanguageTextProcessor from '../service/language';
 import * as Route from '../service/routes/import';
 import { SERVICE_ROUTE_UPLOAD_BASE64_MODE } from "../service/routes/upload/upload_base64";
 import { SERVICE_ROUTE_UPLOAD_BUFFER_MODE } from "../service/routes/upload/upload_buffer";

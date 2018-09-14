@@ -76,7 +76,7 @@ export default class DocTableCardTemplateRenderer implements IDocTemplateRendere
             return this.getRow({
                 name: 'Test Drive',
                 value: buildTestDriveTemplateByRoute(this._route),
-            })
+            });
         }
         return '';
     }

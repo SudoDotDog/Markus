@@ -38,6 +38,7 @@
         "stringify",
         "struct",
         "submodule",
+        "testdrive",
         "tshook",
         "tsnode",
         "ubuild",
