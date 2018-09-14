@@ -5,7 +5,7 @@
  */
 
 import { expect } from 'chai';
-import Color from '../../../src/icon/sparidae/color';
+import Color from '../../../../src/plugin/icon/sparidae/color';
 
 describe('test color sparidae parser', () => {
     let color: Color;

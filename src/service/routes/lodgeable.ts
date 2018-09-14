@@ -5,7 +5,7 @@
  */
 
 import { RequestHandler } from "express";
-import Log from "../../log/log";
+import Log from "../../plugin/log/log";
 import { ExpressAssertionType, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE } from "../interface";
 
 export default abstract class LodgeableExpressRoute implements IExpressRoute {

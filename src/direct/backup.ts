@@ -6,7 +6,7 @@
 
 import * as Mix from '../database/mix/import';
 import { IFileModel } from '../database/model/file';
-import Log from '../log/log';
+import Log from '../plugin/log/log';
 import { appropriateCurrentDateName } from '../util/data/date';
 import { fixConflictName, fixExtName } from '../util/data/file';
 import { fileBuilder, tempPath } from '../util/data/path';

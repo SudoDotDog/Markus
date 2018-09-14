@@ -6,8 +6,8 @@
 
 import * as express from "express";
 import { MARKUS_AUTHORIZATION_ROLE } from "../declare/interface";
-import { LOG_MODE } from "../log/interface";
-import Log from "../log/log";
+import { LOG_MODE } from "../plugin/log/interface";
+import Log from "../plugin/log/log";
 import { MarkusExtensionConfig } from "../markus";
 import { error, ERROR_CODE, handlerError } from "../util/error/error";
 import Fork from '../util/struct/fork';

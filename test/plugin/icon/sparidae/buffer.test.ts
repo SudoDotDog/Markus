@@ -5,8 +5,8 @@
  */
 
 import { expect } from 'chai';
-import Buffer from '../../../src/icon/sparidae/buffer';
-import { IPoint } from '../../../src/icon/sparidae/point';
+import Buffer from '../../../../src/plugin/icon/sparidae/buffer';
+import { IPoint } from '../../../../src/plugin/icon/sparidae/point';
 
 describe('test buffer parser', () => {
     const textEndPoint: IPoint = {

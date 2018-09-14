@@ -6,7 +6,7 @@
 
 import { Express, Request, Response } from "express";
 import { createDocIndex, createSubDocIndex, verifyLanguage } from "../../doc/handler";
-import Log from "../../log/log";
+import Log from "../../plugin/log/log";
 import { IExpressExtension, IText } from '../interface';
 
 export default class ExtensionDocGenerate implements IExpressExtension {

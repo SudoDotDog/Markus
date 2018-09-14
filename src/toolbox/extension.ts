@@ -6,7 +6,7 @@
 
 import { Express, NextFunction, Request, RequestHandler, Response } from "express";
 import { MARKUS_AUTHORIZATION_ROLE } from "../declare/interface";
-import Log from "../log/log";
+import Log from "../plugin/log/log";
 import { MarkusExtensionConfig } from "../markus";
 import { ExpressNextFunction, IExpressExtension } from '../service/interface';
 import { assert } from "../util/error/assert";

@@ -6,7 +6,7 @@
 
 import { Express, RequestHandler } from "express";
 import { MARKUS_AUTHORIZATION_ROLE } from "../declare/interface";
-import Log from '../log/log';
+import Log from '../plugin/log/log';
 
 export interface IExpressBuilder {
     app: Express;

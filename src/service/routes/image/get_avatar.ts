@@ -7,8 +7,8 @@
 import { Request, RequestHandler, Response } from "express";
 import { IFileModel } from "../../../database/model/file";
 import * as Direct from "../../../direct/import";
-import { Icon } from "../../../icon/icon";
-import { IIconConfig } from "../../../icon/interface";
+import { Icon } from "../../../plugin/icon/icon";
+import { IIconConfig } from "../../../plugin/icon/interface";
 import { fileBuilder } from "../../../util/data/path";
 import { rummageLongTermTempFileOrCreateWithLazyLoadContent } from "../../../util/image";
 // tslint:disable-next-line

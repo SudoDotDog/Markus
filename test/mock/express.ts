@@ -5,8 +5,8 @@
  */
 
 import { Response } from "express";
-import { LOG_MODE } from "../../src/log/interface";
-import Log from "../../src/log/log";
+import { LOG_MODE } from "../../src/plugin/log/interface";
+import Log from "../../src/plugin/log/log";
 import { ResponseAgent } from "../../src/script/handlers/util/agent";
 import { error, ERROR_CODE } from "../../src/util/error/error";
 

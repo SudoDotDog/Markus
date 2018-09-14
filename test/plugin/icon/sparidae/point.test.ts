@@ -5,7 +5,7 @@
  */
 
 import { expect } from 'chai';
-import Point from '../../../src/icon/sparidae/point';
+import Point from '../../../../src/plugin/icon/sparidae/point';
 
 describe('test icon point', () => {
     let testContent: Point;

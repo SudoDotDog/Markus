@@ -4,8 +4,8 @@
  */
 
 import { expect } from 'chai';
-import { LOG_MODE } from '../../src/log/interface';
-import Log from '../../src/log/log';
+import { LOG_MODE } from '../../../src/plugin/log/interface';
+import Log from '../../../src/plugin/log/log';
 
 describe('test log main class', (): void => {
 

@@ -6,8 +6,8 @@
 
 import * as Fs from 'fs';
 import * as Path from 'path';
-import { mkPathDir } from '../util/data/file';
-import { error, ERROR_CODE } from '../util/error/error';
+import { mkPathDir } from '../../util/data/file';
+import { error, ERROR_CODE } from '../../util/error/error';
 import Log from './log';
 
 export default class FileLogAgent {

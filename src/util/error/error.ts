@@ -8,7 +8,7 @@
 /// <reference path="../../declare/global.ts" />
 
 import { Response } from "express";
-import Log from "../../log/log";
+import Log from "../../plugin/log/log";
 import { RESPONSE } from "../interface";
 
 export enum ERROR_CODE {

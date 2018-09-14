@@ -5,7 +5,7 @@
  */
 
 import { Response } from "express";
-import Log from "../../../log/log";
+import Log from "../../../plugin/log/log";
 import { error, ERROR_CODE, secureError } from "../../../util/error/error";
 import { RESPONSE } from "../../../util/interface";
 

@@ -4,10 +4,10 @@
  */
 
 import { expect } from 'chai';
-import FileLogAgent from '../../src/log/file';
-import { LOG_MODE } from '../../src/log/interface';
-import Log from '../../src/log/log';
-import { mockWriteStream, monkFsSyncs } from '../mock/mock';
+import FileLogAgent from '../../../src/plugin/log/file';
+import { LOG_MODE } from '../../../src/plugin/log/interface';
+import Log from '../../../src/plugin/log/log';
+import { mockWriteStream, monkFsSyncs } from '../../mock/mock';
 
 describe('test log file agent class', (): void => {
     it('stream should work as expected', (next: () => void): void => {

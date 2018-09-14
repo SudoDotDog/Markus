@@ -10,7 +10,7 @@ import { Request, Response } from "express";
 import { IAvatarCallback } from '../../database/interface/avatar';
 import { IFileModel } from "../../database/model/file";
 import * as Direct from '../../direct/import';
-import { Icon } from "../../icon/icon";
+import { Icon } from "../../plugin/icon/icon";
 import { fileBuilder } from "../../util/data/path";
 import { error, ERROR_CODE, handlerError } from "../../util/error/error";
 import { createTempFile } from "../../util/image";

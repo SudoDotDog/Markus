@@ -4,7 +4,7 @@
  */
 
 import { expect } from 'chai';
-import { Icon } from '../../src/icon/icon';
+import { Icon } from '../../../src/plugin/icon/icon';
 
 describe('test icon generator', () => {
 

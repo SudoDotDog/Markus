@@ -4,7 +4,7 @@
  * @fileoverview Logs class
  */
 
-import { appropriateDateStringWithTime } from "../util/data/date";
+import { appropriateDateStringWithTime } from "../../util/data/date";
 import { LOG_MODE } from "./interface";
 
 export default class Log {

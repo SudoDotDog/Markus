@@ -4,7 +4,7 @@
  */
 
 import { IConfig } from "../interface";
-import Log from "../log/log";
+import Log from "../plugin/log/log";
 import { ResponseAgent } from "../script/handlers/util/agent";
 import { IFileManager } from "../util/manager/file/import";
 import { IMarkusGlobalEnvironment, MARKUS_AUTHORIZATION_ROLE } from "./interface";

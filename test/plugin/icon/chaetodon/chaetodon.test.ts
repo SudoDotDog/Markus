@@ -5,7 +5,7 @@
  */
 
 import { expect } from 'chai';
-import { chaetodon, COLOR_CODE } from '../../../src/icon/chaetodon/chaetodon';
+import { chaetodon, COLOR_CODE } from '../../../../src/plugin/icon/chaetodon/chaetodon';
 
 describe('test color generator', () => {
     it('should return correct chaetodon color set by color code', () => {

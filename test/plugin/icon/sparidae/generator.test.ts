@@ -5,7 +5,7 @@
  */
 
 import { expect } from 'chai';
-import Generator from '../../../src/icon/sparidae/generator';
+import Generator from '../../../../src/plugin/icon/sparidae/generator';
 
 describe('test generator parser', () => {
     let generator: Generator;
