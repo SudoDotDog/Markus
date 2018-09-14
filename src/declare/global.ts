@@ -31,7 +31,7 @@ declare global {
             Markus: {
                 Environment: IMarkusGlobalEnvironment,
                 Config: IConfig,
-            },
+            };
         }
     }
 }

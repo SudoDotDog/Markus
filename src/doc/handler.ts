@@ -10,11 +10,11 @@ import * as Route from '../service/routes/import';
 import { SERVICE_ROUTE_UPLOAD_BASE64_MODE } from "../service/routes/upload/upload_base64";
 import { SERVICE_ROUTE_UPLOAD_BUFFER_MODE } from "../service/routes/upload/upload_buffer";
 import { error, ERROR_CODE } from "../util/error/error";
+import { renderDocIndex } from "./bridge";
 import DocRouteBuilder from './builder';
 import { IDocTemplateRenderer } from "./interface";
 import DocSmallCardTemplateRenderer from './template/components/small_card';
 import DocTableCardTemplateRenderer from './template/components/table_card';
-import DocOuterParentTemplateRenderer from "./template/parent";
 
 export const getBuiltDocRoute = (): DocRouteBuilder => {
     const docBuilder: DocRouteBuilder = new DocRouteBuilder();
@@ -83,6 +83,5 @@ export const createDocIndex = (language: keyof IText): string => {
         );
     });
 
-    const outer: IDocTemplateRenderer = new DocOuterParentTemplateRenderer(cards);
-    return outer.build();
+    return renderDocIndex(cards);
 };

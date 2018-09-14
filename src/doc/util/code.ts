@@ -53,11 +53,11 @@ export const nodeMarkusFormData = (domain: string, route: IExpressRoute): string
             }
         }
         return temp;
-    }
+    };
 
     if (route.assertBody) {
         for (let i of Object.keys(route.assertBody)) {
-            const current = route.assertBody[i]
+            const current = route.assertBody[i];
             append.push(...parseType(i, current));
         }
     }
@@ -102,11 +102,11 @@ export const fetchMarkusFormData = (domain: string, route: IExpressRoute): strin
             }
         }
         return temp;
-    }
+    };
 
     if (route.assertBody) {
         for (let i of Object.keys(route.assertBody)) {
-            const current = route.assertBody[i]
+            const current = route.assertBody[i];
             append.push(...parseType(i, current));
         }
     }

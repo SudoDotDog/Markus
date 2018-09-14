@@ -39,6 +39,7 @@
         "struct",
         "submodule",
         "tshook",
+        "tsnode",
         "ubuild",
         "webp",
         "xlink",
