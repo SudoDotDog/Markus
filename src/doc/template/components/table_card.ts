@@ -4,7 +4,7 @@
  * @fileoverview Table Card
  */
 
-import { EXPRESS_EXAMPLE_CODE, EXPRESS_SPECIAL_MARK, IExpressRoute, IText } from '../../../service/interface';
+import { EXPRESS_EXAMPLE_CODE, EXPRESS_SPECIAL_MARK, IExpressRoute, IText } from '#route-interface';
 import LanguageTextProcessor from '../../../service/language';
 import { IDocTableElement, IDocTemplateRenderer } from '../../interface';
 import { fetchMarkusFormData, htmlMarkusImage, nodeMarkusFormData } from '../../util/code';

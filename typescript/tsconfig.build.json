@@ -3,8 +3,11 @@
     "compilerOptions": {
         "baseUrl": "../src",
         "paths": {
+            "#icon/*": ["plugin/icon/*"],
             "#log/*": ["plugin/log/*"],
-            "#icon/*": ["plugin/icon/*"]
+            "#route/*": ["service/routes/*"],
+            "#global-interface": ["interface"],
+            "#route-interface": ["service/interface"]
         },
         "alwaysStrict": true,
         "outDir": "../dist",

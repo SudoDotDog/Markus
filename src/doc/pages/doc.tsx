@@ -9,7 +9,6 @@
 import * as Fs from 'fs';
 import * as Path from 'path';
 import * as React from "react";
-import { IDocTemplateRenderer } from '../interface';
 
 const styles: {
     [key: string]: React.CSSProperties;
