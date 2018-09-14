@@ -36,12 +36,7 @@ const styles: {
     },
 };
 
-export interface IProps {
-    child: IDocTemplateRenderer[];
-}
-
-export default class Parent extends React.Component<IProps, {}> {
-
+export default class Parent extends React.Component<{}, {}> {
     public render(): JSX.Element {
         return (<html>
             <head>
@@ -54,15 +49,7 @@ export default class Parent extends React.Component<IProps, {}> {
                     <div style={styles.left} className="left">
                         <div className="title">Markus</div>
                         <div className="small-title">M</div>
-                        <div
-                            dangerouslySetInnerHTML={
-                                {
-                                    __html: this.props.child.map(
-                                        (renderer: IDocTemplateRenderer) => renderer.build(),
-                                    ).join(''),
-                                }
-                            }>
-                        </div>
+                        {this.props.children}
                         <div style={styles.version}>
                             <a href="https://github.com/sudo-dog/markus">
                                 v{global.Markus.Environment.version}
@@ -77,11 +64,8 @@ export default class Parent extends React.Component<IProps, {}> {
             <style>
                 {this.getGlobalStyles()}
             </style>
-            <script dangerouslySetInnerHTML={
-                {
-                    __html: Fs.readFileSync(Path.resolve('assets', 'code', 'doc.js'), 'UTF8'),
-                }
-            }>
+            <script>
+                {Fs.readFileSync(Path.resolve('assets', 'code', 'doc.js'), 'UTF8')}
             </script>
         </html>);
     }

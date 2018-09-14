@@ -13,7 +13,6 @@ import { error, ERROR_CODE } from "../util/error/error";
 import { renderDocIndex } from "./bridge";
 import DocRouteBuilder from './builder';
 import { IDocTemplateRenderer } from "./interface";
-import DocSmallCardTemplateRenderer from './template/components/small_card';
 import DocTableCardTemplateRenderer from './template/components/table_card';
 
 export const getBuiltDocRoute = (): DocRouteBuilder => {
@@ -73,15 +72,5 @@ export const createSubDocIndex = (name: string, language: keyof IText, url: stri
 };
 
 export const createDocIndex = (language: keyof IText): string => {
-    const processor: LanguageTextProcessor = new LanguageTextProcessor(language);
-    const cards: IDocTemplateRenderer[] = getBuiltDocRoute().flush().map((route: IExpressRoute) => {
-        return new DocSmallCardTemplateRenderer(
-            route.name,
-            route.doc ? processor.from(route.doc.name) : route.name,
-            route.path,
-            route.specialMark || [],
-        );
-    });
-
-    return renderDocIndex(cards);
+    return renderDocIndex(getBuiltDocRoute().flush(), language);
 };
