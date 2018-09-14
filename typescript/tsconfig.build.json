@@ -3,7 +3,8 @@
     "compilerOptions": {
         "baseUrl": "../src",
         "paths": {
-            "@log/*": ["plugin/log/*"]
+            "#log/*": ["plugin/log/*"],
+            "#icon/*": ["plugin/icon/*"]
         },
         "alwaysStrict": true,
         "outDir": "../dist",

@@ -6,7 +6,7 @@
 import * as ChildProcess from 'child_process';
 import * as fs from 'fs';
 import { IConfig, IMarkusExtensionConfig } from '../../src/interface';
-import { MarkusExtensionConfig, initMarkusGlobalConfig } from '../../src/markus';
+import { initMarkusGlobalConfig, MarkusExtensionConfig } from '../../src/markus';
 import { error, ERROR_CODE } from '../../src/util/error/error';
 
 export class MockExpress {

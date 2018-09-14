@@ -3,10 +3,10 @@
  * @fileoverview Log File Test
  */
 
+import FileLogAgent from '#log/file';
+import { LOG_MODE } from '#log/interface';
+import Log from '#log/log';
 import { expect } from 'chai';
-import FileLogAgent from '../../../src/plugin/log/file';
-import { LOG_MODE } from '../../../src/plugin/log/interface';
-import Log from '../../../src/plugin/log/log';
 import { mockWriteStream, monkFsSyncs } from '../../mock/mock';
 
 describe('test log file agent class', (): void => {
