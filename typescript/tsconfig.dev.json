@@ -6,6 +6,7 @@
         "removeComments": true,
         "downlevelIteration": true,
         "inlineSourceMap": true,
+        "jsx": "react",
         "strict": true,
         "noImplicitReturns": true,
         "noImplicitAny": true,
