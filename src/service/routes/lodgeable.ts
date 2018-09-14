@@ -6,7 +6,7 @@
 
 import { RequestHandler } from "express";
 import Log from "../../log/log";
-import { IExpressRoute, ROUTE_MODE } from "../interface";
+import { ExpressAssertionType, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE } from "../interface";
 
 export default abstract class LodgeableExpressRoute implements IExpressRoute {
     public abstract readonly name: string;
@@ -16,6 +16,11 @@ export default abstract class LodgeableExpressRoute implements IExpressRoute {
     public abstract readonly authorization: boolean;
     public abstract readonly stack: RequestHandler[];
     public abstract readonly after: boolean;
+
+    public readonly assertBody?: IExpressAssertionJSONType;
+    public readonly assertParam?: IExpressAssertionJSONType;
+    public readonly assertQuery?: IExpressAssertionJSONType;
+    public readonly assertResponse?: IExpressAssertionJSONType;
 
     protected _log: Log | undefined;
     public constructor() {
@@ -35,5 +40,74 @@ export default abstract class LodgeableExpressRoute implements IExpressRoute {
         if (this._log) {
             this._log.verbose(str);
         }
+    }
+
+    protected info(str: string) {
+        if (this._log) {
+            this._log.info(str);
+        }
+    }
+
+    protected verifyBody(content: {
+        [key: string]: any;
+    }): boolean {
+        if (!this.assertBody) {
+            return true;
+        }
+
+        for (let key of Object.keys(this.assertBody)) {
+            const expect: ExpressAssertionType = this.assertBody[key];
+
+            if (
+                !Object.keys(content).includes(key) &&
+                !expect.optional
+            ) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    protected verifyQuery(content: {
+        [key: string]: any;
+    }): boolean {
+        if (!this.assertQuery) {
+            return true;
+        }
+
+        for (let key of Object.keys(this.assertQuery)) {
+            const expect: ExpressAssertionType = this.assertQuery[key];
+
+            if (
+                !Object.keys(content).includes(key) &&
+                !expect.optional
+            ) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    protected verifyParams(content: {
+        [key: string]: any;
+    }): boolean {
+        if (!this.assertParam) {
+            return true;
+        }
+
+        for (let key of Object.keys(this.assertParam)) {
+            const expect: ExpressAssertionType = this.assertParam[key];
+
+            if (
+                !Object.keys(content).includes(key) &&
+                !expect.optional
+            ) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
