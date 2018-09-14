@@ -1,6 +1,7 @@
 {
     "compileOnSave": false,
     "compilerOptions": {
+        "baseUrl": "../script",
         "alwaysStrict": true,
         "outDir": "../dist_script",
         "removeComments": true,

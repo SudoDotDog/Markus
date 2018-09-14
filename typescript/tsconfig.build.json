@@ -1,6 +1,10 @@
 {
     "compileOnSave": false,
     "compilerOptions": {
+        "baseUrl": "../src",
+        "paths": {
+            "@log/*": ["plugin/log/*"]
+        },
         "alwaysStrict": true,
         "outDir": "../dist",
         "removeComments": true,
