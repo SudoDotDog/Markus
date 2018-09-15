@@ -3,9 +3,7 @@
  * @fileoverview Single thread service
  */
 
-// For alias
-require('module-alias/register');
-
+require('../../binding');
 import * as Http from 'http';
 import { initMarkusGlobalConfig } from '../../markus';
 import app from './app';

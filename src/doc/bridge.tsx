@@ -4,6 +4,7 @@
  * @fileoverview Bridge
  */
 
+require('../binding');
 import Detail from '#/doc/pages/detail';
 import LanguageTextProcessor from '#/service/language';
 import { IExpressRoute, IText } from '#route-interface';
