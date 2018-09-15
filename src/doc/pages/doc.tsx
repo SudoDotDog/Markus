@@ -63,8 +63,9 @@ export default class Parent extends React.Component<{}, {}> {
             <style>
                 {this.getGlobalStyles()}
             </style>
-            <script>
-                {Fs.readFileSync(Path.resolve('assets', 'code', 'doc.js'), 'UTF8')}
+            <script dangerouslySetInnerHTML={{
+                __html: Fs.readFileSync(Path.resolve('assets', 'code', 'doc.js'), 'UTF8'),
+            }}>
             </script>
         </html>);
     }

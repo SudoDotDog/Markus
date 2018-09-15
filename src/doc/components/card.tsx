@@ -49,7 +49,7 @@ export interface IProps {
     processor: LanguageTextProcessor;
 }
 
-export default class Parent extends React.Component<IProps, {}> {
+export default class Card extends React.Component<IProps, {}> {
     public constructor(props: IProps) {
         super(props);
 
@@ -60,7 +60,7 @@ export default class Parent extends React.Component<IProps, {}> {
     }
 
     public render(): JSX.Element {
-        return (<div style={styles.outer} className="card">
+        return (<div style={styles.outer} className="card" data-doc={this.props.route.name}>
             <div style={styles.inner}>
                 <div style={styles.icon}>
                     <img src={this.icon()} alt="icon" width="80px" height="80px" />

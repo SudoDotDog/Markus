@@ -138,7 +138,7 @@ export default class Detail extends React.Component<IProps, {}> {
             content = convertObjectToHTMLFriendlyJson(row.value, 3);
         }
 
-        return (<tr style={styles.rightRow}>
+        return (<tr style={styles.rightRow} key={row.name}>
             <td style={styles.leftRow} dangerouslySetInnerHTML={{
                 __html: row.name,
             }}>

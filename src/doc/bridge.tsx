@@ -17,7 +17,7 @@ export const renderDocIndex = (routes: IExpressRoute[], language: keyof IText): 
 
     const doc: JSX.Element = (<Doc>
         {routes.map((route: IExpressRoute) => (
-            <Card route={route} processor={processor}>
+            <Card route={route} processor={processor} key={route.name}>
             </Card>
         ))}
     </Doc>);

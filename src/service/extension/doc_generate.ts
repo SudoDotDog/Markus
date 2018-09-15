@@ -50,25 +50,33 @@ export default class ExtensionDocGenerate implements IExpressExtension {
     }
 
     private handler(req: Request, res: Response): void {
-        let language: string | undefined = req.query.language;
-        if (!verifyLanguage(language)) {
-            language = 'EN';
-        }
+        try {
+            let language: string | undefined = req.query.language;
+            if (!verifyLanguage(language)) {
+                language = 'EN';
+            }
 
-        const doc: string = this.rummageDoc(language as keyof IText);
-        res.send(doc);
+            const doc: string = this.rummageDoc(language as keyof IText);
+            res.send(doc);
+        } catch (err) {
+            res.status(400).send('ERROR');
+        }
     }
 
     private subHandler(req: Request, res: Response): void {
-        const url: string = req.protocol + '://' + req.hostname;
-        let language: string | undefined = req.query.language;
-        const name: string = req.params.name;
-        if (!verifyLanguage(language)) {
-            language = 'EN';
-        }
+        try {
+            const url: string = req.protocol + '://' + req.hostname;
+            let language: string | undefined = req.query.language;
+            const name: string = req.params.name;
+            if (!verifyLanguage(language)) {
+                language = 'EN';
+            }
 
-        const doc: string = this.rummageSubDoc(name, language as keyof IText, url);
-        res.send(doc);
+            const doc: string = this.rummageSubDoc(name, language as keyof IText, url);
+            res.send(doc);
+        } catch (err) {
+            res.status(400).send('ERROR');
+        }
     }
 
     private rummageDoc(language: keyof IText): string {
