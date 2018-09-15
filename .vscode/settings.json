@@ -34,6 +34,7 @@
         "originalname",
         "readonly",
         "scrollbar",
+        "setx",
         "splited",
         "stringify",
         "struct",

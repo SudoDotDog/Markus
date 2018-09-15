@@ -71,6 +71,11 @@ host:
 
 tests:
 	@echo "[INFO] Testing with Mocha"
+ifeq ($(OS), Windows_NT)
+	setx NODE_ENV test
+else
+	NODE_ENV=test
+endif
 	@$(mocha)
 
 cleanall: clean
