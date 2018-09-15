@@ -8,9 +8,11 @@ import { fetchMarkusFormData, htmlMarkusImage, nodeMarkusFormData } from '#/doc/
 import { convertObjectToHTMLFriendlyJson, convertRouteToTemplate } from '#/doc/util/covert';
 import LanguageTextProcessor from '#/service/language';
 import { Nullable } from '#global-interface';
+import { I18N_LANGUAGE } from '#i18n/interface';
+import StaticResource from '#i18n/static';
 import { EXPRESS_EXAMPLE_CODE, IExpressRoute } from '#route-interface';
 import * as React from "react";
-import { IDocTableElement } from "../interface";
+import { IDocTableElement, IStaticResourceDocInformation } from "../interface";
 
 const styles: {
     [key: string]: React.CSSProperties;
@@ -65,14 +67,18 @@ export interface IProps {
     route: IExpressRoute;
     processor: LanguageTextProcessor;
     url: string;
+
+    resource?: StaticResource<IStaticResourceDocInformation>;
 }
 
 export default class Detail extends React.Component<IProps, {}> {
     private _content: IDocTableElement[];
+    private _language: I18N_LANGUAGE;
 
     public constructor(props: IProps) {
         super(props);
 
+        this._language = I18N_LANGUAGE.ENGLISH;
         this.icon = this.icon.bind(this);
         this.badge = this.badge.bind(this);
         this.title = this.title.bind(this);
@@ -81,6 +87,7 @@ export default class Detail extends React.Component<IProps, {}> {
             this.props.route,
             this.props.processor,
             url,
+            this.props.resource,
         );
     }
 
@@ -98,7 +105,6 @@ export default class Detail extends React.Component<IProps, {}> {
             <table style={styles.table}>
                 <tbody>
                     {this._content.map(this.row)}
-
                 </tbody>
             </table>
         </div>);
@@ -123,7 +129,12 @@ export default class Detail extends React.Component<IProps, {}> {
     protected title(): JSX.Element {
         const route: IExpressRoute = this.props.route;
         const processor: LanguageTextProcessor = this.props.processor;
-        const title: string = route.doc ? processor.from(route.doc.name) : route.name;
+        let title: string;
+        if (this.props.resource) {
+            title = this.props.resource.language(this._language).name;
+        } else {
+            title = route.doc ? processor.from(route.doc.name) : route.name;
+        }
 
         return (<div style={styles.text}>
             {title}

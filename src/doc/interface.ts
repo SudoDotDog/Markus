@@ -23,4 +23,5 @@ export interface IDocTableElement {
 
 export interface IStaticResourceDocInformation {
     name: string;
+    description: string;
 }

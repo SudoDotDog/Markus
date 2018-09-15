@@ -44,11 +44,20 @@ export const renderDocIndex = (routes: IExpressRoute[], language: keyof IText): 
 
 export const renderDocDetail = (route: IExpressRoute, language: keyof IText, url: string): string => {
     const processor: LanguageTextProcessor = new LanguageTextProcessor(language);
+    const internationalization = new Internationalization(getAssetI18NPath());
+
+    let resource: StaticResource<IStaticResourceDocInformation> | undefined;
+    if (route.resource) {
+        resource = internationalization.resource<IStaticResourceDocInformation>(route.resource);
+    } else {
+        resource = undefined;
+    }
 
     const detail: JSX.Element = (<Detail
         route={route}
         processor={processor}
         url={url}
+        resource={resource}
     ></Detail >);
     return ReactDomServer.renderToStaticMarkup(detail);
 };

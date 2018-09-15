@@ -28,7 +28,7 @@ export default class RouteRoot extends LodgeableExpressRoute implements IExpress
 
     public constructor() {
         super();
-        console.log(this.resource);
+
         this.handle = this.handle.bind(this);
         this.stack = [
             this.handle,

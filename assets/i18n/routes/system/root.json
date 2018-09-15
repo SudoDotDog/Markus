@@ -1,8 +1,10 @@
 {
     "zh_cn": {
-        "name": "System Information 中文"
+        "name": "系统信息",
+        "description": "返回当前运行的软件信息"
     },
     "en_us": {
-        "name": "System Information"
+        "name": "System Information",
+        "description": "Return system information"
     }
 }

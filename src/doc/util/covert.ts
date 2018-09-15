@@ -4,12 +4,14 @@
  * @fileoverview Converter
  */
 
+import { I18N_LANGUAGE } from "#i18n/interface";
+import StaticResource from "#i18n/static";
 // tslint:disable-next-line
 import { ExpressAssertionType, EXPRESS_ASSERTION_TYPES_END, EXPRESS_ASSERTION_TYPES_UNION, IExpressAssertionJSONType, IExpressRoute } from "../../service/interface";
 import LanguageTextProcessor from "../../service/language";
-import { IDocTableElement } from "../interface";
+import { IDocTableElement, IStaticResourceDocInformation } from "../interface";
 
-export const convertRouteToTemplate = (route: IExpressRoute, processor: LanguageTextProcessor, domain?: string): IDocTableElement[] => {
+export const convertRouteToTemplate = (route: IExpressRoute, processor: LanguageTextProcessor, domain?: string, resource?: StaticResource<IStaticResourceDocInformation>): IDocTableElement[] => {
     const template: IDocTableElement[] = [{
         name: 'Route',
         value: route.path,
@@ -35,9 +37,16 @@ export const convertRouteToTemplate = (route: IExpressRoute, processor: Language
         });
     }
 
+    let description: string;
+    if (resource) {
+        description = resource.language(I18N_LANGUAGE.ENGLISH).description;
+    } else {
+        description = route.doc ? processor.from(route.doc.description) : route.name;
+    }
+
     template.unshift({
         name: 'Description',
-        value: route.doc ? processor.from(route.doc.description) : route.name,
+        value: description,
     });
 
     if (route.postType) {
