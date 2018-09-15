@@ -21,10 +21,12 @@
   },
   "nyc": {
     "extension": [
-      ".ts"
+      ".ts",
+      ".tsx"
     ],
     "include": [
       "src/**/*.ts",
+      "src/**/*.tsx",
       "script/**/*.ts"
     ],
     "instrument": true,
