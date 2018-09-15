@@ -45,7 +45,7 @@ export type ExpressAssertionType = {
 } | {
     type: EXPRESS_ASSERTION_TYPES_END;
     optional?: boolean;
-}| {
+} | {
     type: EXPRESS_ASSERTION_TYPES_END;
     optional?: boolean;
 };
@@ -112,6 +112,7 @@ export interface IExpressRoute {
     readonly exampleCode?: EXPRESS_EXAMPLE_CODE[];
     readonly specialMark?: EXPRESS_SPECIAL_MARK[];
     readonly doc?: IDocInformation | null;
+    readonly resource?: string;
 
     available: () => boolean;
     setLog: (log: Log) => void;

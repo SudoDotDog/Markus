@@ -4,9 +4,12 @@
  * @fileoverview Card
  */
 
+import { I18N_LANGUAGE } from "#i18n/interface";
+import StaticResource from "#i18n/static";
 import * as React from "react";
 import { EXPRESS_SPECIAL_MARK, IExpressRoute } from "../../service/interface";
 import LanguageTextProcessor from "../../service/language";
+import { IStaticResourceDocInformation } from "../interface";
 
 const styles: {
     [key: string]: React.CSSProperties;
@@ -47,12 +50,17 @@ const styles: {
 export interface IProps {
     route: IExpressRoute;
     processor: LanguageTextProcessor;
+
+    resource?: StaticResource<IStaticResourceDocInformation>;
 }
 
 export default class Card extends React.Component<IProps, {}> {
+    private _language: I18N_LANGUAGE;
+
     public constructor(props: IProps) {
         super(props);
 
+        this._language = I18N_LANGUAGE.ENGLISH;
         this.icon = this.icon.bind(this);
         this.title = this.title.bind(this);
         this.path = this.path.bind(this);
@@ -81,7 +89,12 @@ export default class Card extends React.Component<IProps, {}> {
     protected title(): JSX.Element {
         const route: IExpressRoute = this.props.route;
         const processor: LanguageTextProcessor = this.props.processor;
-        const title: string = route.doc ? processor.from(route.doc.name) : route.name;
+        let title: string;
+        if (this.props.resource) {
+            title = this.props.resource.language(this._language).name;
+        } else {
+            title = route.doc ? processor.from(route.doc.name) : route.name;
+        }
 
         return (<div style={styles.text}>
             {title}

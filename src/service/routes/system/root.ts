@@ -7,7 +7,7 @@
 import { Request, RequestHandler, Response } from "express";
 import { markusVersion } from "../../../util/struct/agent";
 // tslint:disable-next-line
-import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, IDocInformation, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE } from '../../interface';
+import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE } from '../../interface';
 import LodgeableExpressRoute from "../lodgeable";
 
 export default class RouteRoot extends LodgeableExpressRoute implements IExpressRoute {
@@ -20,14 +20,7 @@ export default class RouteRoot extends LodgeableExpressRoute implements IExpress
     public readonly stack: RequestHandler[];
     public readonly after: boolean = true;
 
-    public readonly doc: IDocInformation = {
-        name: {
-            EN: 'Server information',
-        },
-        description: {
-            EN: 'Get server information',
-        },
-    };
+    public readonly resource: string = '/routes/system/root';
     public readonly assertResponse: IExpressAssertionJSONType = {
         agent: { type: EXPRESS_ASSERTION_TYPES_END.STRING },
         version: { type: EXPRESS_ASSERTION_TYPES_END.STRING },
@@ -35,6 +28,7 @@ export default class RouteRoot extends LodgeableExpressRoute implements IExpress
 
     public constructor() {
         super();
+        console.log(this.resource);
         this.handle = this.handle.bind(this);
         this.stack = [
             this.handle,

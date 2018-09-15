@@ -6,9 +6,9 @@
 
 import * as express from "express";
 import { MARKUS_AUTHORIZATION_ROLE } from "../declare/interface";
+import { MarkusExtensionConfig } from "../markus";
 import { LOG_MODE } from "../plugin/log/interface";
 import Log from "../plugin/log/log";
-import { MarkusExtensionConfig } from "../markus";
 import { error, ERROR_CODE, handlerError } from "../util/error/error";
 import Fork from '../util/struct/fork';
 import { IExpressBuilder, IExpressExtension, IExpressHeader, IExpressRoute, ROUTE_MODE } from "./interface";

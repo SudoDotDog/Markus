@@ -16,8 +16,8 @@ export default class Internationalization {
         this._path = path;
     }
 
-    public resource<T>(name: string): StaticResource<T> {
-        const targetJSON: string = Path.join(this._path, name + '.json');
+    public resource<T>(path: string): StaticResource<T> {
+        const targetJSON: string = Path.join(this._path, path + '.json');
         const perverse: string = Fs.readFileSync(targetJSON, 'UTF8');
         const parsed: I18N<T> = JSON.parse(perverse);
         return new StaticResource<T>(parsed);
