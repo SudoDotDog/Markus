@@ -28,7 +28,7 @@ declare global {
     namespace NodeJS {
         // tslint:disable-next-line
         interface Global {
-            Binding: boolean;
+            Binding?: boolean;
             Markus: {
                 Environment: IMarkusGlobalEnvironment,
                 Config: IConfig,
