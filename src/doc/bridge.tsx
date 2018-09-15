@@ -4,21 +4,33 @@
  * @fileoverview Bridge
  */
 
+import Detail from '#/doc/pages/detail';
+import LanguageTextProcessor from '#/service/language';
+import { IExpressRoute, IText } from '#route-interface';
 import * as React from 'react';
 import * as ReactDomServer from 'react-dom/server';
-import { IExpressRoute, IText } from '../service/interface';
-import LanguageTextProcessor from '../service/language';
 import Card from './components/card';
 import Doc from './pages/doc';
 
 export const renderDocIndex = (routes: IExpressRoute[], language: keyof IText): string => {
     const processor: LanguageTextProcessor = new LanguageTextProcessor(language);
 
-    const doc = (<Doc>
+    const doc: JSX.Element = (<Doc>
         {routes.map((route: IExpressRoute) => (
             <Card route={route} processor={processor}>
             </Card>
         ))}
     </Doc>);
-    return ReactDomServer.renderToString(doc);
+    return ReactDomServer.renderToStaticMarkup(doc);
+};
+
+export const renderDocDetail = (route: IExpressRoute, language: keyof IText, url: string): string => {
+    const processor: LanguageTextProcessor = new LanguageTextProcessor(language);
+
+    const detail: JSX.Element = (<Detail
+        route={route}
+        processor={processor}
+        url={url}
+    ></Detail >);
+    return ReactDomServer.renderToStaticMarkup(detail);
 };

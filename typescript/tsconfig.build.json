@@ -3,6 +3,7 @@
     "compilerOptions": {
         "baseUrl": "../src",
         "paths": {
+            "#/*": ["*"],
             "#icon/*": ["plugin/icon/*"],
             "#log/*": ["plugin/log/*"],
             "#route/*": ["service/routes/*"],

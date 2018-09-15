@@ -73,6 +73,7 @@
     "typescript": "^3.0.3"
   },
   "_moduleAliases": {
+    "#": "dist",
     "#icon": "dist/plugin/icon",
     "#log": "dist/plugin/log",
     "#route": "dist/service/routes",

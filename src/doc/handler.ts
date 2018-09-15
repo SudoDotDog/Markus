@@ -9,10 +9,8 @@ import * as Route from '../service/routes/import';
 import { SERVICE_ROUTE_UPLOAD_BASE64_MODE } from "../service/routes/upload/upload_base64";
 import { SERVICE_ROUTE_UPLOAD_BUFFER_MODE } from "../service/routes/upload/upload_buffer";
 import { error, ERROR_CODE } from "../util/error/error";
-import { renderDocIndex } from "./bridge";
+import { renderDocDetail, renderDocIndex } from "./bridge";
 import DocRouteBuilder from './builder';
-import { IDocTemplateRenderer } from "./interface";
-import DocTableCardTemplateRenderer from './template/components/table_card';
 
 export const getBuiltDocRoute = (): DocRouteBuilder => {
     const docBuilder: DocRouteBuilder = new DocRouteBuilder();
@@ -65,9 +63,8 @@ export const createSubDocIndex = (name: string, language: keyof IText, url: stri
     if (!route) {
         throw error(ERROR_CODE.REQUEST_PATTERN_NOT_MATCHED);
     }
-    const card: IDocTemplateRenderer = new DocTableCardTemplateRenderer(route, language, url);
 
-    return card.build();
+    return renderDocDetail(route, language, url);
 };
 
 export const createDocIndex = (language: keyof IText): string => {
