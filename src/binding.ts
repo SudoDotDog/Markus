@@ -20,6 +20,7 @@ if (!global.Binding) {
     const here: string = Path.join(__dirname, ...route);
     ModuleAlias.addAliases({
         "#": here,
+        "#i18n": Path.join(here, 'plugin', 'internationalization'),
         "#icon": Path.join(here, 'plugin', 'icon'),
         "#log": Path.join(here, 'plugin', 'log'),
         "#route": Path.join(here, 'service', 'routes'),
