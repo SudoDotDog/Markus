@@ -20,7 +20,3 @@ export interface IDocTableElement {
     value: any;
     important?: DOC_TABLE_ELEMENT_IMPORTANT_LEVEL;
 }
-
-export interface IDocTemplateRenderer {
-    build: () => string;
-}

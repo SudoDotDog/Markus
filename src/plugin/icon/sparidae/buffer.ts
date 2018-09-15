@@ -52,9 +52,9 @@ export default class Buffer {
         buffer += point.x + "\" ";
         buffer += "y=\"";
         buffer += point.y + "\" ";
-        if(this._thin){
+        if (this._thin) {
             buffer += "style=\"font-size:";
-        }else{
+        } else {
             buffer += "style=\"font-weight:bold;font-size:";
         }
         buffer += fontSize + ";text-anchor:end\">";
@@ -73,9 +73,9 @@ export default class Buffer {
         buffer += point.x + "\" ";
         buffer += "y=\"";
         buffer += point.y + "\" ";
-        if(this._thin){
+        if (this._thin) {
             buffer += "style=\"font-size:";
-        }else{
+        } else {
             buffer += "style=\"font-weight:bold;font-size:";
         }
         buffer += fontSize + ";text-anchor:middle;dominant-baseline:middle\">";

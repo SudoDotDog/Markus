@@ -65,9 +65,9 @@ export const Icon = (str: string, options: IIconConfig = {}) => {
         .rect(points[9], points[10], points[11], loop())
         .rect(points[12], points[13], points[14], loop())
         .rect(points[15], points[16], points[17], loop());
-    
+
     let fontSize: number = point.getFontSize();
-    if(options.larger){
+    if (options.larger) {
         fontSize = point.getLargerFontSize();
     }
 

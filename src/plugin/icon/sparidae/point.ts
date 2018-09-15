@@ -102,7 +102,7 @@ export default class Point {
         return {
             x: Math.floor(EDGE.LENGTH / 2),
             y: Math.floor(EDGE.LENGTH / 2),
-        }
+        };
     }
 
     public getFontSize(): number {
