@@ -8,8 +8,10 @@ import { Request, RequestHandler, Response } from "express";
 import { markusVersion } from "../../../util/struct/agent";
 // tslint:disable-next-line
 import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE } from '../../interface';
+import { resource } from "../../resource";
 import LodgeableExpressRoute from "../lodgeable";
 
+@resource()
 export default class RouteRoot extends LodgeableExpressRoute implements IExpressRoute {
     public readonly name: string = 'MR@Internal-Route^Root';
     public readonly path: string = '/';
