@@ -31,7 +31,15 @@ export default class Internationalization {
     }
 
     protected readPath(path: string): string {
-        const targetJSON: string = Path.join(this._path, path + '.json');
+        const extName: string = Path.extname(path);
+
+        let targetJSON: string;
+        if (extName === '.json') {
+            targetJSON = Path.join(this._path, path);
+        } else {
+            targetJSON = Path.join(this._path, path + '.json');
+        }
+
         const perverse: string = Fs.readFileSync(targetJSON, 'UTF8');
         return perverse;
     }

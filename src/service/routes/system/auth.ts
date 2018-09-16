@@ -9,9 +9,11 @@ import { assert } from "../../../util/error/assert";
 import { ERROR_CODE } from "../../../util/error/error";
 import { markusVersion } from "../../../util/struct/agent";
 // tslint:disable-next-line
-import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, IDocInformation, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE } from '../../interface';
+import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE } from '../../interface';
+import { resource } from "../../resource";
 import LodgeableExpressRoute from "../lodgeable";
 
+@resource('/routes/system', 'auth')
 export default class RouteAuth extends LodgeableExpressRoute implements IExpressRoute {
     public readonly name: string = 'MR@Internal-Route^Auth';
     public readonly path: string = '/auth';
@@ -24,14 +26,6 @@ export default class RouteAuth extends LodgeableExpressRoute implements IExpress
     ];
     public readonly after: boolean = true;
 
-    public readonly doc: IDocInformation = {
-        name: {
-            EN: 'Verify testing',
-        },
-        description: {
-            EN: 'Get server information with authorization',
-        },
-    };
     public readonly assertResponse: IExpressAssertionJSONType = {
         agent: { type: EXPRESS_ASSERTION_TYPES_END.STRING },
         version: { type: EXPRESS_ASSERTION_TYPES_END.STRING },

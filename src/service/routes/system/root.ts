@@ -11,7 +11,7 @@ import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, IExpressAssertionJSON
 import { resource } from "../../resource";
 import LodgeableExpressRoute from "../lodgeable";
 
-@resource()
+@resource('/routes/system', 'root')
 export default class RouteRoot extends LodgeableExpressRoute implements IExpressRoute {
     public readonly name: string = 'MR@Internal-Route^Root';
     public readonly path: string = '/';
@@ -22,7 +22,6 @@ export default class RouteRoot extends LodgeableExpressRoute implements IExpress
     public readonly stack: RequestHandler[];
     public readonly after: boolean = true;
 
-    public readonly resource: string = '/routes/system/root';
     public readonly assertResponse: IExpressAssertionJSONType = {
         agent: { type: EXPRESS_ASSERTION_TYPES_END.STRING },
         version: { type: EXPRESS_ASSERTION_TYPES_END.STRING },

@@ -24,8 +24,12 @@ export const renderDocIndex = (routes: IExpressRoute[], language: keyof IText): 
     const doc: JSX.Element = (<Doc>
         {routes.map((route: IExpressRoute) => {
             let resource: StaticResource<IStaticResourceDocInformation> | undefined;
-            if (route.resource) {
-                resource = internationalization.resource<IStaticResourceDocInformation>(route.resource);
+            if (route.resource.path) {
+                if (route.resource.key) {
+                    resource = internationalization.subResource<IStaticResourceDocInformation>(route.resource.path, route.resource.key);
+                } else {
+                    resource = internationalization.resource<IStaticResourceDocInformation>(route.resource.path);
+                }
             } else {
                 resource = undefined;
             }
@@ -47,8 +51,12 @@ export const renderDocDetail = (route: IExpressRoute, language: keyof IText, url
     const internationalization = new Internationalization(getAssetI18NPath());
 
     let resource: StaticResource<IStaticResourceDocInformation> | undefined;
-    if (route.resource) {
-        resource = internationalization.resource<IStaticResourceDocInformation>(route.resource);
+    if (route.resource.path) {
+        if (route.resource.key) {
+            resource = internationalization.subResource<IStaticResourceDocInformation>(route.resource.path, route.resource.key);
+        } else {
+            resource = internationalization.resource<IStaticResourceDocInformation>(route.resource.path);
+        }
     } else {
         resource = undefined;
     }

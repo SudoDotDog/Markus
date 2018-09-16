@@ -90,6 +90,11 @@ export enum EXPRESS_EXAMPLE_CODE {
     IOS_SWIFT = "IOS_SWIFT",
 }
 
+export interface IExpressResourcePath {
+    path?: string;
+    key?: string;
+}
+
 export interface IExpressRoute {
     readonly name: string;
     readonly path: string;
@@ -112,7 +117,8 @@ export interface IExpressRoute {
     readonly exampleCode?: EXPRESS_EXAMPLE_CODE[];
     readonly specialMark?: EXPRESS_SPECIAL_MARK[];
     readonly doc?: IDocInformation | null;
-    readonly resource?: string;
+
+    resource: IExpressResourcePath;
 
     available: () => boolean;
     setLog: (log: Log) => void;

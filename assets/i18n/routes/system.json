@@ -8,5 +8,15 @@
             "name": "System Information",
             "description": "Return system information"
         }
+    },
+    "auth": {
+        "zh_cn": {
+            "name": "Authorization Testing",
+            "description": "Authorization Testing"
+        },
+        "en_us": {
+            "name": "Authorization Testing",
+            "description": "Authorization Testing"
+        }
     }
 }

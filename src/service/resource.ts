@@ -4,7 +4,16 @@
  * @fileoverview Resource Decorators
  */
 
-export function resource(constructor: any, value: any) {
-    Object.seal(constructor);
-    Object.seal(constructor.prototype);
-}
+import { IExpressResourcePath } from "#route-interface";
+
+// Decorator
+export const resource = (path: string, key?: string) => {
+    return <T extends { new(...args: any[]): {} }>(target: T) => {
+        return class extends target {
+            public resource: IExpressResourcePath = {
+                path,
+                key,
+            };
+        };
+    };
+};

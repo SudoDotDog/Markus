@@ -6,7 +6,7 @@
 
 import { RequestHandler } from "express";
 import Log from "../../plugin/log/log";
-import { ExpressAssertionType, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE } from "../interface";
+import { ExpressAssertionType, IExpressAssertionJSONType, IExpressResourcePath, IExpressRoute, ROUTE_MODE } from "../interface";
 
 export default abstract class LodgeableExpressRoute implements IExpressRoute {
     public abstract readonly name: string;
@@ -21,6 +21,8 @@ export default abstract class LodgeableExpressRoute implements IExpressRoute {
     public readonly assertParam?: IExpressAssertionJSONType;
     public readonly assertQuery?: IExpressAssertionJSONType;
     public readonly assertResponse?: IExpressAssertionJSONType;
+
+    public resource: IExpressResourcePath = {};
 
     protected _log: Log | undefined;
     public constructor() {
