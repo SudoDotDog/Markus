@@ -107,19 +107,18 @@ export interface IExpressRoute {
     readonly stack: RequestHandler[];
     readonly after: boolean;
 
-
-    readonly testDrive?: boolean;
     readonly postType?: EXPRESS_POST_SUBMIT_FORMAT;
     readonly assertBody?: IExpressAssertionJSONType;
     readonly assertParam?: IExpressAssertionJSONType;
     readonly assertQuery?: IExpressAssertionJSONType;
     readonly assertResponse?: IExpressAssertionJSONType;
     readonly exampleCode?: EXPRESS_EXAMPLE_CODE[];
-    readonly specialMark?: EXPRESS_SPECIAL_MARK[];
     readonly doc?: IDocInformation | null;
 
     ignoreInDoc: boolean;
     resource: IExpressResourcePath;
+    specialMark: EXPRESS_SPECIAL_MARK[];
+    testDrive: boolean;
 
     available: () => boolean;
     setLog: (log: Log) => void;

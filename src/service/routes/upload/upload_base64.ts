@@ -13,6 +13,7 @@ import { concatSuffix } from "../../../util/data/path";
 import { assert } from "../../../util/error/assert";
 import { error, ERROR_CODE } from "../../../util/error/error";
 import { IFileManager } from "../../../util/manager/file/import";
+import { marks } from "../../decorator";
 // tslint:disable-next-line
 import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, EXPRESS_POST_SUBMIT_FORMAT, EXPRESS_SPECIAL_MARK, IDocInformation, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE } from '../../interface';
 import LodgeableExpressRoute from "../lodgeable";
@@ -24,6 +25,7 @@ export enum SERVICE_ROUTE_UPLOAD_BASE64_MODE {
     IMAGE_DOC = 'IMAGE_DOC',
 }
 
+@marks(EXPRESS_SPECIAL_MARK.DEPRECATED)
 export default class RouteUploadAvatarByBase64 extends LodgeableExpressRoute implements IExpressRoute {
     public readonly name: string = 'MR@Internal-Route^Upload-By-Base64';
     public readonly path: string;
@@ -36,7 +38,6 @@ export default class RouteUploadAvatarByBase64 extends LodgeableExpressRoute imp
 
     public readonly postType: EXPRESS_POST_SUBMIT_FORMAT = EXPRESS_POST_SUBMIT_FORMAT.X_WWW_FORM_URLENCODED;
     public readonly assertBody: IExpressAssertionJSONType;
-    public readonly specialMark: EXPRESS_SPECIAL_MARK[] = [EXPRESS_SPECIAL_MARK.DEPRECATED];
     public readonly doc: IDocInformation | null;
 
     public constructor(docMode: SERVICE_ROUTE_UPLOAD_BASE64_MODE, route: string, suffix: string, uploadEngine?: RequestHandler) {

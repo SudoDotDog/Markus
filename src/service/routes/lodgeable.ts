@@ -6,7 +6,8 @@
 
 import { RequestHandler } from "express";
 import Log from "../../plugin/log/log";
-import { ExpressAssertionType, IExpressAssertionJSONType, IExpressResourcePath, IExpressRoute, ROUTE_MODE } from "../interface";
+// tslint:disable-next-line
+import { ExpressAssertionType, EXPRESS_SPECIAL_MARK, IExpressAssertionJSONType, IExpressResourcePath, IExpressRoute, ROUTE_MODE } from "../interface";
 
 export default abstract class LodgeableExpressRoute implements IExpressRoute {
     public abstract readonly name: string;
@@ -24,6 +25,8 @@ export default abstract class LodgeableExpressRoute implements IExpressRoute {
 
     public ignoreInDoc: boolean = false;
     public resource: IExpressResourcePath = {};
+    public specialMark: EXPRESS_SPECIAL_MARK[] = [];
+    public testDrive: boolean = false;
 
     protected _log: Log | undefined;
     public constructor() {

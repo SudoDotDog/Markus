@@ -4,7 +4,7 @@
  * @fileoverview Resource Decorators
  */
 
-import { IExpressResourcePath } from "#route-interface";
+import { EXPRESS_SPECIAL_MARK, IExpressResourcePath } from "#route-interface";
 
 // Decorator
 export const resource = (path: string, key?: string) => {
@@ -25,6 +25,26 @@ export const ignoreDoc = () => {
         // tslint:disable-next-line
         return class extends target {
             public ignoreInDoc: boolean = true;
+        };
+    };
+};
+
+// Decorator
+export const marks = (...markList: EXPRESS_SPECIAL_MARK[]) => {
+    return <T extends { new(...args: any[]): {} }>(target: T) => {
+        // tslint:disable-next-line
+        return class extends target {
+            public specialMark: EXPRESS_SPECIAL_MARK[] = markList;
+        };
+    };
+};
+
+// Decorator
+export const testDrive = () => {
+    return <T extends { new(...args: any[]): {} }>(target: T) => {
+        // tslint:disable-next-line
+        return class extends target {
+            public testDrive: boolean = true;
         };
     };
 };
