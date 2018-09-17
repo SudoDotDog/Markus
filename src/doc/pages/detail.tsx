@@ -79,10 +79,12 @@ export default class Detail extends React.Component<IProps, {}> {
         super(props);
 
         this._language = I18N_LANGUAGE.ENGLISH;
+        const url = this.props.url + this.props.route.path;
+
         this.icon = this.icon.bind(this);
         this.badge = this.badge.bind(this);
         this.title = this.title.bind(this);
-        const url = this.props.url + this.props.route.path;
+        this.testDrive = this.testDrive.bind(this);
         this._content = convertRouteToTemplate(
             this.props.route,
             this.props.processor,
@@ -108,6 +110,13 @@ export default class Detail extends React.Component<IProps, {}> {
                 </tbody>
             </table>
         </div>);
+    }
+
+    protected testDrive(): JSX.Element | undefined {
+        if (this.props.route.testDrive) {
+
+        }
+        return undefined;
     }
 
     protected icon(): string {

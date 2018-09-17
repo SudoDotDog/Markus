@@ -45,10 +45,8 @@ export type ExpressAssertionType = {
 } | {
     type: EXPRESS_ASSERTION_TYPES_END;
     optional?: boolean;
-} | {
-    type: EXPRESS_ASSERTION_TYPES_END;
-    optional?: boolean;
 };
+
 export interface IExpressAssertionJSONType {
     [key: string]: ExpressAssertionType;
 }
