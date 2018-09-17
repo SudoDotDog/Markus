@@ -22,6 +22,7 @@ export default abstract class LodgeableExpressRoute implements IExpressRoute {
     public readonly assertQuery?: IExpressAssertionJSONType;
     public readonly assertResponse?: IExpressAssertionJSONType;
 
+    public ignoreInDoc: boolean = false;
     public resource: IExpressResourcePath = {};
 
     protected _log: Log | undefined;

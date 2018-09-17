@@ -107,7 +107,7 @@ export interface IExpressRoute {
     readonly stack: RequestHandler[];
     readonly after: boolean;
 
-    readonly ignoreInDoc?: boolean;
+
     readonly testDrive?: boolean;
     readonly postType?: EXPRESS_POST_SUBMIT_FORMAT;
     readonly assertBody?: IExpressAssertionJSONType;
@@ -118,6 +118,7 @@ export interface IExpressRoute {
     readonly specialMark?: EXPRESS_SPECIAL_MARK[];
     readonly doc?: IDocInformation | null;
 
+    ignoreInDoc: boolean;
     resource: IExpressResourcePath;
 
     available: () => boolean;

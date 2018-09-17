@@ -11,12 +11,12 @@
     },
     "auth": {
         "zh_cn": {
-            "name": "Authorization Testing",
-            "description": "Authorization Testing"
+            "name": "Authorization Test",
+            "description": "Authorization Test"
         },
         "en_us": {
-            "name": "Authorization Testing",
-            "description": "Authorization Testing"
+            "name": "Authorization Test",
+            "description": "Authorization Test"
         }
     }
 }

@@ -6,15 +6,15 @@
 
 import { Request, RequestHandler, Response } from "express";
 import { error, ERROR_CODE } from "../../../util/error/error";
+import { ignoreDoc } from "../../decorator";
 import { ExpressNextFunction, IExpressRoute, ROUTE_MODE } from '../../interface';
 import LodgeableExpressRoute from "../lodgeable";
 
+@ignoreDoc()
 export default class RouteFourOFour extends LodgeableExpressRoute implements IExpressRoute {
     public readonly name: string = 'MR@Internal-Route^Four-O-Four';
     public readonly path: string = '*';
     public readonly mode: ROUTE_MODE = ROUTE_MODE.ALL;
-
-    public readonly ignoreInDoc: boolean = true;
 
     public readonly prepare: boolean = true;
     public readonly authorization: boolean = false;
