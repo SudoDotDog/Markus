@@ -25,7 +25,7 @@ export default class TestDrive extends React.Component<IProps, {}> {
     public render(): JSX.Element {
         return (<div>
             {this.inputBoxes()}
-            <button>Send</button>
+            <button id="markus-send">Send</button>
         </div>);
     }
 
@@ -48,7 +48,7 @@ export default class TestDrive extends React.Component<IProps, {}> {
     protected input(name: string, key: string): JSX.Element {
         return (<div key={key}>
             {name}
-            <input data-test-drive-key={key}/>
+            <input data-test-drive-input={key}/>
         </div>);
     }
 }
