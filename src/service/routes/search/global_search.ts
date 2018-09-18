@@ -8,10 +8,12 @@ import { Request, RequestHandler, Response } from "express";
 import * as Direct from "../../../direct/import";
 import { assert } from '../../../util/error/assert';
 import { ERROR_CODE } from "../../../util/error/error";
+import { testDrive } from "../../decorator";
 // tslint:disable-next-line
 import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, EXPRESS_POST_SUBMIT_FORMAT, IDocInformation, IExpressAssertionJSONType, IExpressRoute, ISearchResult, ROUTE_MODE } from '../../interface';
 import LodgeableExpressRoute from "../lodgeable";
 
+@testDrive()
 export default class RouteSearchGlobal extends LodgeableExpressRoute implements IExpressRoute {
     public readonly name: string = 'MR@Internal-Route^Search-Global';
     public readonly path: string = '/search';

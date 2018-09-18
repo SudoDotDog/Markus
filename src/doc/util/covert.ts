@@ -17,6 +17,7 @@ export const convertRouteToTemplate = (route: IExpressRoute, processor: Language
         value: route.path,
     }, {
         name: 'Mode',
+        key: 'mode',
         value: route.mode,
     }, {
         name: 'Authorization',

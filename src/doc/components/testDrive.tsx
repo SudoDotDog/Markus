@@ -4,7 +4,7 @@
  * @fileoverview TestDrive
  */
 
-import { IExpressAssertionJSONType, IExpressRoute } from "#route-interface";
+import { IExpressAssertionJSONType, IExpressRoute, EXPRESS_ASSERTION_TYPES_END } from "#route-interface";
 import * as React from "react";
 
 const styles: {
@@ -66,7 +66,9 @@ export default class TestDrive extends React.Component<IProps, {}> {
 
         const body: IExpressAssertionJSONType = route.assertBody || {};
         for (let key of Object.keys(body)) {
-            elements.push(body[key].type.toString());
+            if (body[key].type === EXPRESS_ASSERTION_TYPES_END.STRING) {
+                elements.push(this.input(key, key));
+            }
         }
 
         if (route.authorization) {
