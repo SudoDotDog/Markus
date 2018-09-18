@@ -32,6 +32,7 @@ export const testDocUtilConvert = () => {
                 },
                 {
                     name: "Mode",
+                    key: "mode",
                     value: "GET",
                 },
                 {
