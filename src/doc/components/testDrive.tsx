@@ -48,7 +48,7 @@ export default class TestDrive extends React.Component<IProps, {}> {
     }
 
     public render(): JSX.Element {
-        return (<div>
+        return (<div id="test-drive">
             {this.inputBoxes()}
             <button
                 className="hover-button"
