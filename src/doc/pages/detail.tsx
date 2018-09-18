@@ -108,6 +108,7 @@ export default class Detail extends React.Component<IProps, {}> {
                 <tbody>
                     {this._content.map(this.rowHTML)}
                     {this.testDrive()}
+                    {this.exampleCode()}
                 </tbody>
             </table>
         </div>);
