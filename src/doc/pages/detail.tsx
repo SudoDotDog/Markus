@@ -12,8 +12,8 @@ import { I18N_LANGUAGE } from '#i18n/interface';
 import StaticResource from '#i18n/static';
 import { EXPRESS_EXAMPLE_CODE, IExpressRoute } from '#route-interface';
 import * as React from "react";
-import { IDocTableElement, IStaticResourceDocInformation } from "../interface";
 import TestDrive from '../components/testDrive';
+import { IDocTableElement, IStaticResourceDocInformation } from "../interface";
 
 const styles: {
     [key: string]: React.CSSProperties;
@@ -80,7 +80,11 @@ export default class Detail extends React.Component<IProps, {}> {
         super(props);
 
         this._language = I18N_LANGUAGE.ENGLISH;
-        const url = this.props.url + this.props.route.path;
+        const url =
+            (this.props.url === 'http://localhost' ?
+                this.props.url + ':' + global.Markus.Config.portNumber :
+                this.props.url)
+            + this.props.route.path;
         this._content = convertRouteToTemplate(
             this.props.route,
             this.props.processor,
@@ -113,7 +117,7 @@ export default class Detail extends React.Component<IProps, {}> {
         if (this.props.route.testDrive) {
             return this.row({
                 name: 'Test Drive',
-                value: <TestDrive route={this.props.route} url={this.props.url} />
+                value: (<TestDrive route={this.props.route} url={this.props.url} />),
             });
         }
         return undefined;
@@ -169,12 +173,17 @@ export default class Detail extends React.Component<IProps, {}> {
             content = convertObjectToHTMLFriendlyJson(row.value, 3);
         }
 
+        const keys: any = {};
+        if (row.key) {
+            keys['data-' + row.key] = "";
+        }
+
         return (<tr style={styles.rightRow} key={row.name}>
             <td style={styles.leftRow} dangerouslySetInnerHTML={{
                 __html: row.name,
             }}>
             </td>
-            <td style={styles.rightRow} dangerouslySetInnerHTML={{
+            <td style={styles.rightRow} {...keys} dangerouslySetInnerHTML={{
                 __html: content,
             }}>
             </td>

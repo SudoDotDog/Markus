@@ -10,6 +10,31 @@ import * as React from "react";
 const styles: {
     [key: string]: React.CSSProperties;
 } = {
+    box: {
+        display: 'flex',
+        padding: '3px',
+        alignItems: 'center',
+        backgroundColor: 'black',
+    },
+    label: {
+        width: '28%',
+        fontWeight: 'bold',
+        color: 'white',
+        textAlign: 'right',
+        padding: '5px',
+    },
+    input: {
+        flex: 1,
+        padding: '5px',
+    },
+    send: {
+        marginTop: '5px',
+        fontWeight: 'bold',
+        width: '100%',
+        padding: '5px',
+        border: '0',
+        cursor: 'pointer',
+    },
 };
 
 export interface IProps {
@@ -25,7 +50,13 @@ export default class TestDrive extends React.Component<IProps, {}> {
     public render(): JSX.Element {
         return (<div>
             {this.inputBoxes()}
-            <button id="markus-send">Send</button>
+            <button
+                className="hover-button"
+                style={styles.send}
+                id="markus-send"
+            >
+                Send
+            </button>
         </div>);
     }
 
@@ -39,16 +70,22 @@ export default class TestDrive extends React.Component<IProps, {}> {
         }
 
         if (route.authorization) {
-            elements.push(this.input('AuthKey', 'auth'))
+            elements.push(this.input('Authorization', 'key'));
         }
 
         return elements;
     }
 
     protected input(name: string, key: string): JSX.Element {
-        return (<div key={key}>
-            {name}
-            <input data-test-drive-input={key}/>
+        return (<div key={key} style={styles.box}>
+            <div style={styles.label}>
+                {name}
+            </div>
+            <input
+                data-test-drive-input={key}
+                style={styles.input}
+                placeholder={name}
+            />
         </div>);
     }
 }

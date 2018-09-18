@@ -33,6 +33,7 @@ export const convertRouteToTemplate = (route: IExpressRoute, processor: Language
     if (domain) {
         template.unshift({
             name: 'Path',
+            key: 'path',
             value: domain,
         });
     }

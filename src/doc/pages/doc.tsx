@@ -79,6 +79,8 @@ export default class Parent extends React.Component<{}, {}> {
             `::-webkit-scrollbar-thumb{background-color:#001F3F}`,
             `::-webkit-scrollbar-track{background-color:#AAAAAA}`,
             `pre.prettyprint{border:0}`,
+            `.hover-button{background-color:#AAAAAA;color:#001F3F;transition:0.3s all}`,
+            `.hover-button:hover{color:white;background-color:#001F3F}`,
             `.left{width:20%;min-width:300px}`,
             [
                 `.title{text-align:right;display:block;font-size:3em;`,
