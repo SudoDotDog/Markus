@@ -16,6 +16,8 @@ import * as Extension from '../../service/extension/import';
 import * as Route from '../../service/routes/import';
 import { SERVICE_ROUTE_UPLOAD_BUFFER_MODE } from "../../service/routes/upload/upload_buffer";
 import ExtensionToolBoxExtension from '../../toolbox/extension';
+import { error, ERROR_CODE } from "../../util/error/error";
+import { RESPONSE } from "../../util/interface";
 import UploadManager from '../../util/manager/upload';
 import { markusVersion } from "../../util/struct/agent";
 import * as Handler from '../handlers/import';
@@ -50,6 +52,16 @@ app.use(bodyParser.urlencoded({
     extended: true,
     limit: global.Markus.Config.uploadLimit + 'mb',
 }));
+app.use(function (err: Error, req: Request, res: Response, next: NextFunction) {
+    if (err instanceof SyntaxError) {
+        res.status(400).send({
+            status: RESPONSE.FAILED,
+            error: error(ERROR_CODE.REQUEST_APPLICATION_JSON_CANNOT_PARSE),
+        });
+    } else {
+        next();
+    }
+});
 
 app.all('*', (req: Request, res: Response, next: NextFunction) => {
     req.log = log;

@@ -9,7 +9,6 @@ const getSpace = (amount) => {
 };
 
 const convertObjectToHTMLFriendlyJson = (object, padding, layer) => {
-    console.log(object);
     let result = JSON.stringify(object, null, padding + (layer ? layer * padding : 0));
     if (layer) {
         result = result
@@ -37,20 +36,19 @@ const send = () => {
     const modeKey = document.querySelector('td[data-mode]');
     const mode = modeKey.innerText;
 
-    let body = {};
-
-    if (mode.trim() !== 'GET') {
-        body = { body: info };
-    }
-
-    fetch(path, {
+    const option = {
         method: mode,
         headers: {
             authorization: 'Basic ' + info.key,
             'Content-Type': 'application/json',
         },
-        ...body,
-    }).then(function (response) {
+    };
+
+    if (mode.trim() !== 'GET') {
+        option.body = JSON.stringify(info);
+    }
+
+    fetch(path, option).then(function (response) {
         return response.json();
     }).then(function (data) {
         if (data) {

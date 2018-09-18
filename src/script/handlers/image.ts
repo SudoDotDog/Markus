@@ -5,6 +5,7 @@
 
 import { ObjectId, ObjectID } from "bson";
 import { NextFunction, Request, Response } from "express";
+import * as Path from 'path';
 import { IImageCallback, IImageUserFriendlyCallback } from "../../database/interface/image";
 import { ITagUserFriendly } from "../../database/interface/tag";
 import * as Direct from '../../direct/import';
@@ -67,7 +68,8 @@ export const imageGetBlankWhiteHandler = async (req: Request, res: Response, nex
         const callback: IImageCallback = await Direct.Image.getImageCallbackById(id);
         res.agent.smartFileSend(callback.path);
     } catch (err) {
-        res.agent.smartFileSend(global.Markus.Config.white404ImagePath);
+        const absolutePath: string = Path.resolve(global.Markus.Config.white404ImagePath);
+        res.agent.smartFileSend(absolutePath);
     } finally {
         next();
     }
@@ -88,7 +90,8 @@ export const imageGetBlankBlackHandler = async (req: Request, res: Response, nex
         const callback: IImageCallback = await Direct.Image.getImageCallbackById(id);
         res.agent.smartFileSend(callback.path);
     } catch (err) {
-        res.agent.smartFileSend(global.Markus.Config.white404ImagePath);
+        const absolutePath: string = Path.resolve(global.Markus.Config.black404ImagePath);
+        res.agent.smartFileSend(absolutePath);
     } finally {
         next();
     }

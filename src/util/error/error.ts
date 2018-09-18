@@ -46,6 +46,7 @@ export enum ERROR_CODE {
     PERMISSION_CONFIG_NOT_CORRECT = 302,
 
     REQUEST_PATTERN_NOT_MATCHED = 401,
+    REQUEST_APPLICATION_JSON_CANNOT_PARSE = 402,
     FOUR_O_FOUR_NOT_FOUND = 404,
 
     COMPRESS_TIME_OUT = 467,
@@ -108,6 +109,7 @@ export const errorList: {
     301: 'Image not found in request',
     302: 'Permission config not correct',
     401: 'Request pattern not matched',
+    402: 'Request application json cannot parse',
     404: 'Request URL not found',
     467: 'Compress time out',
     481: 'Element is not exist in queue',
