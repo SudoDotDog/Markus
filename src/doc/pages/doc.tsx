@@ -83,10 +83,10 @@ export default class Parent extends React.Component<{}, {}> {
             `.hover-button:hover{color:white;background-color:#001F3F}`,
             `.left{width:20%;min-width:300px}`,
             [
-                `.title{text-align:right;display:block;font-size:3em;`,
-                `color:white;background-color:#001F3F;padding-left:1em;padding-top:0.8em;`,
-                `width:4em;padding-right:0.3em;padding-bottom:0.1em;margin:auto;margin-top:30px;margin-bottom:45px;`,
-                `box-shadow:0 1px 3px rgba(0,0,0,0.12),0 1px 2px rgba(0,0,0,0.24)`,
+                `.title{text-align:center;display:block;font-size:2.6em;`,
+                `color:#001F3F;font-weight:bold;`,
+                `width:4em;margin:auto;margin-top:45px;margin-bottom:30px;`,
+                `text-shadow:0 1px 3px rgba(0,0,0,0.12),0 1px 2px rgba(0,0,0,0.24)`,
                 `}`,
             ].join(''),
             [
