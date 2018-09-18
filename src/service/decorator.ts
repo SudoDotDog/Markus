@@ -48,3 +48,14 @@ export const testDrive = () => {
         };
     };
 };
+
+// Decorator
+export const preMount = () => {
+    return <T extends { new(...args: any[]): {} }>(target: T) => {
+        // tslint:disable-next-line
+        return class extends target {
+            public preMount: boolean = true;
+        };
+    };
+};
+
