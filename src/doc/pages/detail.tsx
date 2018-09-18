@@ -12,6 +12,7 @@ import { I18N_LANGUAGE } from '#i18n/interface';
 import StaticResource from '#i18n/static';
 import { EXPRESS_EXAMPLE_CODE, IExpressRoute } from '#route-interface';
 import * as React from "react";
+import TestDrive from '../components/testDrive';
 import { IDocTableElement, IStaticResourceDocInformation } from "../interface";
 
 const styles: {
@@ -79,12 +80,11 @@ export default class Detail extends React.Component<IProps, {}> {
         super(props);
 
         this._language = I18N_LANGUAGE.ENGLISH;
-        const url = this.props.url + this.props.route.path;
-
-        this.icon = this.icon.bind(this);
-        this.badge = this.badge.bind(this);
-        this.title = this.title.bind(this);
-        this.testDrive = this.testDrive.bind(this);
+        const url =
+            (this.props.url === 'http://localhost' ?
+                this.props.url + ':' + global.Markus.Config.portNumber :
+                this.props.url)
+            + this.props.route.path;
         this._content = convertRouteToTemplate(
             this.props.route,
             this.props.processor,
@@ -106,7 +106,8 @@ export default class Detail extends React.Component<IProps, {}> {
             </div>
             <table style={styles.table}>
                 <tbody>
-                    {this._content.map(this.row)}
+                    {this._content.map(this.rowHTML)}
+                    {this.testDrive()}
                 </tbody>
             </table>
         </div>);
@@ -114,7 +115,10 @@ export default class Detail extends React.Component<IProps, {}> {
 
     protected testDrive(): JSX.Element | undefined {
         if (this.props.route.testDrive) {
-
+            return this.row({
+                name: 'Test Drive',
+                value: (<TestDrive route={this.props.route} url={this.props.url} />),
+            });
         }
         return undefined;
     }
@@ -151,6 +155,17 @@ export default class Detail extends React.Component<IProps, {}> {
     }
 
     protected row(row: IDocTableElement): JSX.Element {
+        return (<tr style={styles.rightRow} key={row.name}>
+            <td style={styles.leftRow}>
+                {row.name}
+            </td>
+            <td style={styles.rightRow}>
+                {row.value}
+            </td>
+        </tr>);
+    }
+
+    protected rowHTML(row: IDocTableElement): JSX.Element {
         let content: string;
         if (typeof row.value === 'string') {
             content = row.value;
@@ -158,12 +173,17 @@ export default class Detail extends React.Component<IProps, {}> {
             content = convertObjectToHTMLFriendlyJson(row.value, 3);
         }
 
+        const keys: any = {};
+        if (row.key) {
+            keys['data-' + row.key] = "";
+        }
+
         return (<tr style={styles.rightRow} key={row.name}>
             <td style={styles.leftRow} dangerouslySetInnerHTML={{
                 __html: row.name,
             }}>
             </td>
-            <td style={styles.rightRow} dangerouslySetInnerHTML={{
+            <td style={styles.rightRow} {...keys} dangerouslySetInnerHTML={{
                 __html: content,
             }}>
             </td>
@@ -191,21 +211,21 @@ export default class Detail extends React.Component<IProps, {}> {
     }
 
     protected getNodeCode(): JSX.Element {
-        return this.row({
+        return this.rowHTML({
             name: 'NodeJS<br>Request',
             value: `<pre class="prettyprint"><code class="lang-js">${nodeMarkusFormData(this.props.url + this.props.route.path, this.props.route)}</code></pre>`,
         });
     }
 
     protected getFetchCode(): JSX.Element {
-        return this.row({
+        return this.rowHTML({
             name: 'Browser<br>Fetch API',
             value: `<pre class="prettyprint"><code class="lang-js">${fetchMarkusFormData(this.props.url + this.props.route.path, this.props.route)}</code></pre>`,
         });
     }
 
     protected getHTMLCode(): JSX.Element {
-        return this.row({
+        return this.rowHTML({
             name: 'HTML',
             value: `<pre class="prettyprint"><code class="lang-js">${htmlMarkusImage(this.props.url + this.props.route.path, this.props.route)}</code></pre>`,
         });

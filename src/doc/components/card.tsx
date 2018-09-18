@@ -61,10 +61,6 @@ export default class Card extends React.Component<IProps, {}> {
         super(props);
 
         this._language = I18N_LANGUAGE.ENGLISH;
-        this.icon = this.icon.bind(this);
-        this.title = this.title.bind(this);
-        this.path = this.path.bind(this);
-        this.badge = this.badge.bind(this);
     }
 
     public render(): JSX.Element {

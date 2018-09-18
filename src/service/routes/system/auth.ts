@@ -8,12 +8,13 @@ import { Request, RequestHandler, Response } from "express";
 import { assert } from "../../../util/error/assert";
 import { ERROR_CODE } from "../../../util/error/error";
 import { markusVersion } from "../../../util/struct/agent";
-import { resource } from "../../decorator";
+import { resource, testDrive } from "../../decorator";
 // tslint:disable-next-line
 import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE } from '../../interface';
 import LodgeableExpressRoute from "../lodgeable";
 
 @resource('/routes/system', 'auth')
+@testDrive()
 export default class RouteAuth extends LodgeableExpressRoute implements IExpressRoute {
     public readonly name: string = 'MR@Internal-Route^Auth';
     public readonly path: string = '/auth';

@@ -28,6 +28,7 @@ export enum ROUTE_MODE {
 
 export enum EXPRESS_POST_SUBMIT_FORMAT {
     FORM_DATA = 'FORM_DATA',
+    APPLICATION_JSON = 'APPLICATION_JSON',
     X_WWW_FORM_URLENCODED = 'X_WWW_FORM_URLENCODED',
 }
 
@@ -105,7 +106,7 @@ export interface IExpressRoute {
     readonly stack: RequestHandler[];
     readonly after: boolean;
 
-    readonly postType?: EXPRESS_POST_SUBMIT_FORMAT;
+    readonly postType?: EXPRESS_POST_SUBMIT_FORMAT[];
     readonly assertBody?: IExpressAssertionJSONType;
     readonly assertParam?: IExpressAssertionJSONType;
     readonly assertQuery?: IExpressAssertionJSONType;

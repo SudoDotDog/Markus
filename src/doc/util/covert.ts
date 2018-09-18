@@ -17,6 +17,7 @@ export const convertRouteToTemplate = (route: IExpressRoute, processor: Language
         value: route.path,
     }, {
         name: 'Mode',
+        key: 'mode',
         value: route.mode,
     }, {
         name: 'Authorization',
@@ -33,6 +34,7 @@ export const convertRouteToTemplate = (route: IExpressRoute, processor: Language
     if (domain) {
         template.unshift({
             name: 'Path',
+            key: 'path',
             value: domain,
         });
     }
@@ -52,7 +54,7 @@ export const convertRouteToTemplate = (route: IExpressRoute, processor: Language
     if (route.postType) {
         template.push({
             name: 'Post format',
-            value: route.postType,
+            value: route.postType.join(', '),
         });
     }
 
