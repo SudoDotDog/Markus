@@ -35,7 +35,9 @@ export default class RouteUploadAvatarByBuffer extends LodgeableExpressRoute imp
     public readonly stack: RequestHandler[];
     public readonly after: boolean = true;
 
-    public readonly postType: EXPRESS_POST_SUBMIT_FORMAT = EXPRESS_POST_SUBMIT_FORMAT.FORM_DATA;
+    public readonly postType: EXPRESS_POST_SUBMIT_FORMAT[] = [
+        EXPRESS_POST_SUBMIT_FORMAT.FORM_DATA
+    ];
     public readonly assertBody: IExpressAssertionJSONType;
     public readonly exampleCode: EXPRESS_EXAMPLE_CODE[] = [
         EXPRESS_EXAMPLE_CODE.NODEJS_FORM_DATA,

@@ -26,7 +26,10 @@ export default class RouteSearchGlobal extends LodgeableExpressRoute implements 
     ];
     public readonly after: boolean = true;
 
-    public readonly postType: EXPRESS_POST_SUBMIT_FORMAT = EXPRESS_POST_SUBMIT_FORMAT.X_WWW_FORM_URLENCODED;
+    public readonly postType: EXPRESS_POST_SUBMIT_FORMAT[] = [
+        EXPRESS_POST_SUBMIT_FORMAT.X_WWW_FORM_URLENCODED,
+        EXPRESS_POST_SUBMIT_FORMAT.APPLICATION_JSON
+    ];
     public readonly assertBody: IExpressAssertionJSONType = {
         cut: { type: EXPRESS_ASSERTION_TYPES_END.STRING },
     };

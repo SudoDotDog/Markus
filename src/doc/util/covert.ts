@@ -54,7 +54,7 @@ export const convertRouteToTemplate = (route: IExpressRoute, processor: Language
     if (route.postType) {
         template.push({
             name: 'Post format',
-            value: route.postType,
+            value: route.postType.join(', '),
         });
     }
 

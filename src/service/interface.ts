@@ -106,7 +106,7 @@ export interface IExpressRoute {
     readonly stack: RequestHandler[];
     readonly after: boolean;
 
-    readonly postType?: EXPRESS_POST_SUBMIT_FORMAT;
+    readonly postType?: EXPRESS_POST_SUBMIT_FORMAT[];
     readonly assertBody?: IExpressAssertionJSONType;
     readonly assertParam?: IExpressAssertionJSONType;
     readonly assertQuery?: IExpressAssertionJSONType;
