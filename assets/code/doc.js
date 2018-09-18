@@ -37,13 +37,19 @@ const send = () => {
     const modeKey = document.querySelector('td[data-mode]');
     const mode = modeKey.innerText;
 
+    let body = {};
+
+    if (mode.trim() !== 'GET') {
+        body = { body: info };
+    }
+
     fetch(path, {
         method: mode,
         headers: {
             authorization: 'Basic ' + info.key,
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(info),
+        ...body,
     }).then(function (response) {
         return response.json();
     }).then(function (data) {
