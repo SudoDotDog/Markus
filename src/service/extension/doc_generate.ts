@@ -56,7 +56,11 @@ export default class ExtensionDocGenerate implements IExpressExtension {
                 language = 'EN';
             }
 
-            const doc: string = this.rummageDoc(language as keyof IText);
+            const noCache: boolean = Boolean(req.query.noCache);
+            const doc: string = this.rummageDoc(
+                language as keyof IText,
+                noCache,
+            );
             res.send(doc);
         } catch (err) {
             res.status(400).send('ERROR');
@@ -67,38 +71,53 @@ export default class ExtensionDocGenerate implements IExpressExtension {
         try {
             const url: string = req.protocol + '://' + req.hostname;
             let language: string | undefined = req.query.language;
+
+            const noCache: boolean = Boolean(req.query.noCache);
             const name: string = req.params.name;
             if (!verifyLanguage(language)) {
                 language = 'EN';
             }
 
-            const doc: string = this.rummageSubDoc(name, language as keyof IText, url);
+            const doc: string = this.rummageSubDoc(
+                name,
+                language as keyof IText,
+                url,
+                noCache,
+            );
             res.send(doc);
         } catch (err) {
             res.status(400).send('ERROR');
         }
     }
 
-    private rummageDoc(language: keyof IText): string {
+    private rummageDoc(language: keyof IText, noCache?: boolean): string {
         const lang: string = language.toUpperCase();
-        if (this._docs[lang]) {
+        if (this._docs[lang] && !noCache) {
             this._log.info(`Document served from cache`);
             return this._docs[lang];
+        }
+
+        if (noCache) {
+            this._log.info(`Document: Using no cache query`);
         }
         const doc: string = this.flushDoc(language);
         this._docs[lang] = doc;
         return doc;
     }
 
-    private rummageSubDoc(name: string, language: keyof IText, url: string): string {
+    private rummageSubDoc(name: string, language: keyof IText, url: string, noCache?: boolean): string {
         const lang: string = language.toUpperCase();
-        if (this._subDocs[lang]) {
+        if (this._subDocs[lang] && !noCache) {
             if (this._subDocs[lang][name]) {
                 this._log.info(`Sub Document ${name} served from cache`);
                 return this._subDocs[lang][name];
             }
         } else {
             this._subDocs[lang] = {};
+        }
+
+        if (noCache) {
+            this._log.info(`Document: Using no cache query`);
         }
         const doc: string = this.flushDubDoc(name, language, url);
         this._subDocs[lang][name] = doc;
