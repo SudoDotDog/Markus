@@ -176,6 +176,7 @@ export default class ExpressBuilder implements IExpressBuilder {
         }
 
         handlers.push(...route.stack);
+        handlers.push(this.createLogDumpHandler(route));
 
         if (route.after) {
             handlers.push(...MarkusExtensionConfig.middleware.after);
@@ -209,6 +210,16 @@ export default class ExpressBuilder implements IExpressBuilder {
     protected createAuthRoleHandler(position: MARKUS_AUTHORIZATION_ROLE[]): express.RequestHandler {
         return (req: express.Request, res: express.Response, next: express.NextFunction) => {
             req.authRole = position;
+            next();
+            return;
+        };
+    }
+
+    protected createLogDumpHandler(route: IExpressRoute): express.RequestHandler {
+        return (req: express.Request, res: express.Response, next: express.NextFunction) => {
+            if (this._log) {
+                this._log.info(`Route: "${route.name}" executed`);
+            }
             next();
             return;
         };
