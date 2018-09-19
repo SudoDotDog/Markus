@@ -16,6 +16,14 @@ export const TagSchema: Schema = new Schema({
         required: true,
         index: true,
     },
+    temp: {
+        type: {
+            count: Number,
+            time: Date,
+            size: Number,
+        },
+        required: false,
+    }
 }, {
         timestamps: {
             createdAt: true,

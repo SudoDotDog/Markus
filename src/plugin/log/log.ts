@@ -12,9 +12,17 @@ export default class Log {
     private _count: number;
     private _func: (content: string) => void;
 
+    private _buffer: Map<string, number>;
+    private _interval: number;
+    private _intervalCleaner: NodeJS.Timer | null;
+
     public constructor(mode: LOG_MODE) {
         this._mode = mode;
         this._count = 0;
+
+        this._buffer = new Map<string, number>();
+        this._interval = 5000;
+        this._intervalCleaner = null;
         this._func = this._buildFunc(console.log);
     }
 
@@ -101,9 +109,29 @@ export default class Log {
     }
 
     protected _buildFunc(func: (content: string) => void): (content: string) => void {
+        if (this._intervalCleaner) {
+            clearInterval(this._intervalCleaner);
+        }
+        this._intervalCleaner = setInterval(() => {
+            this._buffer.forEach((value: number, key: string) => {
+                let content: string;
+                if (value === 1) {
+                    content = key;
+                } else {
+                    content = key + ' MULTIPLE: ' + value;
+                }
+                func(content);
+            });
+            this._buffer.clear();
+        }, this._interval);
         return (content: string): void => {
             this._count++;
-            func(content);
+            if (this._buffer.has(content)) {
+                const count = this._buffer.get(content) as number;
+                this._buffer.set(content, count + 1);
+            } else {
+                this._buffer.set(content, 1);
+            }
         };
     }
 
