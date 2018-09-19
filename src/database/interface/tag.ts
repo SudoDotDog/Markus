@@ -10,6 +10,11 @@ export interface ITagConfig {
 export interface ITag extends ITagConfig {
     active: boolean;
     createdAt: Date;
+    temp?: {
+        count: number;
+        size: number;
+        time: Date;
+    };
     updatedAt: Date;
 }
 
