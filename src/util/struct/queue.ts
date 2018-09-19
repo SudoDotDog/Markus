@@ -49,6 +49,23 @@ export default class Queue<K, T> {
         return this._rummage(name);
     }
 
+    public set(name: K, value: T): void {
+        for (let i = 0; i < this._queue.length; i++) {
+            if (name === this._queue[i].name) {
+                const spliced = this._queue.splice(i, 1);
+                if (spliced.length < 1) {
+                    throw error(ERROR_CODE.QUEUE_ELEMENT_NOT_EXIST);
+                }
+                const { name } = spliced[0];
+                this._push(name, value);
+            }
+        }
+    }
+
+    public clear(): void {
+        this._queue = [];
+    }
+
     protected _push(name: K, value: T): void {
         this._queue.push({
             name,

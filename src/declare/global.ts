@@ -30,8 +30,9 @@ declare global {
         interface Global {
             Binding?: boolean;
             Markus: {
-                Environment: IMarkusGlobalEnvironment,
-                Config: IConfig,
+                Environment: IMarkusGlobalEnvironment;
+                Config: IConfig;
+                Log?: Log;
             };
         }
     }

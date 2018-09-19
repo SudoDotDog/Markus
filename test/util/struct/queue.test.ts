@@ -51,4 +51,26 @@ describe('test queue data structure', (): void => {
         expect(result).to.be.equal(3);
         expect(queue.array).to.be.deep.equal([1, 2, 4, 5, 3]);
     });
+
+    it('set element will be pull it to the first', (): void => {
+        queue.add(1, 1);
+        queue.add(2, 2);
+        queue.add(3, 3);
+        queue.add(4, 4);
+        queue.add(5, 5);
+        expect(queue.array).to.be.deep.equal([1, 2, 3, 4, 5]);
+        queue.set(3, 10);
+        expect(queue.array).to.be.deep.equal([1, 2, 4, 5, 10]);
+    });
+
+    it('clean element will clean the queue', (): void => {
+        queue.add(1, 1);
+        queue.add(2, 2);
+        queue.add(3, 3);
+        queue.add(4, 4);
+        queue.add(5, 5);
+        expect(queue.array).to.be.deep.equal([1, 2, 3, 4, 5]);
+        queue.clear();
+        expect(queue.array).to.be.deep.equal([]);
+    });
 });

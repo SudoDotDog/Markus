@@ -26,6 +26,8 @@ import { ResponseAgent } from "../handlers/util/agent";
 initMarkusGlobalConfig();
 
 const log: Log = new Log(global.Markus.Config.isDebug ? LOG_MODE.VERBOSE : LOG_MODE.INFO);
+global.Markus.Log = log;
+
 mongoose.set('useCreateIndex', true);
 mongoose.connect(
     global.Markus.Config.host + '/' + global.Markus.Config.database,

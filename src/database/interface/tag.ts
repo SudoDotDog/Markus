@@ -28,4 +28,5 @@ export interface ITagUserFriendlyAdvanced extends ITagUserFriendly {
     id: string;
     size: string;
     updatedAt: Date;
+    cached?: number;
 }

@@ -53,3 +53,7 @@ export const availableAnythingToDate = (num: any): Date | undefined => {
         return void 0;
     }
 };
+
+export const differenceToHour = (difference: number): number => {
+    return Math.round(difference / 3600000);
+};

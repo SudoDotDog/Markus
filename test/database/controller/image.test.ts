@@ -6,6 +6,7 @@
 import { ObjectId, ObjectID } from 'bson';
 import { expect } from 'chai';
 import * as Controller from '../../../src/database/controller/import';
+import * as Mix from '../../../src/database/mix/import';
 import { IFileModel } from '../../../src/database/model/file';
 import { IImageModel } from '../../../src/database/model/image';
 import { ITagModel } from '../../../src/database/model/tag';
@@ -109,7 +110,7 @@ export const testImageController = (): void => {
         }).timeout(3200);
 
         it('get image count by tag should return number of tag', async (): Promise<void> => {
-            const images: number = await Controller.Image.getImageCountByTagId(testTag._id);
+            const images: number = await Mix.Tag.getImageCountByTagId(testTag._id);
             expect(images).to.be.equal(1);
             return;
         }).timeout(3200);

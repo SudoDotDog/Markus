@@ -165,3 +165,20 @@ export const saveTag = async (tag: ITagModel): Promise<void> => {
     await tag.save();
     return;
 };
+
+export const getTagTempByTagId = async (id: ObjectID): Promise<{
+    count: number;
+    size: number;
+    time: Date;
+} | null> => {
+    const tag: ITagModel | null = await TagModel.findOne({ _id: id });
+    if (!tag) {
+        throw error(ERROR_CODE.TAG_NOT_FOUND);
+    }
+
+    if (tag.temp) {
+        return tag.temp;
+    }
+
+    return null;
+}
