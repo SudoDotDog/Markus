@@ -9,10 +9,12 @@ import { MARKUS_AUTHORIZATION_ROLE } from "../../../declare/interface";
 import * as Direct from "../../../direct/import";
 import { assert } from '../../../util/error/assert';
 import { ERROR_CODE } from "../../../util/error/error";
+import { infoLog } from "../../decorator";
 // tslint:disable-next-line
 import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, EXPRESS_POST_SUBMIT_FORMAT, IDocInformation, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE } from '../../interface';
 import LodgeableExpressRoute from "../lodgeable";
 
+@infoLog()
 export default class RouteRenameTag extends LodgeableExpressRoute implements IExpressRoute {
     public readonly name: string = 'MR@Internal-Route^Rename-Tag';
     public readonly path: string = '/tag/rename';

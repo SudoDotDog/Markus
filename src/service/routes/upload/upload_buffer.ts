@@ -12,8 +12,9 @@ import { availableAnythingToDate } from "../../../util/data/date";
 import { concatSuffix } from "../../../util/data/path";
 import { error, ERROR_CODE } from "../../../util/error/error";
 import { IFileManager } from "../../../util/manager/file/import";
+import { infoLog } from "../../decorator";
 // tslint:disable-next-line
-import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, EXPRESS_POST_SUBMIT_FORMAT, IDocInformation, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE, EXPRESS_EXAMPLE_CODE, EXPRESS_ASSERTION_TYPES_UNION } from '../../interface';
+import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, EXPRESS_ASSERTION_TYPES_UNION, EXPRESS_EXAMPLE_CODE, EXPRESS_POST_SUBMIT_FORMAT, IDocInformation, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE } from '../../interface';
 import LodgeableExpressRoute from "../lodgeable";
 
 export enum SERVICE_ROUTE_UPLOAD_BUFFER_MODE {
@@ -23,6 +24,7 @@ export enum SERVICE_ROUTE_UPLOAD_BUFFER_MODE {
     IMAGE_DOC = 'IMAGE_DOC',
 }
 
+@infoLog()
 export default class RouteUploadAvatarByBuffer extends LodgeableExpressRoute implements IExpressRoute {
     public readonly name: string = 'MR@Internal-Route^Upload-By-Buffer';
     public readonly path: string;

@@ -13,7 +13,7 @@ import { concatSuffix } from "../../../util/data/path";
 import { assert } from "../../../util/error/assert";
 import { error, ERROR_CODE } from "../../../util/error/error";
 import { IFileManager } from "../../../util/manager/file/import";
-import { marks } from "../../decorator";
+import { infoLog, marks } from "../../decorator";
 // tslint:disable-next-line
 import { ExpressNextFunction, EXPRESS_ASSERTION_TYPES_END, EXPRESS_POST_SUBMIT_FORMAT, EXPRESS_SPECIAL_MARK, IDocInformation, IExpressAssertionJSONType, IExpressRoute, ROUTE_MODE } from '../../interface';
 import LodgeableExpressRoute from "../lodgeable";
@@ -26,6 +26,7 @@ export enum SERVICE_ROUTE_UPLOAD_BASE64_MODE {
 }
 
 @marks(EXPRESS_SPECIAL_MARK.DEPRECATED)
+@infoLog()
 export default class RouteUploadAvatarByBase64 extends LodgeableExpressRoute implements IExpressRoute {
     public readonly name: string = 'MR@Internal-Route^Upload-By-Base64';
     public readonly path: string;

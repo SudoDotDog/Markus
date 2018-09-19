@@ -176,7 +176,10 @@ export default class ExpressBuilder implements IExpressBuilder {
         }
 
         handlers.push(...route.stack);
-        handlers.push(this.createLogDumpHandler(route));
+
+        if(route.infoLog){
+            handlers.push(this.createLogDumpHandler(route));
+        }
 
         if (route.after) {
             handlers.push(...MarkusExtensionConfig.middleware.after);

@@ -11,12 +11,13 @@ import { MARKUS_AUTHORIZATION_ROLE } from "../../../declare/interface";
 import * as Direct from "../../../direct/import";
 import { error, ERROR_CODE } from "../../../util/error/error";
 import UniqueArray from "../../../util/struct/uniqueArray";
-import { marks } from "../../decorator";
+import { infoLog, marks } from "../../decorator";
 // tslint:disable-next-line
 import { ExpressNextFunction, EXPRESS_SPECIAL_MARK, IDocInformation, IExpressRoute, ROUTE_MODE } from '../../interface';
 import LodgeableExpressRoute from "../lodgeable";
 
 @marks(EXPRESS_SPECIAL_MARK.DEBUG, EXPRESS_SPECIAL_MARK.RISKY)
+@infoLog()
 export default class RouteRiskyGetList extends LodgeableExpressRoute implements IExpressRoute {
     public readonly name: string = 'MR@Internal-Route^Risky_Get_List';
     public readonly path: string = '/list';

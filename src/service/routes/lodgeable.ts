@@ -27,6 +27,7 @@ export default abstract class LodgeableExpressRoute implements IExpressRoute {
     public resource: IExpressResourcePath = {};
     public specialMark: EXPRESS_SPECIAL_MARK[] = [];
     public testDrive: boolean = false;
+    public infoLog: boolean = false;
 
     protected _log: Log | undefined;
     public constructor() {

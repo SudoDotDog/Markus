@@ -59,3 +59,13 @@ export const preMount = () => {
     };
 };
 
+// Decorator
+export const infoLog = () => {
+    return <T extends { new(...args: any[]): {} }>(target: T) => {
+        // tslint:disable-next-line
+        return class extends target {
+            public infoLog: boolean = true;
+        };
+    };
+};
+

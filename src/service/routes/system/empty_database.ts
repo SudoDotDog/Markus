@@ -8,12 +8,13 @@ import { Request, RequestHandler, Response } from "express";
 import { MARKUS_AUTHORIZATION_ROLE } from "../../../declare/interface";
 import * as Direct from "../../../direct/import";
 import { error, ERROR_CODE } from "../../../util/error/error";
-import { marks } from "../../decorator";
+import { infoLog, marks } from "../../decorator";
 // tslint:disable-next-line
 import { ExpressNextFunction, EXPRESS_SPECIAL_MARK, IDocInformation, IExpressRoute, ROUTE_MODE } from '../../interface';
 import LodgeableExpressRoute from "../lodgeable";
 
 @marks(EXPRESS_SPECIAL_MARK.DEBUG, EXPRESS_SPECIAL_MARK.RISKY)
+@infoLog()
 export default class RouteRiskyEmptyDatabase extends LodgeableExpressRoute implements IExpressRoute {
     public readonly name: string = 'MR@Internal-Route^Risky_Empty_Database';
     public readonly path: string = '/empty';

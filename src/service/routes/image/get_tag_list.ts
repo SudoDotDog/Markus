@@ -10,10 +10,12 @@ import { MARKUS_AUTHORIZATION_ROLE } from "../../../declare/interface";
 import * as Direct from "../../../direct/import";
 import { assert } from "../../../util/error/assert";
 import { ERROR_CODE } from "../../../util/error/error";
+import { infoLog } from "../../decorator";
 // tslint:disable-next-line
 import { ExpressNextFunction, IDocInformation, IExpressRoute, ROUTE_MODE } from '../../interface';
 import LodgeableExpressRoute from "../lodgeable";
 
+@infoLog()
 export default class RouteGetTagList extends LodgeableExpressRoute implements IExpressRoute {
     public readonly name: string = 'MR@Internal-Route^Get-Tag-List';
     public readonly path: string = '/tag/list';

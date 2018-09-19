@@ -118,6 +118,7 @@ export interface IExpressRoute {
     resource: IExpressResourcePath;
     specialMark: EXPRESS_SPECIAL_MARK[];
     testDrive: boolean;
+    infoLog: boolean;
 
     available: () => boolean;
     setLog: (log: Log) => void;
