@@ -4,7 +4,7 @@
  * @fileoverview Tag
  */
 
-import { differenceToHour } from "#/util/data/date";
+import { differenceToHour, differenceToTimeString } from "#/util/data/date";
 import { ObjectID } from "bson";
 import * as Controller from '../database/controller/import';
 import { ITagUserFriendly, ITagUserFriendlyAdvanced } from "../database/interface/tag";
@@ -67,9 +67,9 @@ export const getAllAdvancedTagUserFriendlyList = async (): Promise<ITagUserFrien
         } | null = await Controller.Tag.getTagTempByTagId(tag._id);
 
         if (temp) {
-            const difference = differenceToHour(new Date().getTime() - temp.time.getTime());
+            const difference = new Date().getTime() - temp.time.getTime();
 
-            if (difference <= 3) {
+            if (differenceToHour(difference) <= 3) {
                 result.push({
                     name: tag.name,
                     id: tag._id.toString(),
@@ -77,7 +77,7 @@ export const getAllAdvancedTagUserFriendlyList = async (): Promise<ITagUserFrien
                     updatedAt: tag.updatedAt,
                     size: convertBytesNumberToUserFriendlyFormat(temp.size),
                     count: temp.count,
-                    cached: difference,
+                    cached: differenceToTimeString(difference),
                 });
                 continue;
             }
