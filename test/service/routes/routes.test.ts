@@ -3,9 +3,9 @@
  * @fileoverview Service Routes tests
  */
 
+import { initMarkusGlobalConfig } from '#/markus';
 import { expect } from 'chai';
 import * as mongoose from 'mongoose';
-import { initMarkusGlobalConfig } from '../../../src/markus';
 import { testImageRoutes } from './image/image.test';
 
 describe('test handlers', function (this: Mocha.Suite): void {
