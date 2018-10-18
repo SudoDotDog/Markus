@@ -63,7 +63,7 @@ installMarkus()
     echo '[INFO] Installing Markus with git'
 
     # Cloning Markus
-    git clone https://github.com/sudo-dog/Markus.git markus
+    git clone https://github.com/sudodotdog/Markus.git markus
 
     # Install dependences
     cd markus
