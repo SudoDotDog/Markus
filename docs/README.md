@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/SudoDotDog/Markus.svg?branch=master)](https://travis-ci.org/SudoDotDog/Markus)
 [![codecov](https://codecov.io/gh/SudoDotDog/Markus/branch/master/graph/badge.svg)](https://codecov.io/gh/SudoDotDog/Markus)
-[![Version](https://img.shields.io/badge/Version-3.8.3-purple.svg?longCache=true)](https://github.com/SudoDotDog/Markus)
+[![Version](https://img.shields.io/badge/Version-3.8.5-purple.svg?longCache=true)](https://github.com/SudoDotDog/Markus)
 [![Gitter](https://badges.gitter.im/SudoDotDog/Markus.svg)](https://gitter.im/Markus?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 :rainbow: My name is Markus; I am one of them; These are your images!
