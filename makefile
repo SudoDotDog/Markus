@@ -101,7 +101,21 @@ else
 	@rm -rf coverage
 endif
 
-install:
-	@echo "[INFO] Installing Dependences"
-	@npm install
+install: install-dep install-dev
+
+install-dev:
+	@echo "[INFO] Installing dev Dependencies"
 	@npm install --only=dev
+
+install-dep:
+	@echo "[INFO] Installing Dependencies"
+	@npm install
+
+cov:
+	@echo "[INFO] Testing with Nyc and Mocha"
+ifeq ($(OS), Windows_NT)
+	@-setx NODE_ENV test
+else
+	@-export NODE_ENV=test
+endif
+	@nyc $(mocha)

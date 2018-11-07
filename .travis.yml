@@ -4,6 +4,8 @@ language:
 services: 
  - mongodb
 
+cache: npm
+
 node_js:
  - '7'
  - '9'
