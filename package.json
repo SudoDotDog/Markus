@@ -52,7 +52,7 @@
     "mongoose": "^5.3.11",
     "multer": "^1.4.1",
     "react-dom": "^16.6.1",
-    "react": "^16.6.1"
+    "react": "^16.6.3"
   },
   "devDependencies": {
     "@types/archiver": "^2.1.2",
