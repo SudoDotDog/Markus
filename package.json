@@ -46,7 +46,7 @@
     "aws-sdk": "^2.372.0",
     "bkc": "^3.2.0",
     "body-parser": "^1.18.3",
-    "bson": "^3.0.2",
+    "bson": "^4.0.1",
     "express": "^4.16.4",
     "module-alias": "^2.1.0",
     "mongoose": "^5.3.11",
