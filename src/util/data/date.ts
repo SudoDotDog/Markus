@@ -1,5 +1,3 @@
-import { String } from "aws-sdk/clients/workmail";
-
 /**
  * @author WMXPY
  * @description Date
@@ -56,7 +54,7 @@ export const availableAnythingToDate = (num: any): Date | undefined => {
     }
 };
 
-export const differenceToTimeString = (difference: number): String => {
+export const differenceToTimeString = (difference: number): string => {
     const seconds: number = parseFloat((difference / 1000).toFixed(1));
     const minutes: number = parseFloat((difference / (1000 * 60)).toFixed(1));
     const hours: number = parseFloat((difference / (1000 * 60 * 60)).toFixed(1));
@@ -69,10 +67,10 @@ export const differenceToTimeString = (difference: number): String => {
     } else if (hours < 24) {
         return hours + " Hrs";
     } else {
-        return days + " Days"
+        return days + " Days";
     }
 };
 
 export const differenceToHour = (difference: number): number => {
-    return Math.floor(difference / 3600000)
+    return Math.floor(difference / 3600000);
 };
