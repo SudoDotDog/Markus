@@ -1,6 +1,6 @@
 {
   "name": "markus",
-  "version": "3.8.5",
+  "version": "3.8.6",
   "description": ":rainbow: My name is Markus; I am one of them; These are your images!",
   "main": "dist/script/service/markus.js",
   "scripts": {
