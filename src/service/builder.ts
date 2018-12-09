@@ -177,7 +177,7 @@ export default class ExpressBuilder implements IExpressBuilder {
 
         handlers.push(...route.stack);
 
-        if(route.infoLog){
+        if (route.infoLog) {
             handlers.push(this.createLogDumpHandler(route));
         }
 

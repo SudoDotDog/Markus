@@ -54,7 +54,7 @@ app.use(bodyParser.urlencoded({
     extended: true,
     limit: global.Markus.Config.uploadLimit + 'mb',
 }));
-app.use(function (err: Error, req: Request, res: Response, next: NextFunction) {
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     if (err instanceof SyntaxError) {
         res.status(400).send({
             status: RESPONSE.FAILED,
