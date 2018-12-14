@@ -23,7 +23,7 @@ export const TagSchema: Schema = new Schema({
             size: Number,
         },
         required: false,
-    }
+    },
 }, {
         timestamps: {
             createdAt: true,
