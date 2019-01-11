@@ -6,13 +6,8 @@ script := typescript/tsconfig.script.json
 dbPath := F:/db/
 
 # NPX functions
-ifeq ($(OS), Windows_NT)
-	tsc := .\node_modules\.bin\tsc
-	mocha := .\node_modules\.bin\mocha
-else
-	tsc := node_modules/.bin/tsc
-	mocha := node_modules/.bin/mocha
-endif
+tsc := node_modules/.bin/tsc
+mocha := node_modules/.bin/mocha
 
 markus: dev run
 
@@ -51,32 +46,27 @@ run:
 
 dev:
 	@echo "[INFO] Building for development"
-	@$(tsc) --p $(dev)
+	@NODE_ENV=development $(tsc) --p $(dev)
 
 build: clean install ubuild
 	@echo '[INFO] To Start, Run: "./dist/script/service/markus.js"'
 
 ubuild:
 	@echo "[INFO] Building for production"
-	@$(tsc) --p $(build)
+	@NODE_ENV=production $(tsc) --p $(build)
 
 script: buildScript
 
 buildScript:
 	@echo "[INFO] Building scripts"
-	@$(tsc) --p $(script)
+	@NODE_ENV=production $(tsc) --p $(script)
 
 host:
 	@mongod --dbpath $(dbPath)
 
 tests:
 	@echo "[INFO] Testing with Mocha"
-ifeq ($(OS), Windows_NT)
-	@setx NODE_ENV test
-else
-	@NODE_ENV=test
-endif
-	@$(mocha)
+	@NODE_ENV=test $(mocha)
 
 cleanall: clean
 ifeq ($(OS), Windows_NT)
@@ -84,15 +74,11 @@ ifeq ($(OS), Windows_NT)
 else
 	@echo "[INFO] Cleaning dependence files"
 	@rm -rf node_modules
-endif	
+endif
 
 clean:
 ifeq ($(OS), Windows_NT)
 	@echo "[INFO] Skipping"
-	# @rd /s /q .\dist
-	# @rd /s /q .\dist_script
-	# @rd /s /q .\.nyc_output
-	# @rd /s /q .\coverage
 else
 	@echo "[INFO] Cleaning dist files"
 	@rm -rf dist
@@ -105,17 +91,13 @@ install: install-dep install-dev
 
 install-dev:
 	@echo "[INFO] Installing dev Dependencies"
-	@npm install --only=dev
+	@yarn install --production=false
 
 install-dep:
 	@echo "[INFO] Installing Dependencies"
-	@npm install
+	@yarn install --production=true
 
 cov:
 	@echo "[INFO] Testing with Nyc and Mocha"
-ifeq ($(OS), Windows_NT)
-	@-setx NODE_ENV test
-else
-	@-export NODE_ENV=test
-endif
-	@nyc $(mocha)
+	@NODE_ENV=test \
+	nyc $(mocha)
