@@ -51,7 +51,7 @@
     "module-alias": "^2.1.0",
     "mongoose": "^5.4.8",
     "multer": "^1.4.1",
-    "react": "^16.7.0",
+    "react": "^16.8.1",
     "react-dom": "^16.7.0"
   },
   "devDependencies": {
