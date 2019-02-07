@@ -52,7 +52,7 @@
     "mongoose": "^5.4.8",
     "multer": "^1.4.1",
     "react": "^16.7.0",
-    "react-dom": "^16.7.0"
+    "react-dom": "^16.8.1"
   },
   "devDependencies": {
     "@sudoo/triforce": "^1.2.0",
