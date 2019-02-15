@@ -106,23 +106,16 @@
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@types/module-alias/-/module-alias-2.0.0.tgz#882668f8b8cdbda44812c3b592c590909e18849e"
 
-"@types/mongodb@*":
-  version "3.1.18"
-  resolved "https://registry.yarnpkg.com/@types/mongodb/-/mongodb-3.1.18.tgz#24e847c15155226895ec9c79660ec0907005deff"
-  dependencies:
-    "@types/bson" "*"
-    "@types/node" "*"
-
-"@types/mongodb@^3.1.19":
+"@types/mongodb@*", "@types/mongodb@^3.1.19":
   version "3.1.19"
   resolved "https://registry.yarnpkg.com/@types/mongodb/-/mongodb-3.1.19.tgz#40c4310986888975771857810aa47fd3ea8e1acf"
   dependencies:
     "@types/bson" "*"
     "@types/node" "*"
 
-"@types/mongoose@^5.3.12":
-  version "5.3.12"
-  resolved "https://registry.yarnpkg.com/@types/mongoose/-/mongoose-5.3.12.tgz#15cfda757852a2da2840fc2b001e693039cbbdf5"
+"@types/mongoose@^5.3.17":
+  version "5.3.17"
+  resolved "https://registry.yarnpkg.com/@types/mongoose/-/mongoose-5.3.17.tgz#eb91d5beb390f60eb68655ebedc8e85acfc9fbdb"
   dependencies:
     "@types/mongodb" "*"
     "@types/node" "*"
@@ -133,11 +126,7 @@
   dependencies:
     "@types/express" "*"
 
-"@types/node@*":
-  version "10.12.18"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.12.18.tgz#1d3ca764718915584fcd9f6344621b7672665c67"
-
-"@types/node@^10.12.21":
+"@types/node@*", "@types/node@^10.12.21":
   version "10.12.21"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.12.21.tgz#7e8a0c34cf29f4e17a36e9bd0ea72d45ba03908e"
 
