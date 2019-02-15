@@ -254,9 +254,9 @@ async@2.6.1, async@^2.0.0:
   dependencies:
     lodash "^4.17.10"
 
-aws-sdk@^2.398.0:
-  version "2.398.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.398.0.tgz#f916aae084b5075e7277336dda63399a5bb6fe05"
+aws-sdk@^2.403.0:
+  version "2.403.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.403.0.tgz#b215ca78ea57f1a5ee64ff72c870f85ee96a8140"
   dependencies:
     buffer "4.9.1"
     events "1.1.1"
