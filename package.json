@@ -48,7 +48,7 @@
     "bkc": "^3.2.0",
     "body-parser": "^1.18.3",
     "bson": "^4.0.1",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "module-alias": "^2.2.0",
     "mongoose": "^5.7.5",
     "multer": "^1.4.1"
